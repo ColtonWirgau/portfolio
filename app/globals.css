@@ -38,26 +38,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f0f0f;
-    --foreground: #f5f3f0;
-    --card: #1a1a1a;
-    --card-foreground: #f5f3f0;
-    --border: #2a2a2a;
-    --muted: #1f1f1f;
-    --muted-foreground: #9a9a97;
-
-    /* Darker versions for dark mode */
-    --accent: #ff7f50;
-    --accent-foreground: #ffffff;
-    --accent-orange: #ff7f50;
-    --accent-blue: #5fa3ef;
-    --accent-purple: #a569bd;
-    --accent-green: #52d97e;
-    --accent-pink: #f06292;
-  }
-}
 
 * {
   box-sizing: border-box;
@@ -86,13 +66,6 @@ body {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-@media (prefers-color-scheme: dark) {
-  .glass {
-    background: rgba(26, 26, 26, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
-}
 
 /* Tilted photo frame effect */
 .photo-frame {
@@ -107,13 +80,3 @@ body {
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
 }
 
-@media (prefers-color-scheme: dark) {
-  .photo-frame {
-    background: #1a1a1a;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-  }
-
-  .photo-frame:hover {
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
-  }
-}
