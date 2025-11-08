@@ -28,7 +28,7 @@ export function Navigation() {
             </Link>
 
             {/* Pull-Tab Hamburger Button - Center */}
-            <div className="absolute left-1/2 -translate-x-1/2 -bottom-4 z-20">
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-4 z-[110]">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="relative w-20 h-20 bg-white border-2 border-border rounded-b-3xl shadow-lg hover:shadow-xl transition-all hover:h-[84px] flex items-center justify-center group"
@@ -148,7 +148,7 @@ export function Navigation() {
         </div>
       </nav>
 
-      {/* Full-Screen Mobile Menu - Slides DOWN from top */}
+      {/* Mobile Menu - Slides DOWN from top, leaves bottom visible */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -156,9 +156,9 @@ export function Navigation() {
             animate={{ y: 0 }}
             exit={{ y: '-100%' }}
             transition={{ type: 'tween', duration: 0.4, ease: 'easeInOut' }}
-            className="fixed inset-0 z-[100] bg-accent overflow-y-auto"
+            className="fixed top-0 left-0 right-0 bottom-20 z-[100] bg-accent overflow-y-auto rounded-b-3xl"
           >
-            <div className="min-h-screen p-6 pt-24 flex flex-col">
+            <div className="h-full p-6 pt-24 flex flex-col">
               {/* Header with Logo - No close button, use hamburger instead */}
               <div className="flex items-center justify-center mb-12">
                 <div className="w-24 h-24 bg-white rounded-lg flex items-center justify-center shadow-lg">
@@ -167,7 +167,7 @@ export function Navigation() {
               </div>
 
               {/* Navigation Links */}
-              <nav className="flex-1 space-y-1 mb-8">
+              <nav className="space-y-1 mb-8">
                 {navLinks.map((link, index) => (
                   <motion.div
                     key={link.href}
