@@ -28,20 +28,79 @@ export function Navigation() {
             </Link>
 
             {/* Pull-Tab Hamburger Button - Center */}
-            <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 z-20">
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-4 z-20">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="relative w-16 h-16 bg-white border-2 border-border rounded-t-2xl shadow-lg hover:shadow-xl transition-shadow flex items-center justify-center group"
+                className="relative w-20 h-20 bg-white border-2 border-border rounded-b-3xl shadow-lg hover:shadow-xl transition-all hover:h-[84px] flex items-center justify-center group"
                 aria-label="Toggle menu"
-                style={{
-                  clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)',
-                }}
               >
-                <div className="flex flex-col gap-1.5">
-                  <span className="w-6 h-0.5 bg-accent transition-all group-hover:w-7"></span>
-                  <span className="w-6 h-0.5 bg-accent transition-all group-hover:w-7"></span>
-                  <span className="w-6 h-0.5 bg-accent transition-all group-hover:w-7"></span>
-                </div>
+                {/* Animated Hamburger/X Icon */}
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="relative z-10">
+                  <motion.line
+                    x1="4"
+                    y1="8"
+                    x2="24"
+                    y2="8"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    className="text-accent"
+                    animate={mobileMenuOpen ? {
+                      x1: 6,
+                      y1: 6,
+                      x2: 22,
+                      y2: 22,
+                    } : {
+                      x1: 4,
+                      y1: 8,
+                      x2: 24,
+                      y2: 8,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.line
+                    x1="4"
+                    y1="14"
+                    x2="24"
+                    y2="14"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    className="text-accent"
+                    animate={mobileMenuOpen ? {
+                      opacity: 0,
+                      x1: 14,
+                      x2: 14,
+                    } : {
+                      opacity: 1,
+                      x1: 4,
+                      x2: 24,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.line
+                    x1="4"
+                    y1="20"
+                    x2="24"
+                    y2="20"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    className="text-accent"
+                    animate={mobileMenuOpen ? {
+                      x1: 6,
+                      y1: 22,
+                      x2: 22,
+                      y2: 6,
+                    } : {
+                      x1: 4,
+                      y1: 20,
+                      x2: 24,
+                      y2: 20,
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </svg>
               </button>
             </div>
 
@@ -89,42 +148,22 @@ export function Navigation() {
         </div>
       </nav>
 
-      {/* Full-Screen Mobile Menu */}
+      {/* Full-Screen Mobile Menu - Slides DOWN from top */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
+            initial={{ y: '-100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '-100%' }}
+            transition={{ type: 'tween', duration: 0.4, ease: 'easeInOut' }}
             className="fixed inset-0 z-[100] bg-accent overflow-y-auto"
           >
-            <div className="min-h-screen p-6 flex flex-col">
-              {/* Header with Logo and Close Button */}
-              <div className="flex items-center justify-between mb-12">
-                <div className="w-20 h-20 bg-white rounded-lg flex items-center justify-center">
-                  <span className="text-2xl font-bold text-accent">CW</span>
+            <div className="min-h-screen p-6 pt-24 flex flex-col">
+              {/* Header with Logo - No close button, use hamburger instead */}
+              <div className="flex items-center justify-center mb-12">
+                <div className="w-24 h-24 bg-white rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-3xl font-bold text-accent">CW</span>
                 </div>
-                <button
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-14 h-14 rounded-full bg-white text-accent flex items-center justify-center shadow-lg"
-                  aria-label="Close menu"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </button>
               </div>
 
               {/* Navigation Links */}
@@ -134,7 +173,7 @@ export function Navigation() {
                     key={link.href}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: 0.1 + index * 0.08 }}
                   >
                     <Link
                       href={link.href}
