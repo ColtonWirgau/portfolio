@@ -27,83 +27,6 @@ export function Navigation() {
               Colton Wirgau
             </Link>
 
-            {/* Pull-Tab Hamburger Button - Center */}
-            <div className="absolute left-1/2 -translate-x-1/2 -bottom-4 z-[110]">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="relative w-20 h-20 bg-white border-2 border-border rounded-b-3xl shadow-lg hover:shadow-xl transition-all hover:h-[84px] flex items-center justify-center group"
-                aria-label="Toggle menu"
-              >
-                {/* Animated Hamburger/X Icon */}
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="relative z-10">
-                  <motion.line
-                    x1="4"
-                    y1="8"
-                    x2="24"
-                    y2="8"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    className="text-accent"
-                    animate={mobileMenuOpen ? {
-                      x1: 6,
-                      y1: 6,
-                      x2: 22,
-                      y2: 22,
-                    } : {
-                      x1: 4,
-                      y1: 8,
-                      x2: 24,
-                      y2: 8,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <motion.line
-                    x1="4"
-                    y1="14"
-                    x2="24"
-                    y2="14"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    className="text-accent"
-                    animate={mobileMenuOpen ? {
-                      opacity: 0,
-                      x1: 14,
-                      x2: 14,
-                    } : {
-                      opacity: 1,
-                      x1: 4,
-                      x2: 24,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <motion.line
-                    x1="4"
-                    y1="20"
-                    x2="24"
-                    y2="20"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    className="text-accent"
-                    animate={mobileMenuOpen ? {
-                      x1: 6,
-                      y1: 22,
-                      x2: 22,
-                      y2: 6,
-                    } : {
-                      x1: 4,
-                      y1: 20,
-                      x2: 24,
-                      y2: 20,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </svg>
-              </button>
-            </div>
-
             {/* CTA Buttons - Right */}
             <div className="flex items-center gap-3 z-10">
               <Link
@@ -147,6 +70,83 @@ export function Navigation() {
           </div>
         </div>
       </nav>
+
+      {/* Pull-Tab Hamburger Button - Center (Outside nav for proper z-index) */}
+      <div className="fixed top-12 left-1/2 -translate-x-1/2 z-[110]">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="relative w-20 h-20 bg-white border-2 border-border rounded-b-3xl shadow-lg hover:shadow-xl transition-all hover:h-[84px] flex items-center justify-center group"
+          aria-label="Toggle menu"
+        >
+          {/* Animated Hamburger/X Icon */}
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" className="relative z-10">
+            <motion.line
+              x1="4"
+              y1="8"
+              x2="24"
+              y2="8"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              className="text-accent"
+              animate={mobileMenuOpen ? {
+                x1: 6,
+                y1: 6,
+                x2: 22,
+                y2: 22,
+              } : {
+                x1: 4,
+                y1: 8,
+                x2: 24,
+                y2: 8,
+              }}
+              transition={{ duration: 0.3 }}
+            />
+            <motion.line
+              x1="4"
+              y1="14"
+              x2="24"
+              y2="14"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              className="text-accent"
+              animate={mobileMenuOpen ? {
+                opacity: 0,
+                x1: 14,
+                x2: 14,
+              } : {
+                opacity: 1,
+                x1: 4,
+                x2: 24,
+              }}
+              transition={{ duration: 0.3 }}
+            />
+            <motion.line
+              x1="4"
+              y1="20"
+              x2="24"
+              y2="20"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              className="text-accent"
+              animate={mobileMenuOpen ? {
+                x1: 6,
+                y1: 22,
+                x2: 22,
+                y2: 6,
+              } : {
+                x1: 4,
+                y1: 20,
+                x2: 24,
+                y2: 20,
+              }}
+              transition={{ duration: 0.3 }}
+            />
+          </svg>
+        </button>
+      </div>
 
       {/* Mobile Menu - Slides DOWN from top, leaves bottom visible */}
       <AnimatePresence>
