@@ -1,407 +1,232 @@
 'use client';
 
-import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
-import Section from '@/components/ui/Section';
-import Card from '@/components/ui/Card';
-import Button from '@/components/ui/Button';
-import { PageTransition } from '@/components/layout/PageTransition';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
-// Placeholder images from Unsplash
-const heroImages = [
-  {
-    url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80',
-    alt: 'Developer workspace',
-    rotation: -8,
-    position: { top: '10%', left: '5%' },
-    size: 'w-64 h-80',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80',
-    alt: 'Coding on laptop',
-    rotation: 12,
-    position: { top: '15%', right: '10%' },
-    size: 'w-72 h-72',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80',
-    alt: 'Code on screen',
-    rotation: -5,
-    position: { bottom: '15%', left: '15%' },
-    size: 'w-80 h-56',
-  },
+const roles = [
+  'a problem solver',
+  'a UI/UX obsessive',
+  'a full-stack developer',
+  'a builder of tools',
+  'a product thinker',
 ];
 
-const rotatingStatements = [
-  { text: '8 years building systems', color: 'accent-orange' },
-  { text: 'Product-minded engineer', color: 'accent-blue' },
-  { text: 'Dad. Developer. Lions fan.', color: 'accent-purple' },
-  { text: 'Deep Space Award Winner', color: 'accent-green' },
+const navLinks = [
+  { label: 'About Me', href: '#about' },
+  { label: 'Portfolio', href: '#work' },
+  { label: 'Services', href: '#services' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export default function Home() {
-  const [currentStatement, setCurrentStatement] = useState(0);
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
+  const [roleIndex, setRoleIndex] = useState(0);
+  const mainRef = useRef<HTMLElement>(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
-
-  // Rotate statements every 3 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentStatement((prev) => (prev + 1) % rotatingStatements.length);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
 
+  const checkScroll = useCallback(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    const hasMore = el.scrollHeight > el.clientHeight + 20;
+    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 20;
+    setShowScrollIndicator(hasMore && !atBottom);
+  }, []);
+
+  useEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    checkScroll();
+    const timers = [setTimeout(checkScroll, 150), setTimeout(checkScroll, 500)];
+    el.addEventListener('scroll', checkScroll);
+    window.addEventListener('resize', checkScroll);
+    const ro = new ResizeObserver(checkScroll);
+    ro.observe(el);
+    return () => {
+      timers.forEach(clearTimeout);
+      el.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', checkScroll);
+      ro.disconnect();
+    };
+  }, [checkScroll]);
+
   return (
-    <PageTransition>
-      {/* Dynamic Hero Section with Tilted Photos */}
-      <Section ref={heroRef} className="min-h-screen flex items-center relative overflow-hidden">
-        {/* Background tilted photos */}
-        <div className="absolute inset-0 pointer-events-none">
-          {heroImages.map((image, index) => (
-            <motion.div
-              key={index}
-              className={`photo-frame absolute ${image.size} hidden lg:block`}
-              style={{
-                ...image.position,
-                rotate: image.rotation,
-                zIndex: 0,
-              }}
-              initial={{ opacity: 0, scale: 0.8, rotate: image.rotation - 10 }}
-              animate={{ opacity: 1, scale: 1, rotate: image.rotation }}
-              transition={{ delay: index * 0.2, duration: 0.8 }}
-            >
-              <img
-                src={image.url}
-                alt={image.alt}
-                className="w-full h-full object-cover rounded"
-              />
-            </motion.div>
-          ))}
+    <div className="h-screen bg-bg overflow-hidden grid grid-cols-[80px_1fr_40px] grid-rows-[56px_1fr] max-lg:grid-cols-[1fr_40px] max-lg:grid-rows-[56px_1fr]">
+      {/* ── Header ── spans full width, sticky */}
+      <nav className="col-span-full sticky top-0 z-50 h-14 flex items-center justify-between pl-6 lg:pl-0" style={{ paddingRight: '40px' }}>
+        {/* Logo + nav links */}
+        <div className="flex items-center gap-8">
+          <div className="hidden lg:flex items-center justify-center w-[80px]">
+            <a href="#">
+              <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor" className="text-fg">
+                <path d="M6 4L10 12L6 14L10 18L16 26L22 18L26 14L22 12L26 4L20 10L16 6L12 10Z" />
+                <path d="M13 15L16 20L19 15Z" fill="var(--color-bg)" />
+                <circle cx="12" cy="12" r="1.2" fill="var(--color-bg)" />
+                <circle cx="20" cy="12" r="1.2" fill="var(--color-bg)" />
+              </svg>
+            </a>
+          </div>
+          <a href="#" className="lg:hidden flex items-center">
+            <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor" className="text-fg">
+              <path d="M6 4L10 12L6 14L10 18L16 26L22 18L26 14L22 12L26 4L20 10L16 6L12 10Z" />
+              <path d="M13 15L16 20L19 15Z" fill="var(--color-bg)" />
+              <circle cx="12" cy="12" r="1.2" fill="var(--color-bg)" />
+              <circle cx="20" cy="12" r="1.2" fill="var(--color-bg)" />
+            </svg>
+          </a>
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[13px] text-muted hover:text-fg transition-colors uppercase tracking-wider"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
 
-        {/* Hero Content */}
-        <motion.div
-          className="w-full relative z-10"
-          style={{ opacity, scale }}
+        {/* CTA */}
+        <a
+          href="#contact"
+          className="text-[13px] font-medium flex items-center gap-1.5 hover:opacity-70 transition-opacity"
         >
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Animated rotating statement badge */}
-            <motion.div
-              key={currentStatement}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              className="inline-block mb-8"
-            >
-              <div
-                className={`px-6 py-3 rounded-full text-white font-bold text-sm md:text-base shadow-lg`}
-                style={{
-                  background: `var(--${rotatingStatements[currentStatement].color})`,
-                }}
-              >
-                {rotatingStatements[currentStatement].text}
-              </div>
-            </motion.div>
+          <span className="underline underline-offset-4 uppercase tracking-wider">Contact</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M7 17L17 7M17 7H7M17 7V17" />
+          </svg>
+        </a>
+      </nav>
 
-            {/* Unique tagline inspired by "FIND ? YOUR DREAM" */}
-            <motion.h1
-              className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight mb-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 mb-2">
-                <span className="text-accent-orange">BUILD</span>
-                <span className="relative inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full bg-muted text-muted-foreground border-4 border-border">
-                  <span className="text-3xl md:text-5xl lg:text-6xl">?</span>
-                </span>
-                <span className="text-accent-blue">CRAFT</span>
-              </div>
-              <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6">
-                <span className="text-accent-purple">YOUR</span>
-                <span className="bg-gradient-to-r from-accent-green via-accent-orange to-accent-pink bg-clip-text text-transparent">
-                  FUTURE
-                </span>
-              </div>
-            </motion.h1>
-
-            <motion.p
-              className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              Transforming complexity into intuitive experiences.
-              <br />
-              Not just code — crafting what users love.
-            </motion.p>
-
-            <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
-            >
-              <Link href="/case-studies">
-                <Button size="lg" className="bg-accent hover:bg-accent/90">
-                  View My Work
-                </Button>
-              </Link>
-              <Link href="/work-with-me">
-                <Button variant="secondary" size="lg">
-                  Work With Me
-                </Button>
-              </Link>
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Scroll indicator */}
+      {/* ── Left sidebar ── fixed vertical strip (lg only) */}
+      <aside className="hidden lg:flex flex-col items-center row-start-2 sticky top-14 pt-8" style={{ height: 'calc(100vh - 56px)', paddingBottom: '56px' }}>
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
+          transition={{ delay: 0.8 }}
+          className="flex flex-col items-center gap-4 flex-1"
         >
-          <div className="flex flex-col items-center gap-2 text-muted-foreground">
-            <div className="text-sm">Scroll Down</div>
+          <span
+            className="text-[10px] tracking-[0.15em] uppercase text-muted whitespace-nowrap"
+            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          >
+            Full-stack developer
+          </span>
+          <div className="flex-1 w-px bg-border" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="mt-4"
+        >
+          <span
+            className="text-[10px] tracking-[0.15em] text-muted"
+            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+          >
+            2026
+          </span>
+        </motion.div>
+      </aside>
+
+      {/* ── Main content ── single scrollable area */}
+      <main ref={mainRef} className="row-start-2 col-start-2 col-end-2 overflow-y-auto relative max-lg:col-start-1">
+        {/* Hero section */}
+        <section className="h-[calc(100vh-56px)] flex items-center pl-6 lg:pl-10">
+          <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6">
+            {/* Text side */}
+            <div className="flex-1 flex flex-col justify-center gap-6 min-w-0">
+              <div className="z-10">
+                <motion.h1
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.8 }}
+                  className="text-[clamp(5rem,10vw,11rem)] font-[200] leading-[0.85] tracking-tight mb-5"
+                >
+                  Hello
+                </motion.h1>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="flex items-center gap-2 text-muted text-[clamp(1rem,1.5vw,1.25rem)] font-light tracking-[0.03em]"
+                  style={{ marginLeft: '8px' }}
+                >
+                  <span>I{"'"}m Colton,</span>
+                  <div className="relative overflow-hidden h-[1.5em]">
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={roleIndex}
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -20, opacity: 0 }}
+                        transition={{
+                          y: { type: 'spring', stiffness: 300, damping: 30 },
+                          opacity: { duration: 0.2 },
+                        }}
+                        className="block"
+                      >
+                        {roles[roleIndex]}
+                      </motion.span>
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              </div>
+
+            </div>
+
+            {/* Photo side */}
             <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 1.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 1 }}
+              className="w-[50%] max-md:w-full max-md:h-[50vh] shrink-0"
+              style={{ height: '90dvh' }}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
+              <img
+                src="/Portfoliov1.jpg"
+                alt="Colton Wirgau"
+                className="w-full h-full object-cover object-top"
+              />
             </motion.div>
           </div>
-        </motion.div>
-      </Section>
+        </section>
 
-      {/* What I Do Section */}
-      <Section className="bg-gradient-to-b from-background to-muted/30">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
-            What I Do
-          </h2>
-          <p className="text-center text-muted-foreground text-lg md:text-xl mb-16 max-w-2xl mx-auto">
-            I bridge engineering and product thinking
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                </svg>
-              ),
-              title: 'Product-Minded Development',
-              description: 'Transform complex systems into intuitive experiences with user-centered design thinking.',
-              color: 'accent-orange',
-            },
-            {
-              icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polyline points="16 18 22 12 16 6" />
-                  <polyline points="8 6 2 12 8 18" />
-                </svg>
-              ),
-              title: 'Full-Stack Architecture',
-              description: 'Build modern, scalable solutions with Next.js, React, TypeScript, and Node.js.',
-              color: 'accent-blue',
-            },
-            {
-              icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-              ),
-              title: 'Technical Leadership',
-              description: 'Lead teams, mentor developers, and drive innovation through problem-solving.',
-              color: 'accent-purple',
-            },
-            {
-              icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                  <line x1="12" y1="22.08" x2="12" y2="12" />
-                </svg>
-              ),
-              title: 'Contract Development',
-              description: 'Custom applications, API integrations, and dashboards that solve real problems.',
-              color: 'accent-green',
-            },
-          ].map((item, index) => (
+        {/* Scroll indicator */}
+        <AnimatePresence>
+          {showScrollIndicator && (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="pointer-events-none sticky bottom-0 left-0 right-0 z-10 flex items-end justify-center h-10 bg-gradient-to-t from-bg to-transparent"
             >
-              <Card
-                glass
-                hover
-                className="h-full border-2 border-transparent hover:border-accent/50 transition-all"
-              >
-                <div className="mb-4">
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center text-white"
-                    style={{ background: `var(--${item.color})` }}
-                  >
-                    {item.icon}
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Featured Work Section */}
-      <Section>
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
-            Featured Work
-          </h2>
-          <p className="text-center text-muted-foreground text-lg md:text-xl mb-16 max-w-2xl mx-auto">
-            Real projects solving real problems
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {[
-            {
-              image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
-              tags: ['Next.js', 'React', 'TypeScript'],
-              title: 'Apps.WoodsideBible.org',
-              description: 'Unified full-stack platform simplifying major organizational workflows. Methods and UI concepts later adopted by MinistryPlatform core product.',
-              link: '/case-studies',
-              color: 'accent-orange',
-              rotation: -2,
-            },
-            {
-              image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
-              tags: ['React', 'Next.js', 'API Design'],
-              title: 'Dynamic Insights Widgets',
-              description: 'Transformed static reports into interactive dashboards with custom embedded widgets. Innovation later adopted across the MinistryPlatform ecosystem.',
-              link: '/case-studies',
-              color: 'accent-blue',
-              rotation: 2,
-            },
-            {
-              image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80',
-              tags: ['UX Redesign', 'Next.js', 'Product Thinking'],
-              title: 'Sleeper App Redesign',
-              description: 'Unsolicited redesign improving UX for key features. Working interactive prototype demonstrating product-minded problem solving.',
-              link: '/case-studies',
-              color: 'accent-purple',
-              rotation: -1,
-            },
-            {
-              image: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&q=80',
-              tags: ['Next.js', 'Supabase', 'PostgreSQL'],
-              title: 'RoarTracker',
-              description: 'Season ticket management app for Detroit Lions games. Tracks attendance, resale, and spending with clean data visualization.',
-              link: '/case-studies',
-              color: 'accent-green',
-              rotation: 1,
-            },
-          ].map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-            >
-              <Card hover className="overflow-hidden group">
-                <div
-                  className="photo-frame mb-6"
-                  style={{ transform: `rotate(${project.rotation}deg)` }}
+              <div className="mb-2 flex flex-col items-center gap-0.5 text-muted">
+                <span className="text-[10px] tracking-[0.15em] uppercase">
+                  Scroll for more
+                </span>
+                <motion.div
+                  animate={{ y: [0, 3, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
                 >
-                  <div className="aspect-video overflow-hidden rounded">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
-                </div>
-                <div className="mb-3 flex gap-2 flex-wrap">
-                  {project.tags.map((tag, tagIndex) => (
-                    <span
-                      key={tagIndex}
-                      className="text-xs px-3 py-1 rounded-full text-white font-medium"
-                      style={{ background: `var(--${project.color})` }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {project.description}
-                </p>
-                <Link href={project.link}>
-                  <Button variant="ghost" className="group-hover:translate-x-2 transition-transform">
-                    View Project →
-                  </Button>
-                </Link>
-              </Card>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </motion.div>
+              </div>
             </motion.div>
-          ))}
-        </div>
-
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-        >
-          <Link href="/case-studies">
-            <Button size="lg" className="bg-accent hover:bg-accent/90">
-              View All Projects
-            </Button>
-          </Link>
-        </motion.div>
-      </Section>
-    </PageTransition>
+          )}
+        </AnimatePresence>
+      </main>
+    </div>
   );
 }
