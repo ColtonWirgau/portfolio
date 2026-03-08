@@ -49,3 +49,15 @@ body,
   width: 0 !important;
   height: 0 !important;
 }
+
+/* Mapbox popup overrides */
+.about-map-popup .mapboxgl-popup-content {
+  background: var(--color-bg);
+  border-radius: 6px;
+  padding: 10px 14px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+}
+.about-map-popup .mapboxgl-popup-tip {
+  border-top-color: var(--color-bg);
+}
