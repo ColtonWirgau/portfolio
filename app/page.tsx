@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading } from '@/components/SectionHeading';
+import { SideLabel } from '@/components/SideLabel';
 
 const AboutMap = dynamic(() => import('@/components/AboutMap'), { ssr: false });
 
@@ -62,22 +63,12 @@ export default function Home() {
   }, [checkScroll]);
 
   return (
-    <div className="h-screen bg-bg overflow-hidden grid grid-cols-[80px_1fr_40px] grid-rows-[56px_1fr] max-lg:grid-cols-[1fr_40px] max-lg:grid-rows-[56px_1fr]">
+    <div className="h-screen bg-bg overflow-hidden relative">
       {/* ── Header ── spans full width, sticky */}
-      <nav className="col-span-full sticky top-0 z-50 h-14 flex items-center justify-between pl-6 lg:pl-0" style={{ paddingRight: '40px' }}>
+      <nav className="fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between" style={{ padding: '0 24px', backdropFilter: 'blur(20px) saturate(1.4)', WebkitBackdropFilter: 'blur(20px) saturate(1.4)', backgroundColor: 'rgba(232, 232, 232, 0.6)' }}>
         {/* Logo + nav links */}
         <div className="flex items-center gap-8">
-          <div className="hidden lg:flex items-center justify-center w-[80px]">
-            <a href="#" onClick={(e) => { e.preventDefault(); mainRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-              <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor" className="text-fg">
-                <path d="M6 4L10 12L6 14L10 18L16 26L22 18L26 14L22 12L26 4L20 10L16 6L12 10Z" />
-                <path d="M13 15L16 20L19 15Z" fill="var(--color-bg)" />
-                <circle cx="12" cy="12" r="1.2" fill="var(--color-bg)" />
-                <circle cx="20" cy="12" r="1.2" fill="var(--color-bg)" />
-              </svg>
-            </a>
-          </div>
-          <a href="#" onClick={(e) => { e.preventDefault(); mainRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }} className="lg:hidden flex items-center">
+          <a href="#" onClick={(e) => { e.preventDefault(); mainRef.current?.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center">
             <svg width="24" height="24" viewBox="0 0 32 32" fill="currentColor" className="text-fg">
               <path d="M6 4L10 12L6 14L10 18L16 26L22 18L26 14L22 12L26 4L20 10L16 6L12 10Z" />
               <path d="M13 15L16 20L19 15Z" fill="var(--color-bg)" />
@@ -127,42 +118,12 @@ export default function Home() {
         </a>
       </nav>
 
-      {/* ── Left sidebar ── fixed vertical strip (lg only) */}
-      <aside className="hidden lg:flex flex-col items-center row-start-2 sticky top-14 pt-8" style={{ height: 'calc(100vh - 56px)', paddingBottom: '56px' }}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="flex flex-col items-center gap-4 flex-1"
-        >
-          <span
-            className="text-[10px] tracking-[0.15em] uppercase text-muted whitespace-nowrap"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            Full-stack developer
-          </span>
-          <div className="flex-1 w-px bg-border" />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="mt-4"
-        >
-          <span
-            className="text-[10px] tracking-[0.15em] text-muted"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            2026
-          </span>
-        </motion.div>
-      </aside>
-
       {/* ── Main content ── single scrollable area */}
-      <main ref={mainRef} className="row-start-2 col-start-2 col-end-2 overflow-y-auto relative max-lg:col-start-1" style={{ paddingBottom: '80px' }}>
+      <main ref={mainRef} className="h-full overflow-y-auto relative" style={{ paddingBottom: '80px' }}>
         {/* Hero section */}
-        <section className="h-[calc(100vh-56px)] flex items-center pl-6 lg:pl-10">
+        <section className="h-screen flex items-stretch" style={{ padding: '0 24px' }}>
+          <SideLabel label="Full-stack developer" endLabel="2026" side="left" />
+          <div className="flex-1 flex items-center">
           <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6">
             {/* Text side */}
             <div className="flex-1 flex flex-col justify-center gap-6 min-w-0">
@@ -221,117 +182,112 @@ export default function Home() {
               />
             </motion.div>
           </div>
+          </div>
         </section>
 
         {/* About section */}
-        <section id="about" className="flex flex-col-reverse lg:flex-row-reverse gap-10 px-6 lg:px-10" style={{ paddingTop: '80px', paddingBottom: '80px' }}>
-          {/* Right — heading + timeline + details */}
-          <div className="flex-1 min-w-0">
-            <SectionHeading
-              label="About Me"
-              title={<>Michigan born,<br />product obsessed.</>}
-            />
+        <section id="about" style={{ minHeight: '100vh', paddingTop: '80px', paddingBottom: '80px', padding: '80px 24px', display: 'flex' }}>
+          {/* Main content area */}
+          <div style={{ flex: 1, minWidth: 0 }}>
 
-            {/* Timeline */}
-            <div className="relative" style={{ paddingLeft: '32px' }}>
-              {/* Vertical line */}
-              <div className="absolute w-px bg-border" style={{ left: '7px', top: '8px', bottom: '8px' }} />
+          {/* Top row: heading left, map right */}
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '40px', marginBottom: '32px' }}>
+            <div style={{ flex: 1 }}>
+              <SectionHeading
+                label="About Me"
+                title={<>Michigan born,<br />product obsessed.</>}
+                subtitle="Full-stack developer, musician, and lifelong sports fan based in Southeast Michigan. I build tools that make complexity feel simple."
+              />
+            </div>
+            <div style={{ width: '240px', height: '240px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
+              <AboutMap
+                events={lifeEvents}
+                selected={selectedEvent}
+                onSelect={(event) => { setSelectedEvent(event); setSheetDefaultPage('main'); }}
+              />
+            </div>
+          </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-                {lifeEvents.map((event, idx) => (
-                  <div key={event.id}>
-                    {/* Main timeline item */}
-                    <button
-                      onClick={() => {
-                        setSelectedEvent(event);
-                        setSheetDefaultPage('main');
-                      }}
-                      className="group"
+          {/* Full-width life event sections */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '64px' }}>
+            {lifeEvents.map((event, index) => {
+              const imageLeft = index % 2 === 0;
+              return (
+                <div
+                  key={event.id}
+                  className="group"
+                  style={{
+                    display: 'flex',
+                    flexDirection: imageLeft ? 'row' : 'row-reverse',
+                    gap: '48px',
+                    alignItems: 'stretch',
+                  }}
+                >
+                  {/* Image side */}
+                  <div
+                    style={{
+                      width: '45%',
+                      flexShrink: 0,
+                      borderRadius: '12px',
+                      overflow: 'hidden',
+                      cursor: 'pointer',
+                      minHeight: '360px',
+                    }}
+                    onClick={() => {
+                      setSelectedEvent(event);
+                      setSheetDefaultPage('main');
+                    }}
+                  >
+                    <img
+                      src={event.image}
+                      alt={event.label}
                       style={{
-                        position: 'relative',
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: '16px',
                         width: '100%',
-                        textAlign: 'left',
-                        padding: '0',
+                        height: '100%',
+                        objectFit: 'cover',
+                        transition: 'transform 0.4s ease',
+                      }}
+                      className="group-hover:scale-[1.03]"
+                    />
+                  </div>
+
+                  {/* Content side */}
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: 0 }}>
+                    <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: 'var(--color-muted)', marginBottom: '8px', textTransform: 'uppercase' }}>
+                      {event.year}
+                    </div>
+                    <h3
+                      style={{
+                        fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+                        fontWeight: 200,
+                        color: 'var(--color-fg)',
+                        lineHeight: 1.1,
+                        letterSpacing: '-0.02em',
+                        marginBottom: '4px',
                       }}
                     >
-                      {/* Dot on timeline */}
-                      <div
-                        style={{
-                          position: 'absolute',
-                          left: '-32px',
-                          top: '4px',
-                          width: '15px',
-                          height: '15px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: selectedEvent?.id === event.id ? '10px' : '8px',
-                            height: selectedEvent?.id === event.id ? '10px' : '8px',
-                            borderRadius: '50%',
-                            border: `2px solid ${selectedEvent?.id === event.id ? 'var(--color-fg)' : 'var(--color-muted)'}`,
-                            background: selectedEvent?.id === event.id ? 'var(--color-fg)' : 'var(--color-bg)',
-                            transition: 'all 0.2s',
-                          }}
-                        />
-                      </div>
+                      {event.label}
+                    </h3>
+                    <div style={{ fontSize: '14px', fontWeight: 300, color: 'var(--color-muted)', marginBottom: '16px' }}>
+                      {event.tagline}
+                    </div>
 
-                      {/* Number */}
-                      <div
-                        style={{
-                          width: '28px',
-                          height: '28px',
-                          borderRadius: '8px',
-                          background: selectedEvent?.id === event.id ? 'var(--color-fg)' : 'transparent',
-                          border: `1.5px solid ${selectedEvent?.id === event.id ? 'var(--color-fg)' : 'var(--color-border)'}`,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                          transition: 'all 0.2s',
-                        }}
-                      >
-                        <span style={{
-                          fontSize: '11px',
-                          fontWeight: 500,
-                          color: selectedEvent?.id === event.id ? 'var(--color-bg)' : 'var(--color-muted)',
-                          letterSpacing: '0.02em',
-                        }}>
-                          {String(idx + 1).padStart(2, '0')}
-                        </span>
-                      </div>
+                    <p style={{ fontSize: '14px', fontWeight: 300, color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '24px', maxWidth: '520px' }}>
+                      {event.description}
+                    </p>
 
-                      {/* Text */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: 'var(--color-muted)', marginBottom: '2px' }} className="uppercase">
-                          {event.year}
+                    {/* Highlights */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '24px' }}>
+                      {event.highlights.slice(0, 3).map((h, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                          <span style={{ color: 'var(--color-border)', marginTop: '6px', flexShrink: 0, fontSize: '6px' }}>●</span>
+                          <span style={{ fontSize: '13px', lineHeight: 1.5, fontWeight: 300, color: 'var(--color-muted)' }}>{h}</span>
                         </div>
-                        <div style={{ fontSize: '17px', fontWeight: 500, color: 'var(--color-fg)', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
-                          {event.label}
-                        </div>
-                        <div style={{ fontSize: '13px', fontWeight: 300, color: 'var(--color-muted)', marginTop: '2px' }}>
-                          {event.tagline}
-                        </div>
-                      </div>
+                      ))}
+                    </div>
 
-                      {/* Arrow */}
-                      <svg
-                        width="14" height="14" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-                        style={{ color: 'var(--color-border)', flexShrink: 0, marginTop: '8px', transition: 'color 0.15s' }}
-                      >
-                        <path d="M9 18l6-6-6-6" />
-                      </svg>
-                    </button>
-
-                    {/* Sub-events */}
-                    <div style={{ paddingLeft: '44px', marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    {/* Sub-event links */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                       {event.subEvents.map((sub) => (
                         <button
                           key={sub.id}
@@ -339,61 +295,34 @@ export default function Home() {
                             setSelectedEvent(event);
                             setSheetDefaultPage(sub.id);
                           }}
-                          className="group"
                           style={{
-                            position: 'relative',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px',
-                            width: '100%',
-                            textAlign: 'left',
-                            padding: '6px 0',
+                            fontSize: '12px',
+                            fontWeight: 400,
+                            color: 'var(--color-muted)',
+                            padding: '6px 14px',
+                            borderRadius: '100px',
+                            border: '1px solid var(--color-border)',
+                            background: 'transparent',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s',
                           }}
+                          onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-fg)'; e.currentTarget.style.color = 'var(--color-fg)'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--color-border)'; e.currentTarget.style.color = 'var(--color-muted)'; }}
                         >
-                          {/* Small dot */}
-                          <div
-                            className="absolute"
-                            style={{
-                              left: '-37px',
-                              top: '50%',
-                              transform: 'translateY(-50%)',
-                              width: '4px',
-                              height: '4px',
-                              borderRadius: '50%',
-                              background: 'var(--color-border)',
-                            }}
-                          />
-                          <span style={{ fontSize: '12px', fontWeight: 300, color: 'var(--color-muted)', transition: 'color 0.15s' }}
-                            className="group-hover:text-fg"
-                          >
-                            {sub.title}
-                          </span>
-                          <svg
-                            width="8" height="8" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" strokeWidth="3" strokeLinecap="round"
-                            style={{ color: 'var(--color-border)', flexShrink: 0, marginLeft: 'auto', transition: 'color 0.15s' }}
-                            className="group-hover:text-muted"
-                          >
-                            <path d="M9 18l6-6-6-6" />
-                          </svg>
+                          {sub.title}
                         </button>
                       ))}
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-
+                </div>
+              );
+            })}
           </div>
 
-          {/* Left — Map (tall, matching hero aspect) */}
-          <div className="w-full lg:w-[50%] shrink-0 overflow-hidden lg:sticky lg:top-20 lg:self-start" style={{ height: '85dvh', borderRadius: '50%', aspectRatio: '1', maxHeight: '85dvh' }}>
-            <AboutMap
-              events={lifeEvents}
-              selected={selectedEvent}
-              onSelect={(event) => { setSelectedEvent(event); setSheetDefaultPage('main'); }}
-            />
-          </div>
+          </div>{/* end main content area */}
+
+          {/* Side label */}
+          <SideLabel label="About Me" side="right" delay={0.3} mirrorLabel />
         </section>
 
         {/* Life event detail sheet */}
@@ -418,7 +347,7 @@ export default function Home() {
               position: 'fixed',
               bottom: 0,
               left: 0,
-              right: '40px',
+              right: 0,
               zIndex: 10,
               height: '48px',
               display: 'flex',

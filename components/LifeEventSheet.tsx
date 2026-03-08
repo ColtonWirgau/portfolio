@@ -73,9 +73,9 @@ export const lifeEvents: LifeEvent[] = [
     year: 'College',
     tagline: 'Where I found my craft',
     description:
-      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors (3.62 GPA) with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use — not just writing code, but solving real problems.',
+      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use — not just writing code, but solving real problems.',
     highlights: [
-      'BS Software Engineering, Minor in Leadership — Graduated with Honors (3.62)',
+      'BS Software Engineering, Minor in Leadership — Graduated with Honors',
       'Division I track & field athlete',
       'Published: "Sylvester: An Approach to Emotion Classification"',
       'Most sought-after tutor at the Student Success Center',
@@ -150,47 +150,36 @@ export const lifeEvents: LifeEvent[] = [
     lng: -83.1498,
   },
   {
-    id: 'grosse-ile',
-    label: 'Grosse Ile',
-    year: 'Wedding',
-    tagline: 'Where I said "I do"',
+    id: 'clarkston',
+    label: 'Clarkston',
+    year: 'Personal',
+    tagline: 'Where I call home',
     description:
-      'Got married to Sarah at the Grosse Ile Municipal Airport — which probably tells you everything you need to know about us. It was unconventional, personal, and exactly what we wanted.',
+      'We live in Clarkston now — a quiet town north of Detroit. It\'s home base. Married Sarah at the Grosse Ile Municipal Airport — which probably tells you everything you need to know about us. When I\'m not building products, you\'ll find me here with my family.',
     highlights: [
-      'Married Sarah — my favorite person',
-      'Ceremony at the Grosse Ile Municipal Airport',
-      'Yes, an actual airport',
+      'Married Sarah at the Grosse Ile Municipal Airport',
+      'Home with Sarah, Weston (3), and Rosie (1)',
+      'Musician — play at Woodside and have played major shows',
+      'Detroit Lions season ticket holder',
     ],
     subEvents: [
       {
-        id: 'grosse-ile-wedding',
+        id: 'clarkston-wedding',
         title: 'The Airport Wedding',
         description:
-          'Got married at the Grosse Ile Municipal Airport. Yes, an actual airport. It was unconventional, personal, and exactly what we wanted.',
+          'Got married to Sarah at the Grosse Ile Municipal Airport. Yes, an actual airport. It was unconventional, personal, and exactly what we wanted.',
       },
-    ],
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=500&fit=crop',
-    lat: 42.0989,
-    lng: -83.1607,
-  },
-  {
-    id: 'clarkston',
-    label: 'Clarkston',
-    year: 'Now',
-    tagline: 'Where I call home',
-    description:
-      'We live in Clarkston now — a quiet town north of Detroit. It\'s home base. When I\'m not building products, you\'ll find me here with my family.',
-    highlights: [
-      'Home with Sarah, Weston (3), and Rosie (1)',
-      'Detroit Lions season ticket holder',
-      'Where the side projects happen',
-    ],
-    subEvents: [
       {
         id: 'clarkston-family',
         title: 'Family Life',
         description:
           'Home with Sarah, Weston (3), and Rosie (1). A quiet town north of Detroit — home base for family life and side projects alike.',
+      },
+      {
+        id: 'clarkston-music',
+        title: 'Music',
+        description:
+          'I play music at Woodside Bible Church and have played a lot of huge shows over the years. It\'s one of those things that recharges me — whether it\'s leading worship on a Sunday or playing a big stage, there\'s nothing like it.',
       },
       {
         id: 'clarkston-lions',

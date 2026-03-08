@@ -15,7 +15,7 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ label, title, subtitle, watermark }: SectionHeadingProps) {
   return (
-    <div style={{ position: 'relative', marginBottom: '48px', overflow: 'visible' }}>
+    <div style={{ position: 'relative', marginBottom: '32px', overflow: 'visible' }}>
       {/* Watermark */}
       {watermark && (
         <div
