@@ -2,12 +2,9 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
-
-const AboutMap = dynamic(() => import('@/components/AboutMap'), { ssr: false });
 
 const roles = [
   'a problem solver',
@@ -18,9 +15,43 @@ const roles = [
 ];
 
 const navLinks = [
-  { label: 'About Me', href: '#about' },
-  { label: 'Portfolio', href: '#work' },
-  { label: 'Services', href: '#services' },
+  { label: 'Work', href: '#work' },
+  { label: 'About', href: '#about' },
+];
+
+const projects = [
+  {
+    id: 'church-hub',
+    title: 'Church Hub',
+    category: 'SaaS Platform',
+    description: 'What started as an internal tool at Woodside Bible Church evolved into a full SaaS product. Church Hub is a modular Next.js platform that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data. I started a business around it — implementing it across multiple churches to solve real operational problems at scale.',
+    tech: ['Next.js', 'React', 'TypeScript', 'Node.js', 'SQL Server', 'Tailwind', 'Vercel'],
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+  },
+  {
+    id: 'dynamic-insights',
+    title: 'Dynamic Insights',
+    category: 'Dashboard Framework',
+    description: 'Extended a static reporting platform into interactive dashboards with custom embedded widgets. Created a nested JSON framework for optimized data retrieval — this innovation inspired new features in the platform and became a development model across partner organizations.',
+    tech: ['React', 'Next.js', 'JSON', 'SQL', 'REST API'],
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+  },
+  {
+    id: 'mp-next',
+    title: 'MP Next',
+    category: 'Open Source',
+    description: 'An open-source Next.js template for MinistryPlatform API integration. Provides authentication flows, data fetching patterns, and UI components — enabling other organizations to build modern web apps on top of the platform.',
+    tech: ['Next.js', 'TypeScript', 'OAuth', 'REST', 'Open Source'],
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop',
+  },
+  {
+    id: 'roar-tracker',
+    title: 'RoarTracker',
+    category: 'Personal Project',
+    description: 'A personal app to manage Detroit Lions season tickets — track attendance, resale, and spending data with intuitive dashboards and mobile-first UI.',
+    tech: ['Next.js', 'PostgreSQL', 'Supabase', 'Tailwind'],
+    image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&h=600&fit=crop',
+  },
 ];
 
 export default function Home() {
@@ -185,147 +216,172 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Portfolio section */}
+        <section id="work" style={{ padding: '80px 24px', display: 'flex' }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ marginBottom: '48px' }}>
+              <SectionHeading
+                title={<>Things I{"\u2019"}ve<br />built.</>}
+                subtitle="Full-stack platforms, developer tools, and side projects — here's some of what I've been working on."
+              />
+            </div>
+
+            {/* Project grid */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+              {projects.map((project, index) => {
+                const imageLeft = index % 2 === 0;
+                return (
+                  <div
+                    key={project.id}
+                    className="group"
+                    style={{
+                      display: 'flex',
+                      flexDirection: imageLeft ? 'row' : 'row-reverse',
+                      gap: '40px',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {/* Image */}
+                    <div
+                      style={{
+                        width: '50%',
+                        flexShrink: 0,
+                        aspectRatio: '4/3',
+                        borderRadius: '12px',
+                        overflow: 'hidden',
+                        background: 'var(--color-card)',
+                      }}
+                    >
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.4s ease',
+                        }}
+                        className="group-hover:scale-[1.03]"
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: '8px' }}>
+                        {project.category}
+                      </div>
+                      <h3 style={{
+                        fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
+                        fontWeight: 300,
+                        color: 'var(--color-fg)',
+                        lineHeight: 1.2,
+                        letterSpacing: '-0.02em',
+                        marginBottom: '12px',
+                      }}>
+                        {project.title}
+                      </h3>
+                      <p style={{ fontSize: '14px', fontWeight: 300, color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
+                        {project.description}
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                        {project.tech.map((t) => (
+                          <span
+                            key={t}
+                            style={{
+                              fontSize: '11px',
+                              fontWeight: 400,
+                              color: 'var(--color-muted)',
+                              padding: '4px 10px',
+                              borderRadius: '100px',
+                              border: '1px solid var(--color-border)',
+                            }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <SideLabel label="Work" side="right" mirrorLabel />
+        </section>
+
         {/* About section */}
-        <section id="about" style={{ minHeight: '100vh', paddingTop: '80px', paddingBottom: '80px', padding: '80px 24px', display: 'flex' }}>
+        <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative', minHeight: '100vh' }}>
+          <SideLabel label="About" side="left" delay={0.3} mirrorLabel />
           {/* Main content area */}
           <div style={{ flex: 1, minWidth: 0 }}>
 
-          {/* Top row: heading left, map right */}
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '40px', marginBottom: '32px' }}>
-            <div style={{ flex: 1 }}>
-              <SectionHeading
-                label="About Me"
-                title={<>Michigan born,<br />product obsessed.</>}
-                subtitle="Full-stack developer, musician, and lifelong sports fan based in Southeast Michigan. I build tools that make complexity feel simple."
-              />
-            </div>
-            <div style={{ width: '240px', height: '240px', borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
-              <AboutMap
-                events={lifeEvents}
-                selected={selectedEvent}
-                onSelect={(event) => { setSelectedEvent(event); setSheetDefaultPage('main'); }}
-              />
-            </div>
+          <div style={{ marginBottom: '48px' }}>
+            <SectionHeading
+              title={<>Michigan born,<br />product obsessed.</>}
+              subtitle="Full-stack developer, musician, and lifelong sports fan based in Southeast Michigan. I build tools that make complexity feel simple."
+            />
           </div>
 
-          {/* Full-width life event sections */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '64px' }}>
-            {lifeEvents.map((event, index) => {
-              const imageLeft = index % 2 === 0;
-              return (
-                <div
-                  key={event.id}
-                  className="group"
+          {/* Portrait cards row */}
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${lifeEvents.length}, 1fr)`, gap: '16px' }}>
+            {lifeEvents.map((event) => (
+              <motion.button
+                key={event.id}
+                layoutId={`card-${event.id}`}
+                onClick={() => {
+                  setSelectedEvent(event);
+                  setSheetDefaultPage('main');
+                }}
+                className="group"
+                style={{
+                  position: 'relative',
+                  aspectRatio: '3/4',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                <motion.img
+                  layoutId={`img-${event.id}`}
+                  src={event.image}
+                  alt={event.label}
                   style={{
-                    display: 'flex',
-                    flexDirection: imageLeft ? 'row' : 'row-reverse',
-                    gap: '48px',
-                    alignItems: 'stretch',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.4s ease',
                   }}
-                >
-                  {/* Image side */}
-                  <div
-                    style={{
-                      width: '45%',
-                      flexShrink: 0,
-                      borderRadius: '12px',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                      minHeight: '360px',
-                    }}
-                    onClick={() => {
-                      setSelectedEvent(event);
-                      setSheetDefaultPage('main');
-                    }}
-                  >
-                    <img
-                      src={event.image}
-                      alt={event.label}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        transition: 'transform 0.4s ease',
-                      }}
-                      className="group-hover:scale-[1.03]"
-                    />
-                  </div>
-
-                  {/* Content side */}
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minWidth: 0 }}>
-                    <div style={{ fontSize: '10px', letterSpacing: '0.15em', color: 'var(--color-muted)', marginBottom: '8px', textTransform: 'uppercase' }}>
-                      {event.year}
-                    </div>
-                    <h3
-                      style={{
-                        fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
-                        fontWeight: 200,
-                        color: 'var(--color-fg)',
-                        lineHeight: 1.1,
-                        letterSpacing: '-0.02em',
-                        marginBottom: '4px',
-                      }}
-                    >
-                      {event.label}
-                    </h3>
-                    <div style={{ fontSize: '14px', fontWeight: 300, color: 'var(--color-muted)', marginBottom: '16px' }}>
-                      {event.tagline}
-                    </div>
-
-                    <p style={{ fontSize: '14px', fontWeight: 300, color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '24px', maxWidth: '520px' }}>
-                      {event.description}
-                    </p>
-
-                    {/* Highlights */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '24px' }}>
-                      {event.highlights.slice(0, 3).map((h, i) => (
-                        <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                          <span style={{ color: 'var(--color-border)', marginTop: '6px', flexShrink: 0, fontSize: '6px' }}>●</span>
-                          <span style={{ fontSize: '13px', lineHeight: 1.5, fontWeight: 300, color: 'var(--color-muted)' }}>{h}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Sub-event links */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                      {event.subEvents.map((sub) => (
-                        <button
-                          key={sub.id}
-                          onClick={() => {
-                            setSelectedEvent(event);
-                            setSheetDefaultPage(sub.id);
-                          }}
-                          style={{
-                            fontSize: '12px',
-                            fontWeight: 400,
-                            color: 'var(--color-muted)',
-                            padding: '6px 14px',
-                            borderRadius: '100px',
-                            border: '1px solid var(--color-border)',
-                            background: 'transparent',
-                            cursor: 'pointer',
-                            transition: 'all 0.15s',
-                          }}
-                          onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-fg)'; e.currentTarget.style.color = 'var(--color-fg)'; }}
-                          onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--color-border)'; e.currentTarget.style.color = 'var(--color-muted)'; }}
-                        >
-                          {sub.title}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  className="group-hover:scale-[1.03]"
+                />
+                {/* Gradient overlay */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)',
+                }} />
+                {/* Title overlay */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  padding: '24px 20px',
+                }}>
+                  <h3 style={{ fontSize: '22px', fontWeight: 300, color: '#fff', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
+                    {event.year}
+                  </h3>
                 </div>
-              );
-            })}
+              </motion.button>
+            ))}
           </div>
 
           </div>{/* end main content area */}
 
           {/* Side label */}
-          <SideLabel label="About Me" side="right" delay={0.3} mirrorLabel />
         </section>
 
-        {/* Life event detail sheet */}
+        {/* Life event sheet */}
         <LifeEventSheet
           event={selectedEvent}
           onClose={() => { setSelectedEvent(null); setSheetDefaultPage('main'); }}

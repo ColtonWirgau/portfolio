@@ -1,8 +1,6 @@
 'use client';
 
-import { ResponsiveSheet } from './ResponsiveSheet';
-import { useSheet } from './ResponsiveSheet';
-import type { ReactNode } from 'react';
+import { ResponsiveSheet, SheetPage, useResponsiveSheet } from './ResponsiveSheet';
 
 // ── Types ──
 
@@ -63,7 +61,7 @@ export const lifeEvents: LifeEvent[] = [
           'Captain of the football team. Earned All-Area honors and helped lead the team through some of its best seasons.',
       },
     ],
-    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=500&fit=crop',
+    image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=1000&fit=crop',
     lat: 42.6189,
     lng: -82.5321,
   },
@@ -76,32 +74,46 @@ export const lifeEvents: LifeEvent[] = [
       'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use — not just writing code, but solving real problems.',
     highlights: [
       'BS Software Engineering, Minor in Leadership — Graduated with Honors',
-      'Division I track & field athlete',
+      'Division I track & field athlete — Student Athlete of the Year',
+      'Seven Time All-Horizon League selection (Track & Field)',
       'Published: "Sylvester: An Approach to Emotion Classification"',
+      'Embedded Systems Engineering Intern at Continental Automotive',
+      'IT Coordinator — integrated websites, databases, and new systems for the university',
       'Most sought-after tutor at the Student Success Center',
-      'Led digital transformation of Success Center operations',
     ],
     subEvents: [
       {
         id: 'detroit-d1',
         title: 'D1 Track & Field',
         description:
-          'Competed as a Division I track & field athlete at the University of Detroit Mercy while carrying a full academic load and graduating with honors.',
+          'Competed as a Division I track & field athlete at the University of Detroit Mercy while carrying a full academic load and graduating with honors. Named Student Athlete of the Year and earned seven All-Horizon League selections over my career.',
       },
       {
         id: 'detroit-ai',
         title: 'AI Research Publication',
         description:
-          'Published "Sylvester: An Approach to Emotion Classification" — an AI system that integrated with Twitter to identify emotional sentiment in real time. Published in New Trends in Information Technology, 2017.',
+          'Published "Sylvester: An Approach to Emotion Classification" in New Trends in Information Technology, 2017. A collaborative AI program that learns the language of Twitter through automatic annotation and classification — collecting and interpreting tweets in real time to determine how users feel emotionally about any given subject based on current language.',
+      },
+      {
+        id: 'detroit-continental',
+        title: 'Continental Automotive Internship',
+        description:
+          'Embedded Systems Engineering Intern at Continental Automotive (May–Sep 2015). Built a graphical user interface for testing a cybersecurity module found in many Chrysler and Jeep vehicles. The interface verified that plugged-in modules met all security requirements. The work was heavily C-based and requirement-driven.',
+      },
+      {
+        id: 'detroit-it',
+        title: 'IT Coordinator — UDM',
+        description:
+          'IT Coordinator at the University of Detroit Mercy (Sep 2015–Aug 2018). Helped integrate three new websites, managed multiple databases, provided technical support for users and staff, and performed data analytics for university departments. After graduation, was hired by the university to integrate a new system for the disability support services, student success center, and testing center.',
       },
       {
         id: 'detroit-ssc',
         title: 'Student Success Center',
         description:
-          'Started as a TA and tutor — consistently one of the center\'s most sought-after tutors, especially for statistics. Led a digital transformation of the center\'s operations, replacing manual paper timecards and appointment tracking with an automated online platform integrated with university ID scan cards.',
+          'Tutor and Teacher\'s Assistant at UDM\'s Student Success Center. Tutored high-level math and statistics one-on-one and in large groups. Served as a TA in English, Math, and Computer Science courses. Helped high-risk students with time management skills. Consistently one of the center\'s most sought-after tutors. Led a digital transformation of the center\'s operations, replacing manual paper timecards and appointment tracking with an automated online platform integrated with university ID scan cards.',
       },
     ],
-    image: 'https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800&h=500&fit=crop',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=1000&fit=crop',
     lat: 42.3314,
     lng: -83.0458,
   },
@@ -145,22 +157,20 @@ export const lifeEvents: LifeEvent[] = [
           'Lead UI/UX across all digital products at Woodside. Every screen, every flow, every interaction — obsessing over the details so users don\'t have to think. Also a major contributor to "MP Next," an open-source Next.js template for MinistryPlatform API integration.',
       },
     ],
-    image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=500&fit=crop',
+    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=1000&fit=crop',
     lat: 42.6064,
     lng: -83.1498,
   },
   {
     id: 'clarkston',
     label: 'Clarkston',
-    year: 'Personal',
+    year: 'Family',
     tagline: 'Where I call home',
     description:
       'We live in Clarkston now — a quiet town north of Detroit. It\'s home base. Married Sarah at the Grosse Ile Municipal Airport — which probably tells you everything you need to know about us. When I\'m not building products, you\'ll find me here with my family.',
     highlights: [
       'Married Sarah at the Grosse Ile Municipal Airport',
       'Home with Sarah, Weston (3), and Rosie (1)',
-      'Musician — play at Woodside and have played major shows',
-      'Detroit Lions season ticket holder',
     ],
     subEvents: [
       {
@@ -175,20 +185,38 @@ export const lifeEvents: LifeEvent[] = [
         description:
           'Home with Sarah, Weston (3), and Rosie (1). A quiet town north of Detroit — home base for family life and side projects alike.',
       },
+    ],
+    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=1000&fit=crop',
+    lat: 42.7356,
+    lng: -83.4191,
+  },
+  {
+    id: 'hobbies',
+    label: 'Hobbies',
+    year: 'Hobbies',
+    tagline: 'What recharges me',
+    description:
+      'Music and sports are the two things that keep me balanced. I play music at Woodside Bible Church and have played a lot of huge shows over the years. I\'m also a diehard Detroit Lions fan — season ticket holder and builder of my own ticket tracking app.',
+    highlights: [
+      'Musician — play at Woodside and have played major shows',
+      'Detroit Lions season ticket holder',
+      'Built RoarTracker to manage season tickets and spending',
+    ],
+    subEvents: [
       {
-        id: 'clarkston-music',
+        id: 'hobbies-music',
         title: 'Music',
         description:
           'I play music at Woodside Bible Church and have played a lot of huge shows over the years. It\'s one of those things that recharges me — whether it\'s leading worship on a Sunday or playing a big stage, there\'s nothing like it.',
       },
       {
-        id: 'clarkston-lions',
+        id: 'hobbies-lions',
         title: 'Detroit Lions Season Tickets',
         description:
           'Proud Detroit Lions season ticket holder. Built RoarTracker — a personal app to manage season tickets, track attendance, resale, and spending data with intuitive dashboards and mobile-first UI.',
       },
     ],
-    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&h=500&fit=crop',
+    image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=1000&fit=crop',
     lat: 42.7356,
     lng: -83.4191,
   },
@@ -205,7 +233,7 @@ function SheetHeader({ event }: { event: LifeEvent }) {
           alt={event.label}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
       </div>
       <div className="absolute bottom-0 left-0 right-0" style={{ padding: '24px 28px' }}>
         <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '6px' }} className="uppercase text-white/50">
@@ -222,35 +250,10 @@ function SheetHeader({ event }: { event: LifeEvent }) {
   );
 }
 
-// ── Sub-event page header (smaller) ──
-
-function SubEventHeader({ event, subEvent }: { event: LifeEvent; subEvent: SubEvent }) {
-  return (
-    <div className="relative">
-      <div style={{ height: '180px' }} className="w-full overflow-hidden">
-        <img
-          src={subEvent.image || event.image}
-          alt={subEvent.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-      </div>
-      <div className="absolute bottom-0 left-0 right-0" style={{ padding: '24px 28px' }}>
-        <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '6px' }} className="uppercase text-white/50">
-          {event.label} — {event.year}
-        </div>
-        <h3 style={{ fontSize: '22px', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1.1 }} className="text-white">
-          {subEvent.title}
-        </h3>
-      </div>
-    </div>
-  );
-}
-
 // ── Main page content (overview with clickable sub-events) ──
 
 function MainPageContent({ event }: { event: LifeEvent }) {
-  const { navigate } = useSheet();
+  const { navigate } = useResponsiveSheet();
 
   return (
     <div style={{ padding: '28px' }}>
@@ -343,42 +346,33 @@ function SubEventContent({ subEvent }: { subEvent: SubEvent }) {
 interface LifeEventSheetProps {
   event: LifeEvent | null;
   onClose: () => void;
-  /** Open directly to a sub-event page */
   defaultPage?: string;
 }
 
 export function LifeEventSheet({ event, onClose, defaultPage }: LifeEventSheetProps) {
   if (!event) {
     return (
-      <ResponsiveSheet
-        open={false}
-        onClose={onClose}
-        pages={{ main: { content: <div /> } }}
-      />
+      <ResponsiveSheet open={false} onClose={onClose}>
+        <SheetPage name="main"><div /></SheetPage>
+      </ResponsiveSheet>
     );
-  }
-
-  // Build pages record
-  const pages: Record<string, { header?: ReactNode; content: ReactNode }> = {
-    main: {
-      header: <SheetHeader event={event} />,
-      content: <MainPageContent event={event} />,
-    },
-  };
-
-  for (const sub of event.subEvents) {
-    pages[sub.id] = {
-      header: <SubEventHeader event={event} subEvent={sub} />,
-      content: <SubEventContent subEvent={sub} />,
-    };
   }
 
   return (
     <ResponsiveSheet
       open={true}
       onClose={onClose}
-      pages={pages}
+      header={<SheetHeader event={event} />}
       defaultPage={defaultPage || 'main'}
-    />
+    >
+      <SheetPage name="main">
+        <MainPageContent event={event} />
+      </SheetPage>
+      {event.subEvents.map((sub) => (
+        <SheetPage key={sub.id} name={sub.id} title={sub.title}>
+          <SubEventContent subEvent={sub} />
+        </SheetPage>
+      ))}
+    </ResponsiveSheet>
   );
 }
