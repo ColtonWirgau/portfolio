@@ -38,7 +38,7 @@ function EmergingSquid({ size, isInView, delay }: { size: number; isInView: bool
       {/* Body — starts transparent, transitions to accent */}
       <motion.path
         d={SQUID_PATH}
-        initial={{ fill: '#E8501C', opacity: 0 }}
+        initial={{ fill: '#D94420', opacity: 0 }}
         animate={isInView ? { opacity: [0, 0, 0, 1] } : undefined}
         transition={{ duration: 4, delay, times: [0, 0.4, 0.7, 1], ease: 'easeInOut' }}
       />
