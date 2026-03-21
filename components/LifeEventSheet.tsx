@@ -1,5 +1,6 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from './ResponsiveSheet';
 
 // ── Types ──
@@ -22,6 +23,9 @@ export interface LifeEvent {
   image: string;
   lat: number;
   lng: number;
+  narrative?: ReactNode[];
+  narrativeImages?: string[];
+  pullQuote?: string;
 }
 
 // ── Data ──
@@ -36,29 +40,44 @@ export const lifeEvents: LifeEvent[] = [
       'I grew up in Algonac, a small river town on the St. Clair River. It\'s the kind of place where everybody knows everybody. This is where I first got curious about building things — tearing apart computers, making terrible websites, and figuring out how stuff works.',
     highlights: [
       'Algonac High School — IB Diploma Programme (full)',
-      'Graduated with a 4.2 GPA',
+      'Graduated 3rd in class with a 4.2 GPA',
       '7 school records in track & field',
-      'All-State & all-time leading scorer for Algonac HS',
+      'All-State & all-time leading scorer for Algonac HS — Hall of Fame',
       'Captain of the football team — All-Area selection',
+    ],
+    narrative: [
+      'I grew up in a small river town in Michigan called Algonac. I was in the International Baccalaureate program, graduated third in my class with a 4.2 GPA, and was captain of the football team. I also ran track and ended up as the program\u2019s all-time leading scorer and a Hall of Famer.',
+      'But even then, I liked building things just as much as competing.',
+      'I also grew up in a church my great grandfather started. Faith has always been a central part of my life. It shaped how I see people, how I lead, and how I believe people should be treated. I care a lot about treating people with kindness, with grace, and with the same patience that\u2019s been shown to me. That doesn\u2019t stop at church. It carries into my work, my teams, and how I build things.',
+    ],
+    narrativeImages: [
+      'https://images.unsplash.com/photo-1461896836934-bd45ba8fcb0a?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=400&h=400&fit=crop',
     ],
     subEvents: [
       {
         id: 'algonac-ib',
         title: 'IB Diploma Programme',
         description:
-          'Completed the full International Baccalaureate Diploma Programme at Algonac High School — one of the most rigorous academic tracks available. Graduated with a 4.2 GPA.',
+          'Completed the full International Baccalaureate Diploma Programme at Algonac High School — one of the most rigorous academic tracks available. Graduated 3rd in class with a 4.2 GPA.',
       },
       {
         id: 'algonac-track',
         title: 'Track & Field Records',
         description:
-          'Set 7 school records in track & field. All-State selection and the all-time leading scorer in Algonac HS history.',
+          'Set 7 school records in track & field. All-State selection and the all-time leading scorer in Algonac HS history. Inducted into the Hall of Fame.',
       },
       {
         id: 'algonac-football',
         title: 'Football Captain',
         description:
           'Captain of the football team. Earned All-Area honors and helped lead the team through some of its best seasons.',
+      },
+      {
+        id: 'algonac-faith',
+        title: 'Faith & Foundation',
+        description:
+          'Grew up in a church my great grandfather started. Faith has always been a central part of my life. It shaped how I see people, how I lead, and how I believe people should be treated. I care a lot about treating people with kindness, with grace, and with the same patience that\'s been shown to me. That doesn\'t stop at church. It carries into my work, my teams, and how I build things.',
       },
     ],
     image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=1000&fit=crop',
@@ -81,6 +100,15 @@ export const lifeEvents: LifeEvent[] = [
       'IT Coordinator — integrated websites, databases, and new systems for the university',
       'Most sought-after tutor at the Student Success Center',
     ],
+    narrative: [
+      'That mindset followed me to the University of Detroit Mercy, where I studied software engineering with a leadership minor and ran track. I chose software engineering over computer science because I knew I didn\u2019t just want to write code. I wanted to lead people and build things that actually help them. Along the way, I got published for my work in AI. Our team built Sylvester, a program that learned the language of Twitter through automatic annotation and classification, interpreting tweets in real time to determine how people feel about any given subject. It was published in New Trends in Information Technology in 2017.',
+      'During college, I worked as a tutor at the learning center. It started as helping students, but it turned into rebuilding their entire system. Scheduling, time tracking, reporting. Everything had been manual. I moved it online and dragged the whole operation out of the stone age.',
+      'At the same time, I was leading worship at my church, playing music, running events, and somehow balancing all of it. I still love that side of my life. Music, creativity, and working with people have always been a big part of who I am.',
+    ],
+    narrativeImages: [
+      'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=400&fit=crop',
+    ],
     subEvents: [
       {
         id: 'detroit-d1',
@@ -93,6 +121,12 @@ export const lifeEvents: LifeEvent[] = [
         title: 'AI Research Publication',
         description:
           'Published "Sylvester: An Approach to Emotion Classification" in New Trends in Information Technology, 2017. A collaborative AI program that learns the language of Twitter through automatic annotation and classification — collecting and interpreting tweets in real time to determine how users feel emotionally about any given subject based on current language.',
+      },
+      {
+        id: 'detroit-music',
+        title: 'Music & Worship',
+        description:
+          'Led worship at church throughout college, playing music, running events, and balancing it all with academics and athletics. Music, creativity, and working with people have always been a big part of who I am. Still plays at Woodside Bible Church and has played many large shows over the years.',
       },
       {
         id: 'detroit-continental',
@@ -130,7 +164,17 @@ export const lifeEvents: LifeEvent[] = [
       'MinistryPlatform "Deep Space Award" recipient',
       'Features adopted by MP\'s main product for all customers',
       'Lead UI/UX across all digital products',
+      'Started own business helping churches build better tools',
     ],
+    narrative: [
+      'After graduating, Woodside didn\u2019t want to lose me, so they created a role for me. I stepped into web development, database work, and solving problems that nobody else had time to touch. One of my first projects was cleaning up our database. I ended up deactivating about two thirds of it and building better systems to track real engagement. Some of that work eventually made its way into the main MinistryPlatform product.',
+      'From there, I started my own business. I saw the same problems popping up across churches everywhere, so I began helping teams build better tools, better experiences, and better systems. A lot of what I do now lives at the intersection of product thinking, UX, and real-world ministry needs.',
+    ],
+    narrativeImages: [
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=400&fit=crop',
+    ],
+    pullQuote: 'I care a lot about clarity. Not overwhelming people. Saying just enough, at the right time. Good design should feel obvious.',
     subEvents: [
       {
         id: 'troy-platform',
@@ -171,6 +215,14 @@ export const lifeEvents: LifeEvent[] = [
     highlights: [
       'Married Sarah at the Grosse Ile Municipal Airport',
       'Home with Sarah, Weston (3), and Rosie (1)',
+      'Two very different dogs',
+    ],
+    narrative: [
+      'These days, I live in Clarkston, Michigan with my wife Sarah, our two kids, and two very different dogs. When I\u2019m not building something, I\u2019m probably playing music, flying with my wife, or chasing kids around the house.',
+    ],
+    narrativeImages: [
+      'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop',
     ],
     subEvents: [
       {
@@ -250,6 +302,58 @@ function SheetHeader({ event }: { event: LifeEvent }) {
   );
 }
 
+// ── Narrative page content ──
+
+function NarrativeContent({ event }: { event: LifeEvent }) {
+  return (
+    <div style={{ padding: '28px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        {event.narrative?.map((paragraph, i) => (
+          <p key={i} style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+            {paragraph}
+          </p>
+        ))}
+      </div>
+
+      {/* Narrative images */}
+      {event.narrativeImages && event.narrativeImages.length > 0 && (
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '28px' }}>
+          {event.narrativeImages.map((src, i) => (
+            <div key={i} style={{
+              width: i === 0 ? 140 : 100,
+              height: i === 0 ? 140 : 100,
+              borderRadius: '50%',
+              overflow: 'hidden',
+              background: 'var(--color-border)',
+            }}>
+              <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Pull quote */}
+      {event.pullQuote && (
+        <div style={{
+          marginTop: '28px',
+          paddingTop: '20px',
+          borderTop: '1px solid var(--color-border)',
+        }}>
+          <p style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: '15px',
+            fontStyle: 'italic',
+            color: 'var(--color-fg)',
+            lineHeight: 1.6,
+          }}>
+            {event.pullQuote}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main page content (overview with clickable sub-events) ──
 
 function MainPageContent({ event }: { event: LifeEvent }) {
@@ -277,54 +381,95 @@ function MainPageContent({ event }: { event: LifeEvent }) {
         </div>
       </div>
 
-      {/* Sub-event navigation */}
-      {event.subEvents.length > 0 && (
-        <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--color-border)' }}>
-          <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '8px', color: 'var(--color-muted)' }} className="uppercase">
-            Learn More
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-            {event.subEvents.map((sub) => (
-              <button
-                key={sub.id}
-                onClick={() => navigate(sub.id)}
-                className="group"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  width: '100%',
-                  textAlign: 'left',
-                  padding: '12px 12px',
-                  margin: '0 -12px',
-                  borderRadius: '10px',
-                  transition: 'background 0.15s',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.03)')}
-                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+      {/* Navigation links */}
+      <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--color-border)' }}>
+        {/* The Full Story link */}
+        {event.narrative && event.narrative.length > 0 && (
+          <>
+            <button
+              onClick={() => navigate('narrative')}
+              className="group"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                width: '100%',
+                textAlign: 'left',
+                padding: '14px 12px',
+                margin: '0 -12px 8px',
+                borderRadius: '10px',
+                transition: 'background 0.15s',
+                background: 'rgba(0,0,0,0.02)',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.05)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.02)')}
+            >
+              <div style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                background: 'var(--color-accent)',
+                flexShrink: 0,
+              }} />
+              <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-fg)', flex: 1 }}>
+                The Full Story
+              </span>
+              <svg
+                width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="var(--color-muted)" strokeWidth="2.5" strokeLinecap="round"
+                style={{ flexShrink: 0 }}
               >
-                <div style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: 'var(--color-border)',
-                  flexShrink: 0,
-                }} />
-                <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-fg)', flex: 1 }}>
-                  {sub.title}
-                </span>
-                <svg
-                  width="12" height="12" viewBox="0 0 24 24" fill="none"
-                  stroke="var(--color-border)" strokeWidth="2.5" strokeLinecap="round"
-                  style={{ flexShrink: 0 }}
-                >
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </button>
-            ))}
-          </div>
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </>
+        )}
+
+        {/* Sub-event links */}
+        <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '8px', marginTop: '8px', color: 'var(--color-muted)' }} className="uppercase">
+          Learn More
         </div>
-      )}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          {event.subEvents.map((sub) => (
+            <button
+              key={sub.id}
+              onClick={() => navigate(sub.id)}
+              className="group"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                width: '100%',
+                textAlign: 'left',
+                padding: '12px 12px',
+                margin: '0 -12px',
+                borderRadius: '10px',
+                transition: 'background 0.15s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.03)')}
+              onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+            >
+              <div style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: 'var(--color-border)',
+                flexShrink: 0,
+              }} />
+              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-fg)', flex: 1 }}>
+                {sub.title}
+              </span>
+              <svg
+                width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="var(--color-border)" strokeWidth="2.5" strokeLinecap="round"
+                style={{ flexShrink: 0 }}
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -368,6 +513,11 @@ export function LifeEventSheet({ event, onClose, defaultPage }: LifeEventSheetPr
       <SheetPage name="main">
         <MainPageContent event={event} />
       </SheetPage>
+      {event.narrative && event.narrative.length > 0 && (
+        <SheetPage name="narrative" title="The Full Story">
+          <NarrativeContent event={event} />
+        </SheetPage>
+      )}
       {event.subEvents.map((sub) => (
         <SheetPage key={sub.id} name={sub.id} title={sub.title}>
           <SubEventContent subEvent={sub} />
