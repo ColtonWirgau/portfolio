@@ -239,10 +239,10 @@ function SheetHeader({ event }: { event: LifeEvent }) {
         <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '6px' }} className="uppercase text-white/50">
           {event.year}
         </div>
-        <h3 style={{ fontSize: '28px', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1.1 }} className="text-white">
+        <h3 style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.1 }} className="text-white">
           {event.label}
         </h3>
-        <p style={{ fontSize: '13px', fontWeight: 300, marginTop: '4px' }} className="text-white/60">
+        <p style={{ fontSize: '13px', fontWeight: 400, marginTop: '4px' }} className="text-white/60">
           {event.tagline}
         </p>
       </div>
@@ -258,7 +258,7 @@ function MainPageContent({ event }: { event: LifeEvent }) {
   return (
     <div style={{ padding: '28px' }}>
       {/* Description */}
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 300, color: 'var(--color-muted)' }}>
+      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
         {event.description}
       </p>
 
@@ -271,7 +271,7 @@ function MainPageContent({ event }: { event: LifeEvent }) {
           {event.highlights.map((h, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
               <span style={{ color: 'var(--color-border)', marginTop: '6px', flexShrink: 0, fontSize: '6px' }}>●</span>
-              <span style={{ fontSize: '13px', lineHeight: 1.5, fontWeight: 300, color: 'var(--color-muted)' }}>{h}</span>
+              <span style={{ fontSize: '13px', lineHeight: 1.5, fontWeight: 400, color: 'var(--color-muted)' }}>{h}</span>
             </div>
           ))}
         </div>
@@ -334,7 +334,7 @@ function MainPageContent({ event }: { event: LifeEvent }) {
 function SubEventContent({ subEvent }: { subEvent: SubEvent }) {
   return (
     <div style={{ padding: '28px' }}>
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 300, color: 'var(--color-muted)' }}>
+      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
         {subEvent.description}
       </p>
     </div>
