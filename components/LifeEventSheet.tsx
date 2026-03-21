@@ -1,6 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from './ResponsiveSheet';
 
 // ── Types ──
@@ -23,6 +24,7 @@ export interface LifeEvent {
   image: string;
   lat: number;
   lng: number;
+  storyPath?: string;
   narrative?: ReactNode[];
   narrativeImages?: string[];
   pullQuote?: string;
@@ -36,6 +38,7 @@ export const lifeEvents: LifeEvent[] = [
     label: 'Algonac',
     year: 'Childhood',
     tagline: 'Where it started',
+    storyPath: '/childhood',
     description:
       'I grew up in Algonac, a small river town on the St. Clair River. It\'s the kind of place where everybody knows everybody. This is where I first got curious about building things — tearing apart computers, making terrible websites, and figuring out how stuff works.',
     highlights: [
@@ -89,6 +92,7 @@ export const lifeEvents: LifeEvent[] = [
     label: 'Detroit',
     year: 'College',
     tagline: 'Where I found my craft',
+    storyPath: '/college',
     description:
       'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use — not just writing code, but solving real problems.',
     highlights: [
@@ -99,6 +103,7 @@ export const lifeEvents: LifeEvent[] = [
       'Embedded Systems Engineering Intern at Continental Automotive',
       'IT Coordinator — integrated websites, databases, and new systems for the university',
       'Most sought-after tutor at the Student Success Center',
+      'Star of a UDM commercial — yes, really',
     ],
     narrative: [
       'That mindset followed me to the University of Detroit Mercy, where I studied software engineering with a leadership minor and ran track. I chose software engineering over computer science because I knew I didn\u2019t just want to write code. I wanted to lead people and build things that actually help them. Along the way, I got published for my work in AI. Our team built Sylvester, a program that learned the language of Twitter through automatic annotation and classification, interpreting tweets in real time to determine how people feel about any given subject. It was published in New Trends in Information Technology in 2017.',
@@ -141,6 +146,12 @@ export const lifeEvents: LifeEvent[] = [
           'IT Coordinator at the University of Detroit Mercy (Sep 2015–Aug 2018). Helped integrate three new websites, managed multiple databases, provided technical support for users and staff, and performed data analytics for university departments. After graduation, was hired by the university to integrate a new system for the disability support services, student success center, and testing center.',
       },
       {
+        id: 'detroit-commercial',
+        title: 'The UDM Commercial',
+        description:
+          'Somehow I ended up as the star of a University of Detroit Mercy commercial. I\'m not entirely sure how it happened, but it did — and I\'m told it was very convincing. Video and photos coming soon.',
+      },
+      {
         id: 'detroit-ssc',
         title: 'Student Success Center',
         description:
@@ -156,6 +167,7 @@ export const lifeEvents: LifeEvent[] = [
     label: 'Troy',
     year: 'Career',
     tagline: 'Where I build',
+    storyPath: '/career',
     description:
       'Software Development Manager and Full-Stack Developer at Woodside Bible Church since 2016. As the sole in-house developer, I design and build internal tools, platforms, and widgets that serve thousands of people every week — while managing contractors and coordinating with MarCom.',
     highlights: [
@@ -210,6 +222,7 @@ export const lifeEvents: LifeEvent[] = [
     label: 'Clarkston',
     year: 'Family',
     tagline: 'Where I call home',
+    storyPath: '/family',
     description:
       'We live in Clarkston now — a quiet town north of Detroit. It\'s home base. Married Sarah at the Grosse Ile Municipal Airport — which probably tells you everything you need to know about us. When I\'m not building products, you\'ll find me here with my family.',
     highlights: [
@@ -247,6 +260,7 @@ export const lifeEvents: LifeEvent[] = [
     label: 'Hobbies',
     year: 'Hobbies',
     tagline: 'What recharges me',
+    storyPath: '/hobbies',
     description:
       'Music and sports are the two things that keep me balanced. I play music at Woodside Bible Church and have played a lot of huge shows over the years. I\'m also a diehard Detroit Lions fan — season ticket holder and builder of my own ticket tracking app.',
     highlights: [
@@ -384,45 +398,44 @@ function MainPageContent({ event }: { event: LifeEvent }) {
       {/* Navigation links */}
       <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--color-border)' }}>
         {/* The Full Story link */}
-        {event.narrative && event.narrative.length > 0 && (
-          <>
-            <button
-              onClick={() => navigate('narrative')}
-              className="group"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                width: '100%',
-                textAlign: 'left',
-                padding: '14px 12px',
-                margin: '0 -12px 8px',
-                borderRadius: '10px',
-                transition: 'background 0.15s',
-                background: 'rgba(0,0,0,0.02)',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.05)')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.02)')}
+        {event.storyPath && (
+          <Link
+            href={event.storyPath}
+            className="group"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              width: 'calc(100% + 24px)',
+              textAlign: 'left',
+              textDecoration: 'none',
+              padding: '14px 12px',
+              margin: '0 -12px 8px',
+              borderRadius: '10px',
+              transition: 'background 0.15s',
+              background: 'rgba(0,0,0,0.02)',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.05)')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.02)')}
+          >
+            <div style={{
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              background: 'var(--color-accent)',
+              flexShrink: 0,
+            }} />
+            <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-fg)', flex: 1 }}>
+              The Full Story
+            </span>
+            <svg
+              width="12" height="12" viewBox="0 0 24 24" fill="none"
+              stroke="var(--color-muted)" strokeWidth="2.5" strokeLinecap="round"
+              style={{ flexShrink: 0 }}
             >
-              <div style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                background: 'var(--color-accent)',
-                flexShrink: 0,
-              }} />
-              <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-fg)', flex: 1 }}>
-                The Full Story
-              </span>
-              <svg
-                width="12" height="12" viewBox="0 0 24 24" fill="none"
-                stroke="var(--color-muted)" strokeWidth="2.5" strokeLinecap="round"
-                style={{ flexShrink: 0 }}
-              >
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-          </>
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </Link>
         )}
 
         {/* Sub-event links */}
@@ -513,11 +526,6 @@ export function LifeEventSheet({ event, onClose, defaultPage }: LifeEventSheetPr
       <SheetPage name="main">
         <MainPageContent event={event} />
       </SheetPage>
-      {event.narrative && event.narrative.length > 0 && (
-        <SheetPage name="narrative" title="The Full Story">
-          <NarrativeContent event={event} />
-        </SheetPage>
-      )}
       {event.subEvents.map((sub) => (
         <SheetPage key={sub.id} name={sub.id} title={sub.title}>
           <SubEventContent subEvent={sub} />

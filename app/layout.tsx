@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Colton Wirgau - Full-Stack Developer",
@@ -31,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <Header />
         {children}
         <div className="paper-grain" aria-hidden="true" />
       </body>
