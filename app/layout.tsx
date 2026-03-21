@@ -32,6 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         {children}
+        <div className="paper-grain" aria-hidden="true" />
       </body>
     </html>
   );

@@ -9,12 +9,12 @@ import type { LifeEvent } from './LifeEventSheet';
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 const CENTER = {
-  latitude: 42.48,
-  longitude: -83.05,
+  latitude: 42.50,
+  longitude: -83.00,
 };
 
-const MARKER_SIZE = 48;
-const ACTIVE_SIZE = 64;
+const MARKER_SIZE = 28;
+const ACTIVE_SIZE = 38;
 
 interface AboutMapProps {
   events: LifeEvent[];
@@ -51,7 +51,7 @@ export default function AboutMap({ events, selected, onSelect }: AboutMapProps) 
           key="about-map"
           initialViewState={{
             ...CENTER,
-            zoom: 8.5,
+            zoom: 7,
           }}
           style={{ width: '100%', height: '100%' }}
           mapStyle="mapbox://styles/mapbox/light-v11"
@@ -64,6 +64,7 @@ export default function AboutMap({ events, selected, onSelect }: AboutMapProps) 
           touchZoomRotate={false}
           keyboard={false}
           attributionControl={false}
+          logoPosition="top-left"
         >
           {events.map((event) => {
             const isActive = selected?.id === event.id;
