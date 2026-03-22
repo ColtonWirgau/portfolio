@@ -39,7 +39,7 @@ export function StoryPage({ event }: { event: LifeEvent }) {
           left: 0,
           right: 0,
           padding: '40px',
-          maxWidth: '800px',
+          maxWidth: '1100px',
           margin: '0 auto',
         }}>
           <motion.div
@@ -78,7 +78,27 @@ export function StoryPage({ event }: { event: LifeEvent }) {
       </div>
 
       {/* Content */}
-      <div style={{ maxWidth: '700px', margin: '0 auto', padding: '60px 24px 100px' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '60px 24px 100px' }}>
+        {/* Back link */}
+        <Link
+          href="/#about"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: 'var(--color-accent)',
+            fontSize: '14px',
+            fontWeight: 600,
+            textDecoration: 'none',
+            marginBottom: '40px',
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+          Back to My Story
+        </Link>
+
         {/* Description */}
         <motion.p
           custom={0}
@@ -227,26 +247,6 @@ export function StoryPage({ event }: { event: LifeEvent }) {
           </motion.div>
         )}
 
-        {/* Back link bottom */}
-        <div style={{ marginTop: '60px', paddingTop: '32px', borderTop: '1px solid var(--color-border)' }}>
-          <Link
-            href="/#about"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              color: 'var(--color-accent)',
-              fontSize: '14px',
-              fontWeight: 600,
-              textDecoration: 'none',
-            }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-            Back to My Story
-          </Link>
-        </div>
       </div>
 
       <Footer />

@@ -77,7 +77,7 @@ export function SectionHeading({ label, title, subtitle, watermark, center, righ
         color: 'var(--color-accent)',
         WebkitTextStroke: '4px var(--color-accent)',
         paintOrder: 'stroke fill',
-        transform: 'scaleX(0.85)',
+        transform: 'scaleX(0.85) skewX(-2deg)',
         transformOrigin: (center ? 'center' : right ? 'right' : 'left'),
       }}>
         {title}

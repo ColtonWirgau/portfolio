@@ -262,11 +262,11 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'What recharges me',
     storyPath: '/hobbies',
     description:
-      'Music and sports are the two things that keep me balanced. I play music at Woodside Bible Church and have played a lot of huge shows over the years. I\'m also a diehard Detroit Lions fan — season ticket holder and builder of my own ticket tracking app.',
+      'Music and sports are the two things that keep me balanced. I play music at Woodside Bible Church and have played a lot of huge shows over the years. I still play flag football and I\'m a diehard Detroit Lions season ticket holder.',
     highlights: [
       'Musician — play at Woodside and have played major shows',
-      'Detroit Lions season ticket holder',
-      'Built RoarTracker to manage season tickets and spending',
+      'Football — still play flag football, Detroit Lions season ticket holder',
+      'Tattoos',
     ],
     subEvents: [
       {
@@ -276,10 +276,16 @@ export const lifeEvents: LifeEvent[] = [
           'I play music at Woodside Bible Church and have played a lot of huge shows over the years. It\'s one of those things that recharges me — whether it\'s leading worship on a Sunday or playing a big stage, there\'s nothing like it.',
       },
       {
-        id: 'hobbies-lions',
-        title: 'Detroit Lions Season Tickets',
+        id: 'hobbies-football',
+        title: 'Football',
         description:
-          'Proud Detroit Lions season ticket holder. Built RoarTracker — a personal app to manage season tickets, track attendance, resale, and spending data with intuitive dashboards and mobile-first UI.',
+          'Football never really stopped for me. I still play flag football and I\'m a proud Detroit Lions season ticket holder. I even built RoarTracker, a personal app to manage season tickets, track attendance, resale, and spending data.',
+      },
+      {
+        id: 'hobbies-tattoos',
+        title: 'Tattoos',
+        description:
+          'I have a full sleeve of tattoos, and every piece was designed with intention. Each one tells part of my story — faith, family, things I\'ve been through, things I believe in. I see them as a form of design in their own right. Detailed photos and the stories behind each piece coming soon.',
       },
     ],
     image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=1000&fit=crop',

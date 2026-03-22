@@ -104,8 +104,8 @@ export default function Home() {
             <div className="flex-1 flex flex-col justify-center gap-6 min-w-0">
               <div className="z-10">
                 <motion.h1
-                  initial={{ opacity: 0, y: 30, scaleX: 0.85 }}
-                  animate={{ opacity: 1, y: 0, scaleX: 0.85 }}
+                  initial={{ opacity: 0, y: 30, scaleX: 0.85, skewX: -6 }}
+                  animate={{ opacity: 1, y: 0, scaleX: 0.85, skewX: -6 }}
                   transition={{ delay: 0.1, duration: 0.8 }}
                   className="text-[clamp(8rem,16vw,16rem)] leading-[0.85] tracking-[-0.10em] mb-5 uppercase"
                   style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)', WebkitTextStroke: '6px var(--color-accent)', paintOrder: 'stroke fill', transformOrigin: 'left' }}
@@ -164,10 +164,11 @@ export default function Home() {
 
         {/* Pull quote */}
         <div style={{
-          padding: '60px 24px',
-          margin: '40px 0',
+          padding: '100px 24px',
+          margin: '40px 24px',
           background: '#2A2622',
           textAlign: 'center',
+          borderRadius: '140px 0 140px 0',
         }}>
           <motion.p
             initial={{ opacity: 0, y: 15 }}
@@ -190,8 +191,8 @@ export default function Home() {
             <span style={{ textDecoration: 'underline', textUnderlineOffset: '4px', textDecorationColor: 'var(--color-accent)' }}>right time</span>.
           </motion.p>
           <motion.p
-            initial={{ opacity: 0, y: 20, scaleX: 0.85 }}
-            whileInView={{ opacity: 1, y: 0, scaleX: 0.85 }}
+            initial={{ opacity: 0, y: 20, scaleX: 0.85, skewX: -2 }}
+            whileInView={{ opacity: 1, y: 0, scaleX: 0.85, skewX: -2 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
             style={{
@@ -208,7 +209,7 @@ export default function Home() {
               paintOrder: 'stroke fill',
             }}
           >
-            Good design should feel obvious.
+            Good design should <span style={{ display: 'inline-block', transform: 'skewX(-6deg)' }}>feel</span> obvious.
           </motion.p>
         </div>
 
@@ -228,7 +229,7 @@ export default function Home() {
                 marginBottom: '28px',
                 WebkitTextStroke: '5px var(--color-accent)',
                 paintOrder: 'stroke fill',
-                transform: 'scaleX(0.85)',
+                transform: 'scaleX(0.85) skewX(-2deg)',
               }}>
                 My Story.
               </h2>
@@ -455,7 +456,7 @@ export default function Home() {
                         marginBottom: '12px',
                         WebkitTextStroke: '3px var(--color-accent)',
                         paintOrder: 'stroke fill',
-                        transform: 'scaleX(0.85)',
+                        transform: 'scaleX(0.85) skewX(-2deg)',
                         transformOrigin: 'left',
                       }}>
                         {project.title}
