@@ -40,9 +40,9 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'Where it started',
     storyPath: '/childhood',
     description:
-      'I grew up in Algonac, a small river town on the St. Clair River. It\'s the kind of place where everybody knows everybody. This is where I first got curious about building things — tearing apart computers, making terrible websites, and figuring out how stuff works.',
+      'I grew up in Algonac, a small river town on the St. Clair River. It\'s the kind of place where everybody knows everybody. This is where I first got curious about building things. Tearing apart computers, making terrible websites, and figuring out how stuff works.',
     highlights: [
-      'Algonac High School — IB Diploma Programme (full)',
+      'Algonac High School — IB Diploma Recipient',
       'Graduated 3rd in class with a 4.2 GPA',
       '7 school records in track & field',
       'All-State & all-time leading scorer for Algonac HS — Hall of Fame',
@@ -60,9 +60,9 @@ export const lifeEvents: LifeEvent[] = [
     subEvents: [
       {
         id: 'algonac-ib',
-        title: 'IB Diploma Programme',
+        title: 'IB Diploma Recipient',
         description:
-          'Completed the full International Baccalaureate Diploma Programme at Algonac High School — one of the most rigorous academic tracks available. Graduated 3rd in class with a 4.2 GPA.',
+          'Completed the full International Baccalaureate Diploma at Algonac High School, one of the most rigorous academic tracks available. Graduated 3rd in class with a 4.2 GPA.',
       },
       {
         id: 'algonac-track',
@@ -94,7 +94,7 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'Where I found my craft',
     storyPath: '/college',
     description:
-      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use — not just writing code, but solving real problems.',
+      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use. Not just writing code, but solving real problems.',
     highlights: [
       'BS Software Engineering, Minor in Leadership — Graduated with Honors',
       'Division I track & field athlete — Student Athlete of the Year',
@@ -125,7 +125,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-ai',
         title: 'AI Research Publication',
         description:
-          'Published "Sylvester: An Approach to Emotion Classification" in New Trends in Information Technology, 2017. A collaborative AI program that learns the language of Twitter through automatic annotation and classification — collecting and interpreting tweets in real time to determine how users feel emotionally about any given subject based on current language.',
+          'Published "Sylvester: An Approach to Emotion Classification" in New Trends in Information Technology, 2017. A collaborative AI program that learns the language of Twitter through automatic annotation and classification, collecting and interpreting tweets in real time to determine how users feel emotionally about any given subject based on current language.',
       },
       {
         id: 'detroit-music',
@@ -149,7 +149,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-commercial',
         title: 'The UDM Commercial',
         description:
-          'Somehow I ended up as the star of a University of Detroit Mercy commercial. I\'m not entirely sure how it happened, but it did — and I\'m told it was very convincing. Video and photos coming soon.',
+          'Somehow I ended up as the star of a University of Detroit Mercy commercial. I\'m not entirely sure how it happened, but it did, and I\'m told it was very convincing. Video and photos coming soon.',
       },
       {
         id: 'detroit-ssc',
@@ -169,7 +169,7 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'Where I build',
     storyPath: '/career',
     description:
-      'Software Development Manager and Full-Stack Developer at Woodside Bible Church since 2016. As the sole in-house developer, I design and build internal tools, platforms, and widgets that serve thousands of people every week — while managing contractors and coordinating with MarCom.',
+      'Software Development Manager and Full-Stack Developer at Woodside Bible Church since 2016. As the sole in-house developer, I design and build internal tools, platforms, and widgets that serve thousands of people every week while managing contractors and coordinating with MarCom.',
     highlights: [
       'Software Dev Manager / Full-Stack Developer since 2016',
       'Built apps.woodsidebible.org from scratch',
@@ -192,7 +192,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'troy-platform',
         title: 'Apps.WoodsideBible.org',
         description:
-          'Built a unified Next.js platform that simplifies major organizational workflows — centralizing operations, automating data tasks, and providing clean interfaces for both staff and community use across multiple campuses.',
+          'Built a unified Next.js platform that simplifies major organizational workflows by centralizing operations, automating data tasks, and providing clean interfaces for both staff and community use across multiple campuses.',
       },
       {
         id: 'troy-widgets',
@@ -210,7 +210,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'troy-ux',
         title: 'UI/UX Leadership',
         description:
-          'Lead UI/UX across all digital products at Woodside. Every screen, every flow, every interaction — obsessing over the details so users don\'t have to think. Also a major contributor to "MP Next," an open-source Next.js template for MinistryPlatform API integration.',
+          'Lead UI/UX across all digital products at Woodside. Every screen, every flow, every interaction. Obsessing over the details so users don\'t have to think. Also a major contributor to "MP Next," an open-source Next.js template for MinistryPlatform API integration.',
       },
     ],
     image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=1000&fit=crop',
@@ -224,7 +224,7 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'Where I call home',
     storyPath: '/family',
     description:
-      'We live in Clarkston now — a quiet town north of Detroit. It\'s home base. Married Sarah at the Grosse Ile Municipal Airport — which probably tells you everything you need to know about us. When I\'m not building products, you\'ll find me here with my family.',
+      'We live in Clarkston now, a quiet town north of Detroit. It\'s home base. Married Sarah at the Grosse Ile Municipal Airport, which probably tells you everything you need to know about us. When I\'m not building products, you\'ll find me here with my family.',
     highlights: [
       'Married Sarah at the Grosse Ile Municipal Airport',
       'Home with Sarah, Weston (3), and Rosie (1)',
@@ -248,7 +248,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'clarkston-family',
         title: 'Family Life',
         description:
-          'Home with Sarah, Weston (3), and Rosie (1). A quiet town north of Detroit — home base for family life and side projects alike.',
+          'Home with Sarah, Weston (3), and Rosie (1). A quiet town north of Detroit. Home base for family life and side projects alike.',
       },
     ],
     image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=1000&fit=crop',
@@ -264,7 +264,7 @@ export const lifeEvents: LifeEvent[] = [
     description:
       'Music and sports are the two things that keep me balanced. I play music at Woodside Bible Church and have played a lot of huge shows over the years. I still play flag football and I\'m a diehard Detroit Lions season ticket holder.',
     highlights: [
-      'Musician — play at Woodside and have played major shows',
+      'Musician — writer, electric guitar, tracks, drums, bass, keys, vocals',
       'Football — still play flag football, Detroit Lions season ticket holder',
       'Tattoos',
     ],
@@ -273,7 +273,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'hobbies-music',
         title: 'Music',
         description:
-          'I play music at Woodside Bible Church and have played a lot of huge shows over the years. It\'s one of those things that recharges me — whether it\'s leading worship on a Sunday or playing a big stage, there\'s nothing like it.',
+          'I\'ve worked with artists like Detroit Collective, Elevation Worship, Maverick City Music, Chris Tomlin, Switchfoot, and many more. I\'m known mainly as a writer, electric guitar player, and track builder, but I\'ve also played a lot of drums, bass, keys, and sung/led worship. I was on staff as a worship director at Woodside for about 5 years and I\'m widely known as the Ableton guru of the metro Detroit area.',
       },
       {
         id: 'hobbies-football',
@@ -285,7 +285,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'hobbies-tattoos',
         title: 'Tattoos',
         description:
-          'I have a full sleeve of tattoos, and every piece was designed with intention. Each one tells part of my story — faith, family, things I\'ve been through, things I believe in. I see them as a form of design in their own right. Detailed photos and the stories behind each piece coming soon.',
+          'I have a full sleeve of tattoos, and every piece was designed with intention. Each one tells part of my story. Faith, family, things I\'ve been through, things I believe in. I see them as a form of design in their own right. Detailed photos and the stories behind each piece coming soon.',
       },
     ],
     image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=1000&fit=crop',
@@ -377,8 +377,6 @@ function NarrativeContent({ event }: { event: LifeEvent }) {
 // ── Main page content (overview with clickable sub-events) ──
 
 function MainPageContent({ event }: { event: LifeEvent }) {
-  const { navigate } = useResponsiveSheet();
-
   return (
     <div style={{ padding: '28px' }}>
       {/* Description */}
@@ -444,63 +442,7 @@ function MainPageContent({ event }: { event: LifeEvent }) {
           </Link>
         )}
 
-        {/* Sub-event links */}
-        <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '8px', marginTop: '8px', color: 'var(--color-muted)' }} className="uppercase">
-          Learn More
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-          {event.subEvents.map((sub) => (
-            <button
-              key={sub.id}
-              onClick={() => navigate(sub.id)}
-              className="group"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                width: '100%',
-                textAlign: 'left',
-                padding: '12px 12px',
-                margin: '0 -12px',
-                borderRadius: '10px',
-                transition: 'background 0.15s',
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.03)')}
-              onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
-            >
-              <div style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                background: 'var(--color-border)',
-                flexShrink: 0,
-              }} />
-              <span style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-fg)', flex: 1 }}>
-                {sub.title}
-              </span>
-              <svg
-                width="12" height="12" viewBox="0 0 24 24" fill="none"
-                stroke="var(--color-border)" strokeWidth="2.5" strokeLinecap="round"
-                style={{ flexShrink: 0 }}
-              >
-                <path d="M9 18l6-6-6-6" />
-              </svg>
-            </button>
-          ))}
-        </div>
       </div>
-    </div>
-  );
-}
-
-// ── Sub-event page content ──
-
-function SubEventContent({ subEvent }: { subEvent: SubEvent }) {
-  return (
-    <div style={{ padding: '28px' }}>
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
-        {subEvent.description}
-      </p>
     </div>
   );
 }
@@ -532,11 +474,6 @@ export function LifeEventSheet({ event, onClose, defaultPage }: LifeEventSheetPr
       <SheetPage name="main">
         <MainPageContent event={event} />
       </SheetPage>
-      {event.subEvents.map((sub) => (
-        <SheetPage key={sub.id} name={sub.id} title={sub.title}>
-          <SubEventContent subEvent={sub} />
-        </SheetPage>
-      ))}
     </ResponsiveSheet>
   );
 }

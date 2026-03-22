@@ -104,7 +104,8 @@ function SheetContent({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="mt-4 mb-4 flex items-center gap-2 px-6"
+            style={{ padding: '20px 28px 16px' }}
+            className="flex items-center gap-3"
           >
             <button
               onClick={onBack}

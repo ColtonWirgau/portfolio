@@ -1,11 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
 import { Footer } from '@/components/Footer';
+import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 
 const roles = [
   'a problem solver',
@@ -17,38 +19,84 @@ const roles = [
   'a communicator',
 ];
 
-const projects = [
+interface ProjectGroup {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  tech: string[];
+  image: string;
+  storyPath: string;
+  subItems: { id: string; title: string; description: string }[];
+}
+
+const projects: ProjectGroup[] = [
   {
     id: 'church-hub',
     title: 'Church Hub',
     category: 'SaaS Platform',
-    description: 'What started as an internal tool at Woodside Bible Church evolved into a full SaaS product. Church Hub is a modular Next.js platform that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data. I started a business around it — implementing it across multiple churches to solve real operational problems at scale.',
+    description: 'What started as an internal tool at Woodside Bible Church evolved into a full SaaS product. Church Hub is a modular Next.js platform that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data. I started a business around it, implementing it across multiple churches to solve real operational problems at scale.',
     tech: ['Next.js', 'React', 'TypeScript', 'Node.js', 'SQL Server', 'Tailwind', 'Vercel'],
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+    storyPath: '/work/church-hub',
+    subItems: [],
   },
   {
-    id: 'dynamic-insights',
-    title: 'Dynamic Insights',
-    category: 'Dashboard Framework',
-    description: 'Extended a static reporting platform into interactive dashboards with custom embedded widgets. Created a nested JSON framework for optimized data retrieval — this innovation inspired new features in the platform and became a development model across partner organizations.',
-    tech: ['React', 'Next.js', 'JSON', 'SQL', 'REST API'],
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+    id: 'woodside',
+    title: 'Woodside Bible Church',
+    category: 'Full-Stack Development',
+    description: 'As the sole in-house developer at Woodside Bible Church, I\'ve built and maintained the software infrastructure that powers the organization. From interactive dashboards and automated database workflows to public-facing web pages and reporting tools. This is where I cut my teeth building real products for real people.',
+    tech: ['Next.js', 'React', 'SQL Server', 'Power BI', 'REST API', 'MinistryPlatform', 'WordPress', 'Planning Center', 'CSS/SCSS'],
+    image: '/woodside.jpg',
+    storyPath: '/work/woodside',
+    subItems: [
+      {
+        id: 'woodside-insights',
+        title: 'Dynamic Insights',
+        description: 'Extended a static reporting platform into interactive dashboards with custom embedded widgets. Created a nested JSON framework for optimized data retrieval. This innovation inspired new features in MinistryPlatform\'s main product and became a development model across partner organizations.',
+      },
+      {
+        id: 'woodside-web',
+        title: 'Web Pages & Platforms',
+        description: 'Built and maintained multiple public-facing and internal web pages and applications for Woodside Bible Church. Clean, responsive interfaces serving thousands of users every week across multiple campuses.',
+      },
+      {
+        id: 'woodside-db',
+        title: 'Database Automations',
+        description: 'Designed and implemented automated database workflows that replaced manual processes. Cleaned up and deactivated roughly two-thirds of the database, then built better systems to track real engagement. Some of this work was adopted into MinistryPlatform\'s core product.',
+      },
+      {
+        id: 'woodside-powerbi',
+        title: 'Power BI Reporting',
+        description: 'Created Power BI dashboards and reports for leadership and staff, turning raw data into clear, actionable visuals. Gave teams across the organization easy access to the metrics that actually matter.',
+      },
+      {
+        id: 'woodside-integrations',
+        title: 'Third-Party Integrations',
+        description: 'Built and facilitated integrations of platforms like REACH and Planning Center into MinistryPlatform. Syncing data, eliminating manual entry, and keeping systems connected across the organization.',
+      },
+    ],
   },
   {
-    id: 'mp-next',
-    title: 'MP Next',
-    category: 'Open Source',
-    description: 'An open-source Next.js template for MinistryPlatform API integration. Provides authentication flows, data fetching patterns, and UI components — enabling other organizations to build modern web apps on top of the platform.',
-    tech: ['Next.js', 'TypeScript', 'OAuth', 'REST', 'Open Source'],
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop',
-  },
-  {
-    id: 'roar-tracker',
-    title: 'RoarTracker',
-    category: 'Personal Project',
-    description: 'A personal app to manage Detroit Lions season tickets — track attendance, resale, and spending data with intuitive dashboards and mobile-first UI.',
-    tech: ['Next.js', 'PostgreSQL', 'Supabase', 'Tailwind'],
+    id: 'personal',
+    title: 'Personal Projects',
+    category: 'Side Projects',
+    description: 'The stuff I build for fun (and sometimes for my friends and family). These are less polished, more personality.',
+    tech: ['Next.js', 'Neon', 'OAuth', 'Tailwind', 'Vercel'],
     image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&h=600&fit=crop',
+    storyPath: '/work/personal-projects',
+    subItems: [
+      {
+        id: 'personal-lions',
+        title: 'Lions Season Ticket Tracker',
+        description: 'My parents and I have Lions season tickets with two extra seats, so I built a little app to keep track of who\'s going to each game, any resales, and costs. It\'s nothing fancy from a brand standpoint (it\'s just for us) but under the hood it\'s got full OAuth, a Neon database, and clean dashboards. Solves a real (very niche) problem.',
+      },
+      {
+        id: 'personal-degenerates',
+        title: 'Degenerates Dashboard',
+        description: 'Every week, my idiot friends and I place a 12-leg parlay. We have never won. Not once. But we keep doing it, and I built a dashboard to track our glorious losing streak. It pulls in picks, tracks results, and roasts us with the data. It\'s dumb, it\'s fun, and it\'s one of my favorite things I\'ve built.',
+      },
+    ],
   },
 ];
 
@@ -58,6 +106,7 @@ export default function Home() {
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<LifeEvent | null>(null);
   const [sheetDefaultPage, setSheetDefaultPage] = useState<string>('main');
+  const [selectedProject, setSelectedProject] = useState<ProjectGroup | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -254,7 +303,7 @@ export default function Home() {
                 lineHeight: 1.8,
                 maxWidth: '1100px',
               }}>
-                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. I studied software engineering at the University of Detroit Mercy, got published in AI research, and landed at Woodside Bible Church where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
+                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. I studied software engineering and leadership while running track at the University of Detroit Mercy, got published in AI research, and landed at Woodside Bible Church where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
               </p>
 
               {/* Highlight badges */}
@@ -262,35 +311,35 @@ export default function Home() {
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'center',
-                gap: '20px',
+                gap: '24px',
                 marginTop: '36px',
                 maxWidth: '1100px',
               }}>
                 {[
-                  { label: 'Software Engineer', icon: <path d="M16 18l6-3-6-3-6 3 6 3zm0 0v6m-6-9v6l6 3 6-3v-6" strokeLinejoin="round" /> },
-                  { label: 'Published in AI', icon: <><path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" /></> },
-                  { label: 'D1 Athlete', icon: <><circle cx="12" cy="8" r="4" /><path d="M12 12l4 8H8l4-8z" /></> },
+                  { label: 'Software Engineer', icon: <><path d="M12 3L2 9l10 6 10-6-10-6z" /><path d="M2 17l10 6 10-6" /><path d="M2 13l10 6 10-6" /></> },
+                  { label: 'Published in AI', icon: <><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" /><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" /></> },
+                  { label: 'D1 Athlete', icon: <><path d="M6 9a6 6 0 1012 0A6 6 0 006 9z" /><path d="M12 15v7" /><path d="M8 22h8" /></> },
                   { label: 'Hall of Fame', icon: <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" /> },
-                  { label: 'Award Winner', icon: <><circle cx="12" cy="8" r="6" /><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" /></> },
+                  { label: 'Award Winner', icon: <><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" /><circle cx="12" cy="8" r="6" /></> },
                   { label: 'Business Owner', icon: <><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" /></> },
                   { label: 'Musician', icon: <><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></> },
                   { label: 'Father of 2', icon: <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /> },
                 ].map((badge) => (
-                  <div key={badge.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', width: '72px' }}>
+                  <div key={badge.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', width: '80px' }}>
                     <div style={{
-                      width: '44px',
-                      height: '44px',
+                      width: '52px',
+                      height: '52px',
                       borderRadius: '50%',
-                      border: '1px solid var(--color-border)',
+                      background: '#2A2622',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         {badge.icon}
                       </svg>
                     </div>
-                    <span style={{ fontSize: '10px', fontWeight: 500, color: 'var(--color-muted)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '0.02em' }}>
+                    <span style={{ fontSize: '10px', fontWeight: 600, color: 'var(--color-muted)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                       {badge.label}
                     </span>
                   </div>
@@ -397,7 +446,7 @@ export default function Home() {
             <div style={{ marginBottom: '48px' }}>
               <SectionHeading
                 title={<>Things I{"\u2019"}ve built.</>}
-                subtitle={<><Em>Full-stack platforms</Em>, <Ul>developer tools</Ul>, and side projects — here{"\u2019"}s some of what I{"\u2019"}ve been working on.</>}
+                subtitle={<><Em>Full-stack platforms</Em>, <Ul>developer tools</Ul>, and side projects. Here{"\u2019"}s some of what I{"\u2019"}ve been working on.</>}
                 right
               />
             </div>
@@ -410,11 +459,13 @@ export default function Home() {
                   <div
                     key={project.id}
                     className="group"
+                    onClick={() => setSelectedProject(project)}
                     style={{
                       display: 'flex',
                       flexDirection: imageLeft ? 'row' : 'row-reverse',
                       gap: '40px',
                       alignItems: 'center',
+                      cursor: 'pointer',
                     }}
                   >
                     {/* Image */}
@@ -464,7 +515,7 @@ export default function Home() {
                       <p style={{ fontSize: '14px', fontWeight: 400, color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
                         {project.description}
                       </p>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: project.subItems.length > 0 ? '16px' : '0' }}>
                         {project.tech.map((t) => (
                           <span
                             key={t}
@@ -495,6 +546,97 @@ export default function Home() {
           onClose={() => { setSelectedEvent(null); setSheetDefaultPage('main'); }}
           defaultPage={sheetDefaultPage}
         />
+
+        {/* Project sheet */}
+        <ResponsiveSheet
+          open={!!selectedProject}
+          onClose={() => setSelectedProject(null)}
+          header={selectedProject ? (
+            <div className="relative">
+              <div style={{ height: '180px' }} className="w-full overflow-hidden">
+                <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0" style={{ padding: '24px 28px' }}>
+                <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '6px' }} className="uppercase text-white/50">
+                  {selectedProject.category}
+                </div>
+                <h3 style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.1 }} className="text-white">
+                  {selectedProject.title}
+                </h3>
+              </div>
+            </div>
+          ) : undefined}
+          defaultPage="main"
+        >
+          <SheetPage name="main">
+            {selectedProject && (
+              <div style={{ padding: '28px' }}>
+                <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+                  {selectedProject.description}
+                </p>
+
+                {/* Tech tags */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '20px' }}>
+                  {selectedProject.tech.map((t) => (
+                    <span key={t} style={{ fontSize: '11px', fontWeight: 400, color: 'var(--color-muted)', padding: '4px 10px', borderRadius: '100px', border: '1px solid var(--color-border)' }}>
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Highlights / sub-items as bullet points */}
+                {selectedProject.subItems.length > 0 && (
+                  <div style={{ marginTop: '24px' }}>
+                    <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '12px', color: 'var(--color-muted)' }} className="uppercase">
+                      Highlights
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {selectedProject.subItems.map((sub) => (
+                        <div key={sub.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                          <span style={{ color: 'var(--color-border)', marginTop: '6px', flexShrink: 0, fontSize: '6px' }}>●</span>
+                          <div>
+                            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-fg)' }}>{sub.title}</span>
+                            <span style={{ fontSize: '13px', color: 'var(--color-muted)' }}> — {sub.description}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* The Full Story link */}
+                <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--color-border)' }}>
+                  <Link
+                    href={selectedProject.storyPath}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      width: '100%',
+                      textDecoration: 'none',
+                      padding: '14px 12px',
+                      margin: '0 -12px',
+                      borderRadius: '10px',
+                      transition: 'background 0.15s',
+                      background: 'rgba(0,0,0,0.02)',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.05)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.02)')}
+                  >
+                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--color-accent)', flexShrink: 0 }} />
+                    <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-fg)', flex: 1 }}>
+                      The Full Story
+                    </span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-muted)" strokeWidth="2.5" strokeLinecap="round" style={{ flexShrink: 0 }}>
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            )}
+          </SheetPage>
+        </ResponsiveSheet>
 
         <Footer />
       </main>
