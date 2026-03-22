@@ -13,6 +13,8 @@ const roles = [
   'a full-stack developer',
   'a builder of tools',
   'a product thinker',
+  'a leader',
+  'a communicator',
 ];
 
 const projects = [
@@ -164,22 +166,50 @@ export default function Home() {
         <div style={{
           padding: '60px 24px',
           margin: '40px 0',
-          borderTop: '1px solid var(--color-border)',
-          borderBottom: '1px solid var(--color-border)',
+          background: '#2A2622',
           textAlign: 'center',
         }}>
-          <p style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
-            fontStyle: 'italic',
-            color: 'var(--color-fg)',
-            lineHeight: 1.6,
-            maxWidth: '550px',
-            margin: '0 auto',
-          }}>
-            I care a lot about clarity. Not overwhelming people. Saying just enough, at the right time.{' '}
-            <span style={{ fontWeight: 600 }}>Good design should feel obvious.</span>
-          </p>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
+              fontStyle: 'italic',
+              color: 'rgba(255,255,255,0.5)',
+              lineHeight: 1.6,
+              maxWidth: '1100px',
+              margin: '0 auto',
+            }}
+          >
+            I care a lot about clarity. Not overwhelming people.<br />
+            Saying{' '}
+            <span style={{ color: '#fff', fontWeight: 600 }}>just enough</span> at the{' '}
+            <span style={{ textDecoration: 'underline', textUnderlineOffset: '4px', textDecorationColor: 'var(--color-accent)' }}>right time</span>.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20, scaleX: 0.85 }}
+            whileInView={{ opacity: 1, y: 0, scaleX: 0.85 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+              fontWeight: 400,
+              color: 'var(--color-accent)',
+              lineHeight: 1,
+              letterSpacing: '-0.06em',
+              textTransform: 'uppercase',
+              maxWidth: '1100px',
+              margin: '16px auto 0',
+              WebkitTextStroke: '3px var(--color-accent)',
+              paintOrder: 'stroke fill',
+            }}
+          >
+            Good design should feel obvious.
+          </motion.p>
         </div>
 
         {/* My Story / About section */}
@@ -210,21 +240,61 @@ export default function Home() {
                 fontWeight: 400,
                 color: 'var(--color-fg)',
                 lineHeight: 1.6,
-                maxWidth: '600px',
+                maxWidth: '1100px',
                 marginBottom: '20px',
               }}>
-                Small town kid, big curiosity. From football fields to{' '}
-                <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>building things that matter</span>.
+                I{'\u2019'}ve always been interested in how things work, and how to{' '}
+                <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>make them work better</span>.
               </p>
               <p style={{
                 fontSize: '15px',
                 fontWeight: 400,
                 color: 'var(--color-muted)',
                 lineHeight: 1.8,
-                maxWidth: '600px',
+                maxWidth: '1100px',
               }}>
-                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. I studied software engineering at the University of Detroit Mercy, got published in AI research, and landed at Woodside Bible Church where I built an entire technology department from scratch. Now I build products, lead teams, and obsess over making complex things feel simple.
+                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. I studied software engineering at the University of Detroit Mercy, got published in AI research, and landed at Woodside Bible Church where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
               </p>
+
+              {/* Highlight badges */}
+              <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                gap: '20px',
+                marginTop: '36px',
+                maxWidth: '1100px',
+              }}>
+                {[
+                  { label: 'Software Engineer', icon: <path d="M16 18l6-3-6-3-6 3 6 3zm0 0v6m-6-9v6l6 3 6-3v-6" strokeLinejoin="round" /> },
+                  { label: 'Published in AI', icon: <><path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" /></> },
+                  { label: 'D1 Athlete', icon: <><circle cx="12" cy="8" r="4" /><path d="M12 12l4 8H8l4-8z" /></> },
+                  { label: 'Hall of Fame', icon: <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" /> },
+                  { label: 'Award Winner', icon: <><circle cx="12" cy="8" r="6" /><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" /></> },
+                  { label: 'Business Owner', icon: <><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" /></> },
+                  { label: 'Musician', icon: <><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></> },
+                  { label: 'Father of 2', icon: <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /> },
+                ].map((badge) => (
+                  <div key={badge.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', width: '72px' }}>
+                    <div style={{
+                      width: '44px',
+                      height: '44px',
+                      borderRadius: '50%',
+                      border: '1px solid var(--color-border)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        {badge.icon}
+                      </svg>
+                    </div>
+                    <span style={{ fontSize: '10px', fontWeight: 500, color: 'var(--color-muted)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '0.02em' }}>
+                      {badge.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Decorative squid divider */}
@@ -447,19 +517,30 @@ export default function Home() {
               display: 'flex',
               alignItems: 'flex-end',
               justifyContent: 'center',
-              background: 'linear-gradient(to top, var(--color-bg), transparent)',
             }}
           >
-            <div style={{ marginBottom: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', color: 'var(--color-muted)' }}>
+            <div style={{ marginBottom: '10px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px', color: 'var(--color-muted)', padding: '10px 20px', borderRadius: '100px', backdropFilter: 'blur(20px) saturate(1.4)', WebkitBackdropFilter: 'blur(20px) saturate(1.4)', backgroundColor: 'rgba(213, 210, 200, 0.6)', boxShadow: '0 1px 8px rgba(0,0,0,0.08)' }}>
+              <motion.div
+                animate={{ y: [0, 2, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '-2px' }}
+              >
+                <svg width="10" height="14" viewBox="0 0 24 28" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.4 }}>
+                  <path d="M6 5l6 6 6-6" />
+                  <path d="M6 17l6 6 6-6" />
+                </svg>
+              </motion.div>
               <span style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
                 Scroll for more
               </span>
               <motion.div
-                animate={{ y: [0, 3, 0] }}
+                animate={{ y: [0, 2, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
               >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 9l6 6 6-6" />
+                <svg width="10" height="14" viewBox="0 0 24 28" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.4 }}>
+                  <path d="M6 5l6 6 6-6" />
+                  <path d="M6 17l6 6 6-6" />
                 </svg>
               </motion.div>
             </div>
