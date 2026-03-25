@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, Fragment } from 'react';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
@@ -139,6 +139,58 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<LifeEvent | null>(null);
   const [sheetDefaultPage, setSheetDefaultPage] = useState<string>('main');
   const [selectedProject, setSelectedProject] = useState<ProjectGroup | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [activePosterId, setActivePosterId] = useState(0);
+  const storyCarouselRef = useRef<HTMLDivElement>(null);
+  const [activeStoryId, setActiveStoryId] = useState(0);
+
+  // Infinite carousel loop logic + active dot tracking
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      const cardWidth = el.scrollWidth / 3; // 3 sets of cards
+      if (el.scrollLeft >= cardWidth * 2) {
+        el.scrollLeft -= cardWidth;
+      } else if (el.scrollLeft <= 0) {
+        el.scrollLeft += cardWidth;
+      }
+      // Track active poster (0, 1, 2) based on scroll position within one set
+      const posInSet = el.scrollLeft % cardWidth;
+      const singleCardWidth = cardWidth / 3;
+      const idx = Math.round(posInSet / singleCardWidth) % 3;
+      setActivePosterId(idx);
+    };
+    el.addEventListener('scroll', handleScroll);
+    // Start at the middle set
+    requestAnimationFrame(() => {
+      el.scrollLeft = el.scrollWidth / 3;
+    });
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Story cards carousel logic
+  useEffect(() => {
+    const el = storyCarouselRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      const cardWidth = el.scrollWidth / 3;
+      if (el.scrollLeft >= cardWidth * 2) {
+        el.scrollLeft -= cardWidth;
+      } else if (el.scrollLeft <= 0) {
+        el.scrollLeft += cardWidth;
+      }
+      const posInSet = el.scrollLeft % cardWidth;
+      const singleCardWidth = cardWidth / lifeEvents.length;
+      const idx = Math.round(posInSet / singleCardWidth) % lifeEvents.length;
+      setActiveStoryId(idx);
+    };
+    el.addEventListener('scroll', handleScroll);
+    requestAnimationFrame(() => {
+      el.scrollLeft = el.scrollWidth / 3;
+    });
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -295,7 +347,7 @@ export default function Home() {
         </div>
 
         {/* My Story / About section */}
-        <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
+        <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative', overflow: 'hidden' }}>
           <div style={{ flex: 1, minWidth: 0 }}>
 
             {/* Editorial heading */}
@@ -395,56 +447,75 @@ export default function Home() {
               <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
             </div>
 
-            {/* Portrait cards row */}
-            <div style={{ display: 'grid', gridTemplateColumns: `repeat(${lifeEvents.length}, 1fr)`, gap: '16px', marginBottom: '60px' }}>
-              {lifeEvents.map((event) => (
-                <motion.button
-                  key={event.id}
-                  layoutId={`card-${event.id}`}
-                  onClick={() => {
-                    setSelectedEvent(event);
-                    setSheetDefaultPage('main');
-                  }}
-                  className="group"
-                  style={{
-                    position: 'relative',
-                    aspectRatio: '2/3',
-                    overflow: 'hidden',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    borderRadius: 0,
-                    border: 'none',
-                  }}
-                >
-                  <motion.img
-                    layoutId={`img-${event.id}`}
-                    src={event.image}
-                    alt={event.label}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.4s ease',
-                    }}
-                    className="group-hover:scale-[1.03]"
-                  />
-                  <div style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)',
-                  }} />
-                  <div style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    padding: '24px 20px',
-                  }}>
-                    <h3 style={{ fontSize: '22px', fontWeight: 400, color: '#fff', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
-                      {event.year}
-                    </h3>
-                  </div>
-                </motion.button>
+            {/* Portrait cards row / carousel */}
+            <div className="story-grid" ref={storyCarouselRef} style={{ marginBottom: '60px' }}>
+              {[0, 1, 2].map((setIndex) => (
+                <Fragment key={setIndex}>
+                  {lifeEvents.map((event) => (
+                    <motion.button
+                      key={`${setIndex}-${event.id}`}
+                      layoutId={setIndex === 0 ? `card-${event.id}` : undefined}
+                      onClick={() => {
+                        setSelectedEvent(event);
+                        setSheetDefaultPage('main');
+                      }}
+                      className={`group story-card ${setIndex > 0 ? 'story-card-dup' : ''}`}
+                      style={{
+                        position: 'relative',
+                        aspectRatio: '2/3',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        borderRadius: 0,
+                        border: 'none',
+                      }}
+                    >
+                      <motion.img
+                        layoutId={setIndex === 0 ? `img-${event.id}` : undefined}
+                        src={event.image}
+                        alt={event.label}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.4s ease',
+                        }}
+                        className="group-hover:scale-[1.03]"
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)',
+                      }} />
+                      <div style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        padding: '24px 20px',
+                      }}>
+                        <h3 style={{ fontSize: '22px', fontWeight: 400, color: '#fff', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
+                          {event.year}
+                        </h3>
+                      </div>
+                    </motion.button>
+                  ))}
+                </Fragment>
+              ))}
+            </div>
+            {/* Story carousel dot indicators */}
+            <div className="story-dots" style={{
+              gap: '8px',
+              marginBottom: '40px',
+            }}>
+              {lifeEvents.map((event, i) => (
+                <div key={event.id} style={{
+                  height: '8px',
+                  borderRadius: '4px',
+                  transition: 'all 0.3s ease',
+                  width: activeStoryId === i ? '24px' : '8px',
+                  background: activeStoryId === i ? 'var(--color-fg)' : 'var(--color-border)',
+                }} />
               ))}
             </div>
 
@@ -453,7 +524,7 @@ export default function Home() {
         </section>
 
         {/* Portfolio section */}
-        <section id="work" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
+        <section id="work" style={{ padding: '80px 24px', display: 'flex', position: 'relative', overflow: 'hidden' }}>
           <SideLabel label="Work" side="left" mirrorLabel />
           {/* Decorative squid watermark */}
           <svg
@@ -474,7 +545,7 @@ export default function Home() {
             <path fill="var(--color-fg)" d="M316.8,619.52c-10.78-10.88-18.24-18.24-22.4-22.05-13.57-12.42-24.65-27.5-32.17-44.31-3.86-8.62-6.79-17.63-8.86-26.84-.98-4.35-2.55-8.26.05-12.03,2.99-4.33,7.19-7.48,9.79-12.23,3.34-6.09,4.66-13.11,4.95-20.04.56-13.5-2.71-27.13-9.28-38.93-7.71-13.84,8.81-4.82,9.76-13.32,3.57-31.75,4.75-56.89,3.53-75.4-2.62-39.67-7.6-80.33-14.96-121.97-.27-1.48.27-2.97,1.41-3.95,24.79-21.23,37.87-32.4,39.24-33.52,10.88-8.77,16.62-17.85,7.79-29.98-7.07-9.71-46.68-61.46-118.83-155.27-4.51-5.86-10.32-9.54-16.15-9.68-5.83.14-11.64,3.82-16.15,9.68C82.37,103.49,42.76,155.24,35.69,164.95c-8.83,12.13-3.09,21.21,7.79,29.98,1.37,1.11,14.45,12.29,39.24,33.52,1.13.98,1.68,2.46,1.41,3.95-7.36,41.64-12.34,82.3-14.96,121.97-1.21,18.51-.04,43.65,3.53,75.4.96,8.51,17.47-.52,9.76,13.32-6.57,11.8-9.84,25.43-9.28,38.93.29,6.94,1.61,13.96,4.95,20.04,2.6,4.75,6.8,7.9,9.79,12.23,2.6,3.77,1.02,7.68.05,12.03-2.07,9.21-5,18.23-8.86,26.84-7.53,16.8-18.6,31.88-32.17,44.31-4.16,3.81-11.62,11.17-22.4,22.05C6.55,637.7-1.55,659.99.24,686.34c1.37,20.29,9.55,37.89,21.74,53.87,9.77,12.81,15.02,23.09,16.35,38.69.53,6.27.94,10.66,1.25,13.14.27,2.17,1.62,4.04,3.55,5.02,8.07,4.04,11.97-3.48,13.09-10.45,3.73-23.18-4.08-38.46-14.2-59.63-15.04-31.48-9.77-64.04,19.26-84.8,12.05-8.61,23.55-17.77,34.51-27.44,10.06-8.89,18.28-20.02,24.71-33.4.25-.55.94-.76,1.46-.45l.57.31c.29.18.43.53.33.86-3.22,10.12-6.88,19.57-14.61,39.18-5.78,14.61-10.76,29.36-12.71,44.61-3.61,28.28-1.45,55.96,6.5,83.03,5.12,17.42,10.59,31.74,12.48,45.88,2.17,16.09,1.27,32.07-2.66,47.93-.59,2.42.94,6.56,3.32,8.16,7.56,5.14,14.08-2.7,17.5-9,5.31-9.84,8.24-21.15,8.79-33.93,1.11-25.62-4.63-48.59-8.4-72.75-4.39-28.26-1.23-55.25,9.49-80.98,12.85-30.82,20.14-45.61,25.02-67.75.43-1.93,1.11-3.32,2.03-4.16.31-.28.68-.42,1.05-.45.37.03.74.16,1.05.45.92.84,1.6,2.23,2.03,4.16,4.88,22.15,12.17,36.93,25.02,67.75,10.72,25.72,13.89,52.71,9.49,80.98-3.77,24.16-9.51,47.13-8.4,72.75.55,12.77,3.48,24.08,8.79,33.93,3.42,6.31,9.94,14.14,17.5,9,2.38-1.6,3.91-5.74,3.32-8.16-3.93-15.86-4.82-31.84-2.66-47.93,1.89-14.14,7.36-28.46,12.48-45.88,7.95-27.07,10.12-54.75,6.5-83.03-1.95-15.25-6.93-30-12.71-44.61-7.73-19.61-11.39-29.06-14.61-39.18-.1-.33.04-.68.33-.86l.57-.31c.53-.31,1.21-.1,1.46.45,6.43,13.38,14.65,24.51,24.71,33.4,10.96,9.67,22.46,18.83,34.51,27.44,29.02,20.76,34.3,53.32,19.26,84.8-10.12,21.17-17.93,36.45-14.2,59.63,1.11,6.97,5.02,14.49,13.09,10.45,1.93-.98,3.28-2.85,3.55-5.02.31-2.48.72-6.88,1.25-13.14,1.33-15.61,6.58-25.88,16.35-38.69,12.19-15.98,20.37-33.57,21.74-53.87,1.8-26.35-6.31-48.63-24.3-66.82Z" />
           </svg>
 
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="poster-grid-wrapper" style={{ flex: 1, minWidth: 0 }}>
             <div style={{ marginBottom: '48px' }}>
               <SectionHeading
                 title={<>Things I{"\u2019"}ve built.</>}
@@ -484,19 +555,16 @@ export default function Home() {
             </div>
 
             {/* Project posters — responsive grid, 2-up on desktop */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))',
-              gap: '32px',
-              alignItems: 'start',
-            }}>
+            <div className="poster-grid" ref={carouselRef}>
+              {[0, 1, 2].map((setIndex) => (
+                <Fragment key={`poster-set-${setIndex}`}>
 
               {/* ═══════════════════════════════════════════════
                   POSTER 1 — CHURCH HUB
                   Clean, warm style matching Personal Projects feel
                   ═══════════════════════════════════════════════ */}
               <div
-                className="group"
+                className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
                 onClick={() => setSelectedProject(projects[0])}
                 style={{
                   background: '#EDE8E0',
@@ -504,6 +572,7 @@ export default function Home() {
                   position: 'relative',
                   overflow: 'hidden',
                   aspectRatio: '2/3',
+                  maxHeight: '85vh',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
@@ -655,7 +724,7 @@ export default function Home() {
                   POSTER 2 — WOODSIDE BIBLE CHURCH (Dark Navy/Green)
                   ═══════════════════════════════════════════════ */}
               <div
-                className="group"
+                className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
                 onClick={() => setSelectedProject(projects[1])}
                 style={{
                   background: '#1C2B39',
@@ -663,10 +732,39 @@ export default function Home() {
                   position: 'relative',
                   overflow: 'hidden',
                   aspectRatio: '2/3',
+                  maxHeight: '85vh',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
               >
+                {/* Church background pinned to bottom with fade */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  overflow: 'hidden',
+                  zIndex: 1,
+                }}>
+                  <img
+                    src="/woodside.jpg"
+                    alt=""
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      display: 'block',
+                      filter: 'grayscale(1)',
+                      opacity: 0.15,
+                    }}
+                  />
+                  {/* Fade from top */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to bottom, #1C2B39 0%, transparent 35%)',
+                  }} />
+                </div>
+
                 {/* Top info row */}
                 <div style={{
                   display: 'flex',
@@ -728,7 +826,7 @@ export default function Home() {
                   zIndex: 3,
                 }}>
                   <h3 style={{
-                    fontSize: '3.2rem',
+                    fontSize: 'clamp(2rem, 5vw, 3.2rem)',
                     fontFamily: 'var(--font-sans)',
                     fontWeight: 900,
                     color: '#C0C8D0',
@@ -742,7 +840,7 @@ export default function Home() {
                     WOODSIDE
                   </h3>
                   <h4 style={{
-                    fontSize: '1.8rem',
+                    fontSize: 'clamp(1rem, 3vw, 1.8rem)',
                     fontFamily: 'var(--font-sans)',
                     fontWeight: 700,
                     color: '#8A95A5',
@@ -775,10 +873,10 @@ export default function Home() {
                     { label: 'POWER BI', sub: 'REPORTING' },
                   ].map((item) => (
                     <div key={item.label} style={{ padding: '10px 8px', textAlign: 'center' }}>
-                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#8A95A5', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#8A95A5', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
                         {item.label}
                       </div>
-                      <div style={{ fontSize: '6px', fontWeight: 500, color: '#4A5565', fontFamily: 'var(--font-sans)', letterSpacing: '0.15em', marginTop: '2px' }}>
+                      <div style={{ fontSize: '6px', fontWeight: 500, color: '#8A95A5', fontFamily: 'var(--font-sans)', letterSpacing: '0.15em', marginTop: '2px', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
                         {item.sub}
                       </div>
                     </div>
@@ -799,7 +897,7 @@ export default function Home() {
                     {['REST API', 'WORDPRESS', 'PLANNING CENTER'].map((t) => (
                       <span key={t} style={{
                         fontSize: '7px', fontWeight: 600, letterSpacing: '0.12em',
-                        color: '#4A5565', fontFamily: 'var(--font-sans)',
+                        color: '#8A95A5', fontFamily: 'var(--font-sans)', textShadow: '0 1px 4px rgba(0,0,0,0.5)',
                       }}>
                         {t}
                       </span>
@@ -825,7 +923,7 @@ export default function Home() {
                   More playful, experimental feel
                   ═══════════════════════════════════════════════ */}
               <div
-                className="group"
+                className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
                 onClick={() => setSelectedProject(projects[2])}
                 style={{
                   background: '#7B6DB5',
@@ -833,6 +931,7 @@ export default function Home() {
                   position: 'relative',
                   overflow: 'hidden',
                   aspectRatio: '2/3',
+                  maxHeight: '85vh',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
@@ -981,14 +1080,33 @@ export default function Home() {
                   opacity: 0, transition: 'opacity 0.3s ease', pointerEvents: 'none',
                 }} className="group-hover:opacity-100!" />
               </div>
+              </Fragment>
+              ))}
             </div>
 
-            {/* "Scroll for more" divider after posters */}
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '48px 0 0' }}>
-              <span style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.2em', color: 'var(--color-muted)', textTransform: 'uppercase' }}>
-                ↓ Click any poster to explore ↓
-              </span>
+            {/* Carousel dot indicators — only visible in carousel mode */}
+            <div className="poster-dots" style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '24px 0 0',
+              width: '100%',
+            }}>
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
+                  style={{
+                    width: activePosterId === i ? '24px' : '8px',
+                    height: '8px',
+                    borderRadius: '100px',
+                    background: activePosterId === i ? 'var(--color-fg)' : 'var(--color-border)',
+                    transition: 'all 0.3s ease',
+                  }}
+                />
+              ))}
             </div>
+
           </div>
         </section>
 

@@ -380,69 +380,52 @@ function MainPageContent({ event }: { event: LifeEvent }) {
   return (
     <div style={{ padding: '28px' }}>
       {/* Description */}
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '20px' }}>
         {event.description}
       </p>
 
-      {/* Highlights */}
-      <div style={{ marginTop: '24px' }}>
-        <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '12px', color: 'var(--color-muted)' }} className="uppercase">
-          Highlights
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {event.highlights.map((h, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-              <span style={{ color: 'var(--color-border)', marginTop: '6px', flexShrink: 0, fontSize: '6px' }}>●</span>
-              <span style={{ fontSize: '13px', lineHeight: 1.5, fontWeight: 400, color: 'var(--color-muted)' }}>{h}</span>
-            </div>
-          ))}
-        </div>
+      {/* Highlights as pills */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '24px' }}>
+        {event.highlights.map((h, i) => (
+          <span key={i} style={{
+            fontSize: '11px',
+            fontWeight: 500,
+            color: 'var(--color-muted)',
+            padding: '5px 12px',
+            borderRadius: '100px',
+            border: '1px solid var(--color-border)',
+            lineHeight: 1.3,
+          }}>
+            {h}
+          </span>
+        ))}
       </div>
 
-      {/* Navigation links */}
-      <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--color-border)' }}>
-        {/* The Full Story link */}
-        {event.storyPath && (
+      {/* The Full Story link - bottom right */}
+      {event.storyPath && (
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Link
             href={event.storyPath}
-            className="group"
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              gap: '12px',
-              width: 'calc(100% + 24px)',
-              textAlign: 'left',
+              gap: '6px',
               textDecoration: 'none',
-              padding: '14px 12px',
-              margin: '0 -12px 8px',
-              borderRadius: '10px',
-              transition: 'background 0.15s',
-              background: 'rgba(0,0,0,0.02)',
+              fontSize: '13px',
+              fontWeight: 600,
+              color: 'var(--color-accent)',
+              transition: 'opacity 0.15s',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.05)')}
-            onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.02)')}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.7')}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
           >
-            <div style={{
-              width: '8px',
-              height: '8px',
-              borderRadius: '50%',
-              background: 'var(--color-accent)',
-              flexShrink: 0,
-            }} />
-            <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-fg)', flex: 1 }}>
-              The Full Story
-            </span>
-            <svg
-              width="12" height="12" viewBox="0 0 24 24" fill="none"
-              stroke="var(--color-muted)" strokeWidth="2.5" strokeLinecap="round"
-              style={{ flexShrink: 0 }}
-            >
-              <path d="M9 18l6-6-6-6" />
+            The Full Story
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17" />
             </svg>
           </Link>
-        )}
-
-      </div>
+        </div>
+      )}
     </div>
   );
 }

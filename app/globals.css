@@ -83,3 +83,128 @@ body,
 .about-map-popup .mapboxgl-popup-tip {
   border-top-color: var(--color-bg);
 }
+
+/* Hide carousel dots on desktop */
+.poster-dots {
+  display: none;
+}
+
+/* Poster grid — default: 3-up grid on wide screens */
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+/* Hide duplicate poster cards on desktop */
+.poster-card-dup {
+  display: none !important;
+}
+
+/* Below ~1200px: 2-up grid */
+@media (max-width: 1200px) {
+  .poster-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Below ~920px: horizontal scroll carousel */
+@media (max-width: 920px) {
+  .poster-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 16px !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* Break out of parent padding */
+    width: 100vw;
+    margin-left: calc(-24px - env(safe-area-inset-left, 0px));
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+  .poster-card {
+    flex-shrink: 0 !important;
+    width: 65vw !important;
+    min-height: 450px;
+    max-height: 75vh !important;
+    aspect-ratio: unset !important;
+    scroll-snap-align: center;
+  }
+  .poster-card-dup {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .poster-dots {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100vw !important;
+    margin-left: -24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .poster-card {
+    width: 75vw !important;
+  }
+}
+
+/* Story grid — default: 5-up grid on wide screens */
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+/* Hide duplicate story cards on desktop */
+.story-card-dup {
+  display: none !important;
+}
+
+/* Hide story carousel dots on desktop */
+.story-dots {
+  display: none;
+}
+
+/* Below ~920px: horizontal scroll carousel */
+@media (max-width: 920px) {
+  .story-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 16px !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    width: 100vw;
+    margin-left: calc(-24px - env(safe-area-inset-left, 0px));
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+  .story-card {
+    flex-shrink: 0 !important;
+    width: 55vw !important;
+    min-width: 55vw !important;
+    scroll-snap-align: center;
+    display: block !important;
+  }
+  .story-card-dup {
+    display: block !important;
+  }
+  .story-dots {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100vw !important;
+    margin-left: -24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .story-card {
+    width: 65vw !important;
+  }
+}

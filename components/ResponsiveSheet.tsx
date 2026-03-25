@@ -456,7 +456,7 @@ export function ResponsiveSheet({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ duration: 0.2 }}
-              className={`relative z-10 mx-4 flex max-h-[85vh] w-full flex-col overflow-hidden rounded-xl bg-bg shadow-2xl ${maxWidth} ${panelClassName} ${className}`}
+              className={`relative z-10 mx-4 flex max-h-[85vh] w-full flex-col overflow-hidden bg-bg shadow-2xl ${maxWidth} ${panelClassName} ${className}`}
             >
               {/* Close button */}
               <button
