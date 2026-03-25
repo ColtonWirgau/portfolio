@@ -28,6 +28,14 @@ interface ProjectGroup {
   image: string;
   storyPath: string;
   subItems: { id: string; title: string; description: string }[];
+  poster: {
+    bg: string;
+    fg: string;
+    accent: string;
+    muted: string;
+    border: string;
+    tagline: string;
+  };
 }
 
 const projects: ProjectGroup[] = [
@@ -40,15 +48,31 @@ const projects: ProjectGroup[] = [
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
     storyPath: '/work/church-hub',
     subItems: [],
+    poster: {
+      bg: '#2D3B2D',
+      fg: '#F5F2EB',
+      accent: '#C8D5B9',
+      muted: '#8A9A7B',
+      border: '#4A5E4A',
+      tagline: 'FROM INTERNAL TOOL TO FULL PRODUCT',
+    },
   },
   {
     id: 'woodside',
     title: 'Woodside Bible Church',
     category: 'Full-Stack Development',
-    description: 'As the sole in-house developer at Woodside Bible Church, I\'ve built and maintained the software infrastructure that powers the organization. From interactive dashboards and automated database workflows to public-facing web pages and reporting tools. This is where I cut my teeth building real products for real people.',
+    description: 'As the sole in-house developer at Woodside Bible Church, I build and maintain the software infrastructure that powers the organization. From interactive dashboards and automated database workflows to public-facing web pages and reporting tools. This is where I cut my teeth building real products for real people.',
     tech: ['Next.js', 'React', 'SQL Server', 'Power BI', 'REST API', 'MinistryPlatform', 'WordPress', 'Planning Center', 'CSS/SCSS'],
     image: '/woodside.jpg',
     storyPath: '/work/woodside',
+    poster: {
+      bg: '#FAF5EF',
+      fg: '#1A1A1A',
+      accent: '#D94420',
+      muted: '#8C7A6B',
+      border: '#D4C5B5',
+      tagline: 'SOLE DEVELOPER · FULL STACK · REAL IMPACT',
+    },
     subItems: [
       {
         id: 'woodside-insights',
@@ -85,6 +109,14 @@ const projects: ProjectGroup[] = [
     tech: ['Next.js', 'Neon', 'OAuth', 'Tailwind', 'Vercel'],
     image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&h=600&fit=crop',
     storyPath: '/work/personal-projects',
+    poster: {
+      bg: '#1A1F2E',
+      fg: '#F5F2EB',
+      accent: '#D4A855',
+      muted: '#7A8599',
+      border: '#2E3548',
+      tagline: 'BUILT FOR FUN · SHIPPED FOR REAL',
+    },
     subItems: [
       {
         id: 'personal-lions',
@@ -376,7 +408,7 @@ export default function Home() {
                   className="group"
                   style={{
                     position: 'relative',
-                    aspectRatio: '3/4',
+                    aspectRatio: '2/3',
                     overflow: 'hidden',
                     cursor: 'pointer',
                     textAlign: 'left',
@@ -451,91 +483,511 @@ export default function Home() {
               />
             </div>
 
-            {/* Project grid */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
-              {projects.map((project, index) => {
-                const imageLeft = index % 2 === 0;
-                return (
-                  <div
-                    key={project.id}
-                    className="group"
-                    onClick={() => setSelectedProject(project)}
-                    style={{
-                      display: 'flex',
-                      flexDirection: imageLeft ? 'row' : 'row-reverse',
-                      gap: '40px',
-                      alignItems: 'center',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {/* Image */}
-                    <div
-                      style={{
-                        width: '50%',
-                        flexShrink: 0,
-                        aspectRatio: '4/3',
-                        overflow: 'hidden',
-                        background: 'var(--color-card)',
-                      }}
-                    >
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          transition: 'transform 0.4s ease',
-                        }}
-                        className="group-hover:scale-[1.03]"
-                      />
-                    </div>
+            {/* Project posters — responsive grid, 2-up on desktop */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))',
+              gap: '32px',
+              alignItems: 'start',
+            }}>
 
-                    {/* Content */}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: '8px' }}>
-                        {project.category}
+              {/* ═══════════════════════════════════════════════
+                  POSTER 1 — CHURCH HUB
+                  Clean, warm style matching Personal Projects feel
+                  ═══════════════════════════════════════════════ */}
+              <div
+                className="group"
+                onClick={() => setSelectedProject(projects[0])}
+                style={{
+                  background: '#EDE8E0',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  aspectRatio: '2/3',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                {/* Subtle marble background */}
+                <div style={{
+                  position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 1,
+                }}>
+                  <img
+                    src="/marble.jpg"
+                    alt=""
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      opacity: 0.165,
+                      filter: 'saturate(0)',
+                    }}
+                  />
+                </div>
+
+                {/* Top label */}
+                <div style={{ padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
+                  <span style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.2em', color: '#A09888', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
+                    SAAS PLATFORM
+                  </span>
+                </div>
+
+                {/* Giant centered title */}
+                <div style={{
+                  padding: '16px 28px 0',
+                  position: 'relative',
+                  zIndex: 3,
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}>
+                  <h3 style={{
+                    fontSize: 'clamp(3.5rem, 10vw, 6rem)',
+                    fontFamily: 'var(--font-serif)',
+                    fontWeight: 700,
+                    fontStyle: 'italic',
+                    color: '#7BA3C9',
+                    lineHeight: 0.9,
+                    letterSpacing: '-0.02em',
+                    textAlign: 'center',
+                    transform: 'scaleY(1.2)',
+                    transformOrigin: 'center',
+                  }}>
+                    Church
+                  </h3>
+                  <h3 style={{
+                    fontSize: 'clamp(3.5rem, 10vw, 6rem)',
+                    fontFamily: 'var(--font-serif)',
+                    fontWeight: 700,
+                    fontStyle: 'italic',
+                    color: '#7BA3C9',
+                    lineHeight: 0.9,
+                    letterSpacing: '-0.02em',
+                    marginTop: '8px',
+                    textAlign: 'center',
+                    transform: 'scaleY(1.2)',
+                    transformOrigin: 'center',
+                  }}>
+                    Hub
+                  </h3>
+
+                  {/* Subtitle */}
+                  <p style={{
+                    fontSize: '9px',
+                    fontWeight: 700,
+                    letterSpacing: '0.15em',
+                    color: '#8C8474',
+                    fontFamily: 'var(--font-sans)',
+                    textTransform: 'uppercase',
+                    marginTop: '24px',
+                    textAlign: 'center',
+                    lineHeight: 1.6,
+                  }}>
+                    FROM INTERNAL TOOL<br />
+                    TO FULL SAAS PRODUCT
+                  </p>
+                </div>
+
+                {/* Tech info grid */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr',
+                  gap: '1px',
+                  margin: '0 28px',
+                  borderTop: '1px solid #C8C0B4',
+                  borderBottom: '1px solid #C8C0B4',
+                  position: 'relative',
+                  zIndex: 3,
+                }}>
+                  {[
+                    { label: 'NEXT.JS', sub: 'FRAMEWORK' },
+                    { label: 'TYPESCRIPT', sub: 'LANGUAGE' },
+                    { label: 'SQL SERVER', sub: 'DATABASE' },
+                  ].map((item) => (
+                    <div key={item.label} style={{ padding: '10px 8px', textAlign: 'center' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#7BA3C9', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
+                        {item.label}
                       </div>
-                      <h3 style={{
-                        fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
-                        fontFamily: 'var(--font-display)',
-                        fontWeight: 400,
-                        color: 'var(--color-accent)',
-                        lineHeight: 1.2,
-                        letterSpacing: '-0.06em',
-                        textTransform: 'uppercase',
-                        marginBottom: '12px',
-                        WebkitTextStroke: '3px var(--color-accent)',
-                        paintOrder: 'stroke fill',
-                        transform: 'scaleX(0.85) skewX(-2deg)',
-                        transformOrigin: 'left',
+                      <div style={{ fontSize: '6px', fontWeight: 500, color: '#A09888', fontFamily: 'var(--font-sans)', letterSpacing: '0.15em', marginTop: '2px' }}>
+                        {item.sub}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom */}
+                <div style={{
+                  padding: '20px 28px 24px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                  position: 'relative',
+                  zIndex: 3,
+                  marginTop: 'auto',
+                }}>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    {['REACT', 'NODE.JS', 'TAILWIND', 'VERCEL'].map((t) => (
+                      <span key={t} style={{
+                        fontSize: '7px', fontWeight: 600, letterSpacing: '0.12em',
+                        color: '#A09888', fontFamily: 'var(--font-sans)',
                       }}>
-                        {project.title}
-                      </h3>
-                      <p style={{ fontSize: '14px', fontWeight: 400, color: 'var(--color-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
-                        {project.description}
-                      </p>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: project.subItems.length > 0 ? '16px' : '0' }}>
-                        {project.tech.map((t) => (
-                          <span
-                            key={t}
-                            style={{
-                              fontSize: '11px',
-                              fontWeight: 400,
-                              color: 'var(--color-muted)',
-                              padding: '4px 10px',
-                              borderRadius: '100px',
-                              border: '1px solid var(--color-border)',
-                            }}
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <span style={{
+                    fontSize: '7px', fontWeight: 600, letterSpacing: '0.15em',
+                    color: '#A09888', fontFamily: 'var(--font-sans)',
+                  }}>
+                    MULTI-CHURCH
+                  </span>
+                </div>
+
+                {/* Hover overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.02)',
+                  opacity: 0, transition: 'opacity 0.3s ease', pointerEvents: 'none',
+                }} className="group-hover:opacity-100!" />
+              </div>
+
+              {/* ═══════════════════════════════════════════════
+                  POSTER 2 — WOODSIDE BIBLE CHURCH (Dark Navy/Green)
+                  ═══════════════════════════════════════════════ */}
+              <div
+                className="group"
+                onClick={() => setSelectedProject(projects[1])}
+                style={{
+                  background: '#1C2B39',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  aspectRatio: '2/3',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                {/* Top info row */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  padding: '20px 28px 12px',
+                  position: 'relative',
+                  zIndex: 3,
+                }}>
+                  <div>
+                    <div style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.08em', color: '#C0C8D0', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
+                      Sole Developer
+                    </div>
+                    <div style={{ fontSize: '7px', fontWeight: 400, letterSpacing: '0.04em', color: '#6B7888', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', marginTop: '4px', maxWidth: '160px', lineHeight: 1.5 }}>
+                      BUILDING AND MAINTAINING THE SOFTWARE INFRASTRUCTURE THAT POWERS THE ORGANIZATION.
                     </div>
                   </div>
-                );
-              })}
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.08em', color: '#C0C8D0', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
+                      Full-Stack Development
+                    </div>
+                    <div style={{ fontSize: '7px', fontWeight: 400, letterSpacing: '0.04em', color: '#6B7888', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', marginTop: '4px', maxWidth: '160px', lineHeight: 1.5, marginLeft: 'auto' }}>
+                      FROM INTERACTIVE DASHBOARDS TO AUTOMATED WORKFLOWS AND REPORTING TOOLS.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Three crosses — middle one larger */}
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'flex-end',
+                  gap: '24px',
+                  padding: '12px 28px 16px',
+                  position: 'relative',
+                  zIndex: 3,
+                }}>
+                  <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
+                    <rect x="8.5" y="0" width="5" height="30" fill="#62BB46" />
+                    <rect x="0" y="7" width="22" height="5" fill="#62BB46" />
+                  </svg>
+                  <svg width="30" height="42" viewBox="0 0 30 42" fill="none">
+                    <rect x="11" y="0" width="7" height="42" fill="#62BB46" />
+                    <rect x="0" y="10" width="30" height="7" fill="#62BB46" />
+                  </svg>
+                  <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
+                    <rect x="8.5" y="0" width="5" height="30" fill="#62BB46" />
+                    <rect x="0" y="7" width="22" height="5" fill="#62BB46" />
+                  </svg>
+                </div>
+
+                {/* Centered title — Montserrat */}
+                <div style={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  padding: '0 28px',
+                  position: 'relative',
+                  zIndex: 3,
+                }}>
+                  <h3 style={{
+                    fontSize: '3.2rem',
+                    fontFamily: 'var(--font-sans)',
+                    fontWeight: 900,
+                    color: '#C0C8D0',
+                    lineHeight: 1,
+                    letterSpacing: '-0.02em',
+                    textTransform: 'uppercase',
+                    textAlign: 'center',
+                    transform: 'scaleY(1.2)',
+                    transformOrigin: 'center',
+                  }}>
+                    WOODSIDE
+                  </h3>
+                  <h4 style={{
+                    fontSize: '1.8rem',
+                    fontFamily: 'var(--font-sans)',
+                    fontWeight: 700,
+                    color: '#8A95A5',
+                    lineHeight: 1,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    textAlign: 'center',
+                    marginTop: '12px',
+                    transform: 'scaleY(1.2)',
+                    transformOrigin: 'center',
+                  }}>
+                    BIBLE CHURCH
+                  </h4>
+                </div>
+
+                {/* Tech info grid */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr',
+                  gap: '1px',
+                  margin: '0 28px',
+                  borderTop: '1px solid #2A3F50',
+                  borderBottom: '1px solid #2A3F50',
+                  position: 'relative',
+                  zIndex: 3,
+                }}>
+                  {[
+                    { label: 'NEXT.JS', sub: 'FRAMEWORK' },
+                    { label: 'SQL SERVER', sub: 'DATABASE' },
+                    { label: 'POWER BI', sub: 'REPORTING' },
+                  ].map((item) => (
+                    <div key={item.label} style={{ padding: '10px 8px', textAlign: 'center' }}>
+                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#8A95A5', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
+                        {item.label}
+                      </div>
+                      <div style={{ fontSize: '6px', fontWeight: 500, color: '#4A5565', fontFamily: 'var(--font-sans)', letterSpacing: '0.15em', marginTop: '2px' }}>
+                        {item.sub}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+
+                {/* Bottom — tech labels + Woodside logo */}
+                <div style={{
+                  padding: '20px 28px 24px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                  position: 'relative',
+                  zIndex: 3,
+                }}>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    {['REST API', 'WORDPRESS', 'PLANNING CENTER'].map((t) => (
+                      <span key={t} style={{
+                        fontSize: '7px', fontWeight: 600, letterSpacing: '0.12em',
+                        color: '#4A5565', fontFamily: 'var(--font-sans)',
+                      }}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  {/* Woodside logo icon */}
+                  <svg viewBox="0 0 822.73 822.41" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: '28px', height: '28px', opacity: 0.4 }}>
+                    <path d="M482.59,292.96c-28.5,75.56-63.52,148.62-91.88,224.24-22.85,60.93-44.5,165.54,5.99,218.03,53.19,55.31,103.27-36.03,126.36-76.12,29.77-51.67,60.19-102.91,92.51-153.1,37.77-58.65,82.78-117.18,128.05-170.34,17.33-20.35,35.58-39.9,55.18-58.05,1.32-.3,1.67.72,2.19,1.61,2.7,4.68,6.16,19.72,7.79,25.79,55.59,207.53-59.67,424.44-261.39,494.49-162.86,56.55-343.5,6.03-452.97-125.71l.02-2.82c22.1-29.38,43.34-59.51,66.31-88.22,46.87-58.59,104.84-117,159.18-168.95,39.21-37.49,94.79-86.04,141.88-112.38,2.97-1.66,18.74-10.3,20.79-8.46Z" fill="#62BB46" />
+                    <path d="M454.78,615.29c-.4-37.26,12.31-73.93,23.96-108.91,21.35-64.11,58.46-144.93,65.26-211.05,10.09-98.15-75.84-54.82-121.59-23.71-87.22,59.32-157.97,140.42-238.72,207.44-1.08.9-1.56,2.33-3.36,1.91,29.91-61.5,79.75-118.22,92.63-187.03,26.62-142.2-143-109.97-223.13-77.75-1.54-1.51,19.5-33.71,21.85-37.14C170.36,35.21,348.48-31.19,518.31,14.05c111.97,29.83,206.98,107.78,259.7,210.54l-1.23,3.19c-101.38,85.68-182.57,188.93-258.5,297.03-21.17,30.14-40.81,61.47-63.5,90.48Z" fill="#62BB46" />
+                    <path d="M38.3,581.71c-6.2-9.05-10.4-20.99-14.14-31.42C-1.72,478.2-6.79,400.44,8.86,325.38c1.73-8.3,5.99-29.98,9.5-36.56,1.25-2.35,11.96-9.93,14.86-12.01,41.76-29.96,121.9-63.33,173.22-50.74,49.51,12.15,15.29,70.69-.39,97.86-34.22,59.31-78.86,114.75-116.32,172.48-18.06,27.83-35.65,56.1-51.43,85.3Z" fill="#62BB46" />
+                  </svg>
+                </div>
+
+                {/* Hover overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.03)',
+                  opacity: 0, transition: 'opacity 0.3s ease', pointerEvents: 'none',
+                }} className="group-hover:opacity-100!" />
+              </div>
+
+              {/* ═══════════════════════════════════════════════
+                  POSTER 3 — PERSONAL PROJECTS (Dark Navy/Gold)
+                  More playful, experimental feel
+                  ═══════════════════════════════════════════════ */}
+              <div
+                className="group"
+                onClick={() => setSelectedProject(projects[2])}
+                style={{
+                  background: '#7B6DB5',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  aspectRatio: '2/3',
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                {/* Background mountain image with purple duotone */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: '75%',
+                  overflow: 'hidden',
+                  zIndex: 1,
+                }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&h=1200&fit=crop"
+                    alt=""
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center top',
+                      filter: 'saturate(0) contrast(1.4) brightness(0.25)',
+                      opacity: 0.7,
+                    }}
+                  />
+                  {/* Purple tint overlay */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: '#7B6DB5',
+                    mixBlendMode: 'color',
+                  }} />
+                  {/* Fade from top */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to bottom, #7B6DB5 0%, #7B6DB5cc 25%, transparent 55%)',
+                  }} />
+                </div>
+
+                {/* Texture grain overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0, opacity: 0.06,
+                  backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
+                  backgroundRepeat: 'repeat', backgroundSize: '256px 256px', pointerEvents: 'none', zIndex: 2,
+                }} />
+
+                {/* Top label */}
+                <div style={{ padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
+                  <span style={{
+                    fontSize: '8px', fontWeight: 600, letterSpacing: '0.2em',
+                    color: '#C4B8E8', fontFamily: 'var(--font-sans)', textTransform: 'uppercase',
+                  }}>
+                    SIDE PROJECTS
+                  </span>
+                </div>
+
+                {/* Giant title — pink on periwinkle */}
+                <div style={{
+                  padding: '16px 28px 0',
+                  position: 'relative',
+                  zIndex: 3,
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}>
+                  <h3 style={{
+                    fontSize: 'clamp(3rem, 10vw, 5.5rem)',
+                    fontFamily: 'var(--font-serif)',
+                    fontWeight: 700,
+                    color: '#E8899F',
+                    lineHeight: 0.95,
+                    letterSpacing: '-0.02em',
+                    textAlign: 'center',
+                    transform: 'scaleY(1.2)',
+                    transformOrigin: 'center',
+                  }}>
+                    Personal
+                  </h3>
+                  <h3 style={{
+                    fontSize: 'clamp(3rem, 10vw, 5.5rem)',
+                    fontFamily: 'var(--font-serif)',
+                    fontWeight: 700,
+                    color: '#E8899F',
+                    lineHeight: 0.95,
+                    letterSpacing: '-0.02em',
+                    marginTop: '8px',
+                    textAlign: 'center',
+                    transform: 'scaleY(1.2)',
+                    transformOrigin: 'center',
+                  }}>
+                    Projects
+                  </h3>
+
+                  {/* Subtitle */}
+                  <p style={{
+                    fontSize: '9px',
+                    fontWeight: 700,
+                    letterSpacing: '0.15em',
+                    color: '#C4B8E8',
+                    fontFamily: 'var(--font-sans)',
+                    textTransform: 'uppercase',
+                    marginTop: '20px',
+                    textAlign: 'center',
+                    lineHeight: 1.6,
+                  }}>
+                    THE STUFF I BUILD FOR FUN<br />
+                    AND SOMETIMES FOR FRIENDS & FAMILY
+                  </p>
+                </div>
+
+                {/* Bottom — tech + tagline */}
+                <div style={{
+                  padding: '20px 28px 24px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-end',
+                  position: 'relative',
+                  zIndex: 3,
+                  marginTop: 'auto',
+                }}>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    {['NEXT.JS', 'NEON', 'OAUTH', 'TAILWIND'].map((t) => (
+                      <span key={t} style={{
+                        fontSize: '7px', fontWeight: 600, letterSpacing: '0.12em',
+                        color: '#C4B8E8', fontFamily: 'var(--font-sans)',
+                      }}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <span style={{
+                    fontSize: '7px', fontWeight: 600, letterSpacing: '0.15em',
+                    color: '#C4B8E8', fontFamily: 'var(--font-sans)',
+                  }}>
+                    LESS POLISHED · MORE FUN
+                  </span>
+                </div>
+
+                {/* Hover overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.04)',
+                  opacity: 0, transition: 'opacity 0.3s ease', pointerEvents: 'none',
+                }} className="group-hover:opacity-100!" />
+              </div>
+            </div>
+
+            {/* "Scroll for more" divider after posters */}
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '48px 0 0' }}>
+              <span style={{ fontSize: '9px', fontWeight: 600, letterSpacing: '0.2em', color: 'var(--color-muted)', textTransform: 'uppercase' }}>
+                ↓ Click any poster to explore ↓
+              </span>
             </div>
           </div>
         </section>
