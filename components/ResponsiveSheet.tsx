@@ -42,6 +42,8 @@ interface ResponsiveSheetProps {
   modalBreakpoint?: number;
   className?: string;
   panelClassName?: string;
+  panelStyle?: React.CSSProperties;
+  scrollBg?: string;
   sheetMaxHeight?: string;
 }
 
@@ -155,6 +157,8 @@ export function ResponsiveSheet({
   modalBreakpoint = 768,
   className = '',
   panelClassName = '',
+  panelStyle,
+  scrollBg,
   sheetMaxHeight = '90dvh',
 }: ResponsiveSheetProps) {
   const [mode, setMode] = useState<SheetMode>('sheet');
@@ -374,7 +378,7 @@ export function ResponsiveSheet({
           transition={{ duration: 0.2 }}
           className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-20"
           style={{
-            background: 'linear-gradient(to top, var(--color-bg) 0%, var(--color-bg) 30%, transparent 100%)',
+            background: `linear-gradient(to top, ${scrollBg || 'var(--color-bg)'} 0%, ${scrollBg || 'var(--color-bg)'} 30%, transparent 100%)`,
           }}
         >
           <div className="absolute inset-x-0 bottom-2 flex flex-col items-center gap-0.5" style={{ color: 'var(--color-muted)' }}>
@@ -405,7 +409,7 @@ export function ResponsiveSheet({
           {/* Panel */}
           <div
             className={`absolute inset-x-0 bottom-0 flex flex-col rounded-t-[2rem] bg-bg shadow-2xl ${isDragging ? '' : 'transition-transform duration-300 ease-out'} ${panelClassName}`}
-            style={{ transform: panelTransform, maxHeight: sheetMaxHeight, overscrollBehavior: 'contain' }}
+            style={{ transform: panelTransform, maxHeight: sheetMaxHeight, overscrollBehavior: 'contain', ...panelStyle }}
           >
             {/* Drag area: handle + header */}
             <div
@@ -457,6 +461,7 @@ export function ResponsiveSheet({
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ duration: 0.2 }}
               className={`relative z-10 mx-4 flex max-h-[85vh] w-full flex-col overflow-hidden bg-bg shadow-2xl ${maxWidth} ${panelClassName} ${className}`}
+              style={panelStyle}
             >
               {/* Close button */}
               <button

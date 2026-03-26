@@ -90,6 +90,13 @@ body,
 }
 
 /* Poster grid — default: 3-up grid on wide screens */
+.poster-card {
+  transition: transform 0.3s ease !important;
+}
+.poster-card:hover {
+  transform: scale(1.03) !important;
+}
+
 .poster-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -102,15 +109,8 @@ body,
   display: none !important;
 }
 
-/* Below ~1200px: 2-up grid */
+/* Below ~1200px: horizontal scroll carousel */
 @media (max-width: 1200px) {
-  .poster-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Below ~920px: horizontal scroll carousel */
-@media (max-width: 920px) {
   .poster-grid {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -126,11 +126,14 @@ body,
   }
   .poster-card {
     flex-shrink: 0 !important;
-    width: 65vw !important;
-    min-height: 450px;
-    max-height: 75vh !important;
-    aspect-ratio: unset !important;
+    width: auto !important;
+    height: 75vh !important;
+    max-height: 700px !important;
+    aspect-ratio: 2/3 !important;
     scroll-snap-align: center;
+  }
+  .poster-card:hover {
+    transform: none !important;
   }
   .poster-card-dup {
     display: flex !important;
@@ -148,7 +151,7 @@ body,
 
 @media (max-width: 600px) {
   .poster-card {
-    width: 75vw !important;
+    height: 65vh !important;
   }
 }
 

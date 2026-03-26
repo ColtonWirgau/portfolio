@@ -347,8 +347,8 @@ export default function Home() {
         </div>
 
         {/* My Story / About section */}
-        <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
+        <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
+          <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
 
             {/* Editorial heading */}
             <div style={{ marginBottom: '48px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -524,7 +524,7 @@ export default function Home() {
         </section>
 
         {/* Portfolio section */}
-        <section id="work" style={{ padding: '80px 24px', display: 'flex', position: 'relative', overflow: 'hidden' }}>
+        <section id="work" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
           <SideLabel label="Work" side="left" mirrorLabel />
           {/* Decorative squid watermark */}
           <svg
@@ -545,7 +545,7 @@ export default function Home() {
             <path fill="var(--color-fg)" d="M316.8,619.52c-10.78-10.88-18.24-18.24-22.4-22.05-13.57-12.42-24.65-27.5-32.17-44.31-3.86-8.62-6.79-17.63-8.86-26.84-.98-4.35-2.55-8.26.05-12.03,2.99-4.33,7.19-7.48,9.79-12.23,3.34-6.09,4.66-13.11,4.95-20.04.56-13.5-2.71-27.13-9.28-38.93-7.71-13.84,8.81-4.82,9.76-13.32,3.57-31.75,4.75-56.89,3.53-75.4-2.62-39.67-7.6-80.33-14.96-121.97-.27-1.48.27-2.97,1.41-3.95,24.79-21.23,37.87-32.4,39.24-33.52,10.88-8.77,16.62-17.85,7.79-29.98-7.07-9.71-46.68-61.46-118.83-155.27-4.51-5.86-10.32-9.54-16.15-9.68-5.83.14-11.64,3.82-16.15,9.68C82.37,103.49,42.76,155.24,35.69,164.95c-8.83,12.13-3.09,21.21,7.79,29.98,1.37,1.11,14.45,12.29,39.24,33.52,1.13.98,1.68,2.46,1.41,3.95-7.36,41.64-12.34,82.3-14.96,121.97-1.21,18.51-.04,43.65,3.53,75.4.96,8.51,17.47-.52,9.76,13.32-6.57,11.8-9.84,25.43-9.28,38.93.29,6.94,1.61,13.96,4.95,20.04,2.6,4.75,6.8,7.9,9.79,12.23,2.6,3.77,1.02,7.68.05,12.03-2.07,9.21-5,18.23-8.86,26.84-7.53,16.8-18.6,31.88-32.17,44.31-4.16,3.81-11.62,11.17-22.4,22.05C6.55,637.7-1.55,659.99.24,686.34c1.37,20.29,9.55,37.89,21.74,53.87,9.77,12.81,15.02,23.09,16.35,38.69.53,6.27.94,10.66,1.25,13.14.27,2.17,1.62,4.04,3.55,5.02,8.07,4.04,11.97-3.48,13.09-10.45,3.73-23.18-4.08-38.46-14.2-59.63-15.04-31.48-9.77-64.04,19.26-84.8,12.05-8.61,23.55-17.77,34.51-27.44,10.06-8.89,18.28-20.02,24.71-33.4.25-.55.94-.76,1.46-.45l.57.31c.29.18.43.53.33.86-3.22,10.12-6.88,19.57-14.61,39.18-5.78,14.61-10.76,29.36-12.71,44.61-3.61,28.28-1.45,55.96,6.5,83.03,5.12,17.42,10.59,31.74,12.48,45.88,2.17,16.09,1.27,32.07-2.66,47.93-.59,2.42.94,6.56,3.32,8.16,7.56,5.14,14.08-2.7,17.5-9,5.31-9.84,8.24-21.15,8.79-33.93,1.11-25.62-4.63-48.59-8.4-72.75-4.39-28.26-1.23-55.25,9.49-80.98,12.85-30.82,20.14-45.61,25.02-67.75.43-1.93,1.11-3.32,2.03-4.16.31-.28.68-.42,1.05-.45.37.03.74.16,1.05.45.92.84,1.6,2.23,2.03,4.16,4.88,22.15,12.17,36.93,25.02,67.75,10.72,25.72,13.89,52.71,9.49,80.98-3.77,24.16-9.51,47.13-8.4,72.75.55,12.77,3.48,24.08,8.79,33.93,3.42,6.31,9.94,14.14,17.5,9,2.38-1.6,3.91-5.74,3.32-8.16-3.93-15.86-4.82-31.84-2.66-47.93,1.89-14.14,7.36-28.46,12.48-45.88,7.95-27.07,10.12-54.75,6.5-83.03-1.95-15.25-6.93-30-12.71-44.61-7.73-19.61-11.39-29.06-14.61-39.18-.1-.33.04-.68.33-.86l.57-.31c.53-.31,1.21-.1,1.46.45,6.43,13.38,14.65,24.51,24.71,33.4,10.96,9.67,22.46,18.83,34.51,27.44,29.02,20.76,34.3,53.32,19.26,84.8-10.12,21.17-17.93,36.45-14.2,59.63,1.11,6.97,5.02,14.49,13.09,10.45,1.93-.98,3.28-2.85,3.55-5.02.31-2.48.72-6.88,1.25-13.14,1.33-15.61,6.58-25.88,16.35-38.69,12.19-15.98,20.37-33.57,21.74-53.87,1.8-26.35-6.31-48.63-24.3-66.82Z" />
           </svg>
 
-          <div className="poster-grid-wrapper" style={{ flex: 1, minWidth: 0 }}>
+          <div className="poster-grid-wrapper" style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
             <div style={{ marginBottom: '48px' }}>
               <SectionHeading
                 title={<>Things I{"\u2019"}ve built.</>}
@@ -572,7 +572,6 @@ export default function Home() {
                   position: 'relative',
                   overflow: 'hidden',
                   aspectRatio: '2/3',
-                  maxHeight: '85vh',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
@@ -713,11 +712,6 @@ export default function Home() {
                   </span>
                 </div>
 
-                {/* Hover overlay */}
-                <div style={{
-                  position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.02)',
-                  opacity: 0, transition: 'opacity 0.3s ease', pointerEvents: 'none',
-                }} className="group-hover:opacity-100!" />
               </div>
 
               {/* ═══════════════════════════════════════════════
@@ -732,7 +726,6 @@ export default function Home() {
                   position: 'relative',
                   overflow: 'hidden',
                   aspectRatio: '2/3',
-                  maxHeight: '85vh',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
@@ -911,11 +904,6 @@ export default function Home() {
                   </svg>
                 </div>
 
-                {/* Hover overlay */}
-                <div style={{
-                  position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.03)',
-                  opacity: 0, transition: 'opacity 0.3s ease', pointerEvents: 'none',
-                }} className="group-hover:opacity-100!" />
               </div>
 
               {/* ═══════════════════════════════════════════════
@@ -931,7 +919,6 @@ export default function Home() {
                   position: 'relative',
                   overflow: 'hidden',
                   aspectRatio: '2/3',
-                  maxHeight: '85vh',
                   display: 'flex',
                   flexDirection: 'column',
                 }}
@@ -1074,11 +1061,6 @@ export default function Home() {
                   </span>
                 </div>
 
-                {/* Hover overlay */}
-                <div style={{
-                  position: 'absolute', inset: 0, background: 'rgba(255,255,255,0.04)',
-                  opacity: 0, transition: 'opacity 0.3s ease', pointerEvents: 'none',
-                }} className="group-hover:opacity-100!" />
               </div>
               </Fragment>
               ))}
@@ -1121,90 +1103,141 @@ export default function Home() {
         <ResponsiveSheet
           open={!!selectedProject}
           onClose={() => setSelectedProject(null)}
-          header={selectedProject ? (
-            <div className="relative">
-              <div style={{ height: '180px' }} className="w-full overflow-hidden">
-                <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0" style={{ padding: '24px 28px' }}>
-                <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '6px' }} className="uppercase text-white/50">
-                  {selectedProject.category}
+          header={selectedProject ? (() => {
+            const p = selectedProject.poster;
+            const isChurchHub = selectedProject.id === 'church-hub';
+            const isWoodside = selectedProject.id === 'woodside';
+            const isPersonal = selectedProject.id === 'personal';
+            return (
+              <div style={{ background: isWoodside ? '#1C2B39' : isPersonal ? '#7B6DB5' : '#EDE8E0', position: 'relative', overflow: 'hidden' }}>
+                {/* Background image */}
+                {isChurchHub && (
+                  <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+                    <img src="/marble.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.165, filter: 'saturate(0)' }} />
+                  </div>
+                )}
+                {isWoodside && (
+                  <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+                    <img src="/woodside.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.12, filter: 'grayscale(1)' }} />
+                  </div>
+                )}
+                {isPersonal && (
+                  <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+                    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&h=600&fit=crop" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
+                    <div style={{ position: 'absolute', inset: 0, background: '#7B6DB5', mixBlendMode: 'multiply' }} />
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #7B6DB5 0%, transparent 50%)' }} />
+                  </div>
+                )}
+                <div style={{ position: 'relative', zIndex: 1, padding: '40px 28px 28px' }}>
+                  <div style={{
+                    fontSize: '10px',
+                    letterSpacing: '0.15em',
+                    marginBottom: '8px',
+                    color: isWoodside ? '#8A95A5' : isPersonal ? 'rgba(255,255,255,0.5)' : '#9B8F80',
+                    fontFamily: 'var(--font-sans)',
+                    fontWeight: 700,
+                  }} className="uppercase">
+                    {selectedProject.category}
+                  </div>
+                  <h3 style={{
+                    fontSize: '32px',
+                    fontWeight: isWoodside ? 900 : 400,
+                    letterSpacing: isWoodside ? '0.04em' : '-0.02em',
+                    lineHeight: 1.1,
+                    color: isWoodside ? '#C0C8D0' : isPersonal ? '#E8899F' : '#7BA3C9',
+                    fontFamily: isWoodside ? 'var(--font-sans)' : 'var(--font-serif)',
+                    fontStyle: isChurchHub ? 'italic' : 'normal',
+                    textTransform: isWoodside ? 'uppercase' : 'none',
+                  }}>
+                    {selectedProject.title}
+                  </h3>
                 </div>
-                <h3 style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.1 }} className="text-white">
-                  {selectedProject.title}
-                </h3>
               </div>
-            </div>
-          ) : undefined}
+            );
+          })() : undefined}
+          panelStyle={selectedProject ? {
+            background: selectedProject.id === 'woodside' ? '#1C2B39' : selectedProject.id === 'personal' ? '#7B6DB5' : '#EDE8E0',
+          } : undefined}
+          scrollBg={selectedProject ? (selectedProject.id === 'woodside' ? '#1C2B39' : selectedProject.id === 'personal' ? '#7B6DB5' : '#EDE8E0') : undefined}
           defaultPage="main"
         >
           <SheetPage name="main">
-            {selectedProject && (
-              <div style={{ padding: '28px' }}>
-                <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
-                  {selectedProject.description}
-                </p>
+            {selectedProject && (() => {
+              const p = selectedProject.poster;
+              const isWoodside = selectedProject.id === 'woodside';
+              const isPersonal = selectedProject.id === 'personal';
+              const isChurchHub = selectedProject.id === 'church-hub';
+              const bg = isWoodside ? '#1C2B39' : isPersonal ? '#7B6DB5' : '#EDE8E0';
+              const fg = isWoodside ? '#C0C8D0' : isPersonal ? '#F5F0EB' : '#44413B';
+              const muted = isWoodside ? '#8A95A5' : isPersonal ? 'rgba(255,255,255,0.6)' : '#9B8F80';
+              const border = isWoodside ? '#2E3E4E' : isPersonal ? 'rgba(255,255,255,0.15)' : '#C8BDB0';
+              const accent = isWoodside ? '#62BB46' : isPersonal ? '#E8899F' : '#7BA3C9';
+              return (
+                <div style={{ padding: '28px', background: bg, minHeight: '300px' }}>
+                  <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: muted }}>
+                    {selectedProject.description}
+                  </p>
 
-                {/* Tech tags */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '20px' }}>
-                  {selectedProject.tech.map((t) => (
-                    <span key={t} style={{ fontSize: '11px', fontWeight: 400, color: 'var(--color-muted)', padding: '4px 10px', borderRadius: '100px', border: '1px solid var(--color-border)' }}>
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Highlights / sub-items as bullet points */}
-                {selectedProject.subItems.length > 0 && (
-                  <div style={{ marginTop: '24px' }}>
-                    <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '12px', color: 'var(--color-muted)' }} className="uppercase">
-                      Highlights
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {selectedProject.subItems.map((sub) => (
-                        <div key={sub.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                          <span style={{ color: 'var(--color-border)', marginTop: '6px', flexShrink: 0, fontSize: '6px' }}>●</span>
-                          <div>
-                            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-fg)' }}>{sub.title}</span>
-                            <span style={{ fontSize: '13px', color: 'var(--color-muted)' }}> — {sub.description}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                  {/* Tech tags */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '20px' }}>
+                    {selectedProject.tech.map((t) => (
+                      <span key={t} style={{ fontSize: '11px', fontWeight: 400, color: muted, padding: '4px 10px', borderRadius: '100px', border: `1px solid ${border}` }}>
+                        {t}
+                      </span>
+                    ))}
                   </div>
-                )}
 
-                {/* The Full Story link */}
-                <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--color-border)' }}>
-                  <Link
-                    href={selectedProject.storyPath}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      width: '100%',
-                      textDecoration: 'none',
-                      padding: '14px 12px',
-                      margin: '0 -12px',
-                      borderRadius: '10px',
-                      transition: 'background 0.15s',
-                      background: 'rgba(0,0,0,0.02)',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.05)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.02)')}
-                  >
-                    <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--color-accent)', flexShrink: 0 }} />
-                    <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-fg)', flex: 1 }}>
-                      The Full Story
-                    </span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--color-muted)" strokeWidth="2.5" strokeLinecap="round" style={{ flexShrink: 0 }}>
-                      <path d="M9 18l6-6-6-6" />
-                    </svg>
-                  </Link>
+                  {/* Highlights / sub-items as bullet points */}
+                  {selectedProject.subItems.length > 0 && (
+                    <div style={{ marginTop: '24px' }}>
+                      <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '12px', color: muted }} className="uppercase">
+                        Highlights
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        {selectedProject.subItems.map((sub) => (
+                          <div key={sub.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                            <span style={{ color: accent, marginTop: '6px', flexShrink: 0, fontSize: '6px' }}>●</span>
+                            <div>
+                              <span style={{ fontSize: '13px', fontWeight: 600, color: fg }}>{sub.title}</span>
+                              <span style={{ fontSize: '13px', color: muted }}> — {sub.description}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* The Full Story link */}
+                  <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: `1px solid ${border}` }}>
+                    <Link
+                      href={selectedProject.storyPath}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        width: '100%',
+                        textDecoration: 'none',
+                        padding: '14px 12px',
+                        margin: '0 -12px',
+                        borderRadius: '10px',
+                        transition: 'background 0.15s',
+                        background: isWoodside || isPersonal ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)',
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = isWoodside || isPersonal ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.06)')}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = isWoodside || isPersonal ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)')}
+                    >
+                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: accent, flexShrink: 0 }} />
+                      <span style={{ fontSize: '14px', fontWeight: 600, color: fg, flex: 1 }}>
+                        The Full Story
+                      </span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={muted} strokeWidth="2.5" strokeLinecap="round" style={{ flexShrink: 0 }}>
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
           </SheetPage>
         </ResponsiveSheet>
 
