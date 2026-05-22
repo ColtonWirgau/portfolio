@@ -1,0 +1,39 @@
+# Colton Wirgau
+
+> Full-stack developer and AI engineer based in Detroit, MI. Published AI researcher (2017) building production software with AI deeply integrated into both the product and the process. Founder of Church Hub, sole developer at Woodside Bible Church, and the builder behind several side projects.
+
+Colton has been working with machine learning since 2016, well before the current LLM era. His undergraduate research on emotion classification (the "Sylvester" project at the University of Detroit Mercy) was peer-reviewed and published in *New Trends in Information Technology* in 2017. Today he ships full-stack products with Next.js, React, TypeScript, and SQL Server, and uses modern AI tooling heavily across his daily engineering work.
+
+This portfolio is built with Next.js 16 and React 19 and is intentionally design-forward, but the underlying positioning is AI-first: depth of experience with language models, plus the product instincts to know where they actually belong.
+
+## About
+
+- [Story and background](/#about): Grew up in Algonac, Michigan. IB diploma, football captain, track and field Hall of Famer. Studied software engineering and leadership at the University of Detroit Mercy while running D1 track. Got published in AI research. Joined Woodside Bible Church as the sole in-house developer, where the work eventually became the foundation for Church Hub.
+- [AI research, "Sylvester"](https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification): Peer-reviewed paper on emotion classification from Twitter data, published in *New Trends in Information Technology*, 2017. Pre-LLM NLP work on tokenization, language drift, sarcasm, slang, and ambiguity at scale.
+
+## Work
+
+- [Church Hub](/work/church-hub): SaaS platform for churches. Started as an internal tool at Woodside Bible Church and evolved into a full product that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data. Built on Next.js, React, TypeScript, Node.js, SQL Server, and Tailwind. Colton founded the business and has implemented it across multiple churches.
+- [Woodside Bible Church](/work/woodside): Sole in-house developer. Builds and maintains the software infrastructure for the organization, including interactive dashboards, automated database workflows, public-facing web pages, Power BI reporting, and third-party integrations with REACH, Planning Center, and MinistryPlatform. Some of this work was adopted into MinistryPlatform's core product.
+- [Personal Projects](/work/personal-projects): Side projects, including Dynastly (a dynasty fantasy football trade and league management tool with a companion browser extension), a Lions season ticket tracker with full OAuth and a Neon database, and the Degenerates Dashboard (a parlay tracker for him and his friends).
+
+## Skills and stack
+
+- Languages: TypeScript, JavaScript, SQL, Python (for AI/ML work)
+- Frameworks: Next.js, React, Node.js, Tailwind CSS
+- Data: SQL Server, Neon (Postgres), Drizzle, Supabase
+- Infrastructure and tools: Vercel, AWS S3, Mapbox, Playwright, OAuth
+- Reporting and integrations: Power BI, MinistryPlatform, Planning Center, WordPress, REST APIs
+- AI: production use of modern LLMs in product features and engineering workflow, plus pre-LLM NLP research background
+
+## Contact
+
+- [Contact form](/#contact): the primary way to reach Colton for hiring, collaboration, or project conversations.
+- Email: coltonwirgau@gmail.com
+- Location: Detroit, MI (open to remote)
+
+## Optional
+
+- [Hobbies and life beyond code](/hobbies): music, sports, family, faith, and other context on who he is outside of work.
+- [Career timeline](/career): a more detailed view of roles and milestones.
+- [College years](/college) and [childhood](/childhood): longer-form background for anyone reading deeper into the story.

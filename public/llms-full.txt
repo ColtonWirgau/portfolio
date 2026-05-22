@@ -1,0 +1,142 @@
+# Colton Wirgau, Full-Stack Developer and AI Engineer
+
+> Detroit-based full-stack developer with a decade of production engineering experience and a peer-reviewed background in AI. Published in *New Trends in Information Technology* in 2017 on emotion classification from social data, well before the LLM era. Founder of Church Hub, sole developer at Woodside Bible Church, and the builder behind several side projects. Focused on product engineering, UI/UX, and applying AI deeply (and tastefully) inside real software.
+
+## Quick identity
+
+- Name: Colton Wirgau
+- Location: Detroit, MI (Clarkston, north of Detroit)
+- Email: coltonwirgau@gmail.com
+- Primary site role labels: AI Researcher (Published, 2017), Product Engineer (Since 2016), Founder (Church Hub)
+- Self-described roles (rotating on the hero): AI pioneer, problem solver, UI/UX obsessive, full-stack developer, builder of tools, product thinker, leader, communicator
+
+## Positioning
+
+Colton's portfolio is intentionally design-forward, but the *substantive* lead is AI. He was doing applied NLP research as an undergrad in 2016 and 2017, when most engineers had never touched a language model. His co-authored paper, "Sylvester: An Approach to Emotion Classification," was published in *New Trends in Information Technology* in 2017 and is hosted on ResearchGate.
+
+In his own words: "I built AI before you could use AI to build code. That predates the entire vibe-coding era. Working on Sylvester meant wrestling with the messy reality of unstructured language at scale: tokenization, drift, sarcasm, slang, ambiguity. The instincts I developed then are the foundation of what's now called context engineering."
+
+Today he uses modern LLMs heavily inside both product features and his daily engineering workflow, and is well-suited to teams asking whether AI can be leveraged deeper into their product or process.
+
+## Work, in detail
+
+### Church Hub (SaaS Platform, founder)
+
+What started as an internal tool at Woodside Bible Church evolved into a full SaaS product. Church Hub is a modular Next.js platform that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data. Colton started a business around it and has implemented it across multiple churches to solve real operational problems at scale.
+
+The platform handles event management, volunteer coordination, giving dashboards, custom reporting, and modular tools that extend MinistryPlatform data.
+
+- Tech: Next.js, React, TypeScript, Node.js, SQL Server, Tailwind, Vercel
+- Tagline: From internal tool to full SaaS product
+- Detail page: /work/church-hub
+
+### Woodside Bible Church (Sole in-house developer, since 2016)
+
+Title: Software Development Manager and Full-Stack Developer. As the sole in-house developer at a large multi-campus church, Colton builds and maintains the software infrastructure that powers the organization, from interactive dashboards and automated database workflows to public-facing web pages and reporting tools. This is where he cut his teeth building real products for real people.
+
+Career-defining context: After Colton graduated, Woodside created a role for him so they wouldn't lose him. One of his first projects was cleaning up the database (he ended up deactivating about two-thirds of it) and building better systems to track real engagement. Some of that work was eventually adopted into MinistryPlatform's main product for all customers.
+
+He was recognized with MinistryPlatform's "Deep Space Award" for innovation and advancement of the product ecosystem.
+
+Sub-projects under the Woodside umbrella:
+
+- **Dynamic Insights & Widgets.** Extended MinistryPlatform's static reporting platform into interactive dashboards with custom embedded widgets. Created a nested JSON framework for optimized data retrieval. This innovation inspired new features in MinistryPlatform's main product and became a development model across partner organizations.
+- **Web Pages & Platforms (apps.woodsidebible.org).** Built and maintains multiple public-facing and internal web applications. A unified Next.js platform that centralizes operations, automates data tasks, and provides clean interfaces for both staff and community use across multiple campuses. Serves thousands of users every week.
+- **Database Automations.** Designed and implemented automated database workflows that replaced manual processes.
+- **Power BI Reporting.** Created Power BI dashboards and reports for leadership and staff. Turns raw data into clear, actionable visuals.
+- **Third-Party Integrations.** Built and facilitated integrations of platforms like REACH and Planning Center into MinistryPlatform.
+- **UI/UX Leadership.** Leads UI/UX across all digital products at Woodside. Also a major contributor to "MP Next," an open-source Next.js template for MinistryPlatform API integration.
+
+Tech: Next.js, React, SQL Server, Power BI, REST API, MinistryPlatform, WordPress, Planning Center, CSS/SCSS.
+
+Detail page: /work/woodside
+
+### Personal Projects (Side projects)
+
+Less polished, more personality. The stuff Colton builds for fun and sometimes for friends and family.
+
+- **Dynastly.** A dynasty fantasy football tool. Colton plays dynasty fantasy football and got tired of bouncing between five tools to evaluate his team, see how he stacks up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don't expose the APIs needed. Dynastly pulls player valuations from multiple sources, mirrors his league's rosters and matchups, and lets him build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won't. He's found some interesting things in upstream platforms along the way.
+- **Lions Season Ticket Tracker (RoarTracker).** Colton and his parents have Detroit Lions season tickets with two extra seats, so he built a small app to keep track of who's going to each game, any resales, and costs. Modest from a brand standpoint (it's just for the family), but under the hood it has full OAuth, a Neon Postgres database, and clean dashboards.
+- **Degenerates Dashboard.** Every week, Colton and his friends place a 12-leg parlay. They have never won. The dashboard pulls in picks, tracks results, and roasts them with the data. It's dumb, it's fun, and one of his favorite things he's built.
+
+Tech across these: Next.js, Neon (Postgres), Drizzle, OAuth, Tailwind, Playwright, Vercel.
+
+Detail page: /work/personal-projects
+
+## AI research, "Sylvester"
+
+Sylvester was a collaborative research project Colton worked on during undergrad at the University of Detroit Mercy. It learned the language of Twitter through automatic annotation and classification, then interpreted tweets in real time to determine how people felt emotionally about any given subject, based on the current shape of online language rather than a fixed lexicon.
+
+Citation: "Sylvester: An Approach to Emotion Classification." *New Trends in Information Technology*, 2017.
+
+ResearchGate link: https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification
+
+Why it still matters: emotion classification on social data pre-LLM forced the team to confront the same problems that drive modern context engineering. Tokenization choices, semantic drift, sarcasm, slang, and ambiguity at scale. Those instincts transfer directly to building AI-augmented products today.
+
+## Background and story
+
+Colton's "life events" on the site are organized by place. Each one has a page (`/childhood`, `/college`, `/career`, `/family`, `/hobbies`).
+
+### Algonac, MI (Childhood)
+
+Grew up in Algonac, a small river town on the St. Clair River. The kind of place where everybody knows everybody. Where he first got curious about building things, tearing apart computers, making terrible websites, and figuring out how stuff works.
+
+- IB Diploma recipient at Algonac High School. Graduated 3rd in class with a 4.2 GPA.
+- 7 school records in track & field. All-State selection and the all-time leading scorer in Algonac HS history. Inducted into the Hall of Fame.
+- Captain of the football team. All-Area honors.
+- Grew up in a church his great grandfather started. Faith has always been a central part of his life and shapes how he leads and how he believes people should be treated.
+
+### Detroit (College, University of Detroit Mercy)
+
+BS in Software Engineering with a minor in Leadership. Graduated with honors. Chose software engineering over computer science because he didn't just want to write code, he wanted to lead people and build things that actually help them.
+
+- Division I track & field athlete. Student Athlete of the Year. Seven-time All-Horizon League selection.
+- Published in AI research: "Sylvester: An Approach to Emotion Classification," 2017.
+- Embedded Systems Engineering Intern at Continental Automotive (May to Sep 2015). Built a graphical interface for testing a cybersecurity module used in many Chrysler and Jeep vehicles. Heavily C-based and requirement-driven.
+- IT Coordinator at UDM (Sep 2015 to Aug 2018). Helped integrate three new websites, managed multiple databases, did data analytics for university departments. After graduation, was hired by the university to integrate a new system for disability support services, the Student Success Center, and the testing center.
+- Tutor and TA at the Student Success Center. Consistently one of the center's most sought-after tutors. Led a digital transformation of the center's operations, replacing paper timecards and appointment tracking with an automated online platform integrated with university ID scan cards.
+- Star of a University of Detroit Mercy commercial.
+- Led worship and played music at his church throughout college.
+
+### Troy, MI (Career, Woodside Bible Church)
+
+Stepped into web development, database work, and the problems nobody else had time to touch. From there, Colton started his own business (Church Hub), because he saw the same problems across churches everywhere. A lot of what he does now lives at the intersection of product thinking, UX, and real-world ministry needs.
+
+Pull quote from the site: "I care a lot about clarity. Not overwhelming people. Saying just enough, at the right time. Good design should feel obvious."
+
+### Clarkston, MI (Family)
+
+Lives in Clarkston with his wife Sarah, their two kids Weston (3) and Rosie (1), and two very different dogs. Got married to Sarah at the Grosse Ile Municipal Airport, which probably tells you everything you need to know.
+
+### Hobbies
+
+- **Music.** Writer, electric guitar, track builder, drums, bass, keys, and vocals. On staff as a worship director at Woodside for about 5 years. Has worked with artists including Detroit Collective, Elevation Worship, Maverick City Music, Chris Tomlin, and Switchfoot. Known as the Ableton guru of the metro Detroit area.
+- **Football.** Still plays flag football. Proud Detroit Lions season ticket holder. Built RoarTracker (see Personal Projects) to manage tickets.
+- **Tattoos.** Has a full sleeve, each piece designed with intention. Faith, family, things he's been through, things he believes in.
+
+## Skills and tooling
+
+- **Languages:** TypeScript, JavaScript, SQL, Python (for AI/ML work), C (early embedded systems work)
+- **Frameworks:** Next.js, React, Node.js, Tailwind CSS
+- **Data:** SQL Server, Neon (Postgres), Drizzle, Supabase
+- **Infrastructure and tools:** Vercel, AWS S3, Mapbox, Playwright, OAuth, framer-motion
+- **Reporting and integrations:** Power BI, MinistryPlatform, Planning Center, WordPress, REACH, REST APIs
+- **AI:** production use of modern LLMs in product features and engineering workflow, plus pre-LLM applied NLP research background (tokenization, annotation, classification, language drift, sentiment)
+- **Other:** UI/UX leadership across digital products, leading a team, mentoring, technical writing
+
+## How to engage
+
+- Hiring, collaboration, or project conversations: use the contact form at /#contact or email coltonwirgau@gmail.com.
+- Best framing if reaching out about AI work: Colton sits at the intersection of product engineering and applied AI, with a long runway of NLP experience predating the LLM era. He's a strong fit for teams that want AI built deeper into their product or workflow, not just bolted on.
+
+## Site map (public)
+
+- `/` Home, hero, work, story, contact
+- `/work/church-hub` Church Hub project page
+- `/work/woodside` Woodside Bible Church work
+- `/work/personal-projects` Dynastly, Lions tracker, Degenerates Dashboard
+- `/childhood` Algonac story
+- `/college` University of Detroit Mercy story
+- `/career` Woodside career story
+- `/family` Clarkston, family
+- `/hobbies` Music, football, tattoos
