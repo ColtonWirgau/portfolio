@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 @import "tailwindcss";
 
 @theme inline {
   --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Bebas Neue', sans-serif;
+  --font-display: 'Anton', sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --color-bg: #D5D2C8;
   --color-fg: #222222;
@@ -89,7 +89,7 @@ body,
   display: none;
 }
 
-/* Poster grid — default: 3-up grid on wide screens */
+/* Poster grid - default: 3-up grid on wide screens */
 .poster-card {
   transition: transform 0.3s ease !important;
 }
@@ -155,7 +155,7 @@ body,
   }
 }
 
-/* Story grid — default: 5-up grid on wide screens */
+/* Story grid - default: 5-up grid on wide screens */
 .story-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

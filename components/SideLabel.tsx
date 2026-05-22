@@ -66,6 +66,8 @@ export function SideLabel({ label, endLabel, mirrorLabel, side = 'left', delay =
             style={{
               fontSize: '10px',
               letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              whiteSpace: 'nowrap',
               color: 'var(--color-muted)',
               writingMode: 'vertical-rl',
               transform: side === 'left' ? 'rotate(180deg)' : 'none',

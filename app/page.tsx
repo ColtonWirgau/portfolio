@@ -8,8 +8,11 @@ import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
 import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
+import { AIResearchSheet } from '@/components/AIResearchSheet';
+import { ContactSection } from '@/components/ContactSection';
 
 const roles = [
+  'an AI pioneer',
   'a problem solver',
   'a UI/UX obsessive',
   'a full-stack developer',
@@ -106,7 +109,7 @@ const projects: ProjectGroup[] = [
     title: 'Personal Projects',
     category: 'Side Projects',
     description: 'The stuff I build for fun (and sometimes for my friends and family). These are less polished, more personality.',
-    tech: ['Next.js', 'Neon', 'OAuth', 'Tailwind', 'Vercel'],
+    tech: ['Next.js', 'Neon', 'Drizzle', 'OAuth', 'Tailwind', 'Playwright', 'Vercel'],
     image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&h=600&fit=crop',
     storyPath: '/work/personal-projects',
     poster: {
@@ -118,6 +121,11 @@ const projects: ProjectGroup[] = [
       tagline: 'BUILT FOR FUN · SHIPPED FOR REAL',
     },
     subItems: [
+      {
+        id: 'personal-dynastly',
+        title: 'Dynastly',
+        description: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don’t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league’s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won’t. Found some interesting things in upstream platforms along the way.',
+      },
       {
         id: 'personal-lions',
         title: 'Lions Season Ticket Tracker',
@@ -139,6 +147,16 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<LifeEvent | null>(null);
   const [sheetDefaultPage, setSheetDefaultPage] = useState<string>('main');
   const [selectedProject, setSelectedProject] = useState<ProjectGroup | null>(null);
+  const [aiSheetOpen, setAiSheetOpen] = useState(false);
+
+  const scrollToWork = useCallback(() => {
+    const el = document.getElementById('work');
+    const main = mainRef.current;
+    if (el && main) {
+      const top = el.offsetTop - main.offsetTop;
+      main.scrollTo({ top, behavior: 'smooth' });
+    }
+  }, []);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activePosterId, setActivePosterId] = useState(0);
   const storyCarouselRef = useRef<HTMLDivElement>(null);
@@ -230,18 +248,18 @@ export default function Home() {
       <main ref={mainRef} className="h-full overflow-y-auto relative" style={{ paddingBottom: '0' }}>
         {/* Hero section */}
         <section className="h-screen flex items-stretch" style={{ padding: '0 24px' }}>
-          <SideLabel label="Full-stack developer" endLabel="2026" side="left" />
+          <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" />
           <div className="flex-1 flex items-center">
           <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6">
             {/* Text side */}
             <div className="flex-1 flex flex-col justify-center gap-6 min-w-0">
               <div className="z-10">
                 <motion.h1
-                  initial={{ opacity: 0, y: 30, scaleX: 0.85, skewX: -6 }}
-                  animate={{ opacity: 1, y: 0, scaleX: 0.85, skewX: -6 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.8 }}
-                  className="text-[clamp(8rem,16vw,16rem)] leading-[0.85] tracking-[-0.10em] mb-5 uppercase"
-                  style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)', WebkitTextStroke: '6px var(--color-accent)', paintOrder: 'stroke fill', transformOrigin: 'left' }}
+                  className="text-[clamp(8rem,16vw,16rem)] leading-[0.85] tracking-[-0.04em] mb-5 uppercase"
+                  style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
                 >
                   Hello
                 </motion.h1>
@@ -273,6 +291,91 @@ export default function Home() {
                     </AnimatePresence>
                   </div>
                 </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '18px',
+                    marginLeft: '20px',
+                    marginTop: '34px',
+                    alignItems: 'flex-start',
+                  }}
+                >
+                  {[
+                    {
+                      label: 'AI Researcher',
+                      sub: '· Published, 2017 ·',
+                      ariaLabel: 'See the AI research publication',
+                      onClick: () => setAiSheetOpen(true),
+                    },
+                    {
+                      label: 'Product Engineer',
+                      sub: '· Since 2016 ·',
+                      ariaLabel: 'Jump to Things I’ve Built',
+                      onClick: scrollToWork,
+                    },
+                    {
+                      label: 'Founder',
+                      sub: '· Church Hub ·',
+                      ariaLabel: 'Open Church Hub project',
+                      onClick: () => {
+                        scrollToWork();
+                        setSelectedProject(projects[0]);
+                      },
+                    },
+                  ].map((stamp) => (
+                    <button
+                      key={stamp.label}
+                      type="button"
+                      onClick={stamp.onClick}
+                      aria-label={stamp.ariaLabel}
+                      style={{
+                        border: '2px solid var(--color-accent)',
+                        borderRadius: '3px',
+                        padding: '8px 14px 6px',
+                        fontFamily: 'var(--font-display)',
+                        color: 'var(--color-accent)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.04em',
+                        lineHeight: 1.05,
+                        textAlign: 'center',
+                        background: 'transparent',
+                        cursor: 'pointer',
+                        transition: 'background 0.18s ease, transform 0.18s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(217, 68, 32, 0.08)';
+                        e.currentTarget.style.transform = 'translateY(-1px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.transform = 'translateY(0)';
+                      }}
+                    >
+                      <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', whiteSpace: 'nowrap' }}>
+                        {stamp.label}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: '9px',
+                          fontFamily: 'var(--font-sans)',
+                          fontWeight: 700,
+                          letterSpacing: '0.2em',
+                          marginTop: '5px',
+                          paddingTop: '4px',
+                          borderTop: '1px solid var(--color-accent)',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {stamp.sub}
+                      </div>
+                    </button>
+                  ))}
+                </motion.div>
               </div>
 
             </div>
@@ -295,237 +398,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Pull quote */}
-        <div style={{
-          padding: '100px 24px',
-          margin: '40px 24px',
-          background: '#2A2622',
-          textAlign: 'center',
-          borderRadius: '140px 0 140px 0',
-        }}>
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
-              fontStyle: 'italic',
-              color: 'rgba(255,255,255,0.5)',
-              lineHeight: 1.6,
-              maxWidth: '1100px',
-              margin: '0 auto',
-            }}
-          >
-            I care a lot about clarity. Not overwhelming people.<br />
-            Saying{' '}
-            <span style={{ color: '#fff', fontWeight: 600 }}>just enough</span> at the{' '}
-            <span style={{ textDecoration: 'underline', textUnderlineOffset: '4px', textDecorationColor: 'var(--color-accent)' }}>right time</span>.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 20, scaleX: 0.85, skewX: -2 }}
-            whileInView={{ opacity: 1, y: 0, scaleX: 0.85, skewX: -2 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-              fontWeight: 400,
-              color: 'var(--color-accent)',
-              lineHeight: 1,
-              letterSpacing: '-0.06em',
-              textTransform: 'uppercase',
-              maxWidth: '1100px',
-              margin: '16px auto 0',
-              WebkitTextStroke: '3px var(--color-accent)',
-              paintOrder: 'stroke fill',
-            }}
-          >
-            Good design should <span style={{ display: 'inline-block', transform: 'skewX(-6deg)' }}>feel</span> obvious.
-          </motion.p>
-        </div>
-
-        {/* My Story / About section */}
-        <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
-          <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
-
-            {/* Editorial heading */}
-            <div style={{ marginBottom: '48px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <h2 style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(5rem, 10vw, 9rem)',
-                color: 'var(--color-accent)',
-                lineHeight: 0.9,
-                letterSpacing: '-0.08em',
-                textTransform: 'uppercase',
-                marginBottom: '28px',
-                WebkitTextStroke: '5px var(--color-accent)',
-                paintOrder: 'stroke fill',
-                transform: 'scaleX(0.85) skewX(-2deg)',
-              }}>
-                My Story.
-              </h2>
-              <div style={{ width: '40px', height: '1px', background: 'var(--color-accent)', marginBottom: '24px' }} />
-              <p style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
-                fontStyle: 'italic',
-                fontWeight: 400,
-                color: 'var(--color-fg)',
-                lineHeight: 1.6,
-                maxWidth: '1100px',
-                marginBottom: '20px',
-              }}>
-                I{'\u2019'}ve always been interested in how things work, and how to{' '}
-                <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>make them work better</span>.
-              </p>
-              <p style={{
-                fontSize: '15px',
-                fontWeight: 400,
-                color: 'var(--color-muted)',
-                lineHeight: 1.8,
-                maxWidth: '1100px',
-              }}>
-                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. I studied software engineering and leadership while running track at the University of Detroit Mercy, got published in AI research, and landed at Woodside Bible Church where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
-              </p>
-
-              {/* Highlight badges */}
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                gap: '24px',
-                marginTop: '36px',
-                maxWidth: '1100px',
-              }}>
-                {[
-                  { label: 'Software Engineer', icon: <><path d="M12 3L2 9l10 6 10-6-10-6z" /><path d="M2 17l10 6 10-6" /><path d="M2 13l10 6 10-6" /></> },
-                  { label: 'Published in AI', icon: <><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" /><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" /></> },
-                  { label: 'D1 Athlete', icon: <><path d="M6 9a6 6 0 1012 0A6 6 0 006 9z" /><path d="M12 15v7" /><path d="M8 22h8" /></> },
-                  { label: 'Hall of Fame', icon: <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" /> },
-                  { label: 'Award Winner', icon: <><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" /><circle cx="12" cy="8" r="6" /></> },
-                  { label: 'Business Owner', icon: <><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" /></> },
-                  { label: 'Musician', icon: <><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></> },
-                  { label: 'Father of 2', icon: <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /> },
-                ].map((badge) => (
-                  <div key={badge.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', width: '80px' }}>
-                    <div style={{
-                      width: '52px',
-                      height: '52px',
-                      borderRadius: '50%',
-                      background: '#2A2622',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        {badge.icon}
-                      </svg>
-                    </div>
-                    <span style={{ fontSize: '10px', fontWeight: 600, color: 'var(--color-muted)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                      {badge.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Decorative squid divider */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '16px',
-              marginBottom: '48px',
-              maxWidth: '300px',
-              margin: '0 auto 48px',
-            }}>
-              <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
-              <svg width="12" height="28" viewBox="0 0 341.34 852.51" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.15 }}>
-                <path fill="var(--color-fg)" d="M316.8,619.52c-10.78-10.88-18.24-18.24-22.4-22.05-13.57-12.42-24.65-27.5-32.17-44.31-3.86-8.62-6.79-17.63-8.86-26.84-.98-4.35-2.55-8.26.05-12.03,2.99-4.33,7.19-7.48,9.79-12.23,3.34-6.09,4.66-13.11,4.95-20.04.56-13.5-2.71-27.13-9.28-38.93-7.71-13.84,8.81-4.82,9.76-13.32,3.57-31.75,4.75-56.89,3.53-75.4-2.62-39.67-7.6-80.33-14.96-121.97-.27-1.48.27-2.97,1.41-3.95,24.79-21.23,37.87-32.4,39.24-33.52,10.88-8.77,16.62-17.85,7.79-29.98-7.07-9.71-46.68-61.46-118.83-155.27-4.51-5.86-10.32-9.54-16.15-9.68-5.83.14-11.64,3.82-16.15,9.68C82.37,103.49,42.76,155.24,35.69,164.95c-8.83,12.13-3.09,21.21,7.79,29.98,1.37,1.11,14.45,12.29,39.24,33.52,1.13.98,1.68,2.46,1.41,3.95-7.36,41.64-12.34,82.3-14.96,121.97-1.21,18.51-.04,43.65,3.53,75.4.96,8.51,17.47-.52,9.76,13.32-6.57,11.8-9.84,25.43-9.28,38.93.29,6.94,1.61,13.96,4.95,20.04,2.6,4.75,6.8,7.9,9.79,12.23,2.6,3.77,1.02,7.68.05,12.03-2.07,9.21-5,18.23-8.86,26.84-7.53,16.8-18.6,31.88-32.17,44.31-4.16,3.81-11.62,11.17-22.4,22.05C6.55,637.7-1.55,659.99.24,686.34c1.37,20.29,9.55,37.89,21.74,53.87,9.77,12.81,15.02,23.09,16.35,38.69.53,6.27.94,10.66,1.25,13.14.27,2.17,1.62,4.04,3.55,5.02,8.07,4.04,11.97-3.48,13.09-10.45,3.73-23.18-4.08-38.46-14.2-59.63-15.04-31.48-9.77-64.04,19.26-84.8,12.05-8.61,23.55-17.77,34.51-27.44,10.06-8.89,18.28-20.02,24.71-33.4.25-.55.94-.76,1.46-.45l.57.31c.29.18.43.53.33.86-3.22,10.12-6.88,19.57-14.61,39.18-5.78,14.61-10.76,29.36-12.71,44.61-3.61,28.28-1.45,55.96,6.5,83.03,5.12,17.42,10.59,31.74,12.48,45.88,2.17,16.09,1.27,32.07-2.66,47.93-.59,2.42.94,6.56,3.32,8.16,7.56,5.14,14.08-2.7,17.5-9,5.31-9.84,8.24-21.15,8.79-33.93,1.11-25.62-4.63-48.59-8.4-72.75-4.39-28.26-1.23-55.25,9.49-80.98,12.85-30.82,20.14-45.61,25.02-67.75.43-1.93,1.11-3.32,2.03-4.16.31-.28.68-.42,1.05-.45.37.03.74.16,1.05.45.92.84,1.6,2.23,2.03,4.16,4.88,22.15,12.17,36.93,25.02,67.75,10.72,25.72,13.89,52.71,9.49,80.98-3.77,24.16-9.51,47.13-8.4,72.75.55,12.77,3.48,24.08,8.79,33.93,3.42,6.31,9.94,14.14,17.5,9,2.38-1.6,3.91-5.74,3.32-8.16-3.93-15.86-4.82-31.84-2.66-47.93,1.89-14.14,7.36-28.46,12.48-45.88,7.95-27.07,10.12-54.75,6.5-83.03-1.95-15.25-6.93-30-12.71-44.61-7.73-19.61-11.39-29.06-14.61-39.18-.1-.33.04-.68.33-.86l.57-.31c.53-.31,1.21-.1,1.46.45,6.43,13.38,14.65,24.51,24.71,33.4,10.96,9.67,22.46,18.83,34.51,27.44,29.02,20.76,34.3,53.32,19.26,84.8-10.12,21.17-17.93,36.45-14.2,59.63,1.11,6.97,5.02,14.49,13.09,10.45,1.93-.98,3.28-2.85,3.55-5.02.31-2.48.72-6.88,1.25-13.14,1.33-15.61,6.58-25.88,16.35-38.69,12.19-15.98,20.37-33.57,21.74-53.87,1.8-26.35-6.31-48.63-24.3-66.82Z" />
-              </svg>
-              <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
-            </div>
-
-            {/* Portrait cards row / carousel */}
-            <div className="story-grid" ref={storyCarouselRef} style={{ marginBottom: '60px' }}>
-              {[0, 1, 2].map((setIndex) => (
-                <Fragment key={setIndex}>
-                  {lifeEvents.map((event) => (
-                    <motion.button
-                      key={`${setIndex}-${event.id}`}
-                      layoutId={setIndex === 0 ? `card-${event.id}` : undefined}
-                      onClick={() => {
-                        setSelectedEvent(event);
-                        setSheetDefaultPage('main');
-                      }}
-                      className={`group story-card ${setIndex > 0 ? 'story-card-dup' : ''}`}
-                      style={{
-                        position: 'relative',
-                        aspectRatio: '2/3',
-                        overflow: 'hidden',
-                        cursor: 'pointer',
-                        textAlign: 'left',
-                        borderRadius: 0,
-                        border: 'none',
-                      }}
-                    >
-                      <motion.img
-                        layoutId={setIndex === 0 ? `img-${event.id}` : undefined}
-                        src={event.image}
-                        alt={event.label}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          transition: 'transform 0.4s ease',
-                        }}
-                        className="group-hover:scale-[1.03]"
-                      />
-                      <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)',
-                      }} />
-                      <div style={{
-                        position: 'absolute',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        padding: '24px 20px',
-                      }}>
-                        <h3 style={{ fontSize: '22px', fontWeight: 400, color: '#fff', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
-                          {event.year}
-                        </h3>
-                      </div>
-                    </motion.button>
-                  ))}
-                </Fragment>
-              ))}
-            </div>
-            {/* Story carousel dot indicators */}
-            <div className="story-dots" style={{
-              gap: '8px',
-              marginBottom: '40px',
-            }}>
-              {lifeEvents.map((event, i) => (
-                <div key={event.id} style={{
-                  height: '8px',
-                  borderRadius: '4px',
-                  transition: 'all 0.3s ease',
-                  width: activeStoryId === i ? '24px' : '8px',
-                  background: activeStoryId === i ? 'var(--color-fg)' : 'var(--color-border)',
-                }} />
-              ))}
-            </div>
-
-          </div>
-          <SideLabel label="About" side="right" delay={0.3} mirrorLabel />
-        </section>
-
         {/* Portfolio section */}
         <section id="work" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
-          <SideLabel label="Work" side="left" mirrorLabel />
           {/* Decorative squid watermark */}
           <svg
             viewBox="0 0 341.34 852.51"
@@ -554,13 +428,13 @@ export default function Home() {
               />
             </div>
 
-            {/* Project posters — responsive grid, 2-up on desktop */}
+            {/* Project posters - responsive grid, 2-up on desktop */}
             <div className="poster-grid" ref={carouselRef}>
               {[0, 1, 2].map((setIndex) => (
                 <Fragment key={`poster-set-${setIndex}`}>
 
               {/* ═══════════════════════════════════════════════
-                  POSTER 1 — CHURCH HUB
+                  POSTER 1 - CHURCH HUB
                   Clean, warm style matching Personal Projects feel
                   ═══════════════════════════════════════════════ */}
               <div
@@ -715,7 +589,7 @@ export default function Home() {
               </div>
 
               {/* ═══════════════════════════════════════════════
-                  POSTER 2 — WOODSIDE BIBLE CHURCH (Dark Navy/Green)
+                  POSTER 2 - WOODSIDE BIBLE CHURCH (Dark Navy/Green)
                   ═══════════════════════════════════════════════ */}
               <div
                 className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
@@ -784,7 +658,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Three crosses — middle one larger */}
+                {/* Three crosses - middle one larger */}
                 <div style={{
                   display: 'flex',
                   justifyContent: 'center',
@@ -808,7 +682,7 @@ export default function Home() {
                   </svg>
                 </div>
 
-                {/* Centered title — Montserrat */}
+                {/* Centered title - Montserrat */}
                 <div style={{
                   flex: 1,
                   display: 'flex',
@@ -877,7 +751,7 @@ export default function Home() {
                 </div>
 
 
-                {/* Bottom — tech labels + Woodside logo */}
+                {/* Bottom - tech labels + Woodside logo */}
                 <div style={{
                   padding: '20px 28px 24px',
                   display: 'flex',
@@ -907,7 +781,7 @@ export default function Home() {
               </div>
 
               {/* ═══════════════════════════════════════════════
-                  POSTER 3 — PERSONAL PROJECTS (Dark Navy/Gold)
+                  POSTER 3 - PERSONAL PROJECTS (Dark Navy/Gold)
                   More playful, experimental feel
                   ═══════════════════════════════════════════════ */}
               <div
@@ -978,7 +852,7 @@ export default function Home() {
                   </span>
                 </div>
 
-                {/* Giant title — pink on periwinkle */}
+                {/* Giant title - pink on periwinkle */}
                 <div style={{
                   padding: '16px 28px 0',
                   position: 'relative',
@@ -1033,7 +907,7 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* Bottom — tech + tagline */}
+                {/* Bottom - tech + tagline */}
                 <div style={{
                   padding: '20px 28px 24px',
                   display: 'flex',
@@ -1066,7 +940,7 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Carousel dot indicators — only visible in carousel mode */}
+            {/* Carousel dot indicators - only visible in carousel mode */}
             <div className="poster-dots" style={{
               flexDirection: 'row',
               justifyContent: 'center',
@@ -1090,6 +964,231 @@ export default function Home() {
             </div>
 
           </div>
+          <SideLabel label="Work" side="right" mirrorLabel />
+        </section>
+
+        {/* Pull quote */}
+        <div style={{
+          padding: '100px 24px',
+          margin: '40px 24px',
+          background: '#2A2622',
+          textAlign: 'center',
+          borderRadius: '140px 0 140px 0',
+        }}>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
+              fontStyle: 'italic',
+              color: 'rgba(255,255,255,0.5)',
+              lineHeight: 1.6,
+              maxWidth: '1100px',
+              margin: '0 auto',
+            }}
+          >
+            I care a lot about clarity. Not overwhelming people.<br />
+            Saying{' '}
+            <span style={{ color: '#fff', fontWeight: 600 }}>just enough</span> at the{' '}
+            <span style={{ textDecoration: 'underline', textUnderlineOffset: '4px', textDecorationColor: 'var(--color-accent)' }}>right time</span>.
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+              fontWeight: 400,
+              color: 'var(--color-accent)',
+              lineHeight: 1,
+              letterSpacing: '-0.02em',
+              textTransform: 'uppercase',
+              maxWidth: '1100px',
+              margin: '16px auto 0',
+            }}
+          >
+            Good design should feel obvious.
+          </motion.p>
+        </div>
+
+        {/* My Story / About section */}
+        <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
+          <SideLabel label="About" side="left" delay={0.3} mirrorLabel />
+          <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
+
+            {/* Editorial heading */}
+            <div style={{ marginBottom: '48px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <h2 style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(5rem, 10vw, 9rem)',
+                color: 'var(--color-accent)',
+                lineHeight: 1,
+                letterSpacing: '-0.03em',
+                textTransform: 'uppercase',
+                marginBottom: '28px',
+                paddingTop: '0.08em',
+              }}>
+                My Story.
+              </h2>
+              <div style={{ width: '40px', height: '1px', background: 'var(--color-accent)', marginBottom: '24px' }} />
+              <p style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
+                fontStyle: 'italic',
+                fontWeight: 400,
+                color: 'var(--color-fg)',
+                lineHeight: 1.6,
+                maxWidth: '1100px',
+                marginBottom: '20px',
+              }}>
+                I{'\u2019'}ve always been interested in how things work, and how to{' '}
+                <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>make them work better</span>.
+              </p>
+              <p style={{
+                fontSize: '15px',
+                fontWeight: 400,
+                color: 'var(--color-muted)',
+                lineHeight: 1.8,
+                maxWidth: '1100px',
+              }}>
+                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. I studied software engineering and leadership while running track at the University of Detroit Mercy, got published in AI research, and landed at Woodside Bible Church where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
+              </p>
+
+              {/* Beyond the code \u2014 personal highlight badges */}
+              <div style={{ marginTop: '40px', maxWidth: '1100px' }}>
+                <div style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: '20px', textAlign: 'center' }}>
+                  Beyond the code
+                </div>
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                  gap: '24px',
+                }}>
+                  {[
+                    { label: 'D1 Athlete', icon: <><path d="M6 9a6 6 0 1012 0A6 6 0 006 9z" /><path d="M12 15v7" /><path d="M8 22h8" /></> },
+                    { label: 'Hall of Fame', icon: <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" /> },
+                    { label: 'Musician', icon: <><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></> },
+                    { label: 'Father of 2', icon: <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /> },
+                  ].map((badge) => (
+                    <div key={badge.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', width: '80px' }}>
+                      <div style={{
+                        width: '52px',
+                        height: '52px',
+                        borderRadius: '50%',
+                        background: '#2A2622',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          {badge.icon}
+                        </svg>
+                      </div>
+                      <span style={{ fontSize: '10px', fontWeight: 600, color: 'var(--color-muted)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                        {badge.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+            {/* Decorative squid divider */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '16px',
+              marginBottom: '48px',
+              maxWidth: '300px',
+              margin: '0 auto 48px',
+            }}>
+              <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
+              <svg width="12" height="28" viewBox="0 0 341.34 852.51" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.15 }}>
+                <path fill="var(--color-fg)" d="M316.8,619.52c-10.78-10.88-18.24-18.24-22.4-22.05-13.57-12.42-24.65-27.5-32.17-44.31-3.86-8.62-6.79-17.63-8.86-26.84-.98-4.35-2.55-8.26.05-12.03,2.99-4.33,7.19-7.48,9.79-12.23,3.34-6.09,4.66-13.11,4.95-20.04.56-13.5-2.71-27.13-9.28-38.93-7.71-13.84,8.81-4.82,9.76-13.32,3.57-31.75,4.75-56.89,3.53-75.4-2.62-39.67-7.6-80.33-14.96-121.97-.27-1.48.27-2.97,1.41-3.95,24.79-21.23,37.87-32.4,39.24-33.52,10.88-8.77,16.62-17.85,7.79-29.98-7.07-9.71-46.68-61.46-118.83-155.27-4.51-5.86-10.32-9.54-16.15-9.68-5.83.14-11.64,3.82-16.15,9.68C82.37,103.49,42.76,155.24,35.69,164.95c-8.83,12.13-3.09,21.21,7.79,29.98,1.37,1.11,14.45,12.29,39.24,33.52,1.13.98,1.68,2.46,1.41,3.95-7.36,41.64-12.34,82.3-14.96,121.97-1.21,18.51-.04,43.65,3.53,75.4.96,8.51,17.47-.52,9.76,13.32-6.57,11.8-9.84,25.43-9.28,38.93.29,6.94,1.61,13.96,4.95,20.04,2.6,4.75,6.8,7.9,9.79,12.23,2.6,3.77,1.02,7.68.05,12.03-2.07,9.21-5,18.23-8.86,26.84-7.53,16.8-18.6,31.88-32.17,44.31-4.16,3.81-11.62,11.17-22.4,22.05C6.55,637.7-1.55,659.99.24,686.34c1.37,20.29,9.55,37.89,21.74,53.87,9.77,12.81,15.02,23.09,16.35,38.69.53,6.27.94,10.66,1.25,13.14.27,2.17,1.62,4.04,3.55,5.02,8.07,4.04,11.97-3.48,13.09-10.45,3.73-23.18-4.08-38.46-14.2-59.63-15.04-31.48-9.77-64.04,19.26-84.8,12.05-8.61,23.55-17.77,34.51-27.44,10.06-8.89,18.28-20.02,24.71-33.4.25-.55.94-.76,1.46-.45l.57.31c.29.18.43.53.33.86-3.22,10.12-6.88,19.57-14.61,39.18-5.78,14.61-10.76,29.36-12.71,44.61-3.61,28.28-1.45,55.96,6.5,83.03,5.12,17.42,10.59,31.74,12.48,45.88,2.17,16.09,1.27,32.07-2.66,47.93-.59,2.42.94,6.56,3.32,8.16,7.56,5.14,14.08-2.7,17.5-9,5.31-9.84,8.24-21.15,8.79-33.93,1.11-25.62-4.63-48.59-8.4-72.75-4.39-28.26-1.23-55.25,9.49-80.98,12.85-30.82,20.14-45.61,25.02-67.75.43-1.93,1.11-3.32,2.03-4.16.31-.28.68-.42,1.05-.45.37.03.74.16,1.05.45.92.84,1.6,2.23,2.03,4.16,4.88,22.15,12.17,36.93,25.02,67.75,10.72,25.72,13.89,52.71,9.49,80.98-3.77,24.16-9.51,47.13-8.4,72.75.55,12.77,3.48,24.08,8.79,33.93,3.42,6.31,9.94,14.14,17.5,9,2.38-1.6,3.91-5.74,3.32-8.16-3.93-15.86-4.82-31.84-2.66-47.93,1.89-14.14,7.36-28.46,12.48-45.88,7.95-27.07,10.12-54.75,6.5-83.03-1.95-15.25-6.93-30-12.71-44.61-7.73-19.61-11.39-29.06-14.61-39.18-.1-.33.04-.68.33-.86l.57-.31c.53-.31,1.21-.1,1.46.45,6.43,13.38,14.65,24.51,24.71,33.4,10.96,9.67,22.46,18.83,34.51,27.44,29.02,20.76,34.3,53.32,19.26,84.8-10.12,21.17-17.93,36.45-14.2,59.63,1.11,6.97,5.02,14.49,13.09,10.45,1.93-.98,3.28-2.85,3.55-5.02.31-2.48.72-6.88,1.25-13.14,1.33-15.61,6.58-25.88,16.35-38.69,12.19-15.98,20.37-33.57,21.74-53.87,1.8-26.35-6.31-48.63-24.3-66.82Z" />
+              </svg>
+              <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }} />
+            </div>
+
+            {/* Portrait cards row / carousel */}
+            <div className="story-grid" ref={storyCarouselRef} style={{ marginBottom: '60px' }}>
+              {[0, 1, 2].map((setIndex) => (
+                <Fragment key={setIndex}>
+                  {lifeEvents.map((event) => (
+                    <motion.button
+                      key={`${setIndex}-${event.id}`}
+                      layoutId={setIndex === 0 ? `card-${event.id}` : undefined}
+                      onClick={() => {
+                        setSelectedEvent(event);
+                        setSheetDefaultPage('main');
+                      }}
+                      className={`group story-card ${setIndex > 0 ? 'story-card-dup' : ''}`}
+                      style={{
+                        position: 'relative',
+                        aspectRatio: '2/3',
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        borderRadius: 0,
+                        border: 'none',
+                      }}
+                    >
+                      <motion.img
+                        layoutId={setIndex === 0 ? `img-${event.id}` : undefined}
+                        src={event.image}
+                        alt={event.label}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.4s ease',
+                        }}
+                        className="group-hover:scale-[1.03]"
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)',
+                      }} />
+                      <div style={{
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        padding: '24px 20px',
+                      }}>
+                        <h3 style={{ fontSize: '22px', fontWeight: 400, color: '#fff', lineHeight: 1.2, letterSpacing: '-0.01em' }}>
+                          {event.year}
+                        </h3>
+                      </div>
+                    </motion.button>
+                  ))}
+                </Fragment>
+              ))}
+            </div>
+            {/* Story carousel dot indicators */}
+            <div className="story-dots" style={{
+              gap: '8px',
+              marginBottom: '40px',
+            }}>
+              {lifeEvents.map((event, i) => (
+                <div key={event.id} style={{
+                  height: '8px',
+                  borderRadius: '4px',
+                  transition: 'all 0.3s ease',
+                  width: activeStoryId === i ? '24px' : '8px',
+                  background: activeStoryId === i ? 'var(--color-fg)' : 'var(--color-border)',
+                }} />
+              ))}
+            </div>
+
+          </div>
         </section>
 
         {/* Life event sheet */}
@@ -1098,6 +1197,9 @@ export default function Home() {
           onClose={() => { setSelectedEvent(null); setSheetDefaultPage('main'); }}
           defaultPage={sheetDefaultPage}
         />
+
+        {/* AI research sheet */}
+        <AIResearchSheet open={aiSheetOpen} onClose={() => setAiSheetOpen(false)} />
 
         {/* Project sheet */}
         <ResponsiveSheet
@@ -1199,7 +1301,7 @@ export default function Home() {
                             <span style={{ color: accent, marginTop: '6px', flexShrink: 0, fontSize: '6px' }}>●</span>
                             <div>
                               <span style={{ fontSize: '13px', fontWeight: 600, color: fg }}>{sub.title}</span>
-                              <span style={{ fontSize: '13px', color: muted }}> — {sub.description}</span>
+                              <span style={{ fontSize: '13px', color: muted }}>: {sub.description}</span>
                             </div>
                           </div>
                         ))}
@@ -1241,10 +1343,12 @@ export default function Home() {
           </SheetPage>
         </ResponsiveSheet>
 
+        <ContactSection />
+
         <Footer />
       </main>
 
-      {/* Scroll indicator — inside the outer container, behind main's scroll */}
+      {/* Scroll indicator - inside the outer container, behind main's scroll */}
       <AnimatePresence>
         {showScrollIndicator && (
           <motion.div

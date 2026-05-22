@@ -5,8 +5,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const navLinks = [
-  { label: 'About', href: '/#about' },
   { label: 'Work', href: '/#work' },
+  { label: 'About', href: '/#about' },
 ];
 
 export function Header() {

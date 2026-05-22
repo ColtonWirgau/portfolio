@@ -25,7 +25,7 @@ function SwimSquid({ size, rotation, flip }: { size: number; rotation: number; f
   );
 }
 
-// Emerging squid — starts invisible (same color as bg), eyes fade in, then body reveals
+// Emerging squid - starts invisible (same color as bg), eyes fade in, then body reveals
 function EmergingSquid({ size, isInView, delay }: { size: number; isInView: boolean; delay: number }) {
   const height = size * 2.5; // tall aspect ratio
   return (
@@ -35,14 +35,14 @@ function EmergingSquid({ size, isInView, delay }: { size: number; isInView: bool
       viewBox="0 0 341.34 852.51"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Body — starts transparent, transitions to accent */}
+      {/* Body - starts transparent, transitions to accent */}
       <motion.path
         d={SQUID_PATH}
         initial={{ fill: '#D94420', opacity: 0 }}
         animate={isInView ? { opacity: [0, 0, 0, 1] } : undefined}
         transition={{ duration: 4, delay, times: [0, 0.4, 0.7, 1], ease: 'easeInOut' }}
       />
-      {/* Eyeball — starts transparent, fades to white */}
+      {/* Eyeball - starts transparent, fades to white */}
       <motion.ellipse
         cx="170.67"
         cy="473.09"
@@ -52,7 +52,7 @@ function EmergingSquid({ size, isInView, delay }: { size: number; isInView: bool
         animate={isInView ? { opacity: [0, 0, 1, 1] } : undefined}
         transition={{ duration: 3, delay, times: [0, 0.3, 0.6, 1], ease: 'easeInOut' }}
       />
-      {/* Pupil — starts transparent, fades to dark */}
+      {/* Pupil - starts transparent, fades to dark */}
       <motion.circle
         cx="170.67"
         cy="473.09"
@@ -190,7 +190,7 @@ export function Footer() {
           );
         })}
 
-        {/* Ambient swimming squids — ongoing after initial animation */}
+        {/* Ambient swimming squids - ongoing after initial animation */}
         {ambientSquids.map((s) => {
           const isRight = s.direction === 'right';
           return (
@@ -219,7 +219,7 @@ export function Footer() {
           );
         })}
 
-        {/* Emerging squids — stationary, camouflaged, then reveal */}
+        {/* Emerging squids - stationary, camouflaged, then reveal */}
         <div style={{
           position: 'absolute',
           left: '60px',

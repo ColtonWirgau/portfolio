@@ -53,8 +53,24 @@ export default function PersonalProjectsPage() {
           The stuff I build for fun (and sometimes for my friends and family). These are less polished, more personality.
         </motion.p>
 
-        {/* Lions Tracker */}
+        {/* Dynastly */}
         <motion.div custom={1} initial="hidden" animate="visible" variants={fadeUp}
+          style={{ padding: '32px', background: 'var(--color-card)', border: '1px solid var(--color-border)', marginBottom: '24px' }}>
+          <h3 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--color-fg)', marginBottom: '12px', letterSpacing: '-0.01em' }}>
+            Dynastly
+          </h3>
+          <p style={{ fontSize: '15px', lineHeight: 1.8, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '16px' }}>
+            I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don{'’'}t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league{'’'}s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won{'’'}t. Found some interesting things in upstream platforms along the way.
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+            {['Next.js', 'Neon', 'Drizzle', 'Radix UI', 'Tailwind', 'Browser Extension', 'Playwright'].map((t) => (
+              <span key={t} style={{ fontSize: '11px', fontWeight: 400, color: 'var(--color-muted)', padding: '4px 10px', borderRadius: '100px', border: '1px solid var(--color-border)' }}>{t}</span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Lions Tracker */}
+        <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp}
           style={{ padding: '32px', background: 'var(--color-card)', border: '1px solid var(--color-border)', marginBottom: '24px' }}>
           <h3 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--color-fg)', marginBottom: '12px', letterSpacing: '-0.01em' }}>
             Lions Season Ticket Tracker
@@ -70,7 +86,7 @@ export default function PersonalProjectsPage() {
         </motion.div>
 
         {/* Degenerates */}
-        <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp}
+        <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp}
           style={{ padding: '32px', background: 'var(--color-card)', border: '1px solid var(--color-border)' }}>
           <h3 style={{ fontSize: '20px', fontWeight: 600, color: 'var(--color-fg)', marginBottom: '12px', letterSpacing: '-0.01em' }}>
             Degenerates Dashboard

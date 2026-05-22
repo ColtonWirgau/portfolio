@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 interface SectionHeadingProps {
   /** Small uppercase label above the title */
   label?: string;
-  /** Large heading text — can include <br /> */
+  /** Large heading text - can include <br /> */
   title: ReactNode;
   /** Optional subtitle below the title */
   subtitle?: ReactNode;
@@ -72,13 +72,9 @@ export function SectionHeading({ label, title, subtitle, watermark, center, righ
         fontFamily: 'var(--font-display)',
         fontWeight: 400,
         lineHeight: 1.05,
-        letterSpacing: '-0.1em',
+        letterSpacing: '-0.03em',
         textTransform: 'uppercase',
         color: 'var(--color-accent)',
-        WebkitTextStroke: '4px var(--color-accent)',
-        paintOrder: 'stroke fill',
-        transform: 'scaleX(0.85) skewX(-2deg)',
-        transformOrigin: (center ? 'center' : right ? 'right' : 'left'),
       }}>
         {title}
       </h2>

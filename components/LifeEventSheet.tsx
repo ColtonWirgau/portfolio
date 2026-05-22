@@ -42,11 +42,11 @@ export const lifeEvents: LifeEvent[] = [
     description:
       'I grew up in Algonac, a small river town on the St. Clair River. It\'s the kind of place where everybody knows everybody. This is where I first got curious about building things. Tearing apart computers, making terrible websites, and figuring out how stuff works.',
     highlights: [
-      'Algonac High School — IB Diploma Recipient',
+      'Algonac High School: IB Diploma Recipient',
       'Graduated 3rd in class with a 4.2 GPA',
       '7 school records in track & field',
-      'All-State & all-time leading scorer for Algonac HS — Hall of Fame',
-      'Captain of the football team — All-Area selection',
+      'All-State & all-time leading scorer for Algonac HS, Hall of Fame',
+      'Captain of the football team, All-Area selection',
     ],
     narrative: [
       'I grew up in a small river town in Michigan called Algonac. I was in the International Baccalaureate program, graduated third in my class with a 4.2 GPA, and was captain of the football team. I also ran track and ended up as the program\u2019s all-time leading scorer and a Hall of Famer.',
@@ -96,14 +96,14 @@ export const lifeEvents: LifeEvent[] = [
     description:
       'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use. Not just writing code, but solving real problems.',
     highlights: [
-      'BS Software Engineering, Minor in Leadership — Graduated with Honors',
-      'Division I track & field athlete — Student Athlete of the Year',
+      'BS Software Engineering, Minor in Leadership, Graduated with Honors',
+      'Division I track & field athlete, Student Athlete of the Year',
       'Seven Time All-Horizon League selection (Track & Field)',
       'Published: "Sylvester: An Approach to Emotion Classification"',
       'Embedded Systems Engineering Intern at Continental Automotive',
-      'IT Coordinator — integrated websites, databases, and new systems for the university',
+      'IT Coordinator: integrated websites, databases, and new systems for the university',
       'Most sought-after tutor at the Student Success Center',
-      'Star of a UDM commercial — yes, really',
+      'Star of a UDM commercial (yes, really)',
     ],
     narrative: [
       'That mindset followed me to the University of Detroit Mercy, where I studied software engineering with a leadership minor and ran track. I chose software engineering over computer science because I knew I didn\u2019t just want to write code. I wanted to lead people and build things that actually help them. Along the way, I got published for my work in AI. Our team built Sylvester, a program that learned the language of Twitter through automatic annotation and classification, interpreting tweets in real time to determine how people feel about any given subject. It was published in New Trends in Information Technology in 2017.',
@@ -141,7 +141,7 @@ export const lifeEvents: LifeEvent[] = [
       },
       {
         id: 'detroit-it',
-        title: 'IT Coordinator — UDM',
+        title: 'IT Coordinator at UDM',
         description:
           'IT Coordinator at the University of Detroit Mercy (Sep 2015–Aug 2018). Helped integrate three new websites, managed multiple databases, provided technical support for users and staff, and performed data analytics for university departments. After graduation, was hired by the university to integrate a new system for the disability support services, student success center, and testing center.',
       },
@@ -264,8 +264,8 @@ export const lifeEvents: LifeEvent[] = [
     description:
       'Music and sports are the two things that keep me balanced. I play music at Woodside Bible Church and have played a lot of huge shows over the years. I still play flag football and I\'m a diehard Detroit Lions season ticket holder.',
     highlights: [
-      'Musician — writer, electric guitar, tracks, drums, bass, keys, vocals',
-      'Football — still play flag football, Detroit Lions season ticket holder',
+      'Musician: writer, electric guitar, tracks, drums, bass, keys, vocals',
+      'Football: still play flag football, Detroit Lions season ticket holder',
       'Tattoos',
     ],
     subEvents: [

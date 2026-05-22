@@ -168,13 +168,9 @@ export default function WoodsidePage() {
                   fontWeight: 400,
                   color: 'var(--color-accent)',
                   lineHeight: 1.1,
-                  letterSpacing: '-0.04em',
+                  letterSpacing: '-0.02em',
                   textTransform: 'uppercase',
                   marginBottom: '10px',
-                  WebkitTextStroke: item.span === 2 ? '2px var(--color-accent)' : '1.5px var(--color-accent)',
-                  paintOrder: 'stroke fill',
-                  transform: 'scaleX(0.85) skewX(-2deg)',
-                  transformOrigin: 'left',
                 }}>
                   {item.title}
                 </h3>
