@@ -115,7 +115,7 @@ export default function PersonalProjectsPage() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
         />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)' }} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '40px', maxWidth: '1100px', margin: '0 auto' }}>
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '40px 24px' }}>
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
             style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '8px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
             Side Projects
@@ -131,7 +131,7 @@ export default function PersonalProjectsPage() {
         </div>
       </div>
 
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 24px 100px' }}>
+      <div style={{ padding: '60px 24px 100px' }}>
         <Link href="/#work" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent)', fontSize: '14px', fontWeight: 600, textDecoration: 'none', marginBottom: '40px' }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
           Back to Work

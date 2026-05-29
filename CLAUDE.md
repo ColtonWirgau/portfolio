@@ -26,6 +26,19 @@ Style rule: no em dashes anywhere in these files. Use colons, commas, parenthese
 
 **Do not surface the Sleeper outreach material in either file.** `app/notes/sleeper-websocket-leak` is part of a private outreach package and is intentionally absent from the LLM-readable files. If that page should also be kept out of search indexes, add `robots: { index: false }` to its `metadata` export rather than disallowing it in `robots.txt` (the robots file is itself public and listing the path there draws attention to it).
 
+## Resume (`/resume`, `/resume/<variant>`)
+
+The resume lives in the project as a real Next.js route so it stays in sync with the portfolio content (and so PDFs can be regenerated on demand).
+
+- `app/resume/page.tsx` serves the default variant. `app/resume/[slug]/page.tsx` serves named variants.
+- Content is typed (`app/resume/content/types.ts`) and split into a shared base (`content/base.ts`) plus per-job variants under `content/variants/`. New variants register themselves in `content/index.ts`.
+- The renderer is `app/resume/ResumeView.tsx`. It owns all styling (Anton + Playfair + Montserrat already loaded from `globals.css`), enforces `@page { size: letter }`, and hides the site nav + paper-grain on the resume route.
+- The route is `robots: { index: false, follow: false }` and is intentionally absent from `llms.txt` / `llms-full.txt`. Treat the resume the same as the Sleeper outreach page: keep it out of search indexes and out of the LLM-readable files.
+
+To regenerate a PDF: with `npm run dev` running in another terminal, run `npm run resume:pdf -- --variant=<slug>`. Output lands in `out/resume/<slug>-<date>.pdf` (already gitignored). Defaults to the IT BA variant. Override the URL with `--url=...` if the dev server isn't on `:3000`.
+
+When updating canonical bio content (Woodside bullets, education, AI work), update both the relevant `app/page.tsx` / `llms-full.txt` *and* `app/resume/content/base.ts` so the resume tracks the rest of the site.
+
 ## robots.txt
 
 `public/robots.txt` is intentionally minimal: allow everything, no disallows. SEO defaults. If you ever add per-route blocking, prefer Next.js `metadata.robots` on the page itself over editing `robots.txt`, for the reason above.

@@ -67,6 +67,18 @@ body,
   height: 0 !important;
 }
 
+/* Contact form fields — warm parchment placeholder */
+.contact-input::placeholder {
+  color: var(--color-muted);
+  opacity: 0.45;
+}
+.contact-input:-webkit-autofill,
+.contact-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-fg);
+  -webkit-box-shadow: 0 0 0 1000px #ECE8DF inset, inset 0 1px 2px rgba(34, 33, 30, 0.06);
+  caret-color: var(--color-fg);
+}
+
 /* Hide Mapbox logo */
 .mapboxgl-ctrl-logo {
   display: none !important;

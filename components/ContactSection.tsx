@@ -137,6 +137,7 @@ export function ContactSection() {
                 type="text"
                 required
                 autoComplete="name"
+                placeholder="Your name"
                 error={state.errors?.name}
               />
               <Field
@@ -145,6 +146,7 @@ export function ContactSection() {
                 type="email"
                 required
                 autoComplete="email"
+                placeholder="you@example.com"
                 error={state.errors?.email}
               />
             </div>
@@ -154,6 +156,7 @@ export function ContactSection() {
               name="message"
               required
               multiline
+              placeholder="Tell me about the role, project, or idea you have in mind."
               error={state.errors?.message}
             />
 
@@ -186,21 +189,37 @@ interface FieldProps {
   required?: boolean;
   autoComplete?: string;
   multiline?: boolean;
+  placeholder?: string;
   error?: string;
 }
 
-function Field({ label, name, type = 'text', required, autoComplete, multiline, error }: FieldProps) {
+function Field({ label, name, type = 'text', required, autoComplete, multiline, placeholder, error }: FieldProps) {
+  const restingBorder = error ? 'var(--color-accent)' : 'var(--color-border)';
+
   const inputStyle: React.CSSProperties = {
     width: '100%',
-    padding: '12px 14px',
+    padding: '13px 15px',
     fontSize: '15px',
     fontFamily: 'inherit',
     color: 'var(--color-fg)',
-    background: 'var(--color-card)',
-    border: `1px solid ${error ? 'var(--color-accent)' : 'var(--color-border)'}`,
+    background: '#ECE8DF',
+    border: `1px solid ${restingBorder}`,
     borderRadius: '3px',
     outline: 'none',
-    transition: 'border-color 0.15s ease',
+    appearance: 'none',
+    WebkitAppearance: 'none',
+    boxShadow: 'inset 0 1px 2px rgba(34, 33, 30, 0.06)',
+    transition: 'border-color 0.18s ease, box-shadow 0.18s ease',
+  };
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.currentTarget.style.borderColor = 'var(--color-accent)';
+    e.currentTarget.style.boxShadow =
+      'inset 0 1px 2px rgba(34, 33, 30, 0.06), 0 0 0 3px rgba(217, 68, 32, 0.14)';
+  };
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    e.currentTarget.style.borderColor = restingBorder;
+    e.currentTarget.style.boxShadow = 'inset 0 1px 2px rgba(34, 33, 30, 0.06)';
   };
 
   return (
@@ -226,6 +245,10 @@ function Field({ label, name, type = 'text', required, autoComplete, multiline, 
           required={required}
           rows={6}
           autoComplete={autoComplete}
+          placeholder={placeholder}
+          className="contact-input"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           style={{ ...inputStyle, resize: 'vertical', minHeight: '140px', fontFamily: 'inherit' }}
         />
       ) : (
@@ -235,6 +258,10 @@ function Field({ label, name, type = 'text', required, autoComplete, multiline, 
           type={type}
           required={required}
           autoComplete={autoComplete}
+          placeholder={placeholder}
+          className="contact-input"
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           style={inputStyle}
         />
       )}
@@ -254,7 +281,7 @@ function SubmitButton() {
       type="submit"
       disabled={pending}
       style={{
-        alignSelf: 'flex-start',
+        alignSelf: 'flex-end',
         padding: '12px 22px 10px',
         background: 'transparent',
         color: 'var(--color-accent)',

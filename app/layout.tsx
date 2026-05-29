@@ -3,6 +3,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://coltonwirgau.me"),
   title: "Colton Wirgau - Full-Stack Developer",
   description:
     "Full-stack developer specializing in UI/UX, making complex systems intuitive and beautiful.",
@@ -15,9 +16,20 @@ export const metadata: Metadata = {
     "colton wirgau",
   ],
   authors: [{ name: "Colton Wirgau" }],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
+    url: "https://coltonwirgau.me",
+    siteName: "Colton Wirgau",
+    title: "Colton Wirgau - Full-Stack Developer",
+    description:
+      "Full-stack developer specializing in UI/UX, making complex systems intuitive and beautiful.",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Colton Wirgau - Full-Stack Developer",
     description:
       "Full-stack developer specializing in UI/UX, making complex systems intuitive and beautiful.",
