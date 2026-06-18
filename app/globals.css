@@ -104,6 +104,8 @@ body,
 /* Poster grid - default: 3-up grid on wide screens */
 .poster-card {
   transition: transform 0.3s ease !important;
+  /* container-type is set inline on each card (see page.tsx): the CSS
+     minifier strips it from this stylesheet, but inline styles survive. */
 }
 .poster-card:hover {
   transform: scale(1.03) !important;

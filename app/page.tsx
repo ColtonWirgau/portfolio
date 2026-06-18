@@ -9,6 +9,7 @@ import { SideLabel } from '@/components/SideLabel';
 import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 import { AIResearchSheet } from '@/components/AIResearchSheet';
+import { BeyondCards } from '@/components/BeyondSheet';
 import { ContactSection } from '@/components/ContactSection';
 
 const roles = [
@@ -45,8 +46,8 @@ const projects: ProjectGroup[] = [
   {
     id: 'church-hub',
     title: 'Church Hub',
-    category: 'SaaS Platform',
-    description: 'What started as an internal tool at Woodside Bible Church evolved into a full SaaS product. Church Hub is a modular Next.js platform that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data. I started a business around it, implementing it across multiple churches to solve real operational problems at scale.',
+    category: 'Developer Platform',
+    description: 'What started as an internal tool at Woodside Bible Church grew into a platform churches own and build on. Church Hub is a modular Next.js system that centralizes operations, automates workflows, and lets churches build custom tools on top of their existing data: extend it in-house, hire a developer, or let AI build on top of it. I started a business around it, implementing it across multiple churches to solve real operational problems at scale.',
     tech: ['Next.js', 'React', 'TypeScript', 'Node.js', 'SQL Server', 'Tailwind', 'Vercel'],
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
     storyPath: '/work/church-hub',
@@ -128,8 +129,8 @@ const projects: ProjectGroup[] = [
       },
       {
         id: 'personal-lions',
-        title: 'Lions Season Ticket Tracker',
-        description: 'My parents and I have Lions season tickets with two extra seats, so I built a little app to keep track of who\'s going to each game, any resales, and costs. It\'s nothing fancy from a brand standpoint (it\'s just for us) but under the hood it\'s got full OAuth, a Neon database, and clean dashboards. Solves a real (very niche) problem.',
+        title: 'RoarTracker',
+        description: 'My parents and I have Lions season tickets with two extra seats, so I built RoarTracker to keep tabs on who\'s going to each game, any resales, and costs. It\'s nothing fancy from a brand standpoint (it\'s just for us) but under the hood it\'s got full OAuth, a Neon database, and clean dashboards. Solves a real (very niche) problem.',
       },
       {
         id: 'personal-degenerates',
@@ -445,6 +446,7 @@ export default function Home() {
                   cursor: 'pointer',
                   position: 'relative',
                   overflow: 'hidden',
+                  containerType: 'inline-size',
                   aspectRatio: '2/3',
                   display: 'flex',
                   flexDirection: 'column',
@@ -470,7 +472,7 @@ export default function Home() {
                 {/* Top label */}
                 <div style={{ padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
                   <span style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.2em', color: '#A09888', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
-                    SAAS PLATFORM
+                    DEVELOPER PLATFORM
                   </span>
                 </div>
 
@@ -485,7 +487,7 @@ export default function Home() {
                   justifyContent: 'center',
                 }}>
                   <h3 style={{
-                    fontSize: 'clamp(3.5rem, 10vw, 6rem)',
+                    fontSize: 'clamp(2.25rem, 19cqw, 6rem)',
                     fontFamily: 'var(--font-serif)',
                     fontWeight: 700,
                     fontStyle: 'italic',
@@ -499,7 +501,7 @@ export default function Home() {
                     Church
                   </h3>
                   <h3 style={{
-                    fontSize: 'clamp(3.5rem, 10vw, 6rem)',
+                    fontSize: 'clamp(2.25rem, 19cqw, 6rem)',
                     fontFamily: 'var(--font-serif)',
                     fontWeight: 700,
                     fontStyle: 'italic',
@@ -527,63 +529,8 @@ export default function Home() {
                     lineHeight: 1.6,
                   }}>
                     FROM INTERNAL TOOL<br />
-                    TO FULL SAAS PRODUCT
+                    TO A PLATFORM THEY OWN
                   </p>
-                </div>
-
-                {/* Tech info grid */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: '1px',
-                  margin: '0 28px',
-                  borderTop: '1px solid #C8C0B4',
-                  borderBottom: '1px solid #C8C0B4',
-                  position: 'relative',
-                  zIndex: 3,
-                }}>
-                  {[
-                    { label: 'NEXT.JS', sub: 'FRAMEWORK' },
-                    { label: 'TYPESCRIPT', sub: 'LANGUAGE' },
-                    { label: 'SQL SERVER', sub: 'DATABASE' },
-                  ].map((item) => (
-                    <div key={item.label} style={{ padding: '10px 8px', textAlign: 'center' }}>
-                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#7BA3C9', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em' }}>
-                        {item.label}
-                      </div>
-                      <div style={{ fontSize: '6px', fontWeight: 500, color: '#A09888', fontFamily: 'var(--font-sans)', letterSpacing: '0.15em', marginTop: '2px' }}>
-                        {item.sub}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Bottom */}
-                <div style={{
-                  padding: '20px 28px 24px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                  position: 'relative',
-                  zIndex: 3,
-                  marginTop: 'auto',
-                }}>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    {['REACT', 'NODE.JS', 'TAILWIND', 'VERCEL'].map((t) => (
-                      <span key={t} style={{
-                        fontSize: '7px', fontWeight: 600, letterSpacing: '0.12em',
-                        color: '#A09888', fontFamily: 'var(--font-sans)',
-                      }}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <span style={{
-                    fontSize: '7px', fontWeight: 600, letterSpacing: '0.15em',
-                    color: '#A09888', fontFamily: 'var(--font-sans)',
-                  }}>
-                    MULTI-CHURCH
-                  </span>
                 </div>
 
               </div>
@@ -599,9 +546,11 @@ export default function Home() {
                   cursor: 'pointer',
                   position: 'relative',
                   overflow: 'hidden',
+                  containerType: 'inline-size',
                   aspectRatio: '2/3',
                   display: 'flex',
                   flexDirection: 'column',
+                  justifyContent: 'center',
                 }}
               >
                 {/* Church background pinned to bottom with fade */}
@@ -632,32 +581,6 @@ export default function Home() {
                   }} />
                 </div>
 
-                {/* Top info row */}
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  padding: '20px 28px 12px',
-                  position: 'relative',
-                  zIndex: 3,
-                }}>
-                  <div>
-                    <div style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.08em', color: '#C0C8D0', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
-                      Sole Developer
-                    </div>
-                    <div style={{ fontSize: '7px', fontWeight: 400, letterSpacing: '0.04em', color: '#6B7888', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', marginTop: '4px', maxWidth: '160px', lineHeight: 1.5 }}>
-                      BUILDING AND MAINTAINING THE SOFTWARE INFRASTRUCTURE THAT POWERS THE ORGANIZATION.
-                    </div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.08em', color: '#C0C8D0', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
-                      Full-Stack Development
-                    </div>
-                    <div style={{ fontSize: '7px', fontWeight: 400, letterSpacing: '0.04em', color: '#6B7888', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', marginTop: '4px', maxWidth: '160px', lineHeight: 1.5, marginLeft: 'auto' }}>
-                      FROM INTERACTIVE DASHBOARDS TO AUTOMATED WORKFLOWS AND REPORTING TOOLS.
-                    </div>
-                  </div>
-                </div>
-
                 {/* Three crosses - middle one larger */}
                 <div style={{
                   display: 'flex',
@@ -684,7 +607,6 @@ export default function Home() {
 
                 {/* Centered title - Montserrat */}
                 <div style={{
-                  flex: 1,
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
@@ -693,7 +615,7 @@ export default function Home() {
                   zIndex: 3,
                 }}>
                   <h3 style={{
-                    fontSize: 'clamp(2rem, 5vw, 3.2rem)',
+                    fontSize: 'clamp(1.5rem, 13cqw, 3.2rem)',
                     fontFamily: 'var(--font-sans)',
                     fontWeight: 900,
                     color: '#C0C8D0',
@@ -707,7 +629,7 @@ export default function Home() {
                     WOODSIDE
                   </h3>
                   <h4 style={{
-                    fontSize: 'clamp(1rem, 3vw, 1.8rem)',
+                    fontSize: 'clamp(0.8rem, 8cqw, 1.8rem)',
                     fontFamily: 'var(--font-sans)',
                     fontWeight: 700,
                     color: '#8A95A5',
@@ -721,61 +643,6 @@ export default function Home() {
                   }}>
                     BIBLE CHURCH
                   </h4>
-                </div>
-
-                {/* Tech info grid */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr 1fr',
-                  gap: '1px',
-                  margin: '0 28px',
-                  borderTop: '1px solid #2A3F50',
-                  borderBottom: '1px solid #2A3F50',
-                  position: 'relative',
-                  zIndex: 3,
-                }}>
-                  {[
-                    { label: 'NEXT.JS', sub: 'FRAMEWORK' },
-                    { label: 'SQL SERVER', sub: 'DATABASE' },
-                    { label: 'POWER BI', sub: 'REPORTING' },
-                  ].map((item) => (
-                    <div key={item.label} style={{ padding: '10px 8px', textAlign: 'center' }}>
-                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#8A95A5', fontFamily: 'var(--font-sans)', letterSpacing: '0.1em', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
-                        {item.label}
-                      </div>
-                      <div style={{ fontSize: '6px', fontWeight: 500, color: '#8A95A5', fontFamily: 'var(--font-sans)', letterSpacing: '0.15em', marginTop: '2px', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
-                        {item.sub}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-
-                {/* Bottom - tech labels + Woodside logo */}
-                <div style={{
-                  padding: '20px 28px 24px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                  position: 'relative',
-                  zIndex: 3,
-                }}>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    {['REST API', 'WORDPRESS', 'PLANNING CENTER'].map((t) => (
-                      <span key={t} style={{
-                        fontSize: '7px', fontWeight: 600, letterSpacing: '0.12em',
-                        color: '#8A95A5', fontFamily: 'var(--font-sans)', textShadow: '0 1px 4px rgba(0,0,0,0.5)',
-                      }}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  {/* Woodside logo icon */}
-                  <svg viewBox="0 0 822.73 822.41" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ width: '28px', height: '28px', opacity: 0.4 }}>
-                    <path d="M482.59,292.96c-28.5,75.56-63.52,148.62-91.88,224.24-22.85,60.93-44.5,165.54,5.99,218.03,53.19,55.31,103.27-36.03,126.36-76.12,29.77-51.67,60.19-102.91,92.51-153.1,37.77-58.65,82.78-117.18,128.05-170.34,17.33-20.35,35.58-39.9,55.18-58.05,1.32-.3,1.67.72,2.19,1.61,2.7,4.68,6.16,19.72,7.79,25.79,55.59,207.53-59.67,424.44-261.39,494.49-162.86,56.55-343.5,6.03-452.97-125.71l.02-2.82c22.1-29.38,43.34-59.51,66.31-88.22,46.87-58.59,104.84-117,159.18-168.95,39.21-37.49,94.79-86.04,141.88-112.38,2.97-1.66,18.74-10.3,20.79-8.46Z" fill="#62BB46" />
-                    <path d="M454.78,615.29c-.4-37.26,12.31-73.93,23.96-108.91,21.35-64.11,58.46-144.93,65.26-211.05,10.09-98.15-75.84-54.82-121.59-23.71-87.22,59.32-157.97,140.42-238.72,207.44-1.08.9-1.56,2.33-3.36,1.91,29.91-61.5,79.75-118.22,92.63-187.03,26.62-142.2-143-109.97-223.13-77.75-1.54-1.51,19.5-33.71,21.85-37.14C170.36,35.21,348.48-31.19,518.31,14.05c111.97,29.83,206.98,107.78,259.7,210.54l-1.23,3.19c-101.38,85.68-182.57,188.93-258.5,297.03-21.17,30.14-40.81,61.47-63.5,90.48Z" fill="#62BB46" />
-                    <path d="M38.3,581.71c-6.2-9.05-10.4-20.99-14.14-31.42C-1.72,478.2-6.79,400.44,8.86,325.38c1.73-8.3,5.99-29.98,9.5-36.56,1.25-2.35,11.96-9.93,14.86-12.01,41.76-29.96,121.9-63.33,173.22-50.74,49.51,12.15,15.29,70.69-.39,97.86-34.22,59.31-78.86,114.75-116.32,172.48-18.06,27.83-35.65,56.1-51.43,85.3Z" fill="#62BB46" />
-                  </svg>
                 </div>
 
               </div>
@@ -792,6 +659,7 @@ export default function Home() {
                   cursor: 'pointer',
                   position: 'relative',
                   overflow: 'hidden',
+                  containerType: 'inline-size',
                   aspectRatio: '2/3',
                   display: 'flex',
                   flexDirection: 'column',
@@ -863,7 +731,7 @@ export default function Home() {
                   justifyContent: 'center',
                 }}>
                   <h3 style={{
-                    fontSize: 'clamp(3rem, 10vw, 5.5rem)',
+                    fontSize: 'clamp(2rem, 17cqw, 5.5rem)',
                     fontFamily: 'var(--font-serif)',
                     fontWeight: 700,
                     color: '#E8899F',
@@ -876,7 +744,7 @@ export default function Home() {
                     Personal
                   </h3>
                   <h3 style={{
-                    fontSize: 'clamp(3rem, 10vw, 5.5rem)',
+                    fontSize: 'clamp(2rem, 17cqw, 5.5rem)',
                     fontFamily: 'var(--font-serif)',
                     fontWeight: 700,
                     color: '#E8899F',
@@ -905,34 +773,6 @@ export default function Home() {
                     THE STUFF I BUILD FOR FUN<br />
                     AND SOMETIMES FOR FRIENDS & FAMILY
                   </p>
-                </div>
-
-                {/* Bottom - tech + tagline */}
-                <div style={{
-                  padding: '20px 28px 24px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-end',
-                  position: 'relative',
-                  zIndex: 3,
-                  marginTop: 'auto',
-                }}>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    {['NEXT.JS', 'NEON', 'OAUTH', 'TAILWIND'].map((t) => (
-                      <span key={t} style={{
-                        fontSize: '7px', fontWeight: 600, letterSpacing: '0.12em',
-                        color: '#C4B8E8', fontFamily: 'var(--font-sans)',
-                      }}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <span style={{
-                    fontSize: '7px', fontWeight: 600, letterSpacing: '0.15em',
-                    color: '#C4B8E8', fontFamily: 'var(--font-sans)',
-                  }}>
-                    LESS POLISHED · MORE FUN
-                  </span>
                 </div>
 
               </div>
@@ -1056,7 +896,7 @@ export default function Home() {
                 lineHeight: 1.8,
                 maxWidth: '1100px',
               }}>
-                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. I studied software engineering and leadership while running track at the University of Detroit Mercy, got published in AI research, and landed at Woodside Bible Church where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
+                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. At the University of Detroit Mercy I studied software engineering and leadership, ran Division I track, and got published in AI research before the current wave existed. Then I landed at Woodside Bible Church, where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
               </p>
 
               {/* Beyond the code \u2014 personal highlight badges */}
@@ -1064,38 +904,7 @@ export default function Home() {
                 <div style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: '20px', textAlign: 'center' }}>
                   Beyond the code
                 </div>
-                <div style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  justifyContent: 'center',
-                  gap: '24px',
-                }}>
-                  {[
-                    { label: 'D1 Athlete', icon: <><path d="M6 9a6 6 0 1012 0A6 6 0 006 9z" /><path d="M12 15v7" /><path d="M8 22h8" /></> },
-                    { label: 'Hall of Fame', icon: <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" /> },
-                    { label: 'Musician', icon: <><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></> },
-                    { label: 'Father of 2', icon: <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" /> },
-                  ].map((badge) => (
-                    <div key={badge.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', width: '80px' }}>
-                      <div style={{
-                        width: '52px',
-                        height: '52px',
-                        borderRadius: '50%',
-                        background: '#2A2622',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                          {badge.icon}
-                        </svg>
-                      </div>
-                      <span style={{ fontSize: '10px', fontWeight: 600, color: 'var(--color-muted)', textAlign: 'center', lineHeight: 1.3, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                        {badge.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                <BeyondCards />
               </div>
 
             </div>

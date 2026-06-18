@@ -56,7 +56,7 @@ export const itBusinessAnalystResume: Resume = {
       location: 'Detroit, MI',
       dates: 'Aug 2025 – Present',
       bullets: [
-        'Founded and built Church Hub, a modular SaaS platform extending MinistryPlatform with event management, volunteer coordination, giving dashboards, and custom reporting; implemented across multiple churches.',
+        'Founded and built Church Hub, a modular, client-owned platform on top of MinistryPlatform with event management, volunteer coordination, giving dashboards, and custom reporting; implemented across multiple churches.',
         'Own product strategy, requirements, architecture, and delivery end-to-end; translate cross-organization operational needs into a single configurable platform.',
       ],
     },

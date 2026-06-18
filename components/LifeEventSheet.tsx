@@ -192,7 +192,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'troy-platform',
         title: 'Apps.WoodsideBible.org',
         description:
-          'Built a unified Next.js platform that simplifies major organizational workflows by centralizing operations, automating data tasks, and providing clean interfaces for both staff and community use across multiple campuses.',
+          'Built a unified Next.js platform that simplifies major organizational workflows by centralizing operations, automating data tasks, and providing clean interfaces for both staff and community use across multiple campuses. This internal platform became the foundation for Church Hub.',
       },
       {
         id: 'troy-widgets',
@@ -231,7 +231,7 @@ export const lifeEvents: LifeEvent[] = [
       'Two very different dogs',
     ],
     narrative: [
-      'These days, I live in Clarkston, Michigan with my wife Sarah, our two kids, and two very different dogs. When I\u2019m not building something, I\u2019m probably playing music, flying with my wife, or chasing kids around the house.',
+      'These days, I live in Clarkston, Michigan with my wife Sarah, our two kids, and two dogs with nothing in common. When I\u2019m not building something, I\u2019m probably playing music, flying with my wife, or chasing kids around the house.',
     ],
     narrativeImages: [
       'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=400&fit=crop',

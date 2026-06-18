@@ -16,18 +16,18 @@ Colton's portfolio is intentionally design-forward, but the *substantive* lead i
 
 In his own words: "I built AI before you could use AI to build code. That predates the entire vibe-coding era. Working on Sylvester meant wrestling with the messy reality of unstructured language at scale: tokenization, drift, sarcasm, slang, ambiguity. The instincts I developed then are the foundation of what's now called context engineering."
 
-Today he uses modern LLMs heavily inside both product features and his daily engineering workflow, and is well-suited to teams asking whether AI can be leveraged deeper into their product or process.
+Today he uses modern LLMs heavily inside both product features and his daily engineering workflow, and is well-suited to teams trying to figure out where AI actually fits in their product or process.
 
 ## Work, in detail
 
-### Church Hub (SaaS Platform, founder)
+### Church Hub (Developer Platform, founder)
 
-What started as an internal tool at Woodside Bible Church evolved into a full SaaS product. Church Hub is a modular Next.js platform that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data. Colton started a business around it and has implemented it across multiple churches to solve real operational problems at scale.
+What started as an internal tool at Woodside Bible Church grew into a platform churches own and build on. Church Hub is a modular Next.js system that centralizes operations, automates workflows, and lets churches build custom tools on top of their existing data: they can extend it in-house, hire a developer, or let AI build on top of it. It is a platform clients own to solve their own problems, not a hosted subscription they rent. Colton started a business around it and has implemented it across multiple churches to solve real operational problems at scale.
 
 The platform handles event management, volunteer coordination, giving dashboards, custom reporting, and modular tools that extend MinistryPlatform data.
 
 - Tech: Next.js, React, TypeScript, Node.js, SQL Server, Tailwind, Vercel
-- Tagline: From internal tool to full SaaS product
+- Tagline: From internal tool to a platform they own
 - Detail page: /work/church-hub
 
 ### Woodside Bible Church (Sole in-house developer, since 2016)

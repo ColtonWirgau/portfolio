@@ -94,7 +94,7 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
               I built AI before you could use AI to build code. That predates the entire vibe-coding era. Working on Sylvester meant wrestling with the messy reality of unstructured language at scale: tokenization, drift, sarcasm, slang, ambiguity. The instincts I developed then are the foundation of what{'’'}s now called context engineering.
             </p>
             <p>
-              The last year and a half have been transformative, and the surface area of what{'’'}s possible keeps expanding. But I{'’'}ve watched every iteration of this from inside the work, not just as a user. If your team is wondering whether AI could be leveraged deeper into your product or workflow, I{'’'}m probably the right person to take that to the next step.
+              AI{'’'}s capabilities have expanded faster than anything I{'’'}ve worked in, and I{'’'}ve watched every iteration from inside the work, not just as a user. If your team is trying to figure out where AI actually fits in your product, I{'’'}m the person who has been doing this since before it was easy.
             </p>
           </Section>
 

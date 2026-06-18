@@ -402,7 +402,7 @@ export function ResponsiveSheet({
           {/* Backdrop */}
           <div
             className={`absolute inset-0 bg-black/20 transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
-            style={{ touchAction: 'none' }}
+            style={{ touchAction: 'none', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
             onClick={onClose}
           />
 
@@ -453,6 +453,7 @@ export function ResponsiveSheet({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="absolute inset-0 bg-black/20"
+              style={{ backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)' }}
               onClick={onClose}
             />
             <motion.div

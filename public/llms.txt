@@ -13,9 +13,9 @@ This portfolio is built with Next.js 16 and React 19 and is intentionally design
 
 ## Work
 
-- [Church Hub](/work/church-hub): SaaS platform for churches. Started as an internal tool at Woodside Bible Church and evolved into a full product that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data. Built on Next.js, React, TypeScript, Node.js, SQL Server, and Tailwind. Colton founded the business and has implemented it across multiple churches.
+- [Church Hub](/work/church-hub): A developer platform churches own and build on. Started as an internal tool at Woodside Bible Church and grew into a product that helps churches centralize operations, automate workflows, and build custom tools on top of their existing data: they can extend it in-house, hire a developer, or let AI build on top of it. Built on Next.js, React, TypeScript, Node.js, SQL Server, and Tailwind. Colton founded the business and has implemented it across multiple churches.
 - [Woodside Bible Church](/work/woodside): Sole in-house developer. Builds and maintains the software infrastructure for the organization, including interactive dashboards, automated database workflows, public-facing web pages, Power BI reporting, and third-party integrations with REACH, Planning Center, and MinistryPlatform. Some of this work was adopted into MinistryPlatform's core product.
-- [Personal Projects](/work/personal-projects): Side projects, including Dynastly (a dynasty fantasy football trade and league management tool with a companion browser extension), a Lions season ticket tracker with full OAuth and a Neon database, and the Degenerates Dashboard (a parlay tracker for him and his friends).
+- [Personal Projects](/work/personal-projects): Side projects, including Dynastly (a dynasty fantasy football trade and league management tool with a companion browser extension), RoarTracker (a Lions season ticket tracker with full OAuth and a Neon database), and the Degenerates Dashboard (a parlay tracker for him and his friends).
 
 ## Skills and stack
 
