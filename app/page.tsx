@@ -248,7 +248,7 @@ export default function Home() {
       <main ref={mainRef} className="h-full overflow-y-auto relative" style={{ paddingBottom: '0' }}>
         {/* Hero section */}
         <section className="h-screen flex items-stretch" style={{ padding: '0 24px' }}>
-          <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" />
+          <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" align="center" matchHeight="90dvh" />
           <div className="flex-1 flex items-center">
           <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6">
             {/* Text side */}
@@ -857,7 +857,6 @@ export default function Home() {
               }}>
                 My Story.
               </h2>
-              <div style={{ width: '40px', height: '1px', background: 'var(--color-accent)', marginBottom: '24px' }} />
               <p style={{
                 fontFamily: 'var(--font-serif)',
                 fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
@@ -878,7 +877,7 @@ export default function Home() {
                 lineHeight: 1.8,
                 maxWidth: '1100px',
               }}>
-                I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. At the University of Detroit Mercy I studied software engineering and leadership, ran Division I track, and got published in AI research before the current wave existed. Then I landed at Woodside Bible Church, where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
+                I grew up in Algonac, Michigan, and was an IB student, football captain, track Hall of Famer. At the University of Detroit Mercy I studied software engineering and leadership, ran Division I track, and got published in AI research before the current wave existed. Then I landed at Woodside Bible Church, where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
               </p>
 
               {/* Personal highlight badges */}
