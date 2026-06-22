@@ -126,7 +126,7 @@ Lives in Clarkston with his wife Sarah, their two kids Weston (3) and Rosie (1),
 
 ## How to engage
 
-- Hiring, collaboration, or project conversations: use the contact form at /#contact or email coltonwirgau@gmail.com.
+- Hiring, collaboration, or project conversations: open the Contact button in the site header to use the contact form, or email coltonwirgau@gmail.com directly.
 - Best framing if reaching out about AI work: Colton sits at the intersection of product engineering and applied AI, with a long runway of NLP experience predating the LLM era. He's a strong fit for teams that want AI built deeper into their product or workflow, not just bolted on.
 
 ## Site map (public)

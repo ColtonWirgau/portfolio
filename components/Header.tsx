@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { ContactSheet } from '@/components/ContactSheet';
 
 const navLinks = [
   { label: 'Work', href: '/#work' },
@@ -11,9 +12,8 @@ const navLinks = [
 
 export function Header() {
   const pathname = usePathname();
-  const router = useRouter();
   const isHome = pathname === '/';
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
 
   const handleNavClick = (e: React.MouseEvent, href: string) => {
     if (isHome) {
@@ -38,18 +38,12 @@ export function Header() {
   };
 
   const handleContactClick = (e: React.MouseEvent) => {
-    if (isHome) {
-      e.preventDefault();
-      const el = document.getElementById('contact');
-      const main = document.querySelector('main');
-      if (el && main) {
-        const top = el.offsetTop - main.offsetTop;
-        main.scrollTo({ top, behavior: 'smooth' });
-      }
-    }
+    e.preventDefault();
+    setContactOpen(true);
   };
 
   return (
+    <>
     <nav
       className="fixed top-0 left-0 right-0 z-50 h-14 flex items-center justify-between"
       style={{
@@ -89,17 +83,20 @@ export function Header() {
       </div>
 
       {/* CTA */}
-      <Link
-        href={isHome ? '/#contact' : '/#contact'}
+      <button
+        type="button"
         onClick={handleContactClick}
-        className="text-[13px] font-medium flex items-center gap-1.5 hover:opacity-70 transition-opacity"
-        style={{ textDecoration: 'none' }}
+        className="text-[13px] font-medium flex items-center gap-1.5 hover:opacity-70 transition-opacity cursor-pointer"
+        style={{ background: 'transparent', border: 'none', padding: 0, color: 'inherit' }}
       >
         <span className="underline underline-offset-4 uppercase tracking-wider">Contact</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <path d="M7 17L17 7M17 7H7M17 7V17" />
         </svg>
-      </Link>
+      </button>
     </nav>
+
+    <ContactSheet open={contactOpen} onClose={() => setContactOpen(false)} />
+    </>
   );
 }

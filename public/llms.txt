@@ -28,8 +28,8 @@ This portfolio is built with Next.js 16 and React 19 and is intentionally design
 
 ## Contact
 
-- [Contact form](/#contact): the primary way to reach Colton for hiring, collaboration, or project conversations.
-- Email: coltonwirgau@gmail.com
+- Contact form: open the Contact button in the site header to reach Colton for hiring, collaboration, or project conversations.
+- Email: coltonwirgau@gmail.com (the most direct way to reach him)
 - Location: Detroit, MI (open to remote)
 
 ## Optional

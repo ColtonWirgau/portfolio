@@ -10,7 +10,6 @@ import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 import { AIResearchSheet } from '@/components/AIResearchSheet';
 import { BeyondCards } from '@/components/BeyondSheet';
-import { ContactSection } from '@/components/ContactSection';
 
 const roles = [
   'an AI pioneer',
@@ -469,13 +468,6 @@ export default function Home() {
                   />
                 </div>
 
-                {/* Top label */}
-                <div style={{ padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
-                  <span style={{ fontSize: '8px', fontWeight: 600, letterSpacing: '0.2em', color: '#A09888', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
-                    DEVELOPER PLATFORM
-                  </span>
-                </div>
-
                 {/* Giant centered title */}
                 <div style={{
                   padding: '16px 28px 0',
@@ -528,8 +520,8 @@ export default function Home() {
                     textAlign: 'center',
                     lineHeight: 1.6,
                   }}>
-                    FROM INTERNAL TOOL<br />
-                    TO A PLATFORM THEY OWN
+                    A DEVELOPER PLATFORM FOR CHURCHES<br />
+                    TO BUILD CUSTOM SOLUTIONS
                   </p>
                 </div>
 
@@ -710,16 +702,6 @@ export default function Home() {
                   backgroundRepeat: 'repeat', backgroundSize: '256px 256px', pointerEvents: 'none', zIndex: 2,
                 }} />
 
-                {/* Top label */}
-                <div style={{ padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
-                  <span style={{
-                    fontSize: '8px', fontWeight: 600, letterSpacing: '0.2em',
-                    color: '#C4B8E8', fontFamily: 'var(--font-sans)', textTransform: 'uppercase',
-                  }}>
-                    SIDE PROJECTS
-                  </span>
-                </div>
-
                 {/* Giant title - pink on periwinkle */}
                 <div style={{
                   padding: '16px 28px 0',
@@ -899,11 +881,8 @@ export default function Home() {
                 I grew up in Algonac, Michigan. IB student, football captain, track Hall of Famer. At the University of Detroit Mercy I studied software engineering and leadership, ran Division I track, and got published in AI research before the current wave existed. Then I landed at Woodside Bible Church, where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
               </p>
 
-              {/* Beyond the code \u2014 personal highlight badges */}
+              {/* Personal highlight badges */}
               <div style={{ marginTop: '40px', maxWidth: '1100px' }}>
-                <div style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-muted)', marginBottom: '20px', textAlign: 'center' }}>
-                  Beyond the code
-                </div>
                 <BeyondCards />
               </div>
 
@@ -1151,8 +1130,6 @@ export default function Home() {
             })()}
           </SheetPage>
         </ResponsiveSheet>
-
-        <ContactSection />
 
         <Footer />
       </main>
