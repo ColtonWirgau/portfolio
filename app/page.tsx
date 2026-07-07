@@ -129,7 +129,7 @@ const projects: ProjectGroup[] = [
       {
         id: 'personal-lions',
         title: 'RoarTracker',
-        description: 'My parents and I have Lions season tickets with two extra seats, so I built RoarTracker to keep tabs on who\'s going to each game, any resales, and costs. It\'s nothing fancy from a brand standpoint (it\'s just for us) but under the hood it\'s got full OAuth, a Neon database, and clean dashboards. Solves a real (very niche) problem.',
+        description: 'My parents, my wife, and I split six Lions season tickets between the four of us, so every game comes with at least two open seats. RoarTracker keeps it straight: who\'s going, who paid, what we\'ve made back selling extras, and it generates the social graphic when we list a pair. Under the hood it\'s got full OAuth, a Supabase database, and clean dashboards. A real solution to a very niche problem.',
       },
       {
         id: 'personal-degenerates',
@@ -248,7 +248,7 @@ export default function Home() {
       <main ref={mainRef} className="h-full overflow-y-auto relative" style={{ paddingBottom: '0' }}>
         {/* Hero section */}
         <section className="h-screen flex items-stretch" style={{ padding: '0 24px' }}>
-          <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" align="center" matchHeight="90dvh" />
+          <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" padTop="64px" padBottom="5dvh" />
           <div className="flex-1 flex items-center">
           <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6">
             {/* Text side */}

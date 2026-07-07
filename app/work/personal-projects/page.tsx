@@ -24,6 +24,7 @@ const sideProjects: Record<SideProjectId, {
   techGrid: { label: string; sub: string }[];
   extraTags: string[];
   status: string;
+  screens?: { desktop: string; mobile: string; caption: string }[];
   theme: {
     bg: string;
     fg: string;
@@ -46,6 +47,33 @@ const sideProjects: Record<SideProjectId, {
     ],
     extraTags: ['TYPESCRIPT', 'SLEEPER API', 'ANTON', 'GEIST'],
     status: 'In active use across multiple leagues',
+    screens: [
+      {
+        desktop: '/images/dynastly-1.webp',
+        mobile: '/images/dynastly-mobile-1.webp',
+        caption: 'The team dashboard: starters, bench, and picks valued in one place, with open offers below.',
+      },
+      {
+        desktop: '/images/dynastly-4.webp',
+        mobile: '/images/dynastly-mobile-4.webp',
+        caption: 'The trade creator: full rosters, picks, and FAAB across every team in the deal, on one canvas.',
+      },
+      {
+        desktop: '/images/dynastly-5.webp',
+        mobile: '/images/dynastly-mobile-5.webp',
+        caption: 'Trade breakdown with a fairness meter per side and suggested assets to even the deal.',
+      },
+      {
+        desktop: '/images/dynastly-2.webp',
+        mobile: '/images/dynastly-mobile-2.webp',
+        caption: 'The full player pool, filterable, with KeepTradeCut and FantasyCalc valuations side by side.',
+      },
+      {
+        desktop: '/images/dynastly-3.webp',
+        mobile: '/images/dynastly-mobile-3.webp',
+        caption: 'Player pages: value history, comparables, prospect profile, and recent seasons.',
+      },
+    ],
     theme: {
       bg: '#09090B',
       fg: '#F0EBE0',
@@ -56,18 +84,18 @@ const sideProjects: Record<SideProjectId, {
   },
   roar: {
     title: 'Roar Tracker',
-    tagline: 'Detroit Lions season-ticket management for the Wirgau family',
-    body: 'My parents and I have Detroit Lions season tickets with two extra seats, so I built a little app to keep track of who’s going to each game, who paid what, any resales, and how much we’ve spent or made across the season. It’s a quiet utility that solves a real (very niche) problem. It’s got full OAuth, a Neon database, and clean dashboards under the hood. I’m migrating my image generator from Dynastly into it next, so it’ll automatically produce social-post graphics for tickets we put up for sale (the kind I usually have to hand-make in Figma every week).',
+    tagline: 'Six Lions season tickets, one organized family',
+    body: 'My parents, my wife, and I split six Lions season tickets, and there are only four of us. So every game comes with at least two open seats: friends when we can find them, the resale market when we can’t. Roar Tracker keeps the whole operation straight. Who’s in for each game, who paid what, and how the season is tracking money-wise. When more people want in than we have seats, it runs the drawing. And when we list a pair, it generates a clean social graphic for the post, the kind I used to rebuild in Figma every single week.',
     techGrid: [
       { label: 'NEXT.JS', sub: 'FRAMEWORK' },
-      { label: 'NEON', sub: 'DATABASE' },
+      { label: 'SUPABASE', sub: 'DATABASE' },
       { label: 'OAUTH', sub: 'AUTH' },
       { label: 'TAILWIND', sub: 'STYLE' },
       { label: 'VERCEL', sub: 'HOSTING' },
       { label: 'TYPESCRIPT', sub: 'LANGUAGE' },
     ],
-    extraTags: ['FAMILY-ONLY', 'GAME TRACKING', 'RESALE LEDGER', 'AUTO-GEN SOCIAL POSTS'],
-    status: 'Used by the family every season',
+    extraTags: ['SIX SEATS', 'GAME-BY-GAME', 'RESALE LEDGER', 'SOCIAL GRAPHICS'],
+    status: 'Runs all season, every season',
     theme: {
       bg: '#0076B6', // Lions Honolulu Blue
       fg: '#FFFFFF',
@@ -168,16 +196,44 @@ export default function PersonalProjectsPage() {
               zIndex: 1,
             }} />
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
-              <div>
-                <div style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: '#A1A1AA', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
-                  Dynasty Fantasy
-                </div>
-                <div style={{ fontSize: '7px', fontWeight: 400, letterSpacing: '0.04em', color: '#52525B', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', marginTop: '4px', maxWidth: '140px', lineHeight: 1.5 }}>
-                  TRADE COMPANION FOR THE LEAGUE
-                </div>
+            {/* Phone screenshots peeking from the bottom corners */}
+            <img
+              src="/images/dynastly-mobile-1.webp"
+              alt=""
+              loading="lazy"
+              style={{
+                position: 'absolute',
+                bottom: '-26%',
+                left: '-10%',
+                width: '42%',
+                transform: 'rotate(-8deg)',
+                borderRadius: '10px',
+                border: '1px solid #27272A',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.55)',
+                zIndex: 2,
+              }}
+            />
+            <img
+              src="/images/dynastly-mobile-5.webp"
+              alt=""
+              loading="lazy"
+              style={{
+                position: 'absolute',
+                bottom: '-30%',
+                right: '-12%',
+                width: '46%',
+                transform: 'rotate(7deg)',
+                borderRadius: '10px',
+                border: '1px solid #27272A',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.55)',
+                zIndex: 2,
+              }}
+            />
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
+              <div style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: '#A1A1AA', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
+                Fantasy Football
               </div>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#F59E0B', boxShadow: '0 0 12px rgba(245,158,11,0.6)' }} />
             </div>
 
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 28px', position: 'relative', zIndex: 3 }}>
@@ -193,13 +249,13 @@ export default function PersonalProjectsPage() {
               }}>
                 Dynastly
               </h3>
-              <div style={{ width: '40px', height: '2px', background: '#F59E0B', margin: '20px auto' }} />
+              <div style={{ width: '40px', height: '2px', background: '#F0EBE0', margin: '20px auto' }} />
               <p style={{
-                fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#F59E0B',
+                fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#F0EBE0',
                 fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textAlign: 'center',
                 marginBottom: '20px',
               }}>
-                Trade Companion
+                Dynasty Command Center
               </p>
               <p style={{
                 fontSize: '11px', fontWeight: 500, color: '#A1A1AA',
@@ -208,19 +264,10 @@ export default function PersonalProjectsPage() {
                 maxWidth: '220px',
                 margin: '0 auto',
               }}>
-                Multi-league valuations, rosters, and multi-team trade builder.
+                Value your roster, size up the league, and build smarter trades.
               </p>
             </div>
 
-            <div style={{
-              padding: '20px 28px 24px', display: 'flex',
-              justifyContent: 'flex-end', alignItems: 'flex-end',
-              position: 'relative', zIndex: 3, marginTop: 'auto',
-              borderTop: '1px solid #27272A',
-              paddingTop: '16px',
-            }}>
-              <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: '#71717A', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>Multi-League</span>
-            </div>
           </div>
 
           {/* ═══════════════════════════════════════════════
@@ -252,28 +299,24 @@ export default function PersonalProjectsPage() {
               position: 'relative',
               zIndex: 3,
               display: 'flex',
-              justifyContent: 'space-between',
+              justifyContent: 'flex-end',
             }}>
-              <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
-                Personal Tool
-              </span>
               <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: '#FFB612', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
                 Detroit Lions
               </span>
             </div>
 
-            {/* BIG centered logo */}
+            {/* Centered type stack, Dynastly-style */}
             <div style={{
               flex: 1,
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'center',
               padding: '0 28px',
               position: 'relative',
               zIndex: 3,
             }}>
-              <div style={{ display: 'inline-flex', alignItems: 'baseline' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'baseline', justifyContent: 'center' }}>
                 <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(2.4rem, 7vw, 3.8rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
                   Roar
                 </span>
@@ -281,27 +324,23 @@ export default function PersonalProjectsPage() {
                   Tracker
                 </span>
               </div>
-
-              <div style={{ width: '40px', height: '2px', background: '#FFB612', margin: '24px auto 18px' }} />
-
+              <div style={{ width: '40px', height: '2px', background: '#FFB612', margin: '20px auto' }} />
+              <p style={{
+                fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#FFB612',
+                fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textAlign: 'center',
+                marginBottom: '20px',
+              }}>
+                Season Ticket HQ
+              </p>
               <p style={{
                 fontSize: '11px', fontWeight: 500, color: 'rgba(255,255,255,0.85)',
                 fontFamily: 'var(--font-sans)', textAlign: 'center',
                 lineHeight: 1.6,
                 maxWidth: '220px',
+                margin: '0 auto',
               }}>
-                Season-ticket tracker for the Wirgau family. Auto-generates social posts for tickets we put up for sale.
+                Six seats, two always open. Who&apos;s going, who paid, and the sale graphic when we list a pair.
               </p>
-            </div>
-
-            <div style={{
-              padding: '20px 28px 24px', display: 'flex',
-              justifyContent: 'flex-end', alignItems: 'flex-end',
-              position: 'relative', zIndex: 3, marginTop: 'auto',
-              borderTop: '1px solid rgba(255,255,255,0.2)',
-              paddingTop: '16px',
-            }}>
-              <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>Family Only</span>
             </div>
           </div>
 
@@ -506,12 +545,72 @@ function ProjectSheetHeader({ project }: { project: typeof sideProjects[SideProj
 }
 
 function ProjectSheetBody({ project }: { project: typeof sideProjects[SideProjectId] }) {
-  const { theme, body, techGrid, extraTags, status } = project;
+  const { theme, body, techGrid, extraTags, status, screens } = project;
   return (
     <div style={{ padding: '28px' }}>
       <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '28px' }}>
         {body}
       </p>
+
+      {screens && screens.length > 0 && (
+        <div style={{ marginBottom: '28px' }}>
+          <div style={{
+            fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase',
+            color: 'var(--color-muted)', marginBottom: '12px', fontWeight: 600,
+            display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+          }}>
+            <span>In the App</span>
+            <span style={{ fontWeight: 500, letterSpacing: '0.1em' }}>Swipe →</span>
+          </div>
+          <div style={{
+            display: 'flex',
+            gap: '16px',
+            overflowX: 'auto',
+            scrollSnapType: 'x mandatory',
+            margin: '0 -28px',
+            padding: '0 28px',
+          }}>
+            {screens.map((screen) => (
+              <figure key={screen.desktop} style={{ flex: '0 0 92%', scrollSnapAlign: 'center', margin: 0 }}>
+                <div style={{ position: 'relative' }}>
+                  <img
+                    src={screen.desktop}
+                    alt={screen.caption}
+                    loading="lazy"
+                    style={{
+                      display: 'block',
+                      width: '94%',
+                      aspectRatio: '1600 / 1000',
+                      border: '1px solid var(--color-border)',
+                      background: theme.bg,
+                    }}
+                  />
+                  <img
+                    src={screen.mobile}
+                    alt=""
+                    loading="lazy"
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                      bottom: 0,
+                      width: '21%',
+                      aspectRatio: '1179 / 1977',
+                      objectFit: 'cover',
+                      objectPosition: 'top',
+                      border: '1px solid var(--color-border)',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
+                      background: theme.bg,
+                    }}
+                  />
+                </div>
+                <figcaption style={{ fontSize: '11px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '10px', lineHeight: 1.5 }}>
+                  {screen.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div style={{ marginBottom: '24px' }}>
         <div style={{

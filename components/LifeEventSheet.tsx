@@ -27,6 +27,7 @@ export interface LifeEvent {
   storyPath?: string;
   narrative?: ReactNode[];
   narrativeImages?: string[];
+  gallery?: string[];
   pullQuote?: string;
 }
 
@@ -54,8 +55,18 @@ export const lifeEvents: LifeEvent[] = [
       'I also grew up in a church my great grandfather started. Faith has always been a central part of my life. It shaped how I see people, how I lead, and how I believe people should be treated. I care a lot about treating people with kindness, with grace, and with the same patience that\u2019s been shown to me. That doesn\u2019t stop at church. It carries into my work, my teams, and how I build things.',
     ],
     narrativeImages: [
-      'https://images.unsplash.com/photo-1461896836934-bd45ba8fcb0a?w=400&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1547347298-4074fc3086f0?w=400&h=400&fit=crop',
+      '/images/HSTrack8.jpg',
+      '/images/Hs1.jpg',
+    ],
+    gallery: [
+      '/images/HSTrack7.jpg',
+      '/images/HSTrack3.jpg',
+      '/images/HSTrack4.jpg',
+      '/images/HSTrack2.jpg',
+      '/images/HSTrack6.jpg',
+      '/images/HSTrack5.jpg',
+      '/images/HSTrack1.jpg',
+      '/images/HS2.jpg',
     ],
     subEvents: [
       {
@@ -111,8 +122,8 @@ export const lifeEvents: LifeEvent[] = [
       'At the same time, I was leading worship at my church, playing music, running events, and somehow balancing all of it. I still love that side of my life. Music, creativity, and working with people have always been a big part of who I am.',
     ],
     narrativeImages: [
-      'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=400&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=400&h=400&fit=crop',
+      '/images/CollegeTrack2.jpg',
+      '/images/CollegeTrack3.jpg',
     ],
     subEvents: [
       {
@@ -158,7 +169,7 @@ export const lifeEvents: LifeEvent[] = [
           'Tutor and Teacher\'s Assistant at UDM\'s Student Success Center. Tutored high-level math and statistics one-on-one and in large groups. Served as a TA in English, Math, and Computer Science courses. Helped high-risk students with time management skills. Consistently one of the center\'s most sought-after tutors. Led a digital transformation of the center\'s operations, replacing manual paper timecards and appointment tracking with an automated online platform integrated with university ID scan cards.',
       },
     ],
-    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=1000&fit=crop',
+    image: '/images/college-track-1.webp',
     lat: 42.3314,
     lng: -83.0458,
   },
@@ -288,7 +299,11 @@ export const lifeEvents: LifeEvent[] = [
           'I have a full sleeve of tattoos, and every piece was designed with intention. Each one tells part of my story. Faith, family, things I\'ve been through, things I believe in. I see them as a form of design in their own right. Detailed photos and the stories behind each piece coming soon.',
       },
     ],
-    image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&h=1000&fit=crop',
+    image: '/images/music-1.webp',
+    gallery: [
+      '/images/music-2.webp',
+      '/images/music-3.webp',
+    ],
     lat: 42.7356,
     lng: -83.4191,
   },

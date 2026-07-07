@@ -211,6 +211,38 @@ export function StoryPage({ event }: { event: LifeEvent }) {
           </div>
         </motion.div>
 
+        {/* Photo gallery */}
+        {event.gallery && event.gallery.length > 0 && (
+          <motion.div
+            custom={(event.narrative?.length ?? 0) + 4}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            style={{ marginBottom: '48px' }}
+          >
+            <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>
+              Photos
+            </div>
+            <div style={{ columns: '3 220px', columnGap: '16px' }}>
+              {event.gallery.map((src) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    marginBottom: '16px',
+                    breakInside: 'avoid',
+                    border: '1px solid var(--color-border)',
+                  }}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         {/* Sub-events as cards */}
         {event.subEvents.length > 0 && (
           <motion.div

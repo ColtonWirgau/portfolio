@@ -18,8 +18,8 @@ export default function ChurchHubPage() {
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)' }}>
       <div style={{ position: 'relative', height: '50vh', minHeight: '340px', overflow: 'hidden' }}>
         <motion.img
-          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&h=900&fit=crop"
-          alt="Church Hub"
+          src="/images/church-hub-1.webp"
+          alt="Church Hub demo dashboard"
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           initial={{ scale: 1.05 }}
           animate={{ scale: 1 }}
@@ -58,9 +58,31 @@ export default function ChurchHubPage() {
           <p style={{ fontSize: '15px', lineHeight: 1.8, fontWeight: 400, color: 'var(--color-muted)' }}>
             I started a business around it, implementing it across multiple churches to solve real operational problems at scale. The platform handles everything from event management and volunteer coordination to giving dashboards and custom reporting.
           </p>
-          <p style={{ fontSize: '15px', lineHeight: 1.8, fontWeight: 400, color: 'var(--color-muted)' }}>
-            More details, screenshots, and case studies coming soon.
-          </p>
+        </motion.div>
+
+        <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp} style={{ marginBottom: '48px' }}>
+          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>In the App</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+            {[
+              { src: '/images/church-hub-2.webp', caption: 'Engagement Circles: a five-ring model of engagement, from the wider community down to the core.' },
+              { src: '/images/church-hub-3.webp', caption: 'Drilling into a single circle: month over month movement for the Committed ring.' },
+              { src: '/images/church-hub-4.webp', caption: 'Two years of engagement growth across every circle, in one chart.' },
+              { src: '/images/church-hub-5.webp', caption: 'Deployed at Woodside Bible Church: people search and household records.' },
+              { src: '/images/church-hub-6.webp', caption: 'Woodside’s analytics home: pinned dashboards, quick facts, and reporting tools.' },
+            ].map((shot) => (
+              <figure key={shot.src} style={{ margin: 0 }}>
+                <img
+                  src={shot.src}
+                  alt={shot.caption}
+                  loading="lazy"
+                  style={{ display: 'block', width: '100%', border: '1px solid var(--color-border)' }}
+                />
+                <figcaption style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '10px', lineHeight: 1.5 }}>
+                  {shot.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </motion.div>
 
         <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp}>

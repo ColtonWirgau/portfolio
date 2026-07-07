@@ -15,16 +15,16 @@ interface SideLabelProps {
   side?: 'left' | 'right';
   delay?: number;
   /**
-   * By default the label stretches to the full height of its (flex) section.
-   * For sections whose visible content is centered and shorter than the
-   * section (e.g. the full-screen hero), pass an explicit height so the line
-   * matches the content instead of the section, plus align="center".
+   * The label stretches to the full height of its (flex) section. For
+   * sections where the line should be inset from the section edges, pass
+   * padTop / padBottom. The hero uses padTop to clear the fixed header and
+   * padBottom to match its centered 90dvh photo (5dvh gap each side).
    */
-  matchHeight?: string;
-  align?: 'stretch' | 'center';
+  padTop?: string;
+  padBottom?: string;
 }
 
-export function SideLabel({ label, endLabel, mirrorLabel, side = 'left', delay = 0.8, matchHeight, align = 'stretch' }: SideLabelProps) {
+export function SideLabel({ label, endLabel, mirrorLabel, side = 'left', delay = 0.8, padTop, padBottom }: SideLabelProps) {
   return (
     <div
       className="hidden lg:flex"
@@ -33,8 +33,9 @@ export function SideLabel({ label, endLabel, mirrorLabel, side = 'left', delay =
         alignItems: 'center',
         width: '24px',
         flexShrink: 0,
-        alignSelf: align,
-        height: matchHeight,
+        alignSelf: 'stretch',
+        paddingTop: padTop,
+        paddingBottom: padBottom,
         marginRight: side === 'left' ? '20px' : '0',
         marginLeft: side === 'right' ? '20px' : '0',
       }}
