@@ -387,10 +387,10 @@ export default function PersonalProjectsPage() {
               zIndex: 3,
             }}>
               <div style={{ display: 'inline-flex', alignItems: 'baseline', justifyContent: 'center' }}>
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(2.4rem, 7vw, 3.8rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1.9rem, 4.8vw, 2.9rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
                   Roar
                 </span>
-                <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(2.4rem, 7vw, 3.8rem)', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.02em' }}>
+                <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1.9rem, 4.8vw, 2.9rem)', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.02em' }}>
                   Tracker
                 </span>
               </div>
@@ -479,56 +479,40 @@ export default function PersonalProjectsPage() {
               </span>
             </div>
 
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '0 28px', position: 'relative', zIndex: 3 }}>
-              <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'clamp(110px, 22vw, 180px)' }}>
-                <span style={{
-                  position: 'absolute',
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(7rem, 18vw, 11rem)',
-                  color: '#00D9FF',
-                  lineHeight: 1,
-                  textShadow: '0 0 24px rgba(0,217,255,0.8), 0 0 48px rgba(0,217,255,0.4)',
-                  left: 'calc(50% - 0.42em)',
-                  paddingTop: '0.08em',
-                }}>
-                  D
-                </span>
-                <span style={{
-                  position: 'absolute',
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(7rem, 18vw, 11rem)',
-                  color: '#FF69B4',
-                  lineHeight: 1,
-                  textShadow: '0 0 24px rgba(255,105,180,0.8), 0 0 48px rgba(255,105,180,0.4)',
-                  left: 'calc(50% - 0.18em)',
-                  paddingTop: '0.08em',
-                  mixBlendMode: 'screen',
-                }}>
-                  D
-                </span>
-              </div>
-
-              <div style={{
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 28px', position: 'relative', zIndex: 3 }}>
+              <h3 style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1rem, 2.2vw, 1.4rem)',
-                color: '#E5E7EB',
-                lineHeight: 1,
-                letterSpacing: '0.08em',
+                fontSize: 'clamp(2.2rem, 6vw, 3.4rem)',
+                lineHeight: 0.95,
+                letterSpacing: '-0.01em',
                 textTransform: 'uppercase',
                 textAlign: 'center',
-                marginTop: '8px',
                 paddingTop: '0.08em',
               }}>
-                Degenerates
-              </div>
-
+                <span style={{ display: 'block', color: '#00D9FF', textShadow: '0 0 20px rgba(0,217,255,0.7), 0 0 40px rgba(0,217,255,0.35)' }}>
+                  Degenerates
+                </span>
+                <span style={{ display: 'block', color: '#FF69B4', textShadow: '0 0 20px rgba(255,105,180,0.7), 0 0 40px rgba(255,105,180,0.35)' }}>
+                  Dashboard
+                </span>
+              </h3>
+              <div style={{ width: '40px', height: '2px', background: '#E5E7EB', margin: '20px auto' }} />
               <p style={{
-                fontSize: '9px', fontWeight: 700, letterSpacing: '0.2em', color: '#39FF14',
+                fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#39FF14',
                 fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textAlign: 'center',
-                marginTop: '24px', lineHeight: 1.6,
+                marginBottom: '20px',
                 textShadow: '0 0 6px rgba(57,255,20,0.5)',
               }}>
-                12 LEGS · ZERO WINS
+                Fantasy League HR Department
+              </p>
+              <p style={{
+                fontSize: '11px', fontWeight: 500, color: 'rgba(229,231,235,0.65)',
+                fontFamily: 'var(--font-sans)', textAlign: 'center',
+                lineHeight: 1.6,
+                maxWidth: '220px',
+                margin: '0 auto',
+              }}>
+                A weekly 12-leg parlay we have never hit. Tracks the picks, the votes, the rules, and the punishments.
               </p>
             </div>
 
