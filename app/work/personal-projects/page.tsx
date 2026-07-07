@@ -24,7 +24,7 @@ const sideProjects: Record<SideProjectId, {
   techGrid: { label: string; sub: string }[];
   extraTags: string[];
   status: string;
-  screens?: { desktop: string; mobile: string; caption: string }[];
+  screens?: { desktop: string; mobile?: string; caption: string; aspect?: string }[];
   theme: {
     bg: string;
     fg: string;
@@ -96,6 +96,23 @@ const sideProjects: Record<SideProjectId, {
     ],
     extraTags: ['SIX SEATS', 'GAME-BY-GAME', 'RESALE LEDGER', 'SOCIAL GRAPHICS'],
     status: 'Runs all season, every season',
+    screens: [
+      {
+        desktop: '/images/roar-tracker-1.webp',
+        mobile: '/images/roar-tracker-mobile-1.webp',
+        caption: 'The season dashboard: net position, ticket status, and every home game at a glance.',
+      },
+      {
+        desktop: '/images/roar-tracker-2.webp',
+        mobile: '/images/roar-tracker-mobile-2.webp',
+        caption: 'Every game gets its own page: final score plus cost, revenue, and net for the seats.',
+      },
+      {
+        desktop: '/images/roar-tracker-3.webp',
+        mobile: '/images/roar-tracker-mobile-3.webp',
+        caption: 'Seat-by-seat breakdown: who has each seat, what it cost, and what it sold for.',
+      },
+    ],
     theme: {
       bg: '#0076B6', // Lions Honolulu Blue
       fg: '#FFFFFF',
@@ -118,6 +135,25 @@ const sideProjects: Record<SideProjectId, {
     ],
     extraTags: ['GLOW EFFECTS', 'PARLAY TRACKING', 'WEEKLY ROAST'],
     status: 'Active every NFL Sunday',
+    screens: [
+      {
+        desktop: '/images/degenerates-1.webp',
+        mobile: '/images/degenerates-mobile-1.webp',
+        caption: 'The landing page. By signing in you agree to be a degenerate.',
+        aspect: '2560 / 1800',
+      },
+      {
+        desktop: '/images/degenerates-2.webp',
+        mobile: '/images/degenerates-mobile-2.webp',
+        caption: 'Season setup: the league votes on every draft rule, date, and stake before anything locks.',
+        aspect: '2560 / 1800',
+      },
+      {
+        desktop: '/images/degenerates-3.webp',
+        caption: 'Punishment, rules, and logistics, all decided by vote. Including what last place has to wear.',
+        aspect: '2560 / 1800',
+      },
+    ],
     theme: {
       bg: '#0A0A0A',
       fg: '#E5E7EB',
@@ -293,6 +329,40 @@ export default function PersonalProjectsPage() {
               zIndex: 1,
             }} />
 
+            {/* Phone screenshots peeking from the bottom corners */}
+            <img
+              src="/images/roar-tracker-mobile-1.webp"
+              alt=""
+              loading="lazy"
+              style={{
+                position: 'absolute',
+                bottom: '-26%',
+                left: '-10%',
+                width: '42%',
+                transform: 'rotate(-8deg)',
+                borderRadius: '10px',
+                border: '1px solid rgba(255,255,255,0.3)',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.45)',
+                zIndex: 2,
+              }}
+            />
+            <img
+              src="/images/roar-tracker-mobile-2.webp"
+              alt=""
+              loading="lazy"
+              style={{
+                position: 'absolute',
+                bottom: '-30%',
+                right: '-12%',
+                width: '46%',
+                transform: 'rotate(7deg)',
+                borderRadius: '10px',
+                border: '1px solid rgba(255,255,255,0.3)',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.45)',
+                zIndex: 2,
+              }}
+            />
+
             {/* Top label */}
             <div style={{
               padding: '24px 28px 0',
@@ -366,6 +436,40 @@ export default function PersonalProjectsPage() {
               zIndex: 1,
             }} />
 
+            {/* Phone screenshots peeking from the bottom corners */}
+            <img
+              src="/images/degenerates-mobile-1.webp"
+              alt=""
+              loading="lazy"
+              style={{
+                position: 'absolute',
+                bottom: '-26%',
+                left: '-10%',
+                width: '42%',
+                transform: 'rotate(-8deg)',
+                borderRadius: '10px',
+                border: '1px solid rgba(0,217,255,0.35)',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.55)',
+                zIndex: 2,
+              }}
+            />
+            <img
+              src="/images/degenerates-mobile-2.webp"
+              alt=""
+              loading="lazy"
+              style={{
+                position: 'absolute',
+                bottom: '-30%',
+                right: '-12%',
+                width: '46%',
+                transform: 'rotate(7deg)',
+                borderRadius: '10px',
+                border: '1px solid rgba(255,105,180,0.35)',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.55)',
+                zIndex: 2,
+              }}
+            />
+
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
               <span style={{ fontSize: '8px', fontWeight: 800, letterSpacing: '0.25em', color: '#00D9FF', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textShadow: '0 0 8px rgba(0,217,255,0.6)' }}>
                 Parlay Tracker
@@ -428,15 +532,6 @@ export default function PersonalProjectsPage() {
               </p>
             </div>
 
-            <div style={{
-              padding: '20px 28px 24px', display: 'flex',
-              justifyContent: 'flex-end', alignItems: 'flex-end',
-              position: 'relative', zIndex: 3, marginTop: 'auto',
-              borderTop: '1px solid rgba(255,105,180,0.25)',
-              paddingTop: '16px',
-            }}>
-              <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: '#FF69B4', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>Every Sunday</span>
-            </div>
           </div>
 
         </div>
@@ -579,29 +674,31 @@ function ProjectSheetBody({ project }: { project: typeof sideProjects[SideProjec
                     loading="lazy"
                     style={{
                       display: 'block',
-                      width: '94%',
-                      aspectRatio: '1600 / 1000',
+                      width: screen.mobile ? '94%' : '100%',
+                      aspectRatio: screen.aspect ?? '1600 / 1000',
                       border: '1px solid var(--color-border)',
                       background: theme.bg,
                     }}
                   />
-                  <img
-                    src={screen.mobile}
-                    alt=""
-                    loading="lazy"
-                    style={{
-                      position: 'absolute',
-                      right: 0,
-                      bottom: 0,
-                      width: '21%',
-                      aspectRatio: '1179 / 1977',
-                      objectFit: 'cover',
-                      objectPosition: 'top',
-                      border: '1px solid var(--color-border)',
-                      boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
-                      background: theme.bg,
-                    }}
-                  />
+                  {screen.mobile && (
+                    <img
+                      src={screen.mobile}
+                      alt=""
+                      loading="lazy"
+                      style={{
+                        position: 'absolute',
+                        right: 0,
+                        bottom: 0,
+                        width: '21%',
+                        aspectRatio: '1179 / 1977',
+                        objectFit: 'cover',
+                        objectPosition: 'top',
+                        border: '1px solid var(--color-border)',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
+                        background: theme.bg,
+                      }}
+                    />
+                  )}
                 </div>
                 <figcaption style={{ fontSize: '11px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '10px', lineHeight: 1.5 }}>
                   {screen.caption}
