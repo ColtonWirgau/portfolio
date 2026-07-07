@@ -582,16 +582,19 @@ function ProjectSheetHeader({ project }: { project: typeof sideProjects[SideProj
         ) : title === 'Degenerates Dashboard' ? (
           <h2 style={{
             fontFamily: 'var(--font-display)',
-            fontSize: 'clamp(2.4rem, 6vw, 3.5rem)',
-            color: theme.fg,
-            lineHeight: 1,
+            fontSize: 'clamp(2rem, 5vw, 2.9rem)',
+            lineHeight: 0.95,
             letterSpacing: '0.02em',
             textTransform: 'uppercase',
             paddingTop: '0.08em',
             marginBottom: '10px',
-            textShadow: `0 0 24px ${theme.accent}66`,
           }}>
-            Degenerates
+            <span style={{ display: 'block', color: '#00D9FF', textShadow: '0 0 20px rgba(0,217,255,0.7), 0 0 40px rgba(0,217,255,0.35)' }}>
+              Degenerates
+            </span>
+            <span style={{ display: 'block', color: '#FF69B4', textShadow: '0 0 20px rgba(255,105,180,0.7), 0 0 40px rgba(255,105,180,0.35)' }}>
+              Dashboard
+            </span>
           </h2>
         ) : (
           <h2 style={{
