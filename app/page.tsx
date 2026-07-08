@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback, useRef, Fragment } from 'react';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
+import { SquidMark } from '@/components/SquidMark';
 import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 import { AIResearchSheet } from '@/components/AIResearchSheet';
@@ -470,20 +471,34 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setPersonalView(false)}
+                  aria-label="Back to Work"
+                  className="pp-back"
                   style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '5px',
+                    display: 'inline-flex', alignItems: 'center', gap: '14px',
                     background: 'transparent', border: 'none', padding: 0,
-                    color: 'var(--color-muted)', cursor: 'pointer',
-                    fontSize: '12px', fontWeight: 600, letterSpacing: '0.08em',
-                    textTransform: 'uppercase', fontFamily: 'var(--font-sans)',
-                    marginBottom: '16px',
-                    transition: 'color 0.15s',
+                    color: 'var(--color-accent)', cursor: 'pointer',
+                    marginBottom: '20px',
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-fg)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-muted)'; }}
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
-                  Back
+                  <span
+                    className="pp-back-squid"
+                    style={{
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      width: '86px', height: '34px', flexShrink: 0,
+                      transition: 'transform 0.2s ease',
+                    }}
+                  >
+                    <SquidMark width={34} style={{ display: 'block', transform: 'rotate(-90deg)' }} />
+                  </span>
+                  <span style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    fontFamily: 'var(--font-display)', fontWeight: 400,
+                    fontSize: 'clamp(1.6rem, 2.4vw, 2.4rem)',
+                    textTransform: 'uppercase', letterSpacing: '-0.01em',
+                    lineHeight: 1, color: 'var(--color-accent)',
+                  }}>
+                    Back
+                  </span>
                 </button>
                 <PersonalProjectsPanel />
               </motion.div>

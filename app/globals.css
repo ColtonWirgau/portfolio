@@ -247,3 +247,11 @@ body,
     display: block;
   }
 }
+
+/* Personal Projects "Back" control: squid swims left on hover */
+.pp-back .pp-back-squid {
+  transform-origin: center;
+}
+.pp-back:hover .pp-back-squid {
+  transform: translateX(-8px);
+}
