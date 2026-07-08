@@ -22,7 +22,6 @@ const sideProjects: Record<SideProjectId, {
   tagline: string;
   body: string;
   stack: string[];
-  status: string;
   screens?: { desktop: string; mobile?: string; caption: string; aspect?: string }[];
   theme: {
     bg: string;
@@ -37,7 +36,6 @@ const sideProjects: Record<SideProjectId, {
     tagline: 'Dynasty fantasy football trade companion',
     body: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don’t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league’s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won’t. Found some interesting things in upstream platforms along the way.',
     stack: ['Next.js 16', 'TypeScript', 'Drizzle', 'Neon', 'Tailwind 4', 'Playwright', 'Chrome Extension', 'Sleeper API'],
-    status: 'In active use across multiple leagues',
     screens: [
       {
         desktop: '/images/dynastly-1.webp',
@@ -78,7 +76,6 @@ const sideProjects: Record<SideProjectId, {
     tagline: 'Six Lions season tickets, one organized family',
     body: 'My parents, my wife, and I split six Lions season tickets, and there are only four of us. So every game comes with at least two open seats: friends when we can find them, the resale market when we can’t. Roar Tracker keeps the whole operation straight. Who’s in for each game, who paid what, and how the season is tracking money-wise. When more people want in than we have seats, it runs the drawing. And when we list a pair, it generates a clean social graphic for the post, the kind I used to rebuild in Figma every single week.',
     stack: ['Next.js', 'TypeScript', 'Supabase', 'OAuth', 'Tailwind', 'Vercel'],
-    status: 'Runs all season, every season',
     screens: [
       {
         desktop: '/images/roar-tracker-1.webp',
@@ -109,23 +106,22 @@ const sideProjects: Record<SideProjectId, {
     tagline: 'A 12-leg parlay you all lose together every Sunday',
     body: 'Every week, my idiot friends and I place a 12-leg parlay. We have never won. Not once. But we keep doing it, and I built a dashboard to track our glorious losing streak. It pulls in picks, tracks results, and roasts us with the data. It’s dumb, it’s fun, and it’s one of my favorite things I’ve built.',
     stack: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'Tailwind'],
-    status: 'Active every NFL Sunday',
     screens: [
       {
         desktop: '/images/degenerates-1.webp',
         mobile: '/images/degenerates-mobile-1.webp',
-        caption: 'The landing page. By signing in you agree to be a degenerate.',
+        caption: 'The weekly slate: every game on the board and whose pick lives where.',
         aspect: '2560 / 1800',
       },
       {
         desktop: '/images/degenerates-2.webp',
         mobile: '/images/degenerates-mobile-2.webp',
-        caption: 'Season setup: the league votes on every draft rule, date, and stake before anything locks.',
+        caption: 'All 12 legs, live: who already hit and who is still sweating.',
         aspect: '2560 / 1800',
       },
       {
         desktop: '/images/degenerates-3.webp',
-        caption: 'Punishment, rules, and logistics, all decided by vote. Including what last place has to wear.',
+        caption: 'Season setup: every rule, date, stake, and punishment gets voted on before anything locks.',
         aspect: '2560 / 1800',
       },
     ],
@@ -721,7 +717,7 @@ function ScreenGallery({
 }
 
 function ProjectSheetBody({ project }: { project: typeof sideProjects[SideProjectId] }) {
-  const { theme, body, stack, status, screens } = project;
+  const { theme, body, stack, screens } = project;
   return (
     <div style={{ padding: '28px' }}>
       <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '28px' }}>
@@ -730,38 +726,10 @@ function ProjectSheetBody({ project }: { project: typeof sideProjects[SideProjec
 
       {screens && screens.length > 0 && <ScreenGallery screens={screens} bg={theme.bg} />}
 
-      <div style={{ marginBottom: '24px' }}>
-        <div style={{
-          fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase',
-          color: 'var(--color-muted)', marginBottom: '8px', fontWeight: 600,
-        }}>
-          Stack
-        </div>
-        <p style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-fg)', lineHeight: 1.8 }}>
-          {stack.map((item, i) => (
-            <span key={item}>
-              {i > 0 && <span style={{ color: 'var(--color-muted)', padding: '0 8px' }}>·</span>}
-              {item}
-            </span>
-          ))}
+      <div style={{ paddingTop: '16px', borderTop: '1px solid var(--color-border)' }}>
+        <p style={{ fontSize: '11px', fontWeight: 400, color: 'var(--color-muted)', lineHeight: 1.8 }}>
+          Built with {stack.join(' · ')}
         </p>
-      </div>
-
-      <div style={{
-        padding: '16px',
-        background: 'var(--color-bg)',
-        border: '1px solid var(--color-border)',
-        borderLeft: `3px solid ${theme.accent}`,
-      }}>
-        <div style={{
-          fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase',
-          color: 'var(--color-muted)', marginBottom: '6px', fontWeight: 600,
-        }}>
-          Status
-        </div>
-        <div style={{ fontSize: '14px', color: 'var(--color-fg)', fontWeight: 500 }}>
-          {status}
-        </div>
       </div>
     </div>
   );
