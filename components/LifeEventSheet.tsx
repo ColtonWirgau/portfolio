@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from './ResponsiveSheet';
 
 // ── Types ──
@@ -341,7 +341,7 @@ function SheetHeader({ event }: { event: LifeEvent }) {
 
 function NarrativeContent({ event }: { event: LifeEvent }) {
   return (
-    <div style={{ padding: '28px' }}>
+    <div style={{ padding: '0 28px 28px' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {event.narrative?.map((paragraph, i) => (
           <p key={i} style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
@@ -385,13 +385,109 @@ function NarrativeContent({ event }: { event: LifeEvent }) {
           </p>
         </div>
       )}
+
+      {/* Photo gallery */}
+      {event.gallery && event.gallery.length > 0 && (
+        <div style={{ marginTop: '28px' }}>
+          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '12px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>
+            Photos
+          </div>
+          <div style={{ columns: '2 140px', columnGap: '12px' }}>
+            {event.gallery.map((src) => (
+              <img
+                key={src}
+                src={src}
+                alt=""
+                loading="lazy"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  marginBottom: '12px',
+                  breakInside: 'avoid',
+                  border: '1px solid var(--color-border)',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+// ── Sub-event page content ──
+
+function SubEventContent({ sub }: { sub: SubEvent }) {
+  return (
+    <div style={{ padding: '0 28px 28px' }}>
+      {sub.image && (
+        <div style={{ marginBottom: '20px', overflow: 'hidden' }}>
+          <img
+            src={sub.image}
+            alt={sub.title}
+            style={{ width: '100%', display: 'block', border: '1px solid var(--color-border)' }}
+          />
+        </div>
+      )}
+      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+        {sub.description}
+      </p>
+    </div>
+  );
+}
+
+// ── Drill-in row (progressive disclosure list item) ──
+
+function DrillRow({ title, teaser, onClick }: { title: string; teaser?: string; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '16px',
+        width: '100%',
+        padding: '14px 8px',
+        background: 'none',
+        border: 'none',
+        borderTop: '1px solid var(--color-border)',
+        cursor: 'pointer',
+        textAlign: 'left',
+        transition: 'background 0.15s',
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--color-card)')}
+      onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
+    >
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-fg)', letterSpacing: '-0.01em' }}>
+          {title}
+        </div>
+        {teaser && (
+          <div style={{
+            fontSize: '12px',
+            fontWeight: 400,
+            color: 'var(--color-muted)',
+            marginTop: '2px',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}>
+            {teaser}
+          </div>
+        )}
+      </div>
+      <ChevronRight style={{ width: '16px', height: '16px', flexShrink: 0, color: 'var(--color-muted)' }} />
+    </button>
   );
 }
 
 // ── Main page content (overview with clickable sub-events) ──
 
 function MainPageContent({ event }: { event: LifeEvent }) {
+  const { navigate } = useResponsiveSheet();
+  const hasStoryPage = Boolean(event.narrative?.length || event.gallery?.length);
+  const storyTeaser = typeof event.narrative?.[0] === 'string' ? event.narrative[0] : 'Photos and the longer version';
+
   return (
     <div style={{ padding: '28px' }}>
       {/* Description */}
@@ -400,7 +496,7 @@ function MainPageContent({ event }: { event: LifeEvent }) {
       </p>
 
       {/* Highlights as pills */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '24px' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '28px' }}>
         {event.highlights.map((h, i) => (
           <span key={i} style={{
             fontSize: '11px',
@@ -416,29 +512,27 @@ function MainPageContent({ event }: { event: LifeEvent }) {
         ))}
       </div>
 
-      {/* The Full Story link - bottom right */}
-      {event.storyPath && (
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Link
-            href={event.storyPath}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              textDecoration: 'none',
-              fontSize: '13px',
-              fontWeight: 600,
-              color: 'var(--color-accent)',
-              transition: 'opacity 0.15s',
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.7')}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
-          >
-            The Full Story
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-              <path d="M7 17L17 7M17 7H7M17 7V17" />
-            </svg>
-          </Link>
+      {/* Drill-in pages */}
+      {(hasStoryPage || event.subEvents.length > 0) && (
+        <div>
+          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '8px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>
+            Go Deeper
+          </div>
+          {hasStoryPage && (
+            <DrillRow
+              title="The Full Story"
+              teaser={storyTeaser}
+              onClick={() => navigate('story')}
+            />
+          )}
+          {event.subEvents.map((sub) => (
+            <DrillRow
+              key={sub.id}
+              title={sub.title}
+              teaser={sub.description}
+              onClick={() => navigate(sub.id)}
+            />
+          ))}
         </div>
       )}
     </div>
@@ -472,6 +566,14 @@ export function LifeEventSheet({ event, onClose, defaultPage }: LifeEventSheetPr
       <SheetPage name="main">
         <MainPageContent event={event} />
       </SheetPage>
+      <SheetPage name="story" title="The Full Story">
+        <NarrativeContent event={event} />
+      </SheetPage>
+      {event.subEvents.map((sub) => (
+        <SheetPage key={sub.id} name={sub.id} title={sub.title}>
+          <SubEventContent sub={sub} />
+        </SheetPage>
+      ))}
     </ResponsiveSheet>
   );
 }
