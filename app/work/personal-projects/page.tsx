@@ -43,6 +43,11 @@ const sideProjects: Record<SideProjectId, {
         caption: 'The team dashboard: starters, bench, and picks valued in one place, with open offers below.',
       },
       {
+        desktop: '/images/dynastly-3.webp',
+        mobile: '/images/dynastly-mobile-3.webp',
+        caption: 'Player pages: value history, comparables, prospect profile, and recent seasons.',
+      },
+      {
         desktop: '/images/dynastly-4.webp',
         mobile: '/images/dynastly-mobile-4.webp',
         caption: 'The trade creator: full rosters, picks, and FAAB across every team in the deal, on one canvas.',
@@ -56,11 +61,6 @@ const sideProjects: Record<SideProjectId, {
         desktop: '/images/dynastly-2.webp',
         mobile: '/images/dynastly-mobile-2.webp',
         caption: 'The full player pool, filterable, with KeepTradeCut and FantasyCalc valuations side by side.',
-      },
-      {
-        desktop: '/images/dynastly-3.webp',
-        mobile: '/images/dynastly-mobile-3.webp',
-        caption: 'Player pages: value history, comparables, prospect profile, and recent seasons.',
       },
     ],
     theme: {
