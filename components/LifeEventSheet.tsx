@@ -245,8 +245,7 @@ export const lifeEvents: LifeEvent[] = [
       'These days, I live in Clarkston, Michigan with my wife Sarah, our two kids, and two dogs with nothing in common. When I\u2019m not building something, I\u2019m probably playing music, flying with my wife, or chasing kids around the house.',
     ],
     narrativeImages: [
-      'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=400&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop',
+      '/images/family-newborn.webp',
     ],
     subEvents: [
       {
@@ -262,7 +261,7 @@ export const lifeEvents: LifeEvent[] = [
           'Home with Sarah, Weston (3), and Rosie (1). A quiet town north of Detroit. Home base for family life and side projects alike.',
       },
     ],
-    image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=1000&fit=crop',
+    image: '/images/family-embrace.webp',
     lat: 42.7356,
     lng: -83.4191,
   },
