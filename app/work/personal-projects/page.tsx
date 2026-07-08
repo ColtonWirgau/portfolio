@@ -34,7 +34,7 @@ const sideProjects: Record<SideProjectId, {
   dynastly: {
     title: 'Dynastly',
     tagline: 'Dynasty fantasy football trade companion',
-    body: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don’t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league’s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won’t. Found some interesting things in upstream platforms along the way.',
+    body: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don’t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league’s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won’t. Along the way I found a major bug in Sleeper’s software, which I’m reporting to them, not shipping.',
     stack: ['Next.js 16', 'TypeScript', 'Drizzle', 'Neon', 'Tailwind 4', 'Playwright', 'Chrome Extension', 'Sleeper API'],
     screens: [
       {
@@ -98,7 +98,7 @@ const sideProjects: Record<SideProjectId, {
       fg: '#FFFFFF',
       accent: '#FFB612', // Lions Honey Gold
       muted: 'rgba(255,255,255,0.7)',
-      label: '#FFB612',
+      label: 'rgba(255,255,255,0.85)',
     },
   },
   degenerates: {
@@ -355,7 +355,7 @@ export default function PersonalProjectsPage() {
               display: 'flex',
               justifyContent: 'flex-end',
             }}>
-              <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: '#FFB612', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.75)', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
                 Detroit Lions
               </span>
             </div>
@@ -378,9 +378,9 @@ export default function PersonalProjectsPage() {
                   Tracker
                 </span>
               </div>
-              <div style={{ width: '40px', height: '2px', background: '#FFB612', margin: '20px auto' }} />
+              <div style={{ width: '40px', height: '2px', background: '#FFFFFF', margin: '20px auto' }} />
               <p style={{
-                fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#FFB612',
+                fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#FFFFFF',
                 fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textAlign: 'center',
                 marginBottom: '20px',
               }}>
@@ -454,12 +454,9 @@ export default function PersonalProjectsPage() {
               }}
             />
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '24px 28px 0', position: 'relative', zIndex: 3 }}>
               <span style={{ fontSize: '8px', fontWeight: 800, letterSpacing: '0.25em', color: '#00D9FF', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textShadow: '0 0 8px rgba(0,217,255,0.6)' }}>
                 Parlay Tracker
-              </span>
-              <span style={{ fontSize: '8px', fontWeight: 800, letterSpacing: '0.25em', color: '#FF69B4', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textShadow: '0 0 8px rgba(255,105,180,0.5)' }}>
-                0–∞
               </span>
             </div>
 
@@ -482,10 +479,10 @@ export default function PersonalProjectsPage() {
               </h3>
               <div style={{ width: '40px', height: '2px', background: '#E5E7EB', margin: '20px auto' }} />
               <p style={{
-                fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#39FF14',
+                fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#FF69B4',
                 fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textAlign: 'center',
                 marginBottom: '20px',
-                textShadow: '0 0 6px rgba(57,255,20,0.5)',
+                textShadow: '0 0 6px rgba(255,105,180,0.5)',
               }}>
                 Fantasy League HR Department
               </p>
