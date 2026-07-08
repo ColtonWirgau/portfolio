@@ -53,11 +53,6 @@ const sideProjects: Record<SideProjectId, {
         caption: 'The trade creator: full rosters, picks, and FAAB across every team in the deal, on one canvas.',
       },
       {
-        desktop: '/images/dynastly-5.webp',
-        mobile: '/images/dynastly-mobile-5.webp',
-        caption: 'Trade breakdown with a fairness meter per side and suggested assets to even the deal.',
-      },
-      {
         desktop: '/images/dynastly-2.webp',
         mobile: '/images/dynastly-mobile-2.webp',
         caption: 'The full player pool, filterable, with KeepTradeCut and FantasyCalc valuations side by side.',
