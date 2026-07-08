@@ -434,12 +434,44 @@ export default function Home() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 40 }}
                     transition={{ duration: 0.3, ease: 'easeOut' }}
+                    style={{ position: 'relative' }}
                   >
                     <SectionHeading
                       title={<>Personal Projects.</>}
-                      subtitle={<>The stuff I build for fun, and sometimes for <Em>friends &amp; family</Em>.</>}
+                      subtitle={<>The stuff I build for fun, and sometimes for <Em>friends &amp; family</Em>. Less polished, more personality.</>}
                       right
                     />
+                    <button
+                      type="button"
+                      onClick={() => setPersonalView(false)}
+                      aria-label="Back to Work"
+                      className="pp-back"
+                      style={{
+                        position: 'absolute', left: 0, bottom: '4px',
+                        display: 'inline-flex', alignItems: 'center', gap: '14px',
+                        background: 'transparent', border: 'none', padding: 0,
+                        color: 'var(--color-accent)', cursor: 'pointer',
+                      }}
+                    >
+                      <span
+                        className="pp-back-squid"
+                        style={{
+                          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                          width: '86px', height: '34px', flexShrink: 0,
+                          transition: 'transform 0.2s ease',
+                        }}
+                      >
+                        <SquidMark width={34} style={{ display: 'block', transform: 'rotate(-90deg)' }} />
+                      </span>
+                      <span style={{
+                        fontFamily: 'var(--font-display)', fontWeight: 400,
+                        fontSize: 'clamp(1.6rem, 2.4vw, 2.4rem)',
+                        textTransform: 'uppercase', letterSpacing: '-0.01em',
+                        lineHeight: 1, color: 'var(--color-accent)',
+                      }}>
+                        Back
+                      </span>
+                    </button>
                   </motion.div>
                 ) : (
                   <motion.div
@@ -468,38 +500,6 @@ export default function Home() {
                 exit={{ x: 40, opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
               >
-                <button
-                  type="button"
-                  onClick={() => setPersonalView(false)}
-                  aria-label="Back to Work"
-                  className="pp-back"
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '14px',
-                    background: 'transparent', border: 'none', padding: 0,
-                    color: 'var(--color-accent)', cursor: 'pointer',
-                    marginBottom: '20px',
-                  }}
-                >
-                  <span
-                    className="pp-back-squid"
-                    style={{
-                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                      width: '86px', height: '34px', flexShrink: 0,
-                      transition: 'transform 0.2s ease',
-                    }}
-                  >
-                    <SquidMark width={34} style={{ display: 'block', transform: 'rotate(-90deg)' }} />
-                  </span>
-                  <span style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '6px',
-                    fontFamily: 'var(--font-display)', fontWeight: 400,
-                    fontSize: 'clamp(1.6rem, 2.4vw, 2.4rem)',
-                    textTransform: 'uppercase', letterSpacing: '-0.01em',
-                    lineHeight: 1, color: 'var(--color-accent)',
-                  }}>
-                    Back
-                  </span>
-                </button>
                 <PersonalProjectsPanel />
               </motion.div>
             ) : (
