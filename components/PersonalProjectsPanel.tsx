@@ -201,8 +201,6 @@ export function PersonalProjectsPanel() {
             flexDirection: 'column',
           }}
         >
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(0deg, transparent 0, transparent 60px, rgba(255,255,255,0.04) 60px, rgba(255,255,255,0.04) 61px)', zIndex: 1 }} />
-
           <img src="/images/roar-tracker-mobile-1.webp" alt="" loading="lazy" style={{ position: 'absolute', bottom: '-26%', left: '-10%', width: '42%', transform: 'rotate(-8deg)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.3)', boxShadow: '0 12px 32px rgba(0,0,0,0.45)', zIndex: 2 }} />
           <img src="/images/roar-tracker-mobile-2.webp" alt="" loading="lazy" style={{ position: 'absolute', bottom: '-30%', right: '-12%', width: '46%', transform: 'rotate(7deg)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.3)', boxShadow: '0 12px 32px rgba(0,0,0,0.45)', zIndex: 2 }} />
 
