@@ -41,10 +41,10 @@ const beyondCards: BeyondCard[] = [
     title: 'Musician',
     intro: 'Music has been part of who I am for as long as I can remember.',
     body: [
-      'I served as a worship director at Woodside Bible Church for about five years and still play there today. I’m known mainly as a writer, electric guitar player, and track builder, but I’ve also played plenty of drums, bass, keys, and led vocals.',
+      'I served as a worship director at Woodside Bible Church for about three years and still play there today. I’m known mainly as a writer, electric guitar player, and track builder, but I’ve also played plenty of drums, bass, keys, and led vocals.',
       'Over the years I’ve worked with artists like Detroit Collective, Elevation Worship, Maverick City Music, Chris Tomlin, and Switchfoot, and played a lot of big shows. I’m also widely known as the Ableton guru of the metro Detroit area.',
     ],
-    highlights: ['Worship director, ~5 years', 'Guitar, keys, bass, drums', 'Writer & track builder', 'Elevation · Maverick City · Switchfoot', 'Ableton'],
+    highlights: ['Worship director, ~3 years', 'Guitar, keys, bass, drums', 'Writer & track builder', 'Elevation · Maverick City · Switchfoot', 'Ableton'],
     icon: <><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></>,
   },
   {

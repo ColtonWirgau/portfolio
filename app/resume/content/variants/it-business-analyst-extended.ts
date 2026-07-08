@@ -290,7 +290,7 @@ export const itBusinessAnalystExtendedResume: Resume = {
     {
       label: 'Music',
       description:
-        'Multi-instrumentalist and producer; former Worship Director at Woodside (5 years on staff); active in contract and studio work.',
+        'Multi-instrumentalist and producer; former Worship Director at Woodside (3 years on staff); active in contract and studio work.',
     },
     {
       label: 'Athletics',

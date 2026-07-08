@@ -284,7 +284,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'hobbies-music',
         title: 'Music',
         description:
-          'I\'ve worked with artists like Detroit Collective, Elevation Worship, Maverick City Music, Chris Tomlin, Switchfoot, and many more. I\'m known mainly as a writer, electric guitar player, and track builder, but I\'ve also played a lot of drums, bass, keys, and sung/led worship. I was on staff as a worship director at Woodside for about 5 years and I\'m widely known as the Ableton guru of the metro Detroit area.',
+          'I\'ve worked with artists like Detroit Collective, Elevation Worship, Maverick City Music, Chris Tomlin, Switchfoot, and many more. I\'m known mainly as a writer, electric guitar player, and track builder, but I\'ve also played a lot of drums, bass, keys, and sung/led worship. I was on staff as a worship director at Woodside for about 3 years and I\'m widely known as the Ableton guru of the metro Detroit area.',
       },
       {
         id: 'hobbies-football',
