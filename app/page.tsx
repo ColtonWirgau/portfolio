@@ -429,10 +429,10 @@ export default function Home() {
                 {personalView ? (
                   <motion.div
                     key="head-personal"
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 6 }}
-                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 40 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
                   >
                     <SectionHeading
                       title={<>Personal Projects.</>}
@@ -443,10 +443,10 @@ export default function Home() {
                 ) : (
                   <motion.div
                     key="head-main"
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 6 }}
-                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    initial={{ opacity: 0, x: -40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -40 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
                   >
                     <SectionHeading
                       title={<>Things I{"\u2019"}ve built.</>}
