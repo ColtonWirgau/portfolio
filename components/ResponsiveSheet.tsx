@@ -76,6 +76,33 @@ const pageVariants = {
 
 const pageTransition = { type: 'tween' as const, ease: 'easeInOut' as const, duration: 0.25 };
 
+// ── Measured height (for smooth height transitions between pages) ──
+// Callback ref so the first measurement happens on attach (not after a
+// useEffect tick where the value would briefly be 0 and animate from a
+// wrong baseline). Returns 0 until the first observation lands; consumers
+// fall back to `height: 'auto'` while that's the case.
+
+function useMeasuredHeight(): [(node: HTMLElement | null) => void, number] {
+  const [height, setHeight] = useState(0);
+  const observerRef = useRef<ResizeObserver | null>(null);
+
+  const ref = useCallback((node: HTMLElement | null) => {
+    observerRef.current?.disconnect();
+    observerRef.current = null;
+    if (!node) return;
+    setHeight(node.getBoundingClientRect().height);
+    observerRef.current = new ResizeObserver(([entry]) => {
+      // contentRect excludes border/padding-box; offsetHeight is what
+      // the wrapper actually occupies in flow, so prefer that.
+      const target = entry.target as HTMLElement;
+      setHeight(target.offsetHeight);
+    });
+    observerRef.current.observe(node);
+  }, []);
+
+  return [ref, height];
+}
+
 // ── SheetContent (shared between mobile & desktop) ──
 
 function SheetContent({
@@ -96,8 +123,27 @@ function SheetContent({
 
   const topPadding = !hasHeader ? 'pt-2' : '';
 
+  // Measure the inner content (back header + active page) so the outer
+  // wrapper can animate height between pages instead of jumping.
+  // mode="popLayout" below pulls exiting elements out of layout flow
+  // so the measured height immediately reflects the incoming page,
+  // letting the height tween run in parallel with the slide tween.
+  const [measureRef, contentHeight] = useMeasuredHeight();
+
   return (
-    <div className={`relative overflow-hidden ${topPadding}`}>
+    <motion.div
+      // `height: 'auto'` until the first measurement lands so the very
+      // first paint isn't 0px (which would briefly collapse the sheet).
+      animate={{ height: contentHeight > 0 ? contentHeight : 'auto' }}
+      transition={{ type: 'spring', bounce: 0, duration: 0.36 }}
+      style={{ overflow: 'hidden' }}
+      className={`relative ${topPadding}`}
+    >
+      {/* flow-root: contain child margins so they count in offsetHeight.
+          Without it a child margin collapses out of this div but renders
+          inside the overflow-hidden parent, leaving the animated height
+          short and clipping the page's bottom padding. */}
+      <div ref={measureRef} className="flow-root">
       {/* Back header */}
       <AnimatePresence>
         {canGoBack && activePage?.title && (
@@ -127,8 +173,11 @@ function SheetContent({
         )}
       </AnimatePresence>
 
-      {/* Page content with slide animation */}
-      <AnimatePresence mode="wait" custom={direction}>
+      {/* Page content with slide animation. mode="popLayout" pulls
+          exiting children out of layout flow during their exit transition
+          so the measured height reflects only the incoming page — that's
+          what makes the height tween land in sync with the slide. */}
+      <AnimatePresence mode="popLayout" custom={direction}>
         <motion.div
           key={currentPage}
           custom={direction}
@@ -141,7 +190,8 @@ function SheetContent({
           {activePage?.content}
         </motion.div>
       </AnimatePresence>
-    </div>
+      </div>
+    </motion.div>
   );
 }
 
