@@ -150,7 +150,24 @@ export default function Home() {
   const [sheetDefaultPage, setSheetDefaultPage] = useState<string>('main');
   const [selectedProject, setSelectedProject] = useState<ProjectGroup | null>(null);
   const [personalView, setPersonalView] = useState(false);
+  const [inkPos, setInkPos] = useState<{ x: number; y: number } | null>(null);
   const [aiSheetOpen, setAiSheetOpen] = useState(false);
+  const squidRef = useRef<HTMLSpanElement>(null);
+
+  // Back-to-Work: the squid squirts a little ink where it sits, and the
+  // view slides back at the same time. The ink is a viewport-fixed
+  // overlay so it plays its full burst without being clipped by, or
+  // sliding away with, the poster wrapper.
+  const inkAndGoBack = useCallback(() => {
+    const reduced = typeof window !== 'undefined'
+      && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (!reduced && squidRef.current) {
+      const r = squidRef.current.getBoundingClientRect();
+      setInkPos({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+      window.setTimeout(() => setInkPos(null), 650);
+    }
+    setPersonalView(false);
+  }, []);
 
   const scrollToWork = useCallback(() => {
     const el = document.getElementById('work');
@@ -443,25 +460,22 @@ export default function Home() {
                     />
                     <button
                       type="button"
-                      onClick={() => setPersonalView(false)}
+                      onClick={inkAndGoBack}
                       aria-label="Back to Work"
                       className="pp-back"
                       style={{
-                        position: 'absolute', left: 0, bottom: '4px',
+                        position: 'absolute', left: '12px', bottom: '4px',
                         display: 'inline-flex', alignItems: 'center', gap: '14px',
                         background: 'transparent', border: 'none', padding: 0,
                         color: 'var(--color-accent)', cursor: 'pointer',
                       }}
                     >
                       <span
+                        ref={squidRef}
                         className="pp-back-squid"
-                        style={{
-                          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-                          width: '86px', height: '34px', flexShrink: 0,
-                          transition: 'transform 0.2s ease',
-                        }}
+                        style={{ display: 'inline-flex', flexShrink: 0, transition: 'transform 0.2s ease' }}
                       >
-                        <SquidMark width={34} style={{ display: 'block', transform: 'rotate(-90deg)' }} />
+                        <SquidMark direction="left" height={34} style={{ display: 'block' }} />
                       </span>
                       <span style={{
                         fontFamily: 'var(--font-display)', fontWeight: 400,
@@ -1072,6 +1086,38 @@ export default function Home() {
 
         {/* AI research sheet */}
         <AIResearchSheet open={aiSheetOpen} onClose={() => setAiSheetOpen(false)} />
+
+        {/* Squid ink burst (fired by the Personal Projects "Back" control) */}
+        <AnimatePresence>
+          {inkPos && (
+            <motion.span
+              key="squid-ink"
+              aria-hidden
+              initial={{ scale: 0.25, opacity: 0.85 }}
+              animate={{ scale: 1.75, opacity: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              style={{
+                position: 'fixed', left: inkPos.x, top: inkPos.y, x: '-50%', y: '-50%',
+                transformOrigin: 'center', pointerEvents: 'none', lineHeight: 0, zIndex: 60,
+              }}
+            >
+              <svg width="140" height="96" viewBox="0 0 140 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g fill="var(--color-fg)">
+                  <circle cx="68" cy="48" r="28" />
+                  <circle cx="40" cy="36" r="17" />
+                  <circle cx="94" cy="40" r="20" />
+                  <circle cx="54" cy="70" r="15" />
+                  <circle cx="92" cy="68" r="14" />
+                  <circle cx="20" cy="52" r="8" />
+                  <circle cx="118" cy="54" r="7" />
+                  <circle cx="74" cy="16" r="7" />
+                  <circle cx="108" cy="78" r="6" />
+                  <circle cx="30" cy="74" r="5" />
+                </g>
+              </svg>
+            </motion.span>
+          )}
+        </AnimatePresence>
 
         {/* Project sheet */}
         <ResponsiveSheet
