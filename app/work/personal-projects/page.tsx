@@ -120,7 +120,20 @@ const sideProjects: Record<SideProjectId, {
         aspect: '2560 / 1800',
       },
       {
+        desktop: '/images/degenerates-4.webp',
+        mobile: '/images/degenerates-mobile-4.webp',
+        caption: 'The aftermath: 8 hit, 4 missed, and the parlay dies again.',
+        aspect: '2560 / 1800',
+      },
+      {
+        desktop: '/images/degenerates-5.webp',
+        mobile: '/images/degenerates-mobile-5.webp',
+        caption: 'Your season: the week-by-week record and every bet you should not have made.',
+        aspect: '2560 / 1800',
+      },
+      {
         desktop: '/images/degenerates-3.webp',
+        mobile: '/images/degenerates-mobile-3.webp',
         caption: 'Season setup: every rule, date, stake, and punishment gets voted on before anything locks.',
         aspect: '2560 / 1800',
       },
@@ -626,7 +639,7 @@ function ScreenGallery({
   };
 
   return (
-    <div style={{ marginBottom: '28px' }}>
+    <div className="screen-gallery" style={{ marginBottom: '28px' }}>
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         marginBottom: '12px',
@@ -672,40 +685,36 @@ function ScreenGallery({
         }}
       >
         {screens.map((screen) => (
-          <figure key={screen.desktop} style={{ flex: '0 0 92%', scrollSnapAlign: 'center', margin: 0 }}>
-            <div style={{ position: 'relative' }}>
+          <figure
+            key={screen.desktop}
+            className={screen.mobile ? 'screen-figure has-mobile' : 'screen-figure'}
+            style={{ flex: '0 0 92%', scrollSnapAlign: 'center', margin: 0 }}
+          >
+            <img
+              src={screen.desktop}
+              alt={screen.caption}
+              loading="lazy"
+              className="screen-shot-desktop"
+              style={{
+                width: '100%',
+                aspectRatio: screen.aspect ?? '1600 / 1000',
+                border: '1px solid var(--color-border)',
+                background: bg,
+              }}
+            />
+            {screen.mobile && (
               <img
-                src={screen.desktop}
+                src={screen.mobile}
                 alt={screen.caption}
                 loading="lazy"
+                className="screen-shot-mobile"
                 style={{
-                  display: 'block',
-                  width: screen.mobile ? '94%' : '100%',
-                  aspectRatio: screen.aspect ?? '1600 / 1000',
+                  aspectRatio: '1179 / 1977',
                   border: '1px solid var(--color-border)',
                   background: bg,
                 }}
               />
-              {screen.mobile && (
-                <img
-                  src={screen.mobile}
-                  alt=""
-                  loading="lazy"
-                  style={{
-                    position: 'absolute',
-                    right: 0,
-                    bottom: 0,
-                    width: '21%',
-                    aspectRatio: '1179 / 1977',
-                    objectFit: 'cover',
-                    objectPosition: 'top',
-                    border: '1px solid var(--color-border)',
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.35)',
-                    background: bg,
-                  }}
-                />
-              )}
-            </div>
+            )}
             <figcaption style={{ fontSize: '11px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '10px', lineHeight: 1.5 }}>
               {screen.caption}
             </figcaption>

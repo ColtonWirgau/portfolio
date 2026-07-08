@@ -225,3 +225,25 @@ body,
     width: 65vw !important;
   }
 }
+
+/* Project sheet screenshot gallery: show the desktop shot in wide
+   containers and the phone shot in narrow ones. */
+.screen-gallery {
+  container-type: inline-size;
+}
+.screen-shot-desktop {
+  display: block;
+}
+.screen-shot-mobile {
+  display: none;
+  width: min(100%, 300px);
+  margin: 0 auto;
+}
+@container (max-width: 540px) {
+  .screen-figure.has-mobile .screen-shot-desktop {
+    display: none;
+  }
+  .screen-figure.has-mobile .screen-shot-mobile {
+    display: block;
+  }
+}
