@@ -10,6 +10,7 @@ import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 import { AIResearchSheet } from '@/components/AIResearchSheet';
 import { BeyondCards } from '@/components/BeyondSheet';
+import { PersonalProjectsPanel } from '@/components/PersonalProjectsPanel';
 
 const roles = [
   'an AI pioneer',
@@ -147,6 +148,7 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<LifeEvent | null>(null);
   const [sheetDefaultPage, setSheetDefaultPage] = useState<string>('main');
   const [selectedProject, setSelectedProject] = useState<ProjectGroup | null>(null);
+  const [personalView, setPersonalView] = useState(false);
   const [aiSheetOpen, setAiSheetOpen] = useState(false);
 
   const scrollToWork = useCallback(() => {
@@ -157,14 +159,14 @@ export default function Home() {
       main.scrollTo({ top, behavior: 'smooth' });
     }
   }, []);
-  const carouselRef = useRef<HTMLDivElement>(null);
   const [activePosterId, setActivePosterId] = useState(0);
   const storyCarouselRef = useRef<HTMLDivElement>(null);
   const [activeStoryId, setActiveStoryId] = useState(0);
 
-  // Infinite carousel loop logic + active dot tracking
-  useEffect(() => {
-    const el = carouselRef.current;
+  // Infinite carousel loop logic + active dot tracking. Attached via a
+  // callback ref so it re-initialises whenever the poster grid remounts
+  // (e.g. returning from the Personal Projects view).
+  const attachCarousel = useCallback((el: HTMLDivElement | null) => {
     if (!el) return;
     const handleScroll = () => {
       const cardWidth = el.scrollWidth / 3; // 3 sets of cards
@@ -173,7 +175,6 @@ export default function Home() {
       } else if (el.scrollLeft <= 0) {
         el.scrollLeft += cardWidth;
       }
-      // Track active poster (0, 1, 2) based on scroll position within one set
       const posInSet = el.scrollLeft % cardWidth;
       const singleCardWidth = cardWidth / 3;
       const idx = Math.round(posInSet / singleCardWidth) % 3;
@@ -181,10 +182,13 @@ export default function Home() {
     };
     el.addEventListener('scroll', handleScroll);
     // Start at the middle set
-    requestAnimationFrame(() => {
+    const raf = requestAnimationFrame(() => {
       el.scrollLeft = el.scrollWidth / 3;
     });
-    return () => el.removeEventListener('scroll', handleScroll);
+    return () => {
+      el.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   // Story cards carousel logic
@@ -421,15 +425,82 @@ export default function Home() {
 
           <div className="poster-grid-wrapper" style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
             <div style={{ marginBottom: '48px' }}>
-              <SectionHeading
-                title={<>Things I{"\u2019"}ve built.</>}
-                subtitle={<><Em>Full-stack platforms</Em>, <Ul>developer tools</Ul>, and side projects. Here{"\u2019"}s some of what I{"\u2019"}ve been working on.</>}
-                right
-              />
+              <AnimatePresence mode="wait" initial={false}>
+                {personalView ? (
+                  <motion.div
+                    key="head-personal"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setPersonalView(false)}
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '6px',
+                        background: 'transparent',
+                        border: '1px solid var(--color-border)',
+                        color: 'var(--color-muted)', cursor: 'pointer',
+                        fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        padding: '7px 14px 7px 10px', borderRadius: '100px',
+                        fontFamily: 'var(--font-sans)',
+                        marginBottom: '20px',
+                        transition: 'color 0.15s, border-color 0.15s',
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-fg)'; e.currentTarget.style.borderColor = 'var(--color-fg)'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-muted)'; e.currentTarget.style.borderColor = 'var(--color-border)'; }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
+                      Back to Work
+                    </button>
+                    <SectionHeading
+                      title={<>Personal Projects.</>}
+                      subtitle={<>The stuff I build for fun, and sometimes for <Em>friends &amp; family</Em>.</>}
+                      right
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="head-main"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                  >
+                    <SectionHeading
+                      title={<>Things I{"\u2019"}ve built.</>}
+                      subtitle={<><Em>Full-stack platforms</Em>, <Ul>developer tools</Ul>, and side projects. Here{"\u2019"}s some of what I{"\u2019"}ve been working on.</>}
+                      right
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
+            <AnimatePresence mode="wait" initial={false}>
+            {personalView ? (
+              <motion.div
+                key="personal"
+                initial={{ x: 40, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 40, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
+                <PersonalProjectsPanel />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="main"
+                initial={{ x: -40, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: -40, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
             {/* Project posters - responsive grid, 2-up on desktop */}
-            <div className="poster-grid" ref={carouselRef}>
+            <div className="poster-grid" ref={attachCarousel}>
               {[0, 1, 2].map((setIndex) => (
                 <Fragment key={`poster-set-${setIndex}`}>
 
@@ -645,7 +716,7 @@ export default function Home() {
                   ═══════════════════════════════════════════════ */}
               <div
                 className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
-                onClick={() => setSelectedProject(projects[2])}
+                onClick={() => setPersonalView(true)}
                 style={{
                   background: '#7B6DB5',
                   cursor: 'pointer',
@@ -784,6 +855,9 @@ export default function Home() {
                 />
               ))}
             </div>
+              </motion.div>
+            )}
+            </AnimatePresence>
 
           </div>
           <SideLabel label="Work" side="right" mirrorLabel />

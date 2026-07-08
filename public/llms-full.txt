@@ -61,7 +61,7 @@ Less polished, more personality. The stuff Colton builds for fun and sometimes f
 
 Tech across these: Next.js, Neon (Postgres), Drizzle, OAuth, Tailwind, Playwright, Vercel.
 
-Detail page: /work/personal-projects
+The three personal projects live inline in the Work section of the home page (/#work); clicking the Personal Projects poster reveals them.
 
 ## AI research, "Sylvester"
 
@@ -134,7 +134,7 @@ Lives in Clarkston with his wife Sarah, their two kids Weston (3) and Rosie (1),
 - `/` Home, hero, work, story, contact
 - `/work/church-hub` Church Hub project page
 - `/work/woodside` Woodside Bible Church work
-- `/work/personal-projects` Dynastly, Lions tracker, Degenerates Dashboard
+- `/#work` Work section, including the Personal Projects reveal: Dynastly, Lions tracker, Degenerates Dashboard
 - `/childhood` Algonac story
 - `/college` University of Detroit Mercy story
 - `/career` Woodside career story
