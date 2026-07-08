@@ -124,7 +124,7 @@ const projects: ProjectGroup[] = [
       {
         id: 'personal-dynastly',
         title: 'Dynastly',
-        description: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don’t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league’s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won’t. Along the way I found a major bug in Sleeper’s software, which I’m reporting to them, not shipping.',
+        description: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don’t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league’s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won’t. Along the way I found a serious bug in one of the big fantasy platforms, which I’m reporting to them, not shipping.',
       },
       {
         id: 'personal-lions',
