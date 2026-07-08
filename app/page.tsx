@@ -433,29 +433,7 @@ export default function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 6 }}
                     transition={{ duration: 0.25, ease: 'easeOut' }}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}
                   >
-                    <button
-                      type="button"
-                      onClick={() => setPersonalView(false)}
-                      style={{
-                        display: 'inline-flex', alignItems: 'center', gap: '6px',
-                        background: 'transparent',
-                        border: '1px solid var(--color-border)',
-                        color: 'var(--color-muted)', cursor: 'pointer',
-                        fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        padding: '7px 14px 7px 10px', borderRadius: '100px',
-                        fontFamily: 'var(--font-sans)',
-                        marginBottom: '20px',
-                        transition: 'color 0.15s, border-color 0.15s',
-                      }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-fg)'; e.currentTarget.style.borderColor = 'var(--color-fg)'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-muted)'; e.currentTarget.style.borderColor = 'var(--color-border)'; }}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
-                      Back to Work
-                    </button>
                     <SectionHeading
                       title={<>Personal Projects.</>}
                       subtitle={<>The stuff I build for fun, and sometimes for <Em>friends &amp; family</Em>.</>}
@@ -489,6 +467,24 @@ export default function Home() {
                 exit={{ x: 40, opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
               >
+                <button
+                  type="button"
+                  onClick={() => setPersonalView(false)}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '5px',
+                    background: 'transparent', border: 'none', padding: 0,
+                    color: 'var(--color-muted)', cursor: 'pointer',
+                    fontSize: '12px', fontWeight: 600, letterSpacing: '0.08em',
+                    textTransform: 'uppercase', fontFamily: 'var(--font-sans)',
+                    marginBottom: '16px',
+                    transition: 'color 0.15s',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-fg)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-muted)'; }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
+                  Back
+                </button>
                 <PersonalProjectsPanel />
               </motion.div>
             ) : (
