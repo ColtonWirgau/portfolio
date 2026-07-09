@@ -84,17 +84,23 @@ export default function ChurchHubPage() {
 
         <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} style={{ marginBottom: '48px' }}>
           <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>Microsites &amp; widgets, on the church&apos;s own site</div>
-          <figure style={{ margin: 0, maxWidth: '300px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'flex-start' }}>
+            <img
+              src="/images/church-hub-see-jesus-desktop.webp"
+              alt="The See Jesus giving campaign microsite on desktop"
+              loading="lazy"
+              style={{ flex: '1 1 380px', minWidth: 0, width: '100%', maxWidth: '620px', border: '1px solid var(--color-border)' }}
+            />
             <img
               src="/images/church-hub-see-jesus-mobile.webp"
-              alt="The See Jesus giving campaign microsite, responsive on mobile"
+              alt="The See Jesus microsite, responsive on mobile"
               loading="lazy"
-              style={{ display: 'block', width: '100%', borderRadius: '20px', border: '1px solid var(--color-border)', boxShadow: '0 12px 44px rgba(0,0,0,0.28)' }}
+              style={{ width: '190px', flexShrink: 0, borderRadius: '18px', border: '1px solid var(--color-border)', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }}
             />
-            <figcaption style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '12px', lineHeight: 1.5, maxWidth: '300px' }}>
-              Analytics is one slice. The platform also ships public-facing microsites and embeddable widgets on the church&apos;s own site: here, the See Jesus campaign microsite, fully responsive on mobile.
-            </figcaption>
-          </figure>
+          </div>
+          <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '12px', lineHeight: 1.5, maxWidth: '620px' }}>
+            Analytics is one slice. The platform also ships public-facing microsites and embeddable widgets on the church&apos;s own site, custom-designed and fully responsive: here, the See Jesus campaign microsite.
+          </p>
         </motion.div>
 
         <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp}>
