@@ -55,10 +55,13 @@ export const lifeEvents: LifeEvent[] = [
       'I also grew up in a church my great grandfather started. Faith has always been a central part of my life. It shaped how I see people, how I lead, and how I believe people should be treated. I care a lot about treating people with kindness, with grace, and with the same patience that\u2019s been shown to me. That doesn\u2019t stop at church. It carries into my work, my teams, and how I build things.',
     ],
     narrativeImages: [
+      '/images/algonac-childhood.webp',
+      '/images/algonac-football.webp',
       '/images/HSTrack8.jpg',
       '/images/Hs1.jpg',
     ],
     gallery: [
+      '/images/algonac-track-blocks.webp',
       '/images/HSTrack7.jpg',
       '/images/HSTrack3.jpg',
       '/images/HSTrack4.jpg',
@@ -94,7 +97,7 @@ export const lifeEvents: LifeEvent[] = [
           'Grew up in a church my great grandfather started. Faith has always been a central part of my life. It shaped how I see people, how I lead, and how I believe people should be treated. I care a lot about treating people with kindness, with grace, and with the same patience that\'s been shown to me. That doesn\'t stop at church. It carries into my work, my teams, and how I build things.',
       },
     ],
-    image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=1000&fit=crop',
+    image: '/images/algonac-graduation-speech.webp',
     lat: 42.6189,
     lng: -82.5321,
   },
@@ -124,6 +127,10 @@ export const lifeEvents: LifeEvent[] = [
     narrativeImages: [
       '/images/CollegeTrack2.jpg',
       '/images/CollegeTrack3.jpg',
+    ],
+    gallery: [
+      '/images/udm-commercial-model.webp',
+      '/images/udm-commercial-cleanup.webp',
     ],
     subEvents: [
       {
@@ -160,7 +167,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-commercial',
         title: 'The UDM Commercial',
         description:
-          'Somehow I ended up as the star of a University of Detroit Mercy commercial. I\'m not entirely sure how it happened, but it did, and I\'m told it was very convincing. Video and photos coming soon.',
+          'Somehow I ended up as the star of a University of Detroit Mercy commercial. I\'m not entirely sure how it happened, but it did, and I\'m told it was very convincing. That\'s me in the stills below: working a build session with a professor and out on a community cleanup in the UDM colors.',
       },
       {
         id: 'detroit-ssc',
