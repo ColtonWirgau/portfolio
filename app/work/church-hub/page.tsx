@@ -61,6 +61,43 @@ export default function ChurchHubPage() {
         </motion.div>
 
         <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp} style={{ marginBottom: '48px' }}>
+          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>Microsites &amp; widgets, on the church&apos;s own site</div>
+          <p style={{ fontSize: '15px', lineHeight: 1.8, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '28px', maxWidth: '640px' }}>
+            The platform ships public-facing microsites and embeddable widgets on the church&apos;s own site, custom-designed and fully responsive.
+          </p>
+
+          {/* See Jesus microsite */}
+          <div style={{ marginBottom: '36px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'flex-start' }}>
+              <img src="/images/church-hub-see-jesus-desktop.webp" alt="The See Jesus giving campaign microsite on desktop" loading="lazy" style={{ flex: '1 1 380px', minWidth: 0, width: '100%', maxWidth: '620px', border: '1px solid var(--color-border)' }} />
+              <img src="/images/church-hub-see-jesus-mobile.webp" alt="The See Jesus microsite, responsive on mobile" loading="lazy" style={{ width: '190px', flexShrink: 0, borderRadius: '18px', border: '1px solid var(--color-border)', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }} />
+            </div>
+            <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '12px', lineHeight: 1.5, maxWidth: '640px' }}>
+              The See Jesus giving campaign microsite: a custom gold typographic design, fully responsive across desktop and mobile.
+            </p>
+          </div>
+
+          {/* Campus locator widget */}
+          <div style={{ marginBottom: '36px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'flex-start' }}>
+              <img src="/images/church-hub-locations-desktop.webp" alt="Campus locator widget on desktop" loading="lazy" style={{ flex: '1 1 380px', minWidth: 0, width: '100%', maxWidth: '620px', border: '1px solid var(--color-border)' }} />
+              <img src="/images/church-hub-locations-mobile.webp" alt="Campus locator widget, responsive on mobile" loading="lazy" style={{ width: '190px', flexShrink: 0, borderRadius: '18px', border: '1px solid var(--color-border)', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }} />
+            </div>
+            <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '12px', lineHeight: 1.5, maxWidth: '640px' }}>
+              A campus locator built in Next.js: filter by ministry, search by zip and radius, and browse an interactive map with custom illustrated pins. Embedded straight into the public site.
+            </p>
+          </div>
+
+          {/* Life Group finder */}
+          <div>
+            <img src="/images/church-hub-group-finder.webp" alt="Life Group finder result cards" loading="lazy" style={{ display: 'block', width: '100%', maxWidth: '820px', border: '1px solid var(--color-border)' }} />
+            <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '12px', lineHeight: 1.5, maxWidth: '820px' }}>
+              A Life Group finder: searchable, filterable cards with rhythm, campus, and audience tags, wired to live data.
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} style={{ marginBottom: '48px' }}>
           <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>Analytics &amp; insights</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
             {[
@@ -82,28 +119,7 @@ export default function ChurchHubPage() {
           </div>
         </motion.div>
 
-        <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} style={{ marginBottom: '48px' }}>
-          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>Microsites &amp; widgets, on the church&apos;s own site</div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', alignItems: 'flex-start' }}>
-            <img
-              src="/images/church-hub-see-jesus-desktop.webp"
-              alt="The See Jesus giving campaign microsite on desktop"
-              loading="lazy"
-              style={{ flex: '1 1 380px', minWidth: 0, width: '100%', maxWidth: '620px', border: '1px solid var(--color-border)' }}
-            />
-            <img
-              src="/images/church-hub-see-jesus-mobile.webp"
-              alt="The See Jesus microsite, responsive on mobile"
-              loading="lazy"
-              style={{ width: '190px', flexShrink: 0, borderRadius: '18px', border: '1px solid var(--color-border)', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }}
-            />
-          </div>
-          <p style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '12px', lineHeight: 1.5, maxWidth: '620px' }}>
-            Analytics is one slice. The platform also ships public-facing microsites and embeddable widgets on the church&apos;s own site, custom-designed and fully responsive: here, the See Jesus campaign microsite.
-          </p>
-        </motion.div>
-
-        <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp}>
+        <motion.div custom={4} initial="hidden" animate="visible" variants={fadeUp}>
           <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>Tech Stack</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
             {['Next.js', 'React', 'TypeScript', 'Node.js', 'SQL Server', 'Tailwind', 'Vercel'].map((t) => (
