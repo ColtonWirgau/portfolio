@@ -7,6 +7,7 @@ import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEve
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
 import { SquidMark } from '@/components/SquidMark';
+import { InkBurst } from '@/components/InkBurst';
 import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 import { AIResearchSheet } from '@/components/AIResearchSheet';
@@ -1112,20 +1113,7 @@ export default function Home() {
                 transformOrigin: 'center', pointerEvents: 'none', lineHeight: 0, zIndex: 60,
               }}
             >
-              <svg width="140" height="96" viewBox="0 0 140 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g fill="var(--color-fg)">
-                  <circle cx="68" cy="48" r="28" />
-                  <circle cx="40" cy="36" r="17" />
-                  <circle cx="94" cy="40" r="20" />
-                  <circle cx="54" cy="70" r="15" />
-                  <circle cx="92" cy="68" r="14" />
-                  <circle cx="20" cy="52" r="8" />
-                  <circle cx="118" cy="54" r="7" />
-                  <circle cx="74" cy="16" r="7" />
-                  <circle cx="108" cy="78" r="6" />
-                  <circle cx="30" cy="74" r="5" />
-                </g>
-              </svg>
+              <InkBurst width={140} />
             </motion.span>,
             <motion.span
               key="squid-swim"

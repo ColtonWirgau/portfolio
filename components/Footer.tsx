@@ -1,7 +1,9 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect, useCallback } from 'react';
+import { InkBurst } from './InkBurst';
 
 const SQUID_PATH = "M316.8,619.52c-10.78-10.88-18.24-18.24-22.4-22.05-13.57-12.42-24.65-27.5-32.17-44.31-3.86-8.62-6.79-17.63-8.86-26.84-.98-4.35-2.55-8.26.05-12.03,2.99-4.33,7.19-7.48,9.79-12.23,3.34-6.09,4.66-13.11,4.95-20.04.56-13.5-2.71-27.13-9.28-38.93-7.71-13.84,8.81-4.82,9.76-13.32,3.57-31.75,4.75-56.89,3.53-75.4-2.62-39.67-7.6-80.33-14.96-121.97-.27-1.48.27-2.97,1.41-3.95,24.79-21.23,37.87-32.4,39.24-33.52,10.88-8.77,16.62-17.85,7.79-29.98-7.07-9.71-46.68-61.46-118.83-155.27-4.51-5.86-10.32-9.54-16.15-9.68-5.83.14-11.64,3.82-16.15,9.68C82.37,103.49,42.76,155.24,35.69,164.95c-8.83,12.13-3.09,21.21,7.79,29.98,1.37,1.11,14.45,12.29,39.24,33.52,1.13.98,1.68,2.46,1.41,3.95-7.36,41.64-12.34,82.3-14.96,121.97-1.21,18.51-.04,43.65,3.53,75.4.96,8.51,17.47-.52,9.76,13.32-6.57,11.8-9.84,25.43-9.28,38.93.29,6.94,1.61,13.96,4.95,20.04,2.6,4.75,6.8,7.9,9.79,12.23,2.6,3.77,1.02,7.68.05,12.03-2.07,9.21-5,18.23-8.86,26.84-7.53,16.8-18.6,31.88-32.17,44.31-4.16,3.81-11.62,11.17-22.4,22.05C6.55,637.7-1.55,659.99.24,686.34c1.37,20.29,9.55,37.89,21.74,53.87,9.77,12.81,15.02,23.09,16.35,38.69.53,6.27.94,10.66,1.25,13.14.27,2.17,1.62,4.04,3.55,5.02,8.07,4.04,11.97-3.48,13.09-10.45,3.73-23.18-4.08-38.46-14.2-59.63-15.04-31.48-9.77-64.04,19.26-84.8,12.05-8.61,23.55-17.77,34.51-27.44,10.06-8.89,18.28-20.02,24.71-33.4.25-.55.94-.76,1.46-.45l.57.31c.29.18.43.53.33.86-3.22,10.12-6.88,19.57-14.61,39.18-5.78,14.61-10.76,29.36-12.71,44.61-3.61,28.28-1.45,55.96,6.5,83.03,5.12,17.42,10.59,31.74,12.48,45.88,2.17,16.09,1.27,32.07-2.66,47.93-.59,2.42.94,6.56,3.32,8.16,7.56,5.14,14.08-2.7,17.5-9,5.31-9.84,8.24-21.15,8.79-33.93,1.11-25.62-4.63-48.59-8.4-72.75-4.39-28.26-1.23-55.25,9.49-80.98,12.85-30.82,20.14-45.61,25.02-67.75.43-1.93,1.11-3.32,2.03-4.16.31-.28.68-.42,1.05-.45.37.03.74.16,1.05.45.92.84,1.6,2.23,2.03,4.16,4.88,22.15,12.17,36.93,25.02,67.75,10.72,25.72,13.89,52.71,9.49,80.98-3.77,24.16-9.51,47.13-8.4,72.75.55,12.77,3.48,24.08,8.79,33.93,3.42,6.31,9.94,14.14,17.5,9,2.38-1.6,3.91-5.74,3.32-8.16-3.93-15.86-4.82-31.84-2.66-47.93,1.89-14.14,7.36-28.46,12.48-45.88,7.95-27.07,10.12-54.75,6.5-83.03-1.95-15.25-6.93-30-12.71-44.61-7.73-19.61-11.39-29.06-14.61-39.18-.1-.33.04-.68.33-.86l.57-.31c.53-.31,1.21-.1,1.46.45,6.43,13.38,14.65,24.51,24.71,33.4,10.96,9.67,22.46,18.83,34.51,27.44,29.02,20.76,34.3,53.32,19.26,84.8-10.12,21.17-17.93,36.45-14.2,59.63,1.11,6.97,5.02,14.49,13.09,10.45,1.93-.98,3.28-2.85,3.55-5.02.31-2.48.72-6.88,1.25-13.14,1.33-15.61,6.58-25.88,16.35-38.69,12.19-15.98,20.37-33.57,21.74-53.87,1.8-26.35-6.31-48.63-24.3-66.82Z";
 
@@ -25,43 +27,88 @@ function SwimSquid({ size, rotation, flip }: { size: number; rotation: number; f
   );
 }
 
-// Emerging squid - starts invisible (same color as bg), eyes fade in, then body reveals
-function EmergingSquid({ size, isInView, delay }: { size: number; isInView: boolean; delay: number }) {
+const EYE_CX = 170.67;
+const EYE_CY = 473.09;
+
+// Emerging squid - starts invisible (same color as bg), eyes fade in, then body reveals.
+// Once revealed it is also the secret door to /squid: the pupil tracks a
+// nearby cursor as the hint, and clicking it inks the screen and dives.
+function EmergingSquid({ size, isInView, delay, onDive }: { size: number; isInView: boolean; delay: number; onDive: (e: React.MouseEvent) => void }) {
   const height = size * 2.5; // tall aspect ratio
+  const svgRef = useRef<SVGSVGElement>(null);
+  const rawX = useMotionValue(EYE_CX);
+  const rawY = useMotionValue(EYE_CY);
+  const pupilX = useSpring(rawX, { stiffness: 250, damping: 22 });
+  const pupilY = useSpring(rawY, { stiffness: 250, damping: 22 });
+
+  useEffect(() => {
+    if (!isInView) return;
+    const handle = (e: PointerEvent) => {
+      const svg = svgRef.current;
+      if (!svg) return;
+      const rect = svg.getBoundingClientRect();
+      const eyeX = rect.left + rect.width * (EYE_CX / 341.34);
+      const eyeY = rect.top + rect.height * (EYE_CY / 852.51);
+      const dx = e.clientX - eyeX;
+      const dy = e.clientY - eyeY;
+      const dist = Math.hypot(dx, dy);
+      if (dist > 260 || dist < 1) {
+        rawX.set(EYE_CX);
+        rawY.set(EYE_CY);
+        return;
+      }
+      const mag = 13 * Math.min(1, dist / 50);
+      rawX.set(EYE_CX + (dx / dist) * mag);
+      rawY.set(EYE_CY + (dy / dist) * mag);
+    };
+    window.addEventListener('pointermove', handle);
+    return () => window.removeEventListener('pointermove', handle);
+  }, [isInView, rawX, rawY]);
+
   return (
-    <svg
-      width={size}
-      height={height}
-      viewBox="0 0 341.34 852.51"
-      xmlns="http://www.w3.org/2000/svg"
+    <motion.button
+      type="button"
+      onClick={onDive}
+      aria-label="Dive deeper: visit the squid page"
+      title="dive deeper?"
+      whileHover={{ scale: 1.06 }}
+      style={{ background: 'transparent', border: 'none', padding: 0, cursor: 'pointer', display: 'block' }}
     >
-      {/* Body - starts transparent, transitions to accent */}
-      <motion.path
-        d={SQUID_PATH}
-        initial={{ fill: '#D94420', opacity: 0 }}
-        animate={isInView ? { opacity: [0, 0, 0, 1] } : undefined}
-        transition={{ duration: 4, delay, times: [0, 0.4, 0.7, 1], ease: 'easeInOut' }}
-      />
-      {/* Eyeball - starts transparent, fades to white */}
-      <motion.ellipse
-        cx="170.67"
-        cy="473.09"
-        rx="39.52"
-        ry="42.83"
-        initial={{ fill: '#FFFFFF', opacity: 0 }}
-        animate={isInView ? { opacity: [0, 0, 1, 1] } : undefined}
-        transition={{ duration: 3, delay, times: [0, 0.3, 0.6, 1], ease: 'easeInOut' }}
-      />
-      {/* Pupil - starts transparent, fades to dark */}
-      <motion.circle
-        cx="170.67"
-        cy="473.09"
-        r="17.6"
-        initial={{ fill: '#111111', opacity: 0 }}
-        animate={isInView ? { opacity: [0, 0, 1, 1] } : undefined}
-        transition={{ duration: 3, delay, times: [0, 0.3, 0.6, 1], ease: 'easeInOut' }}
-      />
-    </svg>
+      <svg
+        ref={svgRef}
+        width={size}
+        height={height}
+        viewBox="0 0 341.34 852.51"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Body - starts transparent, transitions to accent */}
+        <motion.path
+          d={SQUID_PATH}
+          initial={{ fill: '#D94420', opacity: 0 }}
+          animate={isInView ? { opacity: [0, 0, 0, 1] } : undefined}
+          transition={{ duration: 4, delay, times: [0, 0.4, 0.7, 1], ease: 'easeInOut' }}
+        />
+        {/* Eyeball - starts transparent, fades to white */}
+        <motion.ellipse
+          cx={EYE_CX}
+          cy={EYE_CY}
+          rx="39.52"
+          ry="42.83"
+          initial={{ fill: '#FFFFFF', opacity: 0 }}
+          animate={isInView ? { opacity: [0, 0, 1, 1] } : undefined}
+          transition={{ duration: 3, delay, times: [0, 0.3, 0.6, 1], ease: 'easeInOut' }}
+        />
+        {/* Pupil - starts transparent, fades to dark, then follows the cursor */}
+        <motion.circle
+          cx={pupilX}
+          cy={pupilY}
+          r="17.6"
+          initial={{ fill: '#111111', opacity: 0 }}
+          animate={isInView ? { opacity: [0, 0, 1, 1] } : undefined}
+          transition={{ duration: 3, delay, times: [0, 0.3, 0.6, 1], ease: 'easeInOut' }}
+        />
+      </svg>
+    </motion.button>
   );
 }
 
@@ -132,6 +179,27 @@ export function Footer() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
   const { squids: ambientSquids, removeSquid } = useAmbientSquids(isInView);
+  const router = useRouter();
+  const [inkOrigin, setInkOrigin] = useState<{ x: number; y: number } | null>(null);
+  const wentDeep = useRef(false);
+
+  useEffect(() => {
+    router.prefetch('/squid');
+  }, [router]);
+
+  const goDeep = () => {
+    if (wentDeep.current) return;
+    wentDeep.current = true;
+    router.push('/squid');
+  };
+
+  const dive = (e: React.MouseEvent) => {
+    if (inkOrigin) return;
+    setInkOrigin({ x: e.clientX, y: e.clientY });
+    // Belt and braces: if the ink animation is ever throttled (background/occluded
+    // window), don't leave the user stranded under a half-spread ink blob.
+    window.setTimeout(goDeep, 1100);
+  };
 
   return (
     <footer ref={ref} style={{ position: 'relative', marginTop: '80px' }}>
@@ -219,21 +287,23 @@ export function Footer() {
           );
         })}
 
-        {/* Emerging squids - stationary, camouflaged, then reveal */}
+        {/* Emerging squids - stationary, camouflaged, then reveal; clicking one dives to /squid */}
         <div style={{
           position: 'absolute',
           left: '60px',
           bottom: '10px',
+          zIndex: 2,
         }}>
-          <EmergingSquid size={60} isInView={isInView} delay={0.5} />
+          <EmergingSquid size={60} isInView={isInView} delay={0.5} onDive={dive} />
         </div>
 
         <div style={{
           position: 'absolute',
           right: '60px',
           bottom: '25px',
+          zIndex: 2,
         }}>
-          <EmergingSquid size={50} isInView={isInView} delay={1.2} />
+          <EmergingSquid size={50} isInView={isInView} delay={1.2} onDive={dive} />
         </div>
 
         {/* Footer content */}
@@ -273,6 +343,31 @@ export function Footer() {
           </p>
         </div>
       </div>
+
+      {/* Ink flood: the clicked squid squirts the same circle-cluster burst as the
+          home page's Back control, grown until it swallows the screen, then we
+          surface on /squid */}
+      {inkOrigin && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 10000, overflow: 'hidden' }}>
+          <motion.span
+            initial={{ scale: 0.25, opacity: 1 }}
+            animate={{ scale: 70, opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeIn' }}
+            onAnimationComplete={goDeep}
+            style={{
+              position: 'absolute',
+              left: inkOrigin.x,
+              top: inkOrigin.y,
+              x: '-50%',
+              y: '-50%',
+              transformOrigin: 'center',
+              lineHeight: 0,
+            }}
+          >
+            <InkBurst width={140} fill="#171209" />
+          </motion.span>
+        </div>
+      )}
     </footer>
   );
 }

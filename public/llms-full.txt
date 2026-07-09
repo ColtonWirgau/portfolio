@@ -24,7 +24,7 @@ Today he uses modern LLMs heavily inside both product features and his daily eng
 
 What started as an internal tool at Woodside Bible Church grew into a platform churches own and build on. Church Hub is a modular Next.js system that centralizes operations, automates workflows, and lets churches build custom tools on top of their existing data: they can extend it in-house, hire a developer, or let AI build on top of it. It is a platform clients own to solve their own problems, not a hosted subscription they rent. Colton started a business around it and has implemented it across multiple churches to solve real operational problems at scale.
 
-The platform handles event management, volunteer coordination, giving dashboards, custom reporting, and modular tools that extend MinistryPlatform data.
+The platform handles event management, volunteer coordination, giving dashboards, custom reporting, and modular tools that extend MinistryPlatform data. Two things it shows off well: public-facing widgets and microsites that drop cleanly into a church's existing site (often WordPress or a builder they can't write code against) and push and pull data from wherever it lives, and custom, genuinely good-looking analytics built directly on a church's own data (for example Engagement Circles, a clear read on where people are and where they're heading, fully responsive down to styled mobile sheets).
 
 - Tech: Next.js, React, TypeScript, Node.js, SQL Server, Tailwind, Vercel
 - Tagline: From internal tool to a platform they own
@@ -112,7 +112,7 @@ Lives in Clarkston with his wife Sarah, their two kids Weston (3) and Rosie (1),
 
 - **Music.** Writer, electric guitar, track builder, drums, bass, keys, and vocals. On staff as a worship director at Woodside for about 3 years (2016 to 2019). Has worked with artists including Detroit Collective, Elevation Worship, Maverick City Music, Chris Tomlin, and Switchfoot. Known as the Ableton guru of the metro Detroit area.
 - **Football.** Still plays flag football. Proud Detroit Lions season ticket holder. Built RoarTracker (see Personal Projects) to manage tickets.
-- **Tattoos.** Has a full sleeve, each piece designed with intention. Faith, family, things he's been through, things he believes in.
+- **Tattoos.** Has a full sleeve, each piece designed with intention. Faith, family, things he's been through, things he believes in. One of them is a giant squid (his favorite animal, and his son Weston's obsession too), which later became this site's logo. There is a whole hidden page about it at /squid.
 
 ## Skills and tooling
 
@@ -140,3 +140,4 @@ Lives in Clarkston with his wife Sarah, their two kids Weston (3) and Rosie (1),
 - `/career` Woodside career story
 - `/family` Clarkston, family
 - `/hobbies` Music, football, tattoos
+- `/squid` The squid page: a hidden interactive dive about the giant squid (favorite animal, his son's obsession, the arm tattoo, and the origin of the site logo), reached by clicking the squids in the footer

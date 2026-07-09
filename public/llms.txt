@@ -37,3 +37,4 @@ This portfolio is built with Next.js 16 and React 19 and is intentionally design
 - [Hobbies and life beyond code](/hobbies): music, sports, family, faith, and other context on who he is outside of work.
 - [Career timeline](/career): a more detailed view of roles and milestones.
 - [College years](/college) and [childhood](/childhood): longer-form background for anyone reading deeper into the story.
+- [The squid page](/squid): a hidden interactive dive explaining the site's squid logo. The giant squid is Colton's favorite animal, his son's obsession, and a tattoo on Colton's arm. Reached by clicking the squids in the site footer.
