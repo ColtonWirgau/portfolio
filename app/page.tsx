@@ -151,20 +151,23 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<ProjectGroup | null>(null);
   const [personalView, setPersonalView] = useState(false);
   const [inkPos, setInkPos] = useState<{ x: number; y: number } | null>(null);
+  const [squidSwim, setSquidSwim] = useState(false);
   const [aiSheetOpen, setAiSheetOpen] = useState(false);
   const squidRef = useRef<HTMLSpanElement>(null);
 
-  // Back-to-Work: the squid squirts a little ink where it sits, and the
-  // view slides back at the same time. The ink is a viewport-fixed
-  // overlay so it plays its full burst without being clipped by, or
-  // sliding away with, the poster wrapper.
+  // Back-to-Work: the squid squirts a little ink where it sits and jets
+  // off to the left (the way it faces) while the rest of the view slides
+  // right. The ink is a viewport-fixed overlay so it plays its full burst
+  // without being clipped by, or sliding away with, the poster wrapper.
   const inkAndGoBack = useCallback(() => {
     const reduced = typeof window !== 'undefined'
       && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (!reduced && squidRef.current) {
       const r = squidRef.current.getBoundingClientRect();
       setInkPos({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+      setSquidSwim(true);
       window.setTimeout(() => setInkPos(null), 650);
+      window.setTimeout(() => setSquidSwim(false), 500);
     }
     setPersonalView(false);
   }, []);
@@ -473,7 +476,13 @@ export default function Home() {
                       <span
                         ref={squidRef}
                         className="pp-back-squid"
-                        style={{ display: 'inline-flex', flexShrink: 0, transition: 'transform 0.2s ease' }}
+                        style={{
+                          display: 'inline-flex', flexShrink: 0,
+                          transition: 'transform 0.2s ease',
+                          // Hidden instantly on click; the fixed overlay squid
+                          // takes over and swims left (unclipped).
+                          opacity: squidSwim ? 0 : 1,
+                        }}
                       >
                         <SquidMark direction="left" height={34} style={{ display: 'block' }} />
                       </span>
@@ -1087,9 +1096,11 @@ export default function Home() {
         {/* AI research sheet */}
         <AIResearchSheet open={aiSheetOpen} onClose={() => setAiSheetOpen(false)} />
 
-        {/* Squid ink burst (fired by the Personal Projects "Back" control) */}
+        {/* Squid ink burst + the squid jetting left (fired by the
+            Personal Projects "Back" control). Both are viewport-fixed so
+            the squid can swim left unclipped while the view slides right. */}
         <AnimatePresence>
-          {inkPos && (
+          {inkPos && [
             <motion.span
               key="squid-ink"
               aria-hidden
@@ -1115,8 +1126,21 @@ export default function Home() {
                   <circle cx="30" cy="74" r="5" />
                 </g>
               </svg>
-            </motion.span>
-          )}
+            </motion.span>,
+            <motion.span
+              key="squid-swim"
+              aria-hidden
+              initial={{ x: 0, opacity: 1 }}
+              animate={{ x: -150, opacity: 0 }}
+              transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+              style={{
+                position: 'fixed', left: inkPos.x - 42, top: inkPos.y - 17,
+                pointerEvents: 'none', lineHeight: 0, zIndex: 61,
+              }}
+            >
+              <SquidMark direction="left" height={34} style={{ display: 'block' }} />
+            </motion.span>,
+          ]}
         </AnimatePresence>
 
         {/* Project sheet */}
