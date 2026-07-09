@@ -99,9 +99,8 @@ function goSection(dir: 1 | -1) {
 }
 
 /* Full-width click bands pinned to the top and bottom of the viewport:
-   click anywhere along them to swim up or down one section. At the ends of
-   the dive they become exits home: "back to dry land" at the surface,
-   "back to site" through the sea floor. */
+   click anywhere along them to swim up or down one section. At either end
+   of the dive they become the exit home: "back to dry land". */
 function DiveBand({
   dir,
   visible,
@@ -115,7 +114,7 @@ function DiveBand({
   exit?: boolean;
   onExit?: (e: React.MouseEvent) => void;
 }) {
-  const label = exit ? (dir === -1 ? 'Back to dry land' : 'Back to site') : dir === 1 ? 'Dive' : 'Ascend';
+  const label = exit ? 'Back to dry land' : dir === 1 ? 'Dive' : 'Ascend';
   const chevron = (
     <motion.span
       animate={{ y: dir === 1 ? [0, 6, 0] : [0, -6, 0] }}
