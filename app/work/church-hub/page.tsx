@@ -56,19 +56,16 @@ export default function ChurchHubPage() {
         <motion.div custom={1} initial="hidden" animate="visible" variants={fadeUp}
           style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '48px' }}>
           <p style={{ fontSize: '15px', lineHeight: 1.8, fontWeight: 400, color: 'var(--color-muted)' }}>
-            I started a business around it, implementing it across multiple churches to solve real operational problems at scale. The platform handles everything from event management and volunteer coordination to giving dashboards and custom reporting.
+            I started a business around it, implementing it across multiple churches to solve real operational problems at scale. It spans public-facing microsites and embeddable widgets on the church&apos;s own site, internal staff apps for the work nobody else wants to touch, event and volunteer tooling, and analytics on top of it all.
           </p>
         </motion.div>
 
         <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp} style={{ marginBottom: '48px' }}>
-          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>In the App</div>
+          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>Analytics &amp; insights</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
             {[
-              { src: '/images/church-hub-2.webp', caption: 'Engagement Circles: a five-ring model of engagement, from the wider community down to the core.' },
-              { src: '/images/church-hub-3.webp', caption: 'Drilling into a single circle: month over month movement for the Committed ring.' },
-              { src: '/images/church-hub-4.webp', caption: 'Two years of engagement growth across every circle, in one chart.' },
-              { src: '/images/church-hub-5.webp', caption: 'Deployed at Woodside Bible Church: people search and household records.' },
-              { src: '/images/church-hub-6.webp', caption: 'Woodside’s analytics home: pinned dashboards, quick facts, and reporting tools.' },
+              { src: '/images/church-hub-2.webp', caption: 'Engagement Circles: a five-ring model of belonging, from the wider community down to the core.' },
+              { src: '/images/church-hub-4.webp', caption: 'Two years of engagement growth across every circle, in one view.' },
             ].map((shot) => (
               <figure key={shot.src} style={{ margin: 0 }}>
                 <img
@@ -83,6 +80,21 @@ export default function ChurchHubPage() {
               </figure>
             ))}
           </div>
+        </motion.div>
+
+        <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} style={{ marginBottom: '48px' }}>
+          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '16px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>Microsites &amp; widgets, on the church&apos;s own site</div>
+          <figure style={{ margin: 0, maxWidth: '300px' }}>
+            <img
+              src="/images/church-hub-see-jesus-mobile.webp"
+              alt="The See Jesus giving campaign microsite, responsive on mobile"
+              loading="lazy"
+              style={{ display: 'block', width: '100%', borderRadius: '20px', border: '1px solid var(--color-border)', boxShadow: '0 12px 44px rgba(0,0,0,0.28)' }}
+            />
+            <figcaption style={{ fontSize: '12px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '12px', lineHeight: 1.5, maxWidth: '300px' }}>
+              Analytics is one slice. The platform also ships public-facing microsites and embeddable widgets on the church&apos;s own site: here, the See Jesus campaign microsite, fully responsive on mobile.
+            </figcaption>
+          </figure>
         </motion.div>
 
         <motion.div custom={2} initial="hidden" animate="visible" variants={fadeUp}>
