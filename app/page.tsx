@@ -587,6 +587,7 @@ export default function Home() {
                       title={<>Things I{"\u2019"}ve built.</>}
                       subtitle={<><Em>Full-stack platforms</Em>, <Ul>developer tools</Ul>, and side projects. Here{"\u2019"}s some of what I{"\u2019"}ve been working on.</>}
                       right
+                      className="work-heading"
                     />
                   </motion.div>
                 )}

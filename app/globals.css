@@ -450,6 +450,16 @@ body,
   transform: translateX(-8px);
 }
 
+/* "Things I've built." on mobile: the shared heading's 4rem floor is
+   just too wide for a phone, wrapping it to a lopsided two lines. Size
+   it to the viewport so it stays on one line (inline styles carry the
+   desktop clamp, hence the !important). */
+@media (max-width: 767px) {
+  .work-heading h2 {
+    font-size: clamp(2.25rem, 11vw, 4rem) !important;
+  }
+}
+
 /* Personal Projects header on mobile: the Back control is absolutely
    positioned bottom-left on desktop, which collides with the subtitle
    on narrow screens. Center the heading and drop the Back control into
