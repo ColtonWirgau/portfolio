@@ -725,12 +725,77 @@ function SeedDemo() {
   );
 }
 
+/* ── 15. Set rules and limits ──────────────────────────────────────── */
+
+const AMENITIES = [
+  { key: 'wifi', label: 'Wifi', icon: '<path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M8.5 16.11a6 6 0 0 1 7 0"/><path d="M12 20h.01"/>' },
+  { key: 'parking', label: 'Parking', icon: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/>' },
+  { key: 'pool', label: 'Pool', icon: '<path d="M2 12c1.5 0 1.5-1 3-1s1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1"/><path d="M2 16.5c1.5 0 1.5-1 3-1s1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1"/>' },
+  { key: 'coffee', label: 'Coffee', icon: '<path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/>' },
+];
+
+const DESC_MAX = 80;
+
+function RulesDemo() {
+  const [mode, setMode] = useState<'free' | 'limits'>('limits');
+  const [desc, setDesc] = useState('Cozy cabin, steps from the lake.');
+  const [picked, setPicked] = useState<string[]>(['wifi', 'parking', 'pool']);
+  const toggle = (k: string) => setPicked((p) => (p.includes(k) ? p.filter((x) => x !== k) : [...p, k]));
+  const left = DESC_MAX - desc.length;
+
+  return (
+    <DemoFrame
+      label="Set rules and limits"
+      caption="A description field quietly becomes the catch-all for everything the spec missed. Cap it, and the overflow tells you the structured field you actually needed. Here the amenities people were cramming into prose become icons you toggle per listing: consistent, scannable, and something you can filter on later."
+      control={<Segmented value={mode} onChange={setMode} options={[{ value: 'free', label: 'No limits' }, { value: 'limits', label: 'Rules & limits' }]} />}
+    >
+      <div style={{ minHeight: '210px' }}>
+        <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>Description</div>
+        {mode === 'free' ? (
+          <>
+            <div style={{ border: `1px solid ${RED}`, borderRadius: '8px', padding: '12px 14px', fontSize: '13px', lineHeight: 1.6, color: MUTED, background: PAPER }}>
+              Cozy cabin, steps from the lake. Fast wifi throughout. Free parking on site for two cars. Pool is open May through September. Coffee and tea in the kitchen. Pet friendly, up to two dogs. Fire pit out back. Check in after 3, out by 11. No smoking. Extra towels in the hall closet…
+            </div>
+            <div style={{ fontSize: '12px', color: RED, marginTop: '10px', fontWeight: 600 }}>Everything the form forgot ends up in here.</div>
+          </>
+        ) : (
+          <>
+            <input
+              value={desc}
+              maxLength={DESC_MAX}
+              onChange={(e) => setDesc(e.target.value)}
+              style={{ width: '100%', border: `1px solid ${BORDER}`, borderRadius: '8px', padding: '11px 13px', fontSize: '14px', color: FG, background: PAPER, fontFamily: 'inherit', outline: 'none' }}
+            />
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', marginTop: '7px', fontSize: '11px', color: left <= 0 ? RED : MUTED }}>
+              <span>{left <= 0 ? 'Out of room? Add an amenity below.' : 'Keep it to the vibe, not a spec sheet.'}</span>
+              <span style={{ fontWeight: 700 }}>{desc.length} / {DESC_MAX}</span>
+            </div>
+            <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, margin: '18px 0 10px' }}>Amenities</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {AMENITIES.map((a) => {
+                const on = picked.includes(a.key);
+                return (
+                  <button key={a.key} type="button" onClick={() => toggle(a.key)}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', padding: '7px 13px', borderRadius: '100px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '12px', fontWeight: 700, border: `1px solid ${on ? ACCENT : BORDER}`, background: on ? ACCENT : 'transparent', color: on ? PAPER : MUTED, transition: 'all 0.15s ease' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: a.icon }} />
+                    {a.label}
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        )}
+      </div>
+    </DemoFrame>
+  );
+}
+
 /* ── Registry ──────────────────────────────────────────────────────── */
 
 export type DemoId =
   | 'optimistic' | 'wallOfText' | 'skeleton' | 'mobile' | 'motion'
   | 'typesEnforce' | 'validate' | 'cleanData' | 'cheapest' | 'cache'
-  | 'abstract' | 'monorepo' | 'sharedRule' | 'seed';
+  | 'abstract' | 'monorepo' | 'sharedRule' | 'seed' | 'rules';
 
 const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   optimistic: OptimisticDemo,
@@ -747,6 +812,7 @@ const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   monorepo: MonorepoDemo,
   sharedRule: SharedRuleDemo,
   seed: SeedDemo,
+  rules: RulesDemo,
 };
 
 export function HowIBuildDemo({ id }: { id: DemoId }) {
