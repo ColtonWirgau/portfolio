@@ -255,10 +255,6 @@ export const lifeEvents: LifeEvent[] = [
     storyPath: '/career',
     description:
       'Software Development Manager and Full-Stack Developer at Woodside Bible Church since 2016. As the sole in-house developer, I design and build internal tools, platforms, and widgets that serve thousands of people every week while managing contractors and coordinating with MarCom.',
-    mainPhotos: [
-      '/images/woodside-team-event-1.webp',
-      '/images/woodside-team-event-2.webp',
-    ],
     highlights: [
       'Software Dev Manager / Full-Stack Developer since 2016',
       'Built apps.woodsidebible.org from scratch',
@@ -279,22 +275,14 @@ export const lifeEvents: LifeEvent[] = [
           'My role covers web development, a lot of database work, and the internal systems nobody else has time to touch. Some of what I\'ve built has been folded into MinistryPlatform\'s core product, and seeing the same problems at churches everywhere is what led me to start my own business.',
       },
       {
-        id: 'troy-platform',
-        title: 'Apps.WoodsideBible.org',
+        id: 'troy-team',
+        title: 'The Team',
         description:
-          'Built a unified Next.js platform that simplifies major organizational workflows by centralizing operations, automating data tasks, and providing clean interfaces for both staff and community use across multiple campuses. This internal platform became the foundation for Church Hub.',
-      },
-      {
-        id: 'troy-widgets',
-        title: 'Dynamic Insights & Widgets',
-        description:
-          'Extended MinistryPlatform\'s static reporting into interactive dashboards with custom embedded widgets. Created a nested JSON framework for optimized data retrieval. This innovation inspired new features in the platform and became a development model across partner organizations.',
-      },
-      {
-        id: 'troy-ux',
-        title: 'UI/UX Leadership',
-        description:
-          'Lead UI/UX across all digital products at Woodside. Every screen, every flow, every interaction. Obsessing over the details so users don\'t have to think. Also a major contributor to "MP Next," an open-source Next.js template for MinistryPlatform API integration.',
+          'Being the sole developer doesn\'t mean working solo. I\'m on a staff I genuinely enjoy being around, and that culture is a big part of why I\'ve stuck around. These are from one of our team events.',
+        images: [
+          '/images/woodside-team-event-1.webp',
+          '/images/woodside-team-event-2.webp',
+        ],
       },
     ],
     image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=1000&fit=crop',
@@ -307,8 +295,7 @@ export const lifeEvents: LifeEvent[] = [
     year: 'Family',
     tagline: 'Where I call home',
     storyPath: '/family',
-    description:
-      'We live in Clarkston now, a quiet town north of Detroit. It\'s home base. Married Sarah at the Grosse Ile Municipal Airport, which probably tells you everything you need to know about us. When I\'m not building products, you\'ll find me here with my family.',
+    description: '',
     highlights: [
       'Married Sarah at the Grosse Ile Municipal Airport',
       'Home with Sarah, Weston (3), and Rosie (1)',
