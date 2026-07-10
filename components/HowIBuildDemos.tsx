@@ -732,16 +732,32 @@ const AMENITIES = [
   { key: 'parking', label: 'Parking', icon: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"/>' },
   { key: 'pool', label: 'Pool', icon: '<path d="M2 12c1.5 0 1.5-1 3-1s1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1"/><path d="M2 16.5c1.5 0 1.5-1 3-1s1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1"/>' },
   { key: 'coffee', label: 'Coffee', icon: '<path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/>' },
+  { key: 'pets', label: 'Pets ok', icon: '<circle cx="6" cy="9" r="1.7"/><circle cx="10" cy="6" r="1.7"/><circle cx="14" cy="6" r="1.7"/><circle cx="18" cy="9" r="1.7"/><ellipse cx="12" cy="15.5" rx="4.6" ry="3.6"/>' },
+  { key: 'firepit', label: 'Fire pit', icon: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/>' },
+  { key: 'nosmoke', label: 'No smoking', icon: '<circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/>' },
 ];
 
-const DESC_MAX = 80;
+const CHECK_IN_ICON = '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/>';
+const CHECK_OUT_ICON = '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>';
+
+const DESC_MAX = 120;
 
 function RulesDemo() {
   const [mode, setMode] = useState<'free' | 'limits'>('limits');
-  const [desc, setDesc] = useState('Cozy cabin, steps from the lake.');
-  const [picked, setPicked] = useState<string[]>(['wifi', 'parking', 'pool']);
+  const [desc, setDesc] = useState('Cozy cabin, steps from the lake. Wake up to the water, wind down by the fire.');
+  const [picked, setPicked] = useState<string[]>(AMENITIES.map((a) => a.key));
   const toggle = (k: string) => setPicked((p) => (p.includes(k) ? p.filter((x) => x !== k) : [...p, k]));
   const left = DESC_MAX - desc.length;
+
+  const field = (label: string, value: string, icon?: string) => (
+    <div style={{ border: `1px solid ${BORDER}`, borderRadius: '8px', padding: '9px 12px', background: PAPER }}>
+      <div style={{ fontSize: '9px', letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '5px' }}>{label}</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '13px', fontWeight: 600, color: FG }}>
+        {icon && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: icon }} />}
+        {value}
+      </div>
+    </div>
+  );
 
   return (
     <DemoFrame
@@ -749,43 +765,51 @@ function RulesDemo() {
       caption="A limit is really a conversation. When someone bumps into one, it either exposes a real gap in the software (a field or feature I'm missing) or it's a chance to gently point out that by trying to say everything, they end up saying nothing. Here, capping the description turns that overflow into structured fields instead of prose."
       control={<Segmented value={mode} onChange={setMode} options={[{ value: 'free', label: 'No limits' }, { value: 'limits', label: 'Rules & limits' }]} />}
     >
-      <div style={{ minHeight: '210px' }}>
-        <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>Description</div>
-        {mode === 'free' ? (
-          <>
-            <div style={{ border: `1px solid ${RED}`, borderRadius: '8px', padding: '12px 14px', fontSize: '13px', lineHeight: 1.6, color: MUTED, background: PAPER }}>
-              Cozy cabin, steps from the lake. Fast wifi throughout. Free parking on site for two cars. Pool is open May through September. Coffee and tea in the kitchen. Pet friendly, up to two dogs. Fire pit out back. Check in after 3, out by 11. No smoking. Extra towels in the hall closet…
-            </div>
-            <div style={{ fontSize: '12px', color: RED, marginTop: '10px', fontWeight: 600 }}>Everything the form forgot ends up in here.</div>
-          </>
-        ) : (
-          <>
-            <input
-              value={desc}
-              maxLength={DESC_MAX}
-              onChange={(e) => setDesc(e.target.value)}
-              style={{ width: '100%', border: `1px solid ${BORDER}`, borderRadius: '8px', padding: '11px 13px', fontSize: '14px', color: FG, background: PAPER, fontFamily: 'inherit', outline: 'none' }}
-            />
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', marginTop: '7px', fontSize: '11px', color: left <= 0 ? RED : MUTED }}>
-              <span>{left <= 0 ? 'Out of room? Add an amenity below.' : 'Keep it to the vibe, not a spec sheet.'}</span>
-              <span style={{ fontWeight: 700 }}>{desc.length} / {DESC_MAX}</span>
-            </div>
-            <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, margin: '18px 0 10px' }}>Amenities</div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              {AMENITIES.map((a) => {
-                const on = picked.includes(a.key);
-                return (
-                  <button key={a.key} type="button" onClick={() => toggle(a.key)}
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', padding: '7px 13px', borderRadius: '100px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '12px', fontWeight: 700, border: `1px solid ${on ? ACCENT : BORDER}`, background: on ? ACCENT : 'transparent', color: on ? PAPER : MUTED, transition: 'all 0.15s ease' }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: a.icon }} />
-                    {a.label}
-                  </button>
-                );
-              })}
-            </div>
-          </>
-        )}
-      </div>
+      {mode === 'free' ? (
+        <div>
+          <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>Description</div>
+          <div style={{ border: `1px solid ${RED}`, borderRadius: '8px', padding: '12px 14px', fontSize: '13px', lineHeight: 1.6, color: MUTED, background: PAPER }}>
+            Cozy cabin, steps from the lake. Fast wifi throughout. Free parking on site for two cars. Pool is open May through September. Coffee and tea in the kitchen. Pet friendly, up to two dogs. Fire pit out back. Check in after 3, out by 11. No smoking. $180 a night, sleeps four…
+          </div>
+          <div style={{ fontSize: '12px', color: RED, marginTop: '10px', fontWeight: 600 }}>Everything the form forgot ends up in here.</div>
+        </div>
+      ) : (
+        <div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
+            {field('Rate', '$180 / night')}
+            {field('Sleeps', '4 guests')}
+            {field('Beds', '2')}
+          </div>
+          <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>Description</div>
+          <input
+            value={desc}
+            maxLength={DESC_MAX}
+            onChange={(e) => setDesc(e.target.value)}
+            style={{ width: '100%', border: `1px solid ${BORDER}`, borderRadius: '8px', padding: '11px 13px', fontSize: '14px', color: FG, background: PAPER, fontFamily: 'inherit', outline: 'none' }}
+          />
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', marginTop: '7px', fontSize: '11px', color: left <= 0 ? RED : MUTED }}>
+            <span>{left <= 0 ? 'Out of room? Everything else is a field.' : 'Keep it to the vibe, not a spec sheet.'}</span>
+            <span style={{ fontWeight: 700 }}>{desc.length} / {DESC_MAX}</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', margin: '16px 0' }}>
+            {field('Check-in', 'After 3:00 PM', CHECK_IN_ICON)}
+            {field('Check-out', 'By 11:00 AM', CHECK_OUT_ICON)}
+          </div>
+          <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '10px' }}>Amenities</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {AMENITIES.map((a) => {
+              const on = picked.includes(a.key);
+              return (
+                <button key={a.key} type="button" onClick={() => toggle(a.key)}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', padding: '7px 13px', borderRadius: '100px', cursor: 'pointer', fontFamily: 'inherit', fontSize: '12px', fontWeight: 700, border: `1px solid ${on ? ACCENT : BORDER}`, background: on ? ACCENT : 'transparent', color: on ? PAPER : MUTED, transition: 'all 0.15s ease' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: a.icon }} />
+                  {a.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </DemoFrame>
   );
 }
