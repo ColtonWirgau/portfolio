@@ -162,7 +162,7 @@ export const lifeEvents: LifeEvent[] = [
       'Seven Time All-Horizon League selection (Track & Field)',
       'Published: "Sylvester: An Approach to Emotion Classification"',
       'Embedded Systems Engineering Intern at Continental Automotive',
-      'Student Success Center: most sought-after tutor, promoted to IT Coordinator',
+      'Learning Center: most sought-after tutor, promoted to IT Coordinator',
       'Star of a UDM commercial (yes, really)',
     ],
     narrative: [
@@ -230,7 +230,7 @@ export const lifeEvents: LifeEvent[] = [
       },
       {
         id: 'detroit-ssc-it',
-        title: 'Student Success Center: Tutor to IT Coordinator',
+        title: 'Learning Center: Tutor to IT Coordinator',
         description:
           'I started as a tutor and moved into IT after building the center an automated platform, tied to student ID cards, that replaced its paper timecards and appointment tracking. After graduation they brought me back to extend it to three more departments.',
         badges: [
@@ -238,8 +238,8 @@ export const lifeEvents: LifeEvent[] = [
           'Promoted to IT Coordinator',
         ],
         images: [
-          '/images/udm-learning-center.webp',
           '/images/udm-ssc-team.webp',
+          '/images/udm-learning-center.webp',
         ],
       },
     ],
@@ -271,13 +271,12 @@ export const lifeEvents: LifeEvent[] = [
       'After graduating, Woodside didn\u2019t want to lose me, so they created a role for me. I stepped into web development, database work, and solving problems that nobody else had time to touch. One of my first projects was cleaning up our database. I ended up deactivating about two thirds of it and building better systems to track real engagement. Some of that work eventually made its way into the main MinistryPlatform product.',
       'From there, I started my own business. I saw the same problems popping up across churches everywhere, so I began helping teams build better tools, better experiences, and better systems. A lot of what I do now lives at the intersection of product thinking, UX, and real-world ministry needs.',
     ],
-    pullQuote: 'I care a lot about clarity. Not overwhelming people. Saying just enough, at the right time. Good design should feel obvious.',
     subEvents: [
       {
         id: 'troy-origin',
-        title: 'How It Started',
+        title: 'My Role',
         description:
-          'After graduating, Woodside didn\'t want to lose me, so they created a role for me. I stepped into web development, database work, and solving problems that nobody else had time to touch. One of my first projects was cleaning up our database. I ended up deactivating about two thirds of it and building better systems to track real engagement. Some of that work eventually made its way into the main MinistryPlatform product. Seeing the same problems pop up across churches everywhere is also what led me to start my own business.',
+          'My role covers web development, a lot of database work, and the internal systems nobody else has time to touch. Some of what I\'ve built has been folded into MinistryPlatform\'s core product, and seeing the same problems at churches everywhere is what led me to start my own business.',
       },
       {
         id: 'troy-platform',
@@ -290,12 +289,6 @@ export const lifeEvents: LifeEvent[] = [
         title: 'Dynamic Insights & Widgets',
         description:
           'Extended MinistryPlatform\'s static reporting into interactive dashboards with custom embedded widgets. Created a nested JSON framework for optimized data retrieval. This innovation inspired new features in the platform and became a development model across partner organizations.',
-      },
-      {
-        id: 'troy-award',
-        title: 'Deep Space Award',
-        description:
-          'Recognized with MinistryPlatform\'s "Deep Space Award" for innovation and advancement of the product ecosystem. Multiple features and tools built at Woodside were later adopted by MinistryPlatform\'s main product for all customers.',
       },
       {
         id: 'troy-ux',
@@ -333,6 +326,10 @@ export const lifeEvents: LifeEvent[] = [
         title: 'The Airport Wedding',
         description:
           'Got married to Sarah at the Grosse Ile Municipal Airport. Yes, an actual airport. It was unconventional, personal, and exactly what we wanted.',
+        badges: [
+          'Mexican food',
+          'Helicopter sendoff',
+        ],
         images: [
           '/images/wedding-plane.webp',
           '/images/wedding-hangar.webp',
@@ -344,6 +341,12 @@ export const lifeEvents: LifeEvent[] = [
         title: 'Family Life',
         description:
           'Home with Sarah, Weston (3), and Rosie (1). A quiet town north of Detroit. Home base for family life and side projects alike. When I\'m not building something, I\'m probably playing music, flying with Sarah, or chasing kids around the house.',
+        badges: [
+          'Father of 2',
+          'Married to Sarah',
+          'Boy dad & girl dad',
+          'Clarkston, MI',
+        ],
         images: [
           '/images/family-of-four.webp',
           '/images/family-newborn.webp',
@@ -360,8 +363,7 @@ export const lifeEvents: LifeEvent[] = [
     year: 'Hobbies',
     tagline: 'What recharges me',
     storyPath: '/hobbies',
-    description:
-      'Music and sports are the two things that keep me balanced. I play music at Woodside Bible Church and have played a lot of huge shows over the years. I still play flag football and I\'m a diehard Detroit Lions season ticket holder.',
+    description: '',
     highlights: [
       'Musician: writer, electric guitar, tracks, drums, bass, keys, vocals',
       'Football: still play flag football, Detroit Lions season ticket holder',
@@ -448,9 +450,6 @@ function SheetHeader({ event }: { event: LifeEvent }) {
         <h3 style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.1 }} className="text-white">
           {event.label}
         </h3>
-        <p style={{ fontSize: '13px', fontWeight: 400, marginTop: '4px' }} className="text-white/60">
-          {event.tagline}
-        </p>
       </div>
     </div>
   );

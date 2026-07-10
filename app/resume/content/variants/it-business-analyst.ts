@@ -67,8 +67,8 @@ export const itBusinessAnalystResume: Resume = {
       dates: 'Sep 2015 – Aug 2018',
       bullets: [
         'Integrated three new university websites; administered databases and ran data analytics for academic departments.',
-        'Led the digital transformation of the Student Success Center: replaced paper timecards and appointment tracking with an automated platform integrated with university ID scan cards.',
-        'Retained post-graduation to integrate a new system spanning disability support services, the Student Success Center, and the testing center.',
+        'Led the digital transformation of the Learning Center: replaced paper timecards and appointment tracking with an automated platform integrated with university ID scan cards.',
+        'Retained post-graduation to integrate a new system spanning disability support services, the Learning Center, and the testing center.',
       ],
     },
     {
