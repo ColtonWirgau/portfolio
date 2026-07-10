@@ -10,6 +10,7 @@ This portfolio is built with Next.js 16 and React 19 and is intentionally design
 
 - [Story and background](/#about): Grew up in Algonac, Michigan. IB diploma, football captain, track and field Hall of Famer. Studied software engineering and leadership at the University of Detroit Mercy while running D1 track. Got published in AI research. Joined Woodside Bible Church as the sole in-house developer, where the work eventually became the foundation for Church Hub.
 - [AI research, "Sylvester"](https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification): Peer-reviewed paper on emotion classification from Twitter data, published in *New Trends in Information Technology*, 2017. Pre-LLM NLP work on tokenization, language drift, sarcasm, slang, and ambiguity at scale.
+- [How I build](/how-i-build): Colton's engineering philosophy in depth: UI/UX, frontend, backend, database, where problems belong, and his defaults (monorepo, TypeScript everywhere, build the core and buy the commodity, AI as leverage).
 
 ## Work
 

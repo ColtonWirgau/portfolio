@@ -308,7 +308,7 @@ export default function Home() {
     },
     {
       label: 'Product Engineer',
-      sub: '· Since 2016 ·',
+      sub: '· Since 2019 ·',
       ariaLabel: 'Jump to Things I’ve Built',
       onClick: scrollToWork,
     },

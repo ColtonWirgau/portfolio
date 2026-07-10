@@ -8,6 +8,7 @@ import { ContactSheet } from '@/components/ContactSheet';
 const navLinks = [
   { label: 'Work', href: '/#work' },
   { label: 'About', href: '/#about' },
+  { label: 'Approach', href: '/how-i-build' },
 ];
 
 export function Header() {
@@ -16,7 +17,9 @@ export function Header() {
   const [contactOpen, setContactOpen] = useState(false);
 
   const handleNavClick = (e: React.MouseEvent, href: string) => {
-    if (isHome) {
+    // Only intercept in-page anchor links; real routes (e.g. /how-i-build)
+    // should navigate normally.
+    if (isHome && href.startsWith('/#')) {
       e.preventDefault();
       const id = href.replace('/#', '');
       const el = document.getElementById(id);
