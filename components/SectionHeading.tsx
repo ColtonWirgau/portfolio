@@ -15,12 +15,14 @@ interface SectionHeadingProps {
   center?: boolean;
   /** Right-align the heading */
   right?: boolean;
+  /** Extra class on the root, for per-instance responsive overrides */
+  className?: string;
 }
 
-export function SectionHeading({ label, title, subtitle, watermark, center, right }: SectionHeadingProps) {
+export function SectionHeading({ label, title, subtitle, watermark, center, right, className }: SectionHeadingProps) {
   const align = center ? 'center' : right ? 'right' : undefined;
   return (
-    <div style={{
+    <div className={className} style={{
       position: 'relative',
       marginBottom: '32px',
       overflow: 'visible',

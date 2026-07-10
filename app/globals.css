@@ -316,3 +316,30 @@ body,
 .pp-back:hover .pp-back-squid {
   transform: translateX(-8px);
 }
+
+/* Personal Projects header on mobile: the Back control is absolutely
+   positioned bottom-left on desktop, which collides with the subtitle
+   on narrow screens. Center the heading and drop the Back control into
+   flow below it, with a smaller squid. Inline styles carry the desktop
+   values, hence the !importants. */
+@media (max-width: 767px) {
+  .pp-heading {
+    text-align: center !important;
+    align-items: center !important;
+    margin-bottom: 0 !important;
+  }
+  .pp-back {
+    position: static !important;
+    width: 100%;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin-top: 22px;
+  }
+  .pp-back .pp-back-squid svg {
+    height: 26px;
+    width: auto;
+  }
+  .pp-back .pp-back-label {
+    font-size: 1.3rem !important;
+  }
+}

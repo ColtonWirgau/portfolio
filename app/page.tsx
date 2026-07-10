@@ -467,6 +467,7 @@ export default function Home() {
                       title={<>Personal Projects.</>}
                       subtitle={<>The stuff I build for fun, and sometimes for <Em>friends &amp; family</Em>. Less polished, more personality.</>}
                       right
+                      className="pp-heading"
                     />
                     <button
                       type="button"
@@ -493,7 +494,7 @@ export default function Home() {
                       >
                         <SquidMark direction="left" height={34} style={{ display: 'block' }} />
                       </span>
-                      <span style={{
+                      <span className="pp-back-label" style={{
                         fontFamily: 'var(--font-display)', fontWeight: 400,
                         fontSize: 'clamp(1.6rem, 2.4vw, 2.4rem)',
                         textTransform: 'uppercase', letterSpacing: '-0.01em',
