@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ContactSheet } from '@/components/ContactSheet';
 
@@ -12,30 +12,49 @@ const navLinks = [
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const isHome = pathname === '/';
   const [contactOpen, setContactOpen] = useState(false);
 
-  const handleNavClick = (e: React.MouseEvent, href: string) => {
-    // Only intercept in-page anchor links; real routes (e.g. /how-i-build)
-    // should navigate normally.
-    if (isHome && href.startsWith('/#')) {
-      e.preventDefault();
-      const id = href.replace('/#', '');
+  // Scroll the home page to a section by id. On the home page this is an
+  // in-place smooth scroll; from any other route we stash the target and
+  // navigate to '/', where the page reads it and scrolls on mount. We never
+  // push a '/#id' URL: Next's App Router remembers the last hash internally,
+  // so a repeated push would concatenate into '/#work#work'.
+  const goToSection = (id: string) => {
+    if (isHome) {
       const el = document.getElementById(id);
       const main = document.querySelector('main');
       if (el && main) {
-        const top = el.offsetTop - main.offsetTop;
-        main.scrollTo({ top, behavior: 'smooth' });
+        main.scrollTo({ top: el.offsetTop - main.offsetTop, behavior: 'smooth' });
       }
+      return;
     }
-    // If not home, the Link will navigate to /#about etc.
+    sessionStorage.setItem('homeScroll', id);
+    router.push('/');
+  };
+
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (!href.startsWith('/#')) return; // real routes navigate normally
+    e.preventDefault();
+    goToSection(href.replace('/#', ''));
   };
 
   const handleLogoClick = (e: React.MouseEvent) => {
-    if (isHome) {
-      e.preventDefault();
-      const main = document.querySelector('main');
-      main?.scrollTo({ top: 0, behavior: 'smooth' });
+    e.preventDefault();
+    // Off the home page: return home (top).
+    if (!isHome) {
+      sessionStorage.setItem('homeScroll', 'top');
+      router.push('/');
+      return;
+    }
+    // On the home page: scrolled down -> ride back to the top; already at
+    // the top -> dive into the squid page.
+    const main = document.querySelector('main');
+    if (main && main.scrollTop > 4) {
+      main.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      router.push('/squid');
     }
   };
 

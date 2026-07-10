@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import type { LifeEvent } from './LifeEventSheet';
 import { Footer } from './Footer';
@@ -15,6 +16,14 @@ const fadeUp = {
 };
 
 export function StoryPage({ event }: { event: LifeEvent }) {
+  const router = useRouter();
+  // Stash the target section and route to '/' instead of pushing '/#about'
+  // (Next stacks repeated hash pushes into '/#about#about').
+  const backToStory = (e: React.MouseEvent) => {
+    e.preventDefault();
+    sessionStorage.setItem('homeScroll', 'about');
+    router.push('/');
+  };
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)' }}>
       {/* Hero image */}
@@ -82,6 +91,7 @@ export function StoryPage({ event }: { event: LifeEvent }) {
         {/* Back link */}
         <Link
           href="/#about"
+          onClick={backToStory}
           style={{
             display: 'inline-flex',
             alignItems: 'center',

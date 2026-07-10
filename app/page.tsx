@@ -225,6 +225,37 @@ export default function Home() {
       main.scrollTo({ top, behavior: 'smooth' });
     }
   }, []);
+
+  // Landing intent: the header and the takeover pages stash where they want
+  // the home page to be (a section id, or 'top') and route to '/' rather
+  // than pushing a '/#id' URL (which Next stacks into '/#work#work'). Read
+  // it once on mount, jump there, and scrub any hash left in the URL.
+  useEffect(() => {
+    const target = sessionStorage.getItem('homeScroll');
+    if (!target) return;
+    sessionStorage.removeItem('homeScroll');
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    const jump = () => {
+      const main = mainRef.current;
+      if (!main) return;
+      if (target === 'top') {
+        main.scrollTo({ top: 0 });
+        return;
+      }
+      const el = document.getElementById(target);
+      if (el) main.scrollTo({ top: el.offsetTop - main.offsetTop });
+    };
+    // A few passes so the section lands in place even as above-the-fold
+    // content settles (and after Next's own scroll restoration). Timers are
+    // intentionally not cancelled on cleanup: React Strict Mode double-runs
+    // this effect, and the first run has already consumed the stashed value,
+    // so cancelling would leave nothing to re-schedule the scroll.
+    requestAnimationFrame(jump);
+    window.setTimeout(jump, 120);
+    window.setTimeout(jump, 320);
+  }, []);
   const [activePosterId, setActivePosterId] = useState(0);
   const storyCarouselRef = useRef<HTMLDivElement>(null);
   const [activeStoryId, setActiveStoryId] = useState(0);

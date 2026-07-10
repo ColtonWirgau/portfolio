@@ -25,13 +25,23 @@ export function useInkExit(href = '/#work') {
   const target = useRef(href);
 
   useEffect(() => {
-    router.prefetch(href);
+    router.prefetch(href.startsWith('/#') ? '/' : href);
   }, [router, href]);
 
   const go = useCallback(() => {
     if (navigated.current) return;
     navigated.current = true;
-    router.push(target.current);
+    const to = target.current;
+    // Never push a '/#id' URL: Next's App Router keeps the last hash in its
+    // internal state, so a repeated push stacks into '/#work#work'. Instead
+    // stash the section and land on '/', where the home page scrolls to it
+    // on mount and cleans the URL.
+    if (to.startsWith('/#')) {
+      if (typeof window !== 'undefined') sessionStorage.setItem('homeScroll', to.slice(2));
+      router.push('/');
+    } else {
+      router.push(to);
+    }
   }, [router]);
 
   const exitWithInk = useCallback(
