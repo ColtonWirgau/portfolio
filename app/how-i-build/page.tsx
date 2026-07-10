@@ -64,6 +64,16 @@ const SECTIONS: Section[] = [
     demos: ['cleanData'],
   },
   {
+    kicker: 'Content & the people in it',
+    heading: 'The best software still fails on bad content.',
+    lead: 'A product often lives or dies on what people put into it, not the code. So I treat content as part of what I build: set the guardrails, seed it with great examples, and stay close to the people filling it in.',
+    principles: [
+      { p: 'Set rules and limits.', d: 'Required fields, sane character limits, good defaults. Guardrails keep content consistent and usable without leaning on a style guide nobody reads.' },
+      { p: 'Talk to the people using it.', d: 'When something is being used in a way I didn’t intend, I ask about it instead of assuming. Half the time I find a feature I’m missing; the other half I can show a cleaner way. People make mistakes, and some are just better at a thing than others.' },
+    ],
+    demos: ['seed'],
+  },
+  {
     kicker: 'Where things belong',
     heading: 'I’d rather push a decision down than enforce it by hope.',
     lead: 'A lot of engineering is deciding which layer owns a problem. My rule: put each concern where it can’t be forgotten, and keep the layers above it dumb.',

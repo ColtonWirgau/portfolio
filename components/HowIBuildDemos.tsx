@@ -689,12 +689,48 @@ function SharedRuleDemo() {
   );
 }
 
+/* ── 14. Seed it well ──────────────────────────────────────────────── */
+
+function SeedDemo() {
+  const [seeded, setSeeded] = useState(true);
+  return (
+    <DemoFrame
+      label="Seed it well"
+      caption="A blank page is intimidating and quietly invites junk. Seed it with one great example and content people copy the shape without ever reading a manual."
+      control={<Segmented value={seeded ? 'seeded' : 'blank'} onChange={(v) => setSeeded(v === 'seeded')} options={[{ value: 'blank', label: 'Blank' }, { value: 'seeded', label: 'Seeded' }]} />}
+    >
+      <div style={{ minHeight: '190px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {seeded ? (
+          <>
+            <div style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '14px', background: PAPER }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '10px' }}>
+                <span style={{ fontSize: '14px', fontWeight: 700, color: FG }}>Summer Kickoff</span>
+                <span style={{ fontSize: '10px', fontWeight: 700, color: ACCENT, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Family</span>
+              </div>
+              <div style={{ fontSize: '10px', color: MUTED, margin: '3px 0 9px', letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 700 }}>Sat · Jun 14 · 5 PM</div>
+              <div style={{ fontSize: '13px', color: MUTED, lineHeight: 1.6 }}>Food, games, and a bounce house. Bring the whole crew and stay as long as you like.</div>
+            </div>
+            <div style={{ border: `1px dashed ${BORDER}`, borderRadius: '10px', padding: '13px 14px', color: MUTED, fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '18px', lineHeight: 0, color: ACCENT }}>+</span> Add another like this
+            </div>
+          </>
+        ) : (
+          <div style={{ flex: 1, border: `1px dashed ${BORDER}`, borderRadius: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px', color: MUTED, textAlign: 'center', padding: '24px' }}>
+            <div style={{ fontSize: '13px' }}>No events yet.</div>
+            <span style={{ ...ghostButton, opacity: 0.7 }}>New event</span>
+          </div>
+        )}
+      </div>
+    </DemoFrame>
+  );
+}
+
 /* ── Registry ──────────────────────────────────────────────────────── */
 
 export type DemoId =
   | 'optimistic' | 'wallOfText' | 'skeleton' | 'mobile' | 'motion'
   | 'typesEnforce' | 'validate' | 'cleanData' | 'cheapest' | 'cache'
-  | 'abstract' | 'monorepo' | 'sharedRule';
+  | 'abstract' | 'monorepo' | 'sharedRule' | 'seed';
 
 const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   optimistic: OptimisticDemo,
@@ -710,6 +746,7 @@ const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   abstract: AbstractDemo,
   monorepo: MonorepoDemo,
   sharedRule: SharedRuleDemo,
+  seed: SeedDemo,
 };
 
 export function HowIBuildDemo({ id }: { id: DemoId }) {
