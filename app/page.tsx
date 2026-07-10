@@ -994,7 +994,7 @@ export default function Home() {
                 How I build.
               </h2>
               <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1.05rem, 1.8vw, 1.4rem)', color: 'var(--color-muted)', lineHeight: 1.5, maxWidth: '520px', marginTop: '18px' }}>
-                The opinions and defaults behind everything above.
+                My opinions on what makes a product succeed.
               </p>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(22px, 4vw, 48px)' }}>
@@ -1037,21 +1037,10 @@ export default function Home() {
                 color: 'var(--color-fg)',
                 lineHeight: 1.6,
                 maxWidth: '1100px',
-                marginBottom: '20px',
               }}>
                 I{'\u2019'}ve always been interested in how things work, and how to{' '}
                 <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>make them work better</span>.
               </p>
-              <p style={{
-                fontSize: '15px',
-                fontWeight: 400,
-                color: 'var(--color-muted)',
-                lineHeight: 1.8,
-                maxWidth: '1100px',
-              }}>
-                I grew up in Algonac, Michigan, and was an IB student, football captain, track Hall of Famer. At the University of Detroit Mercy I studied software engineering and leadership, ran Division I track, and got published in AI research before the current wave existed. Then I landed at Woodside Bible Church, where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
-              </p>
-
             </div>
 
             {/* Decorative squid divider */}
