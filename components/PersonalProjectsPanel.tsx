@@ -436,59 +436,32 @@ function ScreenGallery({
   bg: string;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
 
-  const scrollBySlide = (dir: number) => {
+  // Track the slide closest to the track's center so the dots stay in
+  // sync as the user scrolls or swipes, matching the work/story carousels.
+  const handleScroll = () => {
     const el = trackRef.current;
     if (!el) return;
-    const slide = el.firstElementChild as HTMLElement | null;
-    const step = slide ? slide.getBoundingClientRect().width + 16 : el.clientWidth * 0.92;
-    el.scrollBy({ left: dir * step, behavior: 'smooth' });
-  };
-
-  const arrowButtonStyle: React.CSSProperties = {
-    width: '28px',
-    height: '28px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: '1px solid var(--color-border)',
-    background: 'transparent',
-    color: 'var(--color-muted)',
-    cursor: 'pointer',
-    transition: 'color 0.15s, border-color 0.15s',
+    const mid = el.getBoundingClientRect().left + el.clientWidth / 2;
+    let best = 0;
+    let bestDist = Infinity;
+    Array.from(el.children).forEach((child, i) => {
+      const r = (child as HTMLElement).getBoundingClientRect();
+      const dist = Math.abs(r.left + r.width / 2 - mid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    });
+    setActive(best);
   };
 
   return (
     <div className="screen-gallery" style={{ marginBottom: '28px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-        <span style={{ fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-muted)', fontWeight: 600 }}>
-          In the App
-        </span>
-        <div style={{ display: 'flex', gap: '6px' }}>
-          <button
-            type="button"
-            aria-label="Previous screenshot"
-            onClick={() => scrollBySlide(-1)}
-            style={arrowButtonStyle}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-fg)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
-          </button>
-          <button
-            type="button"
-            aria-label="Next screenshot"
-            onClick={() => scrollBySlide(1)}
-            style={arrowButtonStyle}
-            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-fg)')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M9 18l6-6-6-6" /></svg>
-          </button>
-        </div>
-      </div>
       <div
         ref={trackRef}
+        onScroll={handleScroll}
         style={{ display: 'flex', gap: '16px', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', margin: '0 -28px', padding: '0 28px' }}
       >
         {screens.map((screen) => (
@@ -517,12 +490,26 @@ function ScreenGallery({
                 style={{ aspectRatio: '1179 / 1977', border: '1px solid var(--color-border)', background: bg }}
               />
             )}
-            <figcaption style={{ fontSize: '11px', fontWeight: 500, color: 'var(--color-muted)', marginTop: '10px', lineHeight: 1.5 }}>
-              {screen.caption}
-            </figcaption>
           </figure>
         ))}
       </div>
+
+      {screens.length > 1 && (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', padding: '20px 0 0' }}>
+          {screens.map((screen, i) => (
+            <div
+              key={screen.desktop}
+              style={{
+                width: active === i ? '24px' : '8px',
+                height: '8px',
+                borderRadius: '100px',
+                background: active === i ? 'var(--color-fg)' : 'var(--color-border)',
+                transition: 'all 0.3s ease',
+              }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
