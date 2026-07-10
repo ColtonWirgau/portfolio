@@ -46,19 +46,23 @@ const ghostButton: React.CSSProperties = {
   background: 'transparent', border: `1px solid ${BORDER}`, color: MUTED,
 };
 
-/* Segmented toggle that reads like a switch: the active option fills. */
+/* Segmented toggle that reads like a switch. The whole control is one
+   button: a click anywhere on it advances to the next option. */
 function Segmented<T extends string>({ options, value, onChange }: { options: { value: T; label: string }[]; value: T; onChange: (v: T) => void }) {
+  const idx = options.findIndex((o) => o.value === value);
+  const next = options[(idx + 1) % options.length].value;
   return (
-    <div style={{ display: 'inline-flex', padding: '3px', borderRadius: '100px', border: `1px solid ${BORDER}`, background: PAPER }}>
+    <button
+      type="button"
+      onClick={() => onChange(next)}
+      style={{ display: 'inline-flex', padding: '3px', borderRadius: '100px', border: `1px solid ${BORDER}`, background: PAPER, cursor: 'pointer', fontFamily: 'inherit' }}
+    >
       {options.map((o) => {
         const active = o.value === value;
         return (
-          <button
+          <span
             key={o.value}
-            type="button"
-            onClick={() => onChange(o.value)}
             style={{
-              border: 'none', cursor: 'pointer', fontFamily: 'inherit',
               fontSize: '12px', fontWeight: 700, letterSpacing: '0.03em',
               padding: '7px 15px', borderRadius: '100px',
               background: active ? ACCENT : 'transparent',
@@ -67,10 +71,10 @@ function Segmented<T extends string>({ options, value, onChange }: { options: { 
             }}
           >
             {o.label}
-          </button>
+          </span>
         );
       })}
-    </div>
+    </button>
   );
 }
 
@@ -616,12 +620,68 @@ function MonorepoDemo() {
   );
 }
 
+/* ── 13. One rule, in one place ────────────────────────────────────── */
+
+const GROUP_APPS = ['Group finder · site', 'Group finder · app', 'Global search'];
+
+function SharedRuleDemo() {
+  const [mode, setMode] = useState<'copied' | 'shared'>('copied');
+  const [applied, setApplied] = useState(false);
+  const [fixed, setFixed] = useState([false, false, false]);
+
+  // Apply the "hide private groups" rule. Shared: every surface reads the
+  // one view, so all update. Copied: the finders get fixed and the global
+  // search quietly gets forgotten.
+  const apply = () => { setApplied(true); setFixed(mode === 'shared' ? [true, true, true] : [true, true, false]); };
+  const reset = () => { setApplied(false); setFixed([false, false, false]); };
+  const switchMode = (m: 'copied' | 'shared') => { setMode(m); setApplied(false); setFixed([false, false, false]); };
+
+  return (
+    <DemoFrame
+      label="One rule, in one place"
+      caption="Real example: a group finder on the site, another in the app, and a global search all showed groups, built by different people at different times. I fixed the finders to hide private groups but missed the global search, which kept leaking them for months until someone noticed. Push the rule down into a shared SQL view or stored proc (or a constraint) and one change covers everything that reads it."
+      control={<Segmented value={mode} onChange={switchMode} options={[{ value: 'copied', label: 'Copied per app' }, { value: 'shared', label: 'Shared in SQL' }]} />}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '16px', fontSize: '13px', color: FG }}>
+        <span>Rule: <strong>hide private groups</strong></span>
+        {mode === 'shared' && <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: ACCENT, border: `1px solid ${BORDER}`, borderRadius: '100px', padding: '3px 9px' }}>via v_public_groups</span>}
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
+        {GROUP_APPS.map((name, i) => {
+          const hidden = applied && fixed[i];
+          const leaking = applied && !fixed[i];
+          return (
+            <div key={name} style={{ border: `1px solid ${leaking ? RED : BORDER}`, borderRadius: '10px', padding: '12px', background: PAPER, transition: 'border-color 0.3s ease' }}>
+              <div style={{ fontSize: '12.5px', fontWeight: 700, color: FG }}>{name}</div>
+              <div style={{ fontSize: '11px', color: MUTED, margin: '5px 0 10px' }}>shows groups</div>
+              {hidden && (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, color: GREEN }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg> private hidden
+                </span>
+              )}
+              {leaking && (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, color: RED }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></svg> leaking private
+                </span>
+              )}
+              {!applied && <span style={{ fontSize: '11px', fontWeight: 600, color: MUTED }}>all groups visible</span>}
+            </div>
+          );
+        })}
+      </div>
+      {!applied
+        ? <button type="button" onClick={apply} style={pillButton}>Hide private groups</button>
+        : <button type="button" onClick={reset} style={ghostButton}>Reset</button>}
+    </DemoFrame>
+  );
+}
+
 /* ── Registry ──────────────────────────────────────────────────────── */
 
 export type DemoId =
   | 'optimistic' | 'wallOfText' | 'skeleton' | 'mobile' | 'motion'
   | 'typesEnforce' | 'validate' | 'cleanData' | 'cheapest' | 'cache'
-  | 'abstract' | 'monorepo';
+  | 'abstract' | 'monorepo' | 'sharedRule';
 
 const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   optimistic: OptimisticDemo,
@@ -636,6 +696,7 @@ const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   cache: CacheDemo,
   abstract: AbstractDemo,
   monorepo: MonorepoDemo,
+  sharedRule: SharedRuleDemo,
 };
 
 export function HowIBuildDemo({ id }: { id: DemoId }) {

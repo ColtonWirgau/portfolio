@@ -69,10 +69,10 @@ const SECTIONS: Section[] = [
     lead: 'A lot of engineering is deciding which layer owns a problem. My rule: put each concern where it can’t be forgotten, and keep the layers above it dumb.',
     principles: [
       { p: 'Validation at the edge, authorization at the boundary.', d: 'Bad input dies before it reaches logic; every protected route checks auth at the door, not three functions deep.' },
-      { p: 'Business rules in shared packages.', d: 'Anything cross-cutting lives in one typed place. Presentation stays thin and swappable.' },
       { p: 'Transform near the data.', d: 'Shaping happens close to where data comes from, not smeared across components that then disagree.' },
       { p: 'Cache close to the read, and only what you can invalidate.', d: 'A cache you can’t confidently bust is a future bug wearing a performance costume.' },
     ],
+    demos: ['sharedRule'],
   },
   {
     kicker: 'Performance & feel',
