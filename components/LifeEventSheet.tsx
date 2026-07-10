@@ -148,10 +148,10 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'Where I found my craft',
     storyPath: '/college',
     description:
-      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. College is where I fell in love with building things that people actually use. Not just writing code, but solving real problems. I also somehow ended up as the star of a UDM commercial: that\'s me in the stills, working a build session and out on a community cleanup.',
+      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. College is where I fell in love with building things that people actually use. Not just writing code, but solving real problems. I also somehow ended up as the star of a UDM commercial (lol).',
     mainBadges: [
       'BS Software Engineering',
-      'Minor in Leadership',
+      'Leadership Minor',
       'Graduated with honors',
     ],
     highlights: [
@@ -238,11 +238,10 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-ssc-it',
         title: 'Student Success Center: Tutor to IT Coordinator',
         description:
-          'I started as a tutor. The center was operationally living in the stone age, and fixing that got me promoted into IT: an automated platform tied to university ID scan cards replaced their paper timecards and appointment tracking. I still tutored here and there, but mostly I was integrating and managing systems, and after graduation they hired me back to roll a new system out across three more departments.',
+          'I started as a tutor and moved into IT after building the center an automated platform, tied to student ID cards, that replaced its paper timecards and appointment tracking. After graduation they brought me back to extend it to three more departments.',
         badges: [
           'Most-requested tutor',
           'Promoted to IT Coordinator',
-          '2015 to 2018',
         ],
         images: [
           '/images/udm-learning-center.webp',
@@ -552,18 +551,30 @@ function MainPageContent({ event }: { event: LifeEvent }) {
   const hasIntro = Boolean(event.description || (event.mainPhotos && event.mainPhotos.length > 0) || event.pullQuote);
   return (
     <div style={{ padding: '28px 32px 32px' }}>
-      {/* Description */}
-      {event.description && (
-        <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
-          {event.description}
-        </p>
-      )}
-      {event.mainBadges && event.mainBadges.length > 0 && <BadgeRow badges={event.mainBadges} />}
-
-      {/* Lead photos */}
-      {event.mainPhotos && event.mainPhotos.length > 0 && (
-        <div style={{ marginTop: '16px' }}>
-          <PhotoCluster photos={event.mainPhotos} />
+      {/* Intro: text (and pills) on the right, lead photos on the left */}
+      {(event.description || (event.mainBadges && event.mainBadges.length > 0) || (event.mainPhotos && event.mainPhotos.length > 0)) && (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row-reverse',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            gap: '12px 36px',
+          }}
+        >
+          <div style={{ flex: '1 1 340px', minWidth: '260px' }}>
+            {event.description && (
+              <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+                {event.description}
+              </p>
+            )}
+            {event.mainBadges && event.mainBadges.length > 0 && <BadgeRow badges={event.mainBadges} />}
+          </div>
+          {event.mainPhotos && event.mainPhotos.length > 0 && (
+            <div style={{ flex: '1 1 320px', minWidth: '280px', display: 'flex', justifyContent: 'center' }}>
+              <PhotoCluster photos={event.mainPhotos} />
+            </div>
+          )}
         </div>
       )}
 
