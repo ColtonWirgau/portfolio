@@ -216,6 +216,7 @@ export function ResponsiveSheet({
   const [history, setHistory] = useState<string[]>([defaultPage]);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   // Drag state for mobile sheet
   const dragAreaRef = useRef<HTMLDivElement>(null);
@@ -243,6 +244,21 @@ export function ResponsiveSheet({
       document.body.style.left = '0';
       document.body.style.right = '0';
 
+      // Some pages scroll inside an inner container (e.g. the homepage's
+      // <main>) rather than the body, so wheel/touch events the sheet
+      // can't consume would still scroll the page underneath. Lock any
+      // scrollable ancestors too; overflow:hidden preserves scrollTop.
+      const lockedAncestors: Array<[HTMLElement, string]> = [];
+      let ancestor = rootRef.current?.parentElement ?? null;
+      while (ancestor && ancestor !== document.body) {
+        const { overflowY } = getComputedStyle(ancestor);
+        if ((overflowY === 'auto' || overflowY === 'scroll') && ancestor.scrollHeight > ancestor.clientHeight) {
+          lockedAncestors.push([ancestor, ancestor.style.overflowY]);
+          ancestor.style.overflowY = 'hidden';
+        }
+        ancestor = ancestor.parentElement;
+      }
+
       return () => {
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
@@ -251,6 +267,9 @@ export function ResponsiveSheet({
         document.body.style.left = '';
         document.body.style.right = '';
         window.scrollTo(0, scrollY);
+        lockedAncestors.forEach(([node, prev]) => {
+          node.style.overflowY = prev;
+        });
       };
     }
   }, [open]);
@@ -447,6 +466,7 @@ export function ResponsiveSheet({
     return (
       <ResponsiveSheetContext.Provider value={contextValue}>
         <div
+          ref={rootRef}
           className={`fixed inset-0 z-[60] transition-opacity duration-300 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
         >
           {/* Backdrop */}
@@ -496,7 +516,7 @@ export function ResponsiveSheet({
     <ResponsiveSheetContext.Provider value={contextValue}>
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div ref={rootRef} className="fixed inset-0 z-50 flex items-center justify-center">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

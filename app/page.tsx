@@ -271,12 +271,12 @@ export default function Home() {
   return (
     <div className="h-screen bg-bg overflow-hidden relative">
       {/* ── Main content ── single scrollable area */}
-      <main ref={mainRef} className="h-full overflow-y-auto relative" style={{ paddingBottom: '0' }}>
+      <main ref={mainRef} className="h-full overflow-y-auto overflow-x-hidden relative" style={{ paddingBottom: '0' }}>
         {/* Hero section */}
-        <section className="h-screen flex items-stretch" style={{ padding: '0 24px' }}>
+        <section className="min-h-dvh md:h-screen flex items-stretch" style={{ padding: '0 24px' }}>
           <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" padTop="64px" padBottom="5dvh" />
           <div className="flex-1 flex items-center">
-          <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6">
+          <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6 max-md:pt-20 max-md:pb-8">
             {/* Text side */}
             <div className="flex-1 flex flex-col justify-center gap-6 min-w-0">
               <div className="z-10">
@@ -284,7 +284,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.8 }}
-                  className="text-[clamp(8rem,16vw,16rem)] leading-[0.85] tracking-[-0.04em] mb-5 uppercase"
+                  className="text-[clamp(8rem,16vw,16rem)] max-md:text-[clamp(5rem,24vw,8rem)] leading-[0.85] tracking-[-0.04em] mb-5 uppercase"
                   style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
                 >
                   Hello
@@ -411,8 +411,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="w-[50%] max-md:w-full max-md:h-[50vh] shrink-0"
-              style={{ height: '90dvh' }}
+              className="w-[50%] max-md:w-full max-md:h-[50vh] md:h-[90dvh] shrink-0"
             >
               <img
                 src="/Portfoliov1.jpg"
@@ -431,6 +430,7 @@ export default function Home() {
             viewBox="0 0 341.34 852.51"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
+            className="max-md:hidden"
             style={{
               position: 'absolute',
               left: '15%',

@@ -13,10 +13,15 @@
   --color-accent: #D94420;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Layered so Tailwind utilities (also layered) can override it; Tailwind's
+   preflight already applies this same reset. Left unlayered, this beat
+   every padding/margin utility on the site. */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html {

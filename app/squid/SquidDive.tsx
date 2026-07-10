@@ -169,11 +169,8 @@ function DepthMeter({ depth }: { depth: number }) {
   return (
     <div
       aria-hidden="true"
+      className="fixed right-[18px] top-1/2 -translate-y-1/2 max-md:top-auto max-md:bottom-[68px] max-md:translate-y-0"
       style={{
-        position: 'fixed',
-        right: '18px',
-        top: '50%',
-        transform: 'translateY(-50%)',
         zIndex: 400,
         textAlign: 'right',
         pointerEvents: 'none',
