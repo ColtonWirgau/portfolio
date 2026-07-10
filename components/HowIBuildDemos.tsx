@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 /* Interactive demos for the How I Build page. The page argues against
@@ -49,6 +49,7 @@ const ghostButton: React.CSSProperties = {
 /* Segmented toggle that reads like a switch. The whole control is one
    button: a click anywhere on it advances to the next option. */
 function Segmented<T extends string>({ options, value, onChange }: { options: { value: T; label: string }[]; value: T; onChange: (v: T) => void }) {
+  const uid = useId();
   const idx = options.findIndex((o) => o.value === value);
   const next = options[(idx + 1) % options.length].value;
   return (
@@ -63,13 +64,20 @@ function Segmented<T extends string>({ options, value, onChange }: { options: { 
           <span
             key={o.value}
             style={{
+              position: 'relative',
               fontSize: '12px', fontWeight: 700, letterSpacing: '0.03em',
               padding: '7px 15px', borderRadius: '100px',
-              background: active ? ACCENT : 'transparent',
               color: active ? PAPER : MUTED,
-              transition: 'background 0.2s ease, color 0.2s ease',
+              transition: 'color 0.2s ease',
             }}
           >
+            {active && (
+              <motion.span
+                layoutId={`seg-${uid}`}
+                transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                style={{ position: 'absolute', inset: 0, background: ACCENT, borderRadius: '100px', zIndex: -1 }}
+              />
+            )}
             {o.label}
           </span>
         );
@@ -94,12 +102,12 @@ function useTimers() {
 
 /* ── 1. Optimistic UI ──────────────────────────────────────────────── */
 
-const ROSTER = ['Ja’Marr Chase', 'Puka Nacua', 'Jahmyr Gibbs', 'Sam LaPorta', 'CeeDee Lamb', 'Breece Hall'];
-type OptStatus = 'pending' | 'confirmed' | 'settled';
+const TOPPINGS = ['Pepperoni', 'Mushrooms', 'Extra cheese', 'Jalapeños', 'Pineapple', 'Red onion'];
+type OptStatus = 'pending' | 'confirmed' | 'settled' | 'deleting';
 
 function OptimisticDemo() {
   const [items, setItems] = useState<{ id: number; name: string; status: OptStatus }[]>([
-    { id: 0, name: 'Bijan Robinson', status: 'settled' },
+    { id: 0, name: 'Fresh mozzarella', status: 'settled' },
   ]);
   const next = useRef(1);
   const after = useTimers();
@@ -107,12 +115,15 @@ function OptimisticDemo() {
 
   const add = () => {
     const id = next.current++;
-    const name = ROSTER[(id - 1) % ROSTER.length];
+    const name = TOPPINGS[(id - 1) % TOPPINGS.length];
     setItems((prev) => [...prev, { id, name, status: 'pending' }]);
     after(() => setStatus(id, 'confirmed'), 900);   // server says 200
     after(() => setStatus(id, 'settled'), 2000);    // success flourish fades
   };
-  const remove = (id: number) => setItems((prev) => prev.filter((i) => i.id !== id));
+  const remove = (id: number) => {
+    setStatus(id, 'deleting');                                    // optimistic, but not instant: show it going
+    after(() => setItems((prev) => prev.filter((i) => i.id !== id)), 800);  // then poof once the server confirms
+  };
 
   return (
     <DemoFrame label="Snappy by default: optimistic UI" caption="The row lands the instant you click, in a pending state, then settles once the server answers 200. The check is a quick flourish, not a permanent badge. Delete is optimistic too. If a write failed, it would roll back.">
@@ -123,7 +134,7 @@ function OptimisticDemo() {
               key={i.id}
               layout
               initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: i.status === 'pending' ? 0.55 : 1, y: 0 }}
+              animate={{ opacity: i.status === 'pending' || i.status === 'deleting' ? 0.55 : 1, y: 0 }}
               exit={{ opacity: 0, height: 0, marginTop: -8, transition: { duration: 0.2 } }}
               transition={{ duration: 0.25 }}
               style={{
@@ -133,23 +144,25 @@ function OptimisticDemo() {
             >
               <span style={{ fontSize: '14px', fontWeight: 600, color: FG }}>{i.name}</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                {i.status === 'pending' && <Spinner />}
+                {(i.status === 'pending' || i.status === 'deleting') && <Spinner />}
                 {i.status === 'confirmed' && (
                   <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={{ type: 'spring', stiffness: 500, damping: 18 }} style={{ color: GREEN, display: 'inline-flex' }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
                   </motion.span>
                 )}
-                <button type="button" onClick={() => remove(i.id)} aria-label={`Remove ${i.name}`}
-                  style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: MUTED, display: 'inline-flex', padding: 0, lineHeight: 0 }}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
-                </button>
+                {i.status !== 'deleting' && (
+                  <button type="button" onClick={() => remove(i.id)} aria-label={`Remove ${i.name}`}
+                    style={{ border: 'none', background: 'transparent', cursor: 'pointer', color: MUTED, display: 'inline-flex', padding: 0, lineHeight: 0 }}>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+                  </button>
+                )}
               </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
       <button type="button" onClick={add} disabled={items.length >= 6} style={{ ...pillButton, opacity: items.length >= 6 ? 0.5 : 1, cursor: items.length >= 6 ? 'default' : 'pointer' }}>
-        Add to trade
+        Add topping
       </button>
     </DemoFrame>
   );
@@ -166,10 +179,10 @@ function InfoIcon({ path }: { path: string }) {
 }
 
 const CLEAN_ROWS = [
-  { icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', label: 'Sundays', value: '9:00 & 11:00 AM' },
-  { icon: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>', label: 'Location', value: '2400 S Baldwin Rd' },
-  { icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/>', label: 'Childcare', value: 'Ages 0 to 5' },
-  { icon: '<path d="M14 16H9m10 0h3v-3.34a4 4 0 0 0-.9-2.52L18 7h-4"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/>', label: 'Parking', value: 'Free, north & east lots' },
+  { icon: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', label: 'Hours', value: 'Tue to Sun, 4 to 10 PM' },
+  { icon: '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>', label: 'Where', value: '88 Main Street' },
+  { icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/>', label: 'Seating', value: 'Dine-in or carry-out' },
+  { icon: '<path d="M14 16H9m10 0h3v-3.34a4 4 0 0 0-.9-2.52L18 7h-4"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/>', label: 'Parking', value: 'Free lot out back' },
 ];
 
 function WallOfTextDemo() {
@@ -183,7 +196,7 @@ function WallOfTextDemo() {
       <div style={{ minHeight: '188px' }}>
         {view === 'glance' ? (
           <div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: FG, textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: '16px' }}>Lake Orion</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: FG, textTransform: 'uppercase', letterSpacing: '-0.01em', marginBottom: '16px' }}>Tony&apos;s Pizza</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               {CLEAN_ROWS.map((r) => (
                 <div key={r.label} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
@@ -198,7 +211,7 @@ function WallOfTextDemo() {
           </div>
         ) : (
           <p style={{ fontSize: '13px', lineHeight: 1.7, color: MUTED }}>
-            The Lake Orion campus gathers on Sunday mornings at 9:00 AM and again at 11:00 AM at our building located at 2400 South Baldwin Road, and free parking is available in both the north and east lots for all attendees, and childcare is offered throughout both services for children ranging in age from zero through five years old, and if you have any questions the campus office is generally staffed during the week and can be reached by phone or email during normal business hours.
+            Tony&apos;s Pizza is open Tuesday through Sunday from 4:00 PM until 10:00 PM at 88 Main Street, and we offer both dine-in seating and carry-out for all of our guests, and there is a free parking lot located directly behind the building, and if you would like to place an order ahead of time the kitchen phone is answered throughout all of our open hours every day of the week that we are open.
           </p>
         )}
       </div>
@@ -208,10 +221,10 @@ function WallOfTextDemo() {
 
 /* ── 3. Mobile is not a smaller desktop ────────────────────────────── */
 
-const GAMES = [
-  { wk: 'Wk 11', opp: 'vs CHI', net: '+$180' },
-  { wk: 'Wk 13', opp: 'vs GB', net: '+$540' },
-  { wk: 'Wk 15', opp: 'vs DEN', net: '-$60' },
+const MOVIES = [
+  { title: 'Dune: Part Two', genre: 'Sci-fi', rating: '★★★★' },
+  { title: 'The Holdovers', genre: 'Comedy', rating: '★★★' },
+  { title: 'Poor Things', genre: 'Drama', rating: '★★★★' },
 ];
 
 function MobileDemo() {
@@ -226,13 +239,13 @@ function MobileDemo() {
         {device === 'desktop' ? (
           <div style={{ width: '100%', border: `1px solid ${BORDER}`, borderRadius: '10px', overflow: 'hidden', background: PAPER }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, borderBottom: `1px solid ${BORDER}` }}>
-              {['Game', 'Matchup', 'Net'].map((h) => <div key={h} style={{ padding: '10px 14px' }}>{h}</div>)}
+              {['Title', 'Genre', 'Rating'].map((h) => <div key={h} style={{ padding: '10px 14px' }}>{h}</div>)}
             </div>
-            {GAMES.map((g) => (
-              <div key={g.wk} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', fontSize: '14px', color: FG, borderBottom: `1px solid ${BORDER}` }}>
-                <div style={{ padding: '12px 14px', fontWeight: 600 }}>{g.wk}</div>
-                <div style={{ padding: '12px 14px' }}>{g.opp}</div>
-                <div style={{ padding: '12px 14px', fontWeight: 700 }}>{g.net}</div>
+            {MOVIES.map((m) => (
+              <div key={m.title} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', fontSize: '14px', color: FG, borderBottom: `1px solid ${BORDER}` }}>
+                <div style={{ padding: '12px 14px', fontWeight: 600 }}>{m.title}</div>
+                <div style={{ padding: '12px 14px' }}>{m.genre}</div>
+                <div style={{ padding: '12px 14px', fontWeight: 700, color: ACCENT }}>{m.rating}</div>
               </div>
             ))}
           </div>
@@ -240,13 +253,13 @@ function MobileDemo() {
           <div style={{ width: '210px', border: `1px solid ${BORDER}`, borderRadius: '22px', padding: '14px 12px', background: PAPER }}>
             <div style={{ width: '38px', height: '4px', borderRadius: '100px', background: BORDER, margin: '0 auto 12px' }} />
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {GAMES.map((g) => (
-                <div key={g.wk} style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '12px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                    <span style={{ fontSize: '14px', fontWeight: 700, color: FG }}>{g.wk}</span>
-                    <span style={{ fontSize: '13px', fontWeight: 700, color: ACCENT }}>{g.net}</span>
+              {MOVIES.map((m) => (
+                <div key={m.title} style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '12px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: '8px' }}>
+                    <span style={{ fontSize: '14px', fontWeight: 700, color: FG }}>{m.title}</span>
+                    <span style={{ fontSize: '13px', fontWeight: 700, color: ACCENT, flexShrink: 0 }}>{m.rating}</span>
                   </div>
-                  <div style={{ fontSize: '12px', color: MUTED, marginTop: '2px' }}>{g.opp}</div>
+                  <div style={{ fontSize: '12px', color: MUTED, marginTop: '2px' }}>{m.genre}</div>
                 </div>
               ))}
             </div>
@@ -259,7 +272,7 @@ function MobileDemo() {
 
 /* ── 4. Motion should mean something ───────────────────────────────── */
 
-const MOTION_ITEMS = ['Trade offer · Team 3', 'Waiver claim · Puka', 'League message'];
+const MOTION_ITEMS = ['Newsletter · weekly digest', 'Coupon · 20% off', 'Reminder · dentist at 3'];
 
 function MotionDemo() {
   const [mode, setMode] = useState<'meaningful' | 'decorative'>('meaningful');
@@ -304,9 +317,9 @@ function MotionDemo() {
 /* ── 5. Static first + skeletons ───────────────────────────────────── */
 
 const STATS = [
-  { label: 'Net position', value: '+$1,240' },
-  { label: 'Seats sold', value: '18 / 24' },
-  { label: 'Next game', value: 'Wk 13 · Thu' },
+  { label: 'Steps', value: '8,420' },
+  { label: 'Miles', value: '3.7' },
+  { label: 'Streak', value: '12 days' },
 ];
 
 function SkeletonDemo() {
@@ -317,8 +330,8 @@ function SkeletonDemo() {
     <DemoFrame label="Show the static parts first" caption="The shell and labels are instant; only the data waits, streaming into skeletons. Nobody stares at a blank screen. Hit reload.">
       <div style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', overflow: 'hidden', background: PAPER, marginBottom: '18px' }}>
         <div style={{ padding: '16px 18px', borderBottom: `1px solid ${BORDER}` }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: FG, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>Season Dashboard</div>
-          <div style={{ fontSize: '11px', color: MUTED, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Roar Tracker</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: FG, textTransform: 'uppercase', letterSpacing: '-0.01em' }}>Today&apos;s Activity</div>
+          <div style={{ fontSize: '11px', color: MUTED, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Step Tracker</div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
           {STATS.map((s, i) => (
@@ -349,8 +362,8 @@ function TypesDemo() {
       control={<Segmented value={withUser ? 'with' : 'without'} onChange={(v) => setWithUser(v === 'with')} options={[{ value: 'without', label: 'Without userId' }, { value: 'with', label: 'With userId' }]} />}
     >
       <pre style={{ margin: 0, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12.5px', lineHeight: 1.7, color: FG, background: PAPER, border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '16px 18px', overflowX: 'auto' }}>
-{`await mp.contacts.update(id, {
-  status: 'Active',`}
+{`await db.orders.update(id, {
+  status: 'shipped',`}
         {withUser
           ? <span style={{ color: GREEN }}>{`
   userId: session.userId,`}</span>
@@ -361,7 +374,7 @@ function TypesDemo() {
       </pre>
       <div style={{ marginTop: '14px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600, color: withUser ? GREEN : RED }}>
         {withUser ? (
-          <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg> Compiles. Write logged to the Domain_User audit table.</>
+          <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg> Compiles. Write recorded in the audit log.</>
         ) : (
           <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg> Type error: property &apos;userId&apos; is required. Won&apos;t compile.</>
         )}
@@ -373,13 +386,13 @@ function TypesDemo() {
 /* ── 7. Validate at the boundary ───────────────────────────────────── */
 
 function ValidateDemo() {
-  const [val, setVal] = useState('250');
+  const [val, setVal] = useState('20');
   const num = Number(val);
-  const valid = val.trim() !== '' && Number.isFinite(num) && num > 0 && num <= 100000;
-  const reason = val.trim() === '' ? 'required' : !Number.isFinite(num) ? 'not a number' : num <= 0 ? 'must be positive' : num > 100000 ? 'over the limit' : '';
+  const valid = val.trim() !== '' && Number.isFinite(num) && num > 0 && num <= 1000;
+  const reason = val.trim() === '' ? 'required' : !Number.isFinite(num) ? 'not a number' : num <= 0 ? 'must be positive' : num > 1000 ? 'over the limit' : '';
   return (
     <DemoFrame label="Validate at the boundary" caption="Bad data dies at the door, checked by a schema before it reaches any logic. The rest of the system only ever sees values it can trust.">
-      <label style={{ display: 'block', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>Gift amount (USD)</label>
+      <label style={{ display: 'block', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>Tip amount (USD)</label>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', alignItems: 'center', border: `1px solid ${valid ? GREEN : RED}`, borderRadius: '8px', padding: '0 12px', background: PAPER, transition: 'border-color 0.2s ease' }}>
           <span style={{ color: MUTED, fontSize: '15px' }}>$</span>
@@ -406,11 +419,11 @@ function ValidateDemo() {
 /* ── 8. Clean data is a feature ────────────────────────────────────── */
 
 const CONTACTS = [
-  { id: 0, name: 'Jim Dahlke', email: 'jim.dahlke@…', dup: false },
-  { id: 1, name: 'James Dahlke', email: 'jim.dahlke@…', dup: true },
-  { id: 2, name: 'Jim  Dahlke', email: 'jdahlke@…', dup: true },
-  { id: 3, name: 'Sarah Lee', email: 'sarah.lee@…', dup: false },
-  { id: 4, name: 'Sarah Lee', email: 'sarah.lee@…', dup: true },
+  { id: 0, name: 'Alex Rivera', email: 'alex.rivera@…', dup: false },
+  { id: 1, name: 'Alex Rivera', email: 'a.rivera@…', dup: true },
+  { id: 2, name: 'Alex  Rivera', email: 'alex.rivera@…', dup: true },
+  { id: 3, name: 'Jordan Kim', email: 'jordan.kim@…', dup: false },
+  { id: 4, name: 'Jordan Kim', email: 'jordan.kim@…', dup: true },
 ];
 
 function CleanDataDemo() {
@@ -419,7 +432,7 @@ function CleanDataDemo() {
   const clean = () => setRows((prev) => prev.filter((r) => !r.dup));
   const reset = () => setRows(CONTACTS);
   return (
-    <DemoFrame label="Clean data is a feature" caption="Reports are only as honest as the data under them. I once deactivated roughly two-thirds of a database, matching and merging duplicate people, so the numbers leadership acts on could be trusted.">
+    <DemoFrame label="Clean data is a feature" caption="Reports are only as honest as the data under them. Duplicate and stale records quietly skew every count until someone matches and merges them into one trustworthy record.">
       <div style={{ display: 'flex', gap: '18px', fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 700, color: MUTED, marginBottom: '14px' }}>
         <span>Records: <span style={{ color: FG }}>{rows.length}</span></span>
         <span>Duplicates: <span style={{ color: dupCount ? RED : GREEN }}>{dupCount}</span></span>
@@ -448,8 +461,8 @@ function CleanDataDemo() {
 /* ── 9. Do the work where it's cheapest ────────────────────────────── */
 
 const PIPELINES = {
-  browser: { steps: ['Fetch players', 'Fetch valuations', 'Fetch matchups', 'Stitch in JS', 'Render'], trips: 3, per: 260 },
-  db: { steps: ['Call proc (nested JSON)', 'Render'], trips: 1, per: 260 },
+  browser: { steps: ['Fetch products', 'Fetch prices', 'Fetch reviews', 'Stitch in JS', 'Render'], trips: 3, per: 260 },
+  db: { steps: ['Call view (nested JSON)', 'Render'], trips: 1, per: 260 },
 };
 
 function CheapestDemo() {
@@ -520,12 +533,12 @@ function CacheDemo() {
     <DemoFrame label="Cache the stable, and trust it" caption="Compute the stable stuff once; repeat views are free. A cache you cannot confidently invalidate never gets built, which is what the clear button is for.">
       <div style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '18px', background: PAPER, marginBottom: '16px', minHeight: '96px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         {loading ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: MUTED, fontSize: '13px' }}><Spinner /> Computing season report… (cold)</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: MUTED, fontSize: '13px' }}><Spinner /> Crunching the leaderboard… (cold)</div>
         ) : ms === null ? (
-          <div style={{ color: MUTED, fontSize: '13px' }}>Report not loaded.</div>
+          <div style={{ color: MUTED, fontSize: '13px' }}>Leaderboard not loaded.</div>
         ) : (
           <div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', color: FG }}>+$1,240 net</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', color: FG }}>You&apos;re #4 of 128</div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', marginTop: '8px', fontSize: '12px', fontWeight: 700, color: ms === 0 ? GREEN : MUTED }}>
               {ms === 0
                 ? <span style={{ padding: '3px 10px', borderRadius: '100px', background: 'rgba(63,143,82,0.14)', color: GREEN, letterSpacing: '0.05em', textTransform: 'uppercase', fontSize: '10px' }}>Cache hit · instant</span>
@@ -547,8 +560,8 @@ function CacheDemo() {
 function StatCard({ shared }: { shared?: boolean }) {
   return (
     <div style={{ flex: 1, minWidth: '90px', border: `1px solid ${shared ? ACCENT : BORDER}`, borderRadius: '10px', padding: '14px', background: PAPER, textAlign: 'center' }}>
-      <div style={{ fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: MUTED, fontWeight: 700 }}>Seats</div>
-      <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: FG }}>24</div>
+      <div style={{ fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: MUTED, fontWeight: 700 }}>Likes</div>
+      <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: FG }}>128</div>
       {shared && <div style={{ fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT, fontWeight: 700, marginTop: '6px' }}>Shared component</div>}
     </div>
   );
@@ -557,7 +570,7 @@ function StatCard({ shared }: { shared?: boolean }) {
 function AbstractDemo() {
   const [extracted, setExtracted] = useState(false);
   return (
-    <DemoFrame label="Abstract on the third copy, not the first" caption="I let duplication sit until the pattern is real, usually the third copy, then extract it. Abstracting too early guesses at a shape you do not have yet, and a wrong abstraction is harder to undo than a little repetition.">
+    <DemoFrame label="Abstract on the third copy, not the first" caption="I let duplication sit until the pattern is real, usually around the third copy, then extract it. Abstracting too early guesses at a shape you don’t have yet, and once you’re rolling it’s easy to over-abstract everything. So while I build something new I keep the question in the back of my mind: would this be useful elsewhere, or belong in another project? Once it’s dialed in and the answer is clearly yes, I pull it out.">
       <div style={{ minHeight: '120px', display: 'flex', alignItems: 'center' }}>
         {!extracted ? (
           <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
@@ -581,7 +594,7 @@ function AbstractDemo() {
 
 /* ── 12. Monorepo, by default ──────────────────────────────────────── */
 
-const CLIENTS = ['Woodside', 'Granger', 'McLean'];
+const CLIENTS = ['Web app', 'Mobile app', 'Admin panel'];
 
 function MonorepoDemo() {
   const [fixed, setFixed] = useState<boolean[]>([false, false, false]);
@@ -592,17 +605,17 @@ function MonorepoDemo() {
   };
   const reset = () => setFixed([false, false, false]);
   return (
-    <DemoFrame label="Monorepo, by default" caption="One canonical template. Each church forks it into its own repo, Vercel project, and database, so they own their stack. A fix in a shared package backports to every client without anyone losing that independence.">
+    <DemoFrame label="Monorepo, by default" caption="One workspace, shared packages, and each app deploying on its own. Fix a bug once in the shared code and every app that depends on it gets the fix, without a round of copy-paste across repos that always misses one.">
       <div style={{ border: `1px solid ${allFixed ? GREEN : ACCENT}`, borderRadius: '10px', padding: '12px 14px', background: PAPER, marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '10px', transition: 'border-color 0.3s ease' }}>
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke={allFixed ? GREEN : ACCENT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6" /></svg>
-        <span style={{ fontSize: '13px', fontWeight: 700, color: FG }}>@church/ministry-platform</span>
+        <span style={{ fontSize: '13px', fontWeight: 700, color: FG }}>@acme/core</span>
         <span style={{ fontSize: '11px', color: allFixed ? GREEN : MUTED, marginLeft: 'auto' }}>{allFixed ? 'patched' : 'shared package'}</span>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
         {CLIENTS.map((c, i) => (
           <div key={c} style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '12px', textAlign: 'center', background: PAPER }}>
             <div style={{ fontSize: '13px', fontWeight: 700, color: FG }}>{c}</div>
-            <div style={{ fontSize: '10px', color: MUTED, letterSpacing: '0.06em', textTransform: 'uppercase', margin: '3px 0 10px' }}>own repo &amp; db</div>
+            <div style={{ fontSize: '10px', color: MUTED, letterSpacing: '0.06em', textTransform: 'uppercase', margin: '3px 0 10px' }}>own deploy</div>
             <div style={{ height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {fixed[i]
                 ? <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 480, damping: 18 }} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: GREEN, fontSize: '11px', fontWeight: 700 }}>
@@ -622,16 +635,16 @@ function MonorepoDemo() {
 
 /* ── 13. One rule, in one place ────────────────────────────────────── */
 
-const GROUP_APPS = ['Group finder · site', 'Group finder · app', 'Global search'];
+const SURFACES = ['Homepage', 'Search', 'Category page'];
 
 function SharedRuleDemo() {
   const [mode, setMode] = useState<'copied' | 'shared'>('copied');
   const [applied, setApplied] = useState(false);
   const [fixed, setFixed] = useState([false, false, false]);
 
-  // Apply the "hide private groups" rule. Shared: every surface reads the
-  // one view, so all update. Copied: the finders get fixed and the global
-  // search quietly gets forgotten.
+  // Apply the "hide sold-out items" rule. Shared: every surface reads the
+  // one view, so all update. Copied: two surfaces get fixed and the third
+  // quietly gets forgotten.
   const apply = () => { setApplied(true); setFixed(mode === 'shared' ? [true, true, true] : [true, true, false]); };
   const reset = () => { setApplied(false); setFixed([false, false, false]); };
   const switchMode = (m: 'copied' | 'shared') => { setMode(m); setApplied(false); setFixed([false, false, false]); };
@@ -639,38 +652,38 @@ function SharedRuleDemo() {
   return (
     <DemoFrame
       label="One rule, in one place"
-      caption="Real example: a group finder on the site, another in the app, and a global search all showed groups, built by different people at different times. I fixed the finders to hide private groups but missed the global search, which kept leaking them for months until someone noticed. Push the rule down into a shared SQL view or stored proc (or a constraint) and one change covers everything that reads it."
+      caption="Picture a storefront where the homepage, search, and category pages all list products, each built by a different person. Add a 'hide sold-out' filter to two of them but miss the third, and it keeps showing sold-out items for months until someone notices. Push the rule down into one shared SQL view, stored proc, or constraint and every screen obeys it."
       control={<Segmented value={mode} onChange={switchMode} options={[{ value: 'copied', label: 'Copied per app' }, { value: 'shared', label: 'Shared in SQL' }]} />}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '16px', fontSize: '13px', color: FG }}>
-        <span>Rule: <strong>hide private groups</strong></span>
-        {mode === 'shared' && <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: ACCENT, border: `1px solid ${BORDER}`, borderRadius: '100px', padding: '3px 9px' }}>via v_public_groups</span>}
+        <span>Rule: <strong>hide sold-out items</strong></span>
+        {mode === 'shared' && <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: ACCENT, border: `1px solid ${BORDER}`, borderRadius: '100px', padding: '3px 9px' }}>via v_in_stock</span>}
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
-        {GROUP_APPS.map((name, i) => {
+        {SURFACES.map((name, i) => {
           const hidden = applied && fixed[i];
           const leaking = applied && !fixed[i];
           return (
             <div key={name} style={{ border: `1px solid ${leaking ? RED : BORDER}`, borderRadius: '10px', padding: '12px', background: PAPER, transition: 'border-color 0.3s ease' }}>
               <div style={{ fontSize: '12.5px', fontWeight: 700, color: FG }}>{name}</div>
-              <div style={{ fontSize: '11px', color: MUTED, margin: '5px 0 10px' }}>shows groups</div>
+              <div style={{ fontSize: '11px', color: MUTED, margin: '5px 0 10px' }}>lists products</div>
               {hidden && (
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, color: GREEN }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg> private hidden
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg> sold-out hidden
                 </span>
               )}
               {leaking && (
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, color: RED }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></svg> leaking private
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></svg> showing sold out
                 </span>
               )}
-              {!applied && <span style={{ fontSize: '11px', fontWeight: 600, color: MUTED }}>all groups visible</span>}
+              {!applied && <span style={{ fontSize: '11px', fontWeight: 600, color: MUTED }}>all items shown</span>}
             </div>
           );
         })}
       </div>
       {!applied
-        ? <button type="button" onClick={apply} style={pillButton}>Hide private groups</button>
+        ? <button type="button" onClick={apply} style={pillButton}>Hide sold-out items</button>
         : <button type="button" onClick={reset} style={ghostButton}>Reset</button>}
     </DemoFrame>
   );
