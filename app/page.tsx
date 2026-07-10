@@ -990,7 +990,7 @@ export default function Home() {
                 The approach
               </div>
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 7vw, 5rem)', color: 'var(--color-fg)', lineHeight: 0.9, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>
-                How I build
+                How I build.
               </h2>
               <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1.05rem, 1.8vw, 1.4rem)', color: 'var(--color-muted)', lineHeight: 1.5, maxWidth: '520px', marginTop: '18px' }}>
                 The opinions and defaults behind everything above.

@@ -9,9 +9,12 @@ import { InkBurst } from '@/components/InkBurst';
    Church Hub, How I Build). They open with their own brand transition, but
    they all leave the same way: the squid-ink flood from the /squid dive.
    The clicked point squirts the circle-cluster burst, it grows until it
-   swallows the screen, and we surface back on the home page. */
+   swallows the screen, and in the last beat of ink a shadow of the giant
+   squid's eye blinks at you (same eye as /squid's midnight zone, barely
+   lighter than the ink) as we surface back on the home page. */
 
 const INK = '#171209';
+const EYE_SCLERA = 'rgba(239, 233, 219, 0.045)';
 
 export function useInkExit(href = '/#work') {
   const router = useRouter();
@@ -38,8 +41,9 @@ export function useInkExit(href = '/#work') {
       target.current = to ?? href;
       setOrigin({ x: e.clientX, y: e.clientY });
       // Same throttled-window safety net as the footer / squid dive: if the
-      // ink animation is ever throttled, don't strand the user under it.
-      window.setTimeout(go, reduce ? 500 : 1100);
+      // ink or eye animation is ever throttled, don't strand the user in
+      // the dark. Covers the full flood + blink sequence.
+      window.setTimeout(go, reduce ? 500 : 1600);
     },
     [go, href, reduce],
   );
@@ -67,23 +71,61 @@ export function useInkExit(href = '/#work') {
           style={{ position: 'absolute', inset: 0, background: INK }}
         />
       ) : (
-        <motion.span
-          initial={{ scale: 0.25, opacity: 1 }}
-          animate={{ scale, opacity: 1 }}
-          transition={{ duration: 0.8, ease: 'easeIn' }}
-          onAnimationComplete={go}
-          style={{
-            position: 'absolute',
-            left: origin.x,
-            top: origin.y,
-            x: '-50%',
-            y: '-50%',
-            transformOrigin: 'center',
-            lineHeight: 0,
-          }}
-        >
-          <InkBurst width={140} fill={INK} />
-        </motion.span>
+        <>
+          <motion.span
+            initial={{ scale: 0.25, opacity: 1 }}
+            animate={{ scale, opacity: 1 }}
+            transition={{ duration: 0.7, ease: 'easeIn' }}
+            style={{
+              position: 'absolute',
+              left: origin.x,
+              top: origin.y,
+              x: '-50%',
+              y: '-50%',
+              transformOrigin: 'center',
+              lineHeight: 0,
+            }}
+          >
+            <InkBurst width={140} fill={INK} />
+          </motion.span>
+
+          {/* Something in the dark watches you leave: a shadow of the
+              /squid midnight eye, barely lighter than the ink, blinks
+              once as the flood finishes. It fades in while the last of
+              the screen is still being swallowed, so it costs the exit
+              almost no time; when the lid drops we surface home. */}
+          <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
+            <motion.svg
+              width="min(40vw, 280px)"
+              viewBox="0 0 340 190"
+              style={{ overflow: 'visible' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.15, delay: 0.45, ease: 'easeOut' }}
+            >
+              <motion.g
+                initial={{ scaleY: 0.04 }}
+                animate={{ scaleY: [0.04, 1, 1, 0.04] }}
+                transition={{ duration: 0.55, delay: 0.45, times: [0, 0.4, 0.7, 1], ease: 'easeInOut' }}
+                onAnimationComplete={go}
+                style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
+              >
+                <ellipse cx="170" cy="95" rx="150" ry="86" fill={EYE_SCLERA} />
+                <circle cx="170" cy="95" r="62" fill="var(--color-accent)" fillOpacity={0.06} />
+                {/* The pupil settles on you as the eye opens */}
+                <motion.circle
+                  cx="170"
+                  cy="95"
+                  r="42"
+                  fill={INK}
+                  initial={{ x: -10 }}
+                  animate={{ x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.55, ease: 'easeOut' }}
+                />
+              </motion.g>
+            </motion.svg>
+          </div>
+        </>
       )}
     </div>
   ) : null;
