@@ -14,7 +14,6 @@ import { InkBurst } from '@/components/InkBurst';
 import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 import { AIResearchSheet } from '@/components/AIResearchSheet';
-import { BeyondCards } from '@/components/BeyondSheet';
 import { PersonalProjectsPanel } from '@/components/PersonalProjectsPanel';
 
 const roles = [
@@ -977,11 +976,6 @@ export default function Home() {
               }}>
                 I grew up in Algonac, Michigan, and was an IB student, football captain, track Hall of Famer. At the University of Detroit Mercy I studied software engineering and leadership, ran Division I track, and got published in AI research before the current wave existed. Then I landed at Woodside Bible Church, where I built the software infrastructure that became the foundation for Church Hub and much of Woodside{'\u2019'}s technology. Now I build products, lead teams, and obsess over making complex things feel simple.
               </p>
-
-              {/* Personal highlight badges */}
-              <div style={{ marginTop: '40px', maxWidth: '1100px' }}>
-                <BeyondCards />
-              </div>
 
             </div>
 
