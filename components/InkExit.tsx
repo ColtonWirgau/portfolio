@@ -92,7 +92,7 @@ export function useInkExit(href = '/#work') {
 }
 
 /* The fixed close control these pages share: a round X pinned to the top
-   right that stays on screen while you scroll, tinted to the page's brand. */
+   left that stays on screen while you scroll, tinted to the page's brand. */
 export function InkCloseButton({
   onClick,
   color,
@@ -120,7 +120,7 @@ export function InkCloseButton({
       style={{
         position: 'fixed',
         top: 'max(18px, env(safe-area-inset-top))',
-        right: '18px',
+        left: 'max(18px, env(safe-area-inset-left))',
         zIndex: 900,
         width: '46px',
         height: '46px',
