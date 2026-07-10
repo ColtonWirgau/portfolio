@@ -202,7 +202,11 @@ export function Footer() {
   };
 
   return (
-    <footer ref={ref} style={{ position: 'relative', marginTop: '80px' }}>
+    // overflow: clip keeps the swimming squids' transformed boxes from
+    // extending the page's scrollable area: without it, any squid whose
+    // box dips below the footer body (overflow-y: visible there) adds
+    // temporary scrollable space beneath the footer while it swims.
+    <footer ref={ref} style={{ position: 'relative', marginTop: '80px', overflow: 'clip' }}>
       {/* Wavy cutout SVG */}
       <div style={{ position: 'relative', height: '80px', overflow: 'hidden' }}>
         <svg
