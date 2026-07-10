@@ -226,6 +226,9 @@ export function ResponsiveSheet({
   const dragAreaRef = useRef<HTMLDivElement>(null);
   const touchStartY = useRef<number | null>(null);
   const touchStartTime = useRef<number | null>(null);
+  // Ref (not effect-local) so an effect re-attach mid-gesture (parent
+  // re-renders recreate the inline onClose prop) can't drop the release.
+  const bodyDragEngaged = useRef(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -364,6 +367,7 @@ export function ResponsiveSheet({
 
   useEffect(() => {
     const dragArea = dragAreaRef.current;
+    const container = scrollContainerRef.current;
     if (!dragArea || !open || mode !== 'sheet') return;
 
     const handleTouchStart = (e: TouchEvent) => {
@@ -398,12 +402,57 @@ export function ResponsiveSheet({
     dragArea.addEventListener('touchstart', handleTouchStart, { passive: true });
     dragArea.addEventListener('touchmove', handleTouchMove, { passive: false });
     dragArea.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    // Body drag-to-close: when the sheet is at the very top with the
+    // header fully expanded, pulling down anywhere on the content drags
+    // the sheet closed too, not just the handle/header. While the header
+    // is collapsed or the content is scrolled, the pull re-anchors
+    // instead, so scrolling up and the staged header expansion keep
+    // their own gestures; only the next pull from the fully-open state
+    // engages the drag.
+    const bodyTouchStart = (e: TouchEvent) => {
+      bodyDragEngaged.current = false;
+      touchStartY.current = e.touches[0].clientY;
+      touchStartTime.current = Date.now();
+    };
+    const bodyTouchMove = (e: TouchEvent) => {
+      if (touchStartY.current === null || !container) return;
+      if (collapsed || container.scrollTop > 0) {
+        bodyDragEngaged.current = false;
+        touchStartY.current = e.touches[0].clientY;
+        touchStartTime.current = Date.now();
+        return;
+      }
+      const delta = e.touches[0].clientY - touchStartY.current;
+      if (delta > 0) {
+        e.preventDefault();
+        bodyDragEngaged.current = true;
+        setIsDragging(true);
+        setDragOffset(delta);
+      }
+    };
+    const bodyTouchEnd = (e: TouchEvent) => {
+      if (!bodyDragEngaged.current) {
+        touchStartY.current = null;
+        touchStartTime.current = null;
+        return;
+      }
+      bodyDragEngaged.current = false;
+      handleTouchEnd(e);
+    };
+    container?.addEventListener('touchstart', bodyTouchStart, { passive: true });
+    container?.addEventListener('touchmove', bodyTouchMove, { passive: false });
+    container?.addEventListener('touchend', bodyTouchEnd, { passive: true });
+
     return () => {
       dragArea.removeEventListener('touchstart', handleTouchStart);
       dragArea.removeEventListener('touchmove', handleTouchMove);
       dragArea.removeEventListener('touchend', handleTouchEnd);
+      container?.removeEventListener('touchstart', bodyTouchStart);
+      container?.removeEventListener('touchmove', bodyTouchMove);
+      container?.removeEventListener('touchend', bodyTouchEnd);
     };
-  }, [open, mode, onClose]);
+  }, [open, mode, onClose, collapsed]);
 
   // Prevent scroll propagation at boundaries (iOS)
   useEffect(() => {
