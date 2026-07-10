@@ -347,9 +347,11 @@ export default function Home() {
         <section className="min-h-dvh md:h-screen flex items-stretch" style={{ padding: '0 24px' }}>
           <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" padTop="64px" padBottom="5dvh" />
           <div className="flex-1 flex items-center">
-          <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6 max-md:pt-20 max-md:pb-8">
-            {/* Text side */}
-            <div className="flex-1 flex flex-col justify-center gap-6 min-w-0">
+          <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6 max-md:pt-20 max-md:pb-14">
+            {/* Text side. Full width on mobile: the column layout's
+                items-center would otherwise shrink-wrap this block and
+                re-center it every time the rotating role changes width. */}
+            <div className="flex-1 flex flex-col justify-center gap-6 min-w-0 max-md:w-full">
               <div className="z-10">
                 <motion.h1
                   initial={{ opacity: 0, y: 30 }}
@@ -407,7 +409,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="w-[50%] max-md:w-full max-md:h-[50vh] md:h-[90dvh] shrink-0"
+              className="w-[50%] max-md:w-full max-md:h-[45vh] md:h-[90dvh] shrink-0"
             >
               <img
                 src="/Portfoliov1.jpg"
@@ -416,12 +418,13 @@ export default function Home() {
               />
             </motion.div>
 
-            {/* Stamps sit below the photo on mobile */}
+            {/* Stamps overlap the photo's bottom edge on mobile (the
+                -mt-12 minus the column's gap-6 nets ~24px of overlap) */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="md:hidden flex w-full flex-wrap justify-center gap-3"
+              className="hero-stamps-mobile md:hidden relative z-10 -mt-12 flex w-full flex-wrap justify-center gap-3"
             >
               {stampButtons}
             </motion.div>
@@ -1246,7 +1249,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-none"
+            className="pointer-events-none flex max-md:hidden"
             style={{
               position: 'absolute',
               bottom: 0,
@@ -1254,7 +1257,6 @@ export default function Home() {
               right: 0,
               zIndex: 5,
               height: '48px',
-              display: 'flex',
               alignItems: 'flex-end',
               justifyContent: 'center',
             }}

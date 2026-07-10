@@ -300,18 +300,32 @@ body,
   .story-grid {
     margin-bottom: 32px !important;
   }
+  .footer-body {
+    padding: 12px 24px 20px !important;
+    min-height: 0 !important;
+  }
+  .footer-content {
+    gap: 12px !important;
+  }
   .footer-squid-left {
     left: 10px !important;
-    bottom: 2px !important;
+    bottom: 14px !important;
     transform: scale(0.55);
     transform-origin: bottom left;
   }
   .footer-squid-right {
     right: 10px !important;
-    bottom: 2px !important;
+    bottom: 16px !important;
     transform: scale(0.5);
     transform-origin: bottom right;
   }
+}
+
+/* Hero stamps on mobile overlap the photo's bottom edge, so they need
+   a solid fill to stay readable over it (the shared button style is
+   transparent, and hover handlers write inline backgrounds). */
+.hero-stamps-mobile button {
+  background: var(--color-bg) !important;
 }
 
 /* Personal Projects "Back" control: squid swims left on hover */
