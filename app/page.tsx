@@ -1092,6 +1092,7 @@ export default function Home() {
           event={selectedEvent}
           onClose={() => { setSelectedEvent(null); setSheetDefaultPage('main'); }}
           defaultPage={sheetDefaultPage}
+          onOpenAIResearch={() => { setSelectedEvent(null); setSheetDefaultPage('main'); setAiSheetOpen(true); }}
         />
 
         {/* AI research sheet */}

@@ -1,6 +1,6 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import type { ReactNode, KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { ResponsiveSheet, SheetPage } from './ResponsiveSheet';
 
 // ── Types ──
@@ -12,6 +12,8 @@ export interface SubEvent {
   /** Scannable achievement chips; use for stat-heavy sections, not stories. */
   badges?: string[];
   images?: string[];
+  /** If set, the section becomes clickable and hands off to another sheet. */
+  linksTo?: 'ai-research';
 }
 
 export interface LifeEvent {
@@ -166,7 +168,6 @@ export const lifeEvents: LifeEvent[] = [
     narrative: [
       'That mindset followed me to the University of Detroit Mercy, where I studied software engineering with a leadership minor and ran track. I chose software engineering over computer science because I knew I didn\u2019t just want to write code. I wanted to lead people and build things that actually help them. Along the way, I got published for my work in AI. Our team built Sylvester, a program that learned the language of Twitter through automatic annotation and classification, interpreting tweets in real time to determine how people feel about any given subject. It was published in New Trends in Information Technology in 2017.',
       'During college, I worked as a tutor at the learning center. It started as helping students, but it turned into rebuilding their entire system. Scheduling, time tracking, reporting. Everything had been manual. I moved it online and dragged the whole operation out of the stone age.',
-      'At the same time, I was leading worship at my church, playing music, running events, and somehow balancing all of it. I still love that side of my life. Music, creativity, and working with people have always been a big part of who I am.',
     ],
     narrativeImages: [
       '/images/CollegeTrack2.jpg',
@@ -177,8 +178,8 @@ export const lifeEvents: LifeEvent[] = [
       '/images/udm-commercial-cleanup.webp',
     ],
     mainPhotos: [
-      '/images/udm-commercial-model.webp',
       '/images/udm-commercial-cleanup.webp',
+      '/images/udm-commercial-model.webp',
     ],
     subEvents: [
       {
@@ -200,24 +201,17 @@ export const lifeEvents: LifeEvent[] = [
         title: 'AI Research Publication',
         description:
           'Sylvester learned the language of Twitter through automatic annotation and classification, reading tweets in real time to classify how people felt about any given subject. Pre-LLM NLP at its messiest: tokenization, language drift, sarcasm, slang, and ambiguity at scale. Co-authored with Jalil Dennis and Dr. Shadi Banitaan.',
+        linksTo: 'ai-research',
         badges: [
-          'Peer-reviewed publication',
-          'NTIT 2017, University of Jordan',
-          '6 emotions classified',
+          'Published AI Research',
+          'NTIT 2017',
+          'Sentiment Analysis',
+          'Real-time Classification',
+          'Automatic Annotation',
         ],
         images: [
           '/images/sylvester-page-1.webp',
           '/images/sylvester-flow.webp',
-        ],
-      },
-      {
-        id: 'detroit-music',
-        title: 'Music & Worship',
-        description:
-          'Led worship at church throughout college while balancing academics and athletics. Music, creativity, and working with people have always been a big part of who I am, and I still play at Woodside today.',
-        images: [
-          '/images/music-2.webp',
-          '/images/music-3.webp',
         ],
       },
       {
@@ -348,7 +342,6 @@ export const lifeEvents: LifeEvent[] = [
         images: [
           '/images/family-of-four.webp',
           '/images/family-newborn.webp',
-          '/images/family-embrace.webp',
         ],
       },
     ],
@@ -486,6 +479,58 @@ function BadgeRow({ badges, marginTop = '14px' }: { badges: string[]; marginTop?
   );
 }
 
+// Two photos as an overlapping pair: the first sits as the base (in flow,
+// nudged down and left, so it drives the container height), the second layers
+// on top of it on the far side. Height-capped so a portrait shot stays as
+// compact as a landscape one instead of stacking tall.
+function OverlapPair({ photos }: { photos: string[] }) {
+  const [base, top] = photos;
+  const frame = {
+    boxSizing: 'border-box' as const,
+    background: '#FDFBF6',
+    padding: '8px 8px 20px',
+    boxShadow: '0 8px 22px rgba(34, 33, 30, 0.22)',
+  };
+  const size = { display: 'block', width: 'auto', height: 'auto', maxWidth: '60%', maxHeight: '176px', objectFit: 'cover' as const };
+  return (
+    <div style={{ position: 'relative', width: '300px', maxWidth: '100%', margin: '0 auto' }}>
+      <img
+        src={base}
+        alt=""
+        loading="lazy"
+        style={{ ...frame, ...size, marginTop: '26px', transform: 'rotate(-2.5deg)', position: 'relative', zIndex: 1 }}
+      />
+      <img
+        src={top}
+        alt=""
+        loading="lazy"
+        style={{ ...frame, ...size, position: 'absolute', top: 0, right: 0, transform: 'rotate(2.5deg)', zIndex: 2, boxShadow: '0 14px 30px rgba(34, 33, 30, 0.32)' }}
+      />
+    </div>
+  );
+}
+
+// Three photos as a compact scattered cluster: two tucked at the top corners,
+// one layered lower-center on top. The lower photo sits in flow so it drives
+// the height; all three are height-capped so the pile stays tight.
+function OverlapTrio({ photos }: { photos: string[] }) {
+  const [a, b, c] = photos;
+  const frame = {
+    boxSizing: 'border-box' as const,
+    background: '#FDFBF6',
+    padding: '7px 7px 18px',
+    boxShadow: '0 8px 22px rgba(34, 33, 30, 0.22)',
+  };
+  const size = { display: 'block', width: 'auto', height: 'auto', maxWidth: '54%', maxHeight: '138px', objectFit: 'cover' as const };
+  return (
+    <div style={{ position: 'relative', width: '300px', maxWidth: '100%', margin: '0 auto' }}>
+      <img src={a} alt="" loading="lazy" style={{ ...frame, ...size, position: 'absolute', top: '10px', left: 0, transform: 'rotate(-3.5deg)', zIndex: 1 }} />
+      <img src={b} alt="" loading="lazy" style={{ ...frame, ...size, position: 'absolute', top: 0, right: 0, transform: 'rotate(3deg)', zIndex: 2 }} />
+      <img src={c} alt="" loading="lazy" style={{ ...frame, ...size, marginTop: '74px', marginLeft: '23%', transform: 'rotate(1.5deg)', position: 'relative', zIndex: 3, boxShadow: '0 14px 30px rgba(34, 33, 30, 0.32)' }} />
+    </div>
+  );
+}
+
 function PhotoCluster({ photos, seed = 0 }: { photos: string[]; seed?: number }) {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', padding: '12px 6px' }}>
@@ -547,7 +592,7 @@ function PhotoCluster({ photos, seed = 0 }: { photos: string[]; seed?: number })
 
 // ── Main page content (everything inline: sections with their photos) ──
 
-function MainPageContent({ event }: { event: LifeEvent }) {
+function MainPageContent({ event, onOpenAIResearch }: { event: LifeEvent; onOpenAIResearch?: () => void }) {
   const hasIntro = Boolean(event.description || (event.mainPhotos && event.mainPhotos.length > 0) || event.pullQuote);
   return (
     <div style={{ padding: '28px 32px 32px' }}>
@@ -558,21 +603,29 @@ function MainPageContent({ event }: { event: LifeEvent }) {
             display: 'flex',
             flexDirection: 'row-reverse',
             flexWrap: 'wrap',
-            alignItems: 'center',
+            alignItems: 'stretch',
             gap: '12px 36px',
           }}
         >
-          <div style={{ flex: '1 1 340px', minWidth: '260px' }}>
+          <div style={{ flex: '1 1 340px', minWidth: '260px', display: 'flex', flexDirection: 'column' }}>
             {event.description && (
               <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
                 {event.description}
               </p>
             )}
-            {event.mainBadges && event.mainBadges.length > 0 && <BadgeRow badges={event.mainBadges} />}
+            {event.mainBadges && event.mainBadges.length > 0 && (
+              <div style={{ marginTop: 'auto' }}>
+                <BadgeRow badges={event.mainBadges} />
+              </div>
+            )}
           </div>
           {event.mainPhotos && event.mainPhotos.length > 0 && (
-            <div style={{ flex: '1 1 320px', minWidth: '280px', display: 'flex', justifyContent: 'center' }}>
-              <PhotoCluster photos={event.mainPhotos} />
+            <div style={{ flex: '0 1 300px', minWidth: '240px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+              {event.mainPhotos.length === 2 ? (
+                <OverlapPair photos={event.mainPhotos} />
+              ) : (
+                <PhotoCluster photos={event.mainPhotos} />
+              )}
             </div>
           )}
         </div>
@@ -592,13 +645,28 @@ function MainPageContent({ event }: { event: LifeEvent }) {
         const hasPhotos = Boolean(sub.images && sub.images.length > 0);
         const flip = i % 2 === 1;
         const leadsSheet = i === 0 && !hasIntro;
+        const clickable = sub.linksTo === 'ai-research' && Boolean(onOpenAIResearch);
         return (
           <section
             key={sub.id}
+            {...(clickable
+              ? {
+                  role: 'button',
+                  tabIndex: 0,
+                  onClick: onOpenAIResearch,
+                  onKeyDown: (e: ReactKeyboardEvent) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onOpenAIResearch!();
+                    }
+                  },
+                }
+              : {})}
             style={{
               borderTop: leadsSheet ? 'none' : '1px solid var(--color-border)',
               marginTop: leadsSheet ? 0 : '26px',
               paddingTop: leadsSheet ? 0 : '22px',
+              cursor: clickable ? 'pointer' : undefined,
             }}
           >
             <div
@@ -606,11 +674,11 @@ function MainPageContent({ event }: { event: LifeEvent }) {
                 display: 'flex',
                 flexDirection: flip ? 'row-reverse' : 'row',
                 flexWrap: 'wrap',
-                alignItems: 'center',
+                alignItems: 'stretch',
                 gap: '12px 36px',
               }}
             >
-              <div style={{ flex: '1 1 340px', minWidth: '260px' }}>
+              <div style={{ flex: '1 1 340px', minWidth: '260px', display: 'flex', flexDirection: 'column' }}>
                 <h4 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--color-fg)', letterSpacing: '-0.01em', marginBottom: '8px' }}>
                   {sub.title}
                 </h4>
@@ -619,13 +687,28 @@ function MainPageContent({ event }: { event: LifeEvent }) {
                     {sub.description}
                   </p>
                 )}
-                {sub.badges && sub.badges.length > 0 && (
-                  <BadgeRow badges={sub.badges} marginTop={sub.description ? '14px' : '4px'} />
+                {((sub.badges && sub.badges.length > 0) || clickable) && (
+                  <div style={{ marginTop: 'auto' }}>
+                    {sub.badges && sub.badges.length > 0 && (
+                      <BadgeRow badges={sub.badges} marginTop={sub.description ? '14px' : '4px'} />
+                    )}
+                    {clickable && (
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '16px', fontSize: '13px', fontWeight: 600, color: 'var(--color-accent)' }}>
+                        See the full research
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
               {hasPhotos && (
-                <div style={{ flex: '1 1 320px', minWidth: '280px', display: 'flex', justifyContent: 'center' }}>
-                  <PhotoCluster photos={sub.images!} seed={i} />
+                <div style={{ flex: '0 1 300px', minWidth: '240px', display: 'flex', alignItems: 'center', justifyContent: flip ? 'flex-start' : 'flex-end' }}>
+                  {(() => {
+                    const noLogos = !sub.images!.some((p) => p.includes('logo'));
+                    if (noLogos && sub.images!.length === 2) return <OverlapPair photos={sub.images!} />;
+                    if (noLogos && sub.images!.length === 3) return <OverlapTrio photos={sub.images!} />;
+                    return <PhotoCluster photos={sub.images!} seed={i} />;
+                  })()}
                 </div>
               )}
             </div>
@@ -642,9 +725,10 @@ interface LifeEventSheetProps {
   event: LifeEvent | null;
   onClose: () => void;
   defaultPage?: string;
+  onOpenAIResearch?: () => void;
 }
 
-export function LifeEventSheet({ event, onClose, defaultPage }: LifeEventSheetProps) {
+export function LifeEventSheet({ event, onClose, defaultPage, onOpenAIResearch }: LifeEventSheetProps) {
   if (!event) {
     return (
       <ResponsiveSheet open={false} onClose={onClose}>
@@ -662,7 +746,7 @@ export function LifeEventSheet({ event, onClose, defaultPage }: LifeEventSheetPr
       maxWidth="max-w-5xl"
     >
       <SheetPage name="main">
-        <MainPageContent event={event} />
+        <MainPageContent event={event} onOpenAIResearch={onOpenAIResearch} />
       </SheetPage>
     </ResponsiveSheet>
   );
