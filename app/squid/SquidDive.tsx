@@ -551,28 +551,39 @@ const SCALE_ITEMS: { label: string; sub: string; node: React.ReactNode }[] = [
 ];
 
 function ScaleStrip() {
+  // Full-bleed scroll container: on wide screens the row centers and shows
+  // everything (the giant squid can't be chopped by the 1100px column); on
+  // narrow screens the inner row overflows and scrolls horizontally.
   return (
     <div
       style={{
-        display: 'flex',
-        alignItems: 'flex-end',
-        gap: '56px',
+        width: '100vw',
+        marginLeft: 'calc(50% - 50vw)',
         overflowX: 'auto',
         overflowY: 'hidden',
-        padding: '24px 32px 20px',
-        borderBottom: `1px dashed ${LIGHT_FAINT}`,
-        maxWidth: '100%',
       }}
     >
-      {SCALE_ITEMS.map((item) => (
-        <div key={item.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
-          {item.node}
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '13px', fontWeight: 600, color: LIGHT }}>{item.label}</div>
-            <div style={{ fontSize: '11px', color: LIGHT_FAINT, marginTop: '2px' }}>{item.sub}</div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-end',
+          gap: '56px',
+          width: 'fit-content',
+          margin: '0 auto',
+          padding: '24px 40px 20px',
+          borderBottom: `1px dashed ${LIGHT_FAINT}`,
+        }}
+      >
+        {SCALE_ITEMS.map((item) => (
+          <div key={item.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
+            {item.node}
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '13px', fontWeight: 600, color: LIGHT }}>{item.label}</div>
+              <div style={{ fontSize: '11px', color: LIGHT_FAINT, marginTop: '2px' }}>{item.sub}</div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

@@ -469,7 +469,10 @@ function ScreenGallery({
             key={screen.desktop}
             className={screen.mobile ? 'screen-figure has-mobile' : 'screen-figure'}
             style={{
-              flex: `0 0 min(92%, calc(${SHOT_MAX_HEIGHT} * ${aspectRatioNumber(screen.aspect)}))`,
+              // Cap the slide at ~74% of the track so the neighbouring shots
+              // always peek in (the height term still keeps wide dashboards
+              // from getting too tall on large screens).
+              flex: `0 0 min(74%, calc(${SHOT_MAX_HEIGHT} * ${aspectRatioNumber(screen.aspect)}))`,
               scrollSnapAlign: 'center',
               margin: 0,
             }}
