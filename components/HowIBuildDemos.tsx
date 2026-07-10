@@ -611,7 +611,7 @@ function MonorepoDemo() {
         <span style={{ fontSize: '13px', fontWeight: 700, color: FG }}>@acme/core</span>
         <span style={{ fontSize: '11px', color: allFixed ? GREEN : MUTED, marginLeft: 'auto' }}>{allFixed ? 'patched' : 'shared package'}</span>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '10px', marginBottom: '16px' }}>
         {CLIENTS.map((c, i) => (
           <div key={c} style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '12px', textAlign: 'center', background: PAPER }}>
             <div style={{ fontSize: '13px', fontWeight: 700, color: FG }}>{c}</div>
@@ -659,7 +659,7 @@ function SharedRuleDemo() {
         <span>Rule: <strong>hide sold-out items</strong></span>
         {mode === 'shared' && <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: ACCENT, border: `1px solid ${BORDER}`, borderRadius: '100px', padding: '3px 9px' }}>via v_in_stock</span>}
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '10px', marginBottom: '16px' }}>
         {SURFACES.map((name, i) => {
           const hidden = applied && fixed[i];
           const leaking = applied && !fixed[i];
@@ -775,7 +775,7 @@ function RulesDemo() {
         </div>
       ) : (
         <div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '10px', marginBottom: '16px' }}>
             {field('Rate', '$180 / night')}
             {field('Sleeps', '4 guests')}
             {field('Beds', '2')}
@@ -791,7 +791,7 @@ function RulesDemo() {
             <span>{left <= 0 ? 'Out of room? Everything else is a field.' : 'Keep it to the vibe, not a spec sheet.'}</span>
             <span style={{ fontWeight: 700 }}>{desc.length} / {DESC_MAX}</span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', margin: '16px 0' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '10px', margin: '16px 0' }}>
             {field('Check-in', 'After 3:00 PM', CHECK_IN_ICON)}
             {field('Check-out', 'By 11:00 AM', CHECK_OUT_ICON)}
           </div>
