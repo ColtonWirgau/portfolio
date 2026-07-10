@@ -57,7 +57,7 @@ const sideProjects: Record<SideProjectId, {
   roar: {
     title: 'Roar Tracker',
     tagline: 'Six Lions season tickets, one organized family',
-    body: 'My parents, my wife, and I split six Lions season tickets, and there are only four of us. So every game comes with at least two open seats: friends when we can find them, the resale market when we can’t. Roar Tracker keeps the whole operation straight. Who’s in for each game, who paid what, and how the season is tracking money-wise. When more people want in than we have seats, it runs the drawing. And when we list a pair, it generates a clean social graphic for the post, the kind I used to rebuild in Figma every single week.',
+    body: 'My parents, my wife, and I split six Lions season tickets, and there are only four of us. So every game comes with at least two open seats: friends when we can find them, the resale market when we can’t. Roar Tracker keeps the whole operation straight. Who’s in for each game, who paid what, and how the season is tracking money-wise. When more people want in than we have seats, it runs the drawing. And when we list a pair, it generates a clean social graphic for the post, the kind I used to rebuild in Illustrator every single week.',
     stack: ['Next.js', 'TypeScript', 'Supabase', 'OAuth', 'Tailwind', 'Vercel'],
     screens: [
       {
@@ -279,6 +279,7 @@ export function PersonalProjectsPanel() {
       <ResponsiveSheet
         open={!!selected}
         onClose={() => setSelected(null)}
+        maxWidth="max-w-5xl"
         header={selected ? <ProjectSheetHeader project={sideProjects[selected]} /> : null}
       >
         <SheetPage name="main">
