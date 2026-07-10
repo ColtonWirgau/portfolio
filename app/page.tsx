@@ -287,6 +287,17 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  // Mobile hero shows one role stamp at a time (three don't fit a phone
+  // row cleanly); cycle on a different cadence than the role text so the
+  // two rotations don't tick in lockstep.
+  const [stampIndex, setStampIndex] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStampIndex((prev) => (prev + 1) % 3);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   const checkScroll = useCallback(() => {
     const el = mainRef.current;
     if (!el) return;
@@ -312,7 +323,7 @@ export default function Home() {
     };
   }, [checkScroll]);
 
-  const stampButtons = [
+  const stamps = [
     {
       label: 'AI Researcher',
       sub: '· Published, 2017 ·',
@@ -331,7 +342,9 @@ export default function Home() {
       ariaLabel: 'Open Church Hub project',
       onClick: (e: { clientX: number; clientY: number }) => openChurchHub(e),
     },
-  ].map((stamp) => (
+  ];
+
+  const renderStamp = (stamp: (typeof stamps)[number]) => (
     <button
       key={stamp.label}
       type="button"
@@ -378,7 +391,9 @@ export default function Home() {
         {stamp.sub}
       </div>
     </button>
-  ));
+  );
+
+  const stampButtons = stamps.map(renderStamp);
 
   return (
     <div className="h-screen bg-bg overflow-hidden relative">
@@ -459,15 +474,27 @@ export default function Home() {
               />
             </motion.div>
 
-            {/* Stamps overlap the photo's bottom edge on mobile (the
-                -mt-12 minus the column's gap-6 nets ~24px of overlap) */}
+            {/* One stamp at a time on mobile, auto-cycling: three won't
+                sit on a single phone row, and a 2+1 wrap looked lopsided.
+                Still overlaps the photo's bottom edge (-mt-12 minus the
+                column's gap-6 nets ~24px of overlap). */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="hero-stamps-mobile md:hidden relative z-10 -mt-12 flex w-full flex-wrap justify-center gap-3"
+              className="hero-stamps-mobile md:hidden relative z-10 -mt-12 flex w-full justify-center"
             >
-              {stampButtons}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={stampIndex}
+                  initial={{ opacity: 0, scale: 1.12, rotate: -2 }}
+                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.28, ease: 'easeOut' }}
+                >
+                  {renderStamp(stamps[stampIndex])}
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
           </div>
           </div>
