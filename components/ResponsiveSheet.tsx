@@ -290,9 +290,10 @@ export function ResponsiveSheet({
     }
   }, [open, defaultPage]);
 
-  // Scroll to top on page change
+  // Scroll to top on page change, with the header expanded again
   useEffect(() => {
     scrollContainerRef.current?.scrollTo(0, 0);
+    setCollapsed(false);
   }, [currentPage]);
 
   // Escape key to close
@@ -328,9 +329,6 @@ export function ResponsiveSheet({
     const hasMore = container.scrollHeight > container.clientHeight + 5;
     const atBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 20;
     setShowScrollIndicator(hasMore && !atBottom);
-    // Hysteresis (collapse past 40, expand under 8) so the viewport growth
-    // from the shrinking header can't oscillate the state at the threshold.
-    setCollapsed((prev) => (prev ? container.scrollTop > 8 : container.scrollTop > 40));
   }, []);
 
   useEffect(() => {
@@ -428,6 +426,60 @@ export function ResponsiveSheet({
     };
   }, [open, mode]);
 
+  // Staged scrolling (sheet mode): the first scroll intent only collapses
+  // the header while the body stays pinned (the container is overflow-
+  // hidden while expanded, see the sheet branch below); the body scrolls
+  // only once the header is out of the way. At the top, pulling down past
+  // a small threshold expands the header again. This keeps the two
+  // motions sequential instead of simultaneous.
+  const hasHeader = !!header;
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || !open || mode !== 'sheet' || !hasHeader) return;
+
+    const contentOverflows = () => container.scrollHeight > container.clientHeight + 5;
+    let startY: number | null = null;
+
+    const onWheel = (e: WheelEvent) => {
+      if (!collapsed && e.deltaY > 0 && contentOverflows()) {
+        e.preventDefault();
+        setCollapsed(true);
+      } else if (collapsed && e.deltaY < 0 && container.scrollTop <= 0) {
+        setCollapsed(false);
+      }
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      startY = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (startY === null) return;
+      if (!collapsed) {
+        if (e.touches[0].clientY - startY < -8 && contentOverflows()) {
+          e.preventDefault();
+          setCollapsed(true);
+        }
+      } else {
+        // Measure the pull only from the moment the top is reached, so
+        // arriving at the top doesn't expand by itself; it takes a
+        // deliberate extra pull.
+        if (container.scrollTop > 0) {
+          startY = e.touches[0].clientY;
+          return;
+        }
+        if (e.touches[0].clientY - startY > 12) setCollapsed(false);
+      }
+    };
+
+    container.addEventListener('wheel', onWheel, { passive: false });
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchmove', onTouchMove, { passive: false });
+    return () => {
+      container.removeEventListener('wheel', onWheel);
+      container.removeEventListener('touchstart', onTouchStart);
+      container.removeEventListener('touchmove', onTouchMove);
+    };
+  }, [open, mode, collapsed, hasHeader]);
+
   // Extract SheetPage children
   const pages: { name: string; title?: string; content: ReactNode }[] = [];
   Children.forEach(children, (child) => {
@@ -508,8 +560,9 @@ export function ResponsiveSheet({
               </div>
             </div>
 
-            {/* Scrollable content */}
-            <div ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+            {/* Scrollable content: pinned while the header is expanded so
+                the collapse plays out before any body scrolling starts */}
+            <div ref={scrollContainerRef} className={`min-h-0 flex-1 overscroll-contain ${hasHeader && !collapsed ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
               <SheetContent
                 pages={pages}
                 currentPage={currentPage}
