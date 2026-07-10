@@ -100,22 +100,24 @@ export function StoryPage({ event }: { event: LifeEvent }) {
         </Link>
 
         {/* Description */}
-        <motion.p
-          custom={0}
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)',
-            fontStyle: 'italic',
-            color: 'var(--color-fg)',
-            lineHeight: 1.7,
-            marginBottom: '40px',
-          }}
-        >
-          {event.description}
-        </motion.p>
+        {event.description && (
+          <motion.p
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: 'clamp(1.1rem, 1.6vw, 1.35rem)',
+              fontStyle: 'italic',
+              color: 'var(--color-fg)',
+              lineHeight: 1.7,
+              marginBottom: '40px',
+            }}
+          >
+            {event.description}
+          </motion.p>
+        )}
 
         {/* Narrative */}
         {event.narrative && event.narrative.length > 0 && (

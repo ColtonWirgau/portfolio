@@ -43,8 +43,7 @@ export const lifeEvents: LifeEvent[] = [
     year: 'Childhood',
     tagline: 'Where it started',
     storyPath: '/childhood',
-    description:
-      'I grew up in Algonac, a small river town on the St. Clair River. It\'s the kind of place where everybody knows everybody. This is where I first got curious about building things. Tearing apart computers, making terrible websites, and figuring out how stuff works.',
+    description: '',
     highlights: [
       'Algonac High School: IB Diploma Recipient',
       'Graduated 3rd in class with a 4.2 GPA',
@@ -93,14 +92,13 @@ export const lifeEvents: LifeEvent[] = [
         images: [
           '/images/HSTrack8.jpg',
           '/images/HSTrack7.jpg',
-          '/images/HSTrack3.jpg',
         ],
       },
       {
         id: 'algonac-football',
         title: 'Football Captain',
         description:
-          'Captain of the football team. Earned All-Area honors and helped lead the team through some of its best seasons.',
+          'Captain of the football team and All-Area selection. I played safety, running back, and wide receiver, returned punts and kicks, and even handled place kicking. About the only time I came off the field was kickoff. They called me the Energizer Bunny.',
         images: [
           '/images/algonac-football.webp',
           '/images/HS2.jpg',
@@ -110,7 +108,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'algonac-faith',
         title: 'Faith & Foundation',
         description:
-          'I grew up in a church my great grandfather started, and faith has shaped how I see people, how I lead, and how I believe people should be treated: with kindness, grace, and the same patience that\'s been shown to me. That doesn\'t stop at church. It carries into my work, my teams, and how I build things.',
+          'I grew up in a church my great grandfather started, and faith has shaped how I see people, how I lead, and how I believe people should be treated: with kindness, grace, and the same patience that\'s been shown to me.',
         images: [
           '/images/algonac-church.webp',
           '/images/algonac-youth-group.webp',
@@ -480,12 +478,15 @@ function PhotoCluster({ photos, seed = 0 }: { photos: string[]; seed?: number })
 // ── Main page content (everything inline: sections with their photos) ──
 
 function MainPageContent({ event }: { event: LifeEvent }) {
+  const hasIntro = Boolean(event.description || (event.mainPhotos && event.mainPhotos.length > 0) || event.pullQuote);
   return (
     <div style={{ padding: '28px 32px 32px' }}>
       {/* Description */}
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
-        {event.description}
-      </p>
+      {event.description && (
+        <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+          {event.description}
+        </p>
+      )}
 
       {/* Lead photos */}
       {event.mainPhotos && event.mainPhotos.length > 0 && (
@@ -507,8 +508,16 @@ function MainPageContent({ event }: { event: LifeEvent }) {
       {event.subEvents.map((sub, i) => {
         const hasPhotos = Boolean(sub.images && sub.images.length > 0);
         const flip = i % 2 === 1;
+        const leadsSheet = i === 0 && !hasIntro;
         return (
-          <section key={sub.id} style={{ borderTop: '1px solid var(--color-border)', marginTop: '26px', paddingTop: '22px' }}>
+          <section
+            key={sub.id}
+            style={{
+              borderTop: leadsSheet ? 'none' : '1px solid var(--color-border)',
+              marginTop: leadsSheet ? 0 : '26px',
+              paddingTop: leadsSheet ? 0 : '22px',
+            }}
+          >
             <div
               style={{
                 display: 'flex',
