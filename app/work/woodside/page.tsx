@@ -42,6 +42,12 @@ const STORIES = [
     tags: ['REST APIs', 'Full sync', 'REACH', 'Planning Center', 'Webhooks'],
   },
   {
+    kicker: 'Data integrity · The trust layer',
+    heading: 'None of it matters if the data can’t be trusted.',
+    body: 'With one person owning the data for 14 campuses and dozens of connected tools, integrity isn’t a nice-to-have, it’s the whole foundation. MinistryPlatform is the canonical source of truth, and I keep every integration reconciled against it so nothing drifts or double-writes. Bad data doesn’t get to sneak in: I validate at the boundary, so what enters is already correct instead of something I clean up later. Every change is traceable and reversible, with writes carrying the user who made them, so there’s a real audit trail and no silent mystery edits. And underneath all of it is the constant, unglamorous work of keeping records clean, matching and merging duplicate people and retiring stale data, so the reports leadership actually acts on are honest.',
+    tags: ['Single source of truth', 'Sync reconciliation', 'Boundary validation', 'Audit trails', 'Dedup & merge'],
+  },
+  {
     kicker: 'One developer · Fourteen campuses',
     heading: 'Everything I ship touches a lot of people.',
     body: 'As the only technical person, I own the whole stack: architecture, tools, tradeoffs, all of it. Projects often start with almost no spec, or with a ministry leader who knows the outcome they need but not how to ask for it, and my job is to turn that into something real. And it all lands across 14 campuses, from a few hundred people to megachurches, with wildly different staffing and ways of working. You can’t please everyone at once, so I build things that relieve tension instead of adding it. I never want to be a burden to ministry. I want to be the reason it got easier.',

@@ -34,6 +34,8 @@ The platform handles event management, volunteer coordination, giving dashboards
 
 Title: Software Development Manager and Full-Stack Developer. As the sole in-house developer at a large multi-campus church, Colton builds and maintains the software infrastructure that powers the organization, from interactive dashboards and automated database workflows to public-facing web pages and reporting tools. This is where he cut his teeth building real products for real people.
 
+As the sole steward of the organization's data across 14 campuses, he treats data integrity as the foundation, not an afterthought: MinistryPlatform stays the single source of truth, every integration is reconciled against it so nothing drifts or double-writes, data is validated at the boundary so bad values never get in, writes carry the user who made them for a real audit trail, and duplicate and stale records are continuously matched, merged, and retired so leadership's reports are honest.
+
 Career-defining context: After Colton graduated, Woodside created a role for him so they wouldn't lose him. One of his first projects was cleaning up the database (he ended up deactivating about two-thirds of it) and building better systems to track real engagement. Some of that work was eventually adopted into MinistryPlatform's main product for all customers.
 
 He was recognized with MinistryPlatform's "Deep Space Award" for innovation and advancement of the product ecosystem.
