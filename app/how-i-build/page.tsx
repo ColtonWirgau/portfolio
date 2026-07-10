@@ -28,32 +28,29 @@ const SECTIONS: Section[] = [
     lead: 'If someone needs a tutorial to use what I built, I did it wrong. Most of my users are non-technical ministry staff, and they are the bar: if a busy person can sit down and just get it, the design is done.',
     principles: [
       { p: 'Clarity over cleverness.', d: 'Say just enough, at the right time. A clever interaction that needs explaining loses to a plain one that doesn’t.' },
-      { p: 'Mobile is not a smaller desktop.', d: 'I design the phone experience as its own first-class thing: styled bottom sheets, thumb-reachable controls, layouts that reflow instead of shrink.' },
-      { p: 'Motion should mean something.', d: 'Animation earns its place when it explains where something came from or where it went. If it’s only decoration, it’s noise.' },
     ],
-    demos: ['wallOfText', 'optimistic'],
+    demos: ['optimistic', 'wallOfText', 'mobile', 'motion'],
   },
   {
     kicker: 'Frontend',
     heading: 'Boring, typed, and consistent beats clever.',
     lead: 'My default is Next.js, React, and TypeScript, everywhere, strict. The goal isn’t the fanciest code; it’s code that future-me can change without fear.',
     principles: [
-      { p: 'Abstract on the third copy, not the first.', d: 'I let duplication sit until the pattern is real. Premature abstractions are harder to undo than a little repetition.' },
       { p: 'Keep state local and derived.', d: 'Data fetched on the server and passed down beats a pile of client state. I reach for global state only when something is genuinely shared.' },
       { p: 'Tailwind plus a shared design system.', d: 'A consistent component library (Shadcn-based) for the 90%, and a plain inline style when a one-off is clearer than fighting classes.' },
       { p: 'Performance is a feature, not a pass at the end.', d: 'Lazy-load images, ship what’s needed, and measure before optimizing.' },
     ],
+    demos: ['abstract'],
   },
   {
     kicker: 'Backend',
     heading: 'Put the rules where they can’t be skipped.',
     lead: 'I keep route handlers thin and push real logic into typed, reusable clients and packages. The best guardrail is one the compiler enforces, not one that lives in a wiki nobody reads.',
     principles: [
-      { p: 'Let types enforce what matters.', d: 'In our platform a mutation literally won’t compile without a userId, so every write lands in the audit trail. There’s no “remember to log it”; you can’t not.' },
-      { p: 'Validate at the boundary.', d: 'Zod schemas on anything coming from outside. I don’t trust shapes and I don’t lean on bare interfaces for external data.' },
       { p: 'One source of truth.', d: 'When systems have to talk, I sync so data lives in one place and nobody re-keys it. Humans shouldn’t be the integration layer.' },
       { p: 'Do slow, flaky work out of band.', d: 'Anything that can fail or drag stays off the request path so the person waiting doesn’t pay for it.' },
     ],
+    demos: ['typesEnforce', 'validate'],
   },
   {
     kicker: 'Database',
@@ -62,9 +59,9 @@ const SECTIONS: Section[] = [
     principles: [
       { p: 'Right tool per job.', d: 'SQL Server (MinistryPlatform) as the source of truth for the domain; Postgres (Neon) for app-level concerns. I don’t force one to be the other.' },
       { p: 'Normalize by default, denormalize on purpose.', d: 'I only denormalize for a read path that actually hurts, and I write down why. I’ve built nested-JSON frameworks when the relational shape fought the UI.' },
-      { p: 'Clean data is a feature.', d: 'I once deactivated roughly two-thirds of a database to make the rest trustworthy. Reports are only as honest as the data under them.' },
       { p: 'Migrations are code.', d: 'Reviewed, reversible, and never run by hand-copying SQL into a prod window.' },
     ],
+    demos: ['cleanData'],
   },
   {
     kicker: 'Where things belong',
@@ -81,22 +78,19 @@ const SECTIONS: Section[] = [
     kicker: 'Performance & feel',
     heading: 'Fast is a feeling, and you engineer it.',
     lead: 'A lot of how an app feels comes down to unglamorous decisions about where work happens and what the user sees while it happens. I sweat these details, because they’re the difference between something that feels instant and something that feels like it’s thinking.',
-    principles: [
-      { p: 'Do the work where it’s cheapest.', d: 'Before I optimize the frontend, I ask whether the work belongs there at all. Sometimes the right move is a nested-JSON stored procedure that does the heavy lifting in one round trip and hands the client something dumb and ready to render, instead of shipping raw rows and stitching them together in the browser.' },
-      { p: 'Cache the stable, and trust it.', d: 'I work out what can actually be cached, and what changes too often to trust, then lean on it hard so repeat views feel instant. If I can’t confidently invalidate it, I don’t cache it.' },
-    ],
-    demos: ['skeleton'],
+    principles: [],
+    demos: ['cheapest', 'skeleton', 'cache'],
   },
   {
     kicker: 'Defaults & preferences',
     heading: 'Own the thing that’s actually yours.',
     lead: 'As the sole technical decision-maker, I optimize for leverage and longevity: build what’s core, buy the commodity, and keep the whole thing maintainable by a small team (sometimes a team of one).',
     principles: [
-      { p: 'Monorepo, by default.', d: 'Turborepo, shared packages for anything reusable, business logic local to each app. Independent deploys so one client’s change never puts another at risk.' },
       { p: 'Build vs. buy, honestly.', d: 'Buy the commodity; build the workflows and data that are the actual point. Own your core so you’re never renting your own operations.' },
       { p: 'Test the risky seams.', d: 'Integrations, money, and auth get real coverage (Playwright for the flows that matter). I don’t chase a coverage number for its own sake.' },
       { p: 'AI is leverage, not an excuse to stop thinking.', d: 'I use modern LLMs heavily to move faster, but I own every decision and read every line. I was doing applied NLP before the LLM era; I know where the models are confidently wrong.' },
     ],
+    demos: ['monorepo'],
   },
 ];
 
@@ -150,20 +144,22 @@ export default function HowIBuildPage() {
                 </div>
               )}
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2px', border: '1px solid var(--color-border)', borderRadius: '10px', overflow: 'hidden', background: 'var(--color-border)' }}>
-                {s.principles.map((pr, i) => (
-                  <motion.div key={pr.p} variants={reveal} custom={i % 2} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }}
-                    style={{ background: 'var(--color-bg)', padding: 'clamp(22px, 3vw, 30px)' }}>
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <span style={{ color: 'var(--color-accent)', flexShrink: 0, marginTop: '7px', fontSize: '7px' }}>●</span>
-                      <div>
-                        <p style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-fg)', lineHeight: 1.4, marginBottom: '8px' }}>{pr.p}</p>
-                        <p style={{ fontSize: '14px', lineHeight: 1.7, color: 'var(--color-muted)' }}>{pr.d}</p>
+              {s.principles.length > 0 && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2px', border: '1px solid var(--color-border)', borderRadius: '10px', overflow: 'hidden', background: 'var(--color-border)' }}>
+                  {s.principles.map((pr, i) => (
+                    <motion.div key={pr.p} variants={reveal} custom={i % 2} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }}
+                      style={{ background: 'var(--color-bg)', padding: 'clamp(22px, 3vw, 30px)' }}>
+                      <div style={{ display: 'flex', gap: '12px' }}>
+                        <span style={{ color: 'var(--color-accent)', flexShrink: 0, marginTop: '7px', fontSize: '7px' }}>●</span>
+                        <div>
+                          <p style={{ fontSize: '15px', fontWeight: 700, color: 'var(--color-fg)', lineHeight: 1.4, marginBottom: '8px' }}>{pr.p}</p>
+                          <p style={{ fontSize: '14px', lineHeight: 1.7, color: 'var(--color-muted)' }}>{pr.d}</p>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+                    </motion.div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
