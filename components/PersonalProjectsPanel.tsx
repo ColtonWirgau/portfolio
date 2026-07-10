@@ -345,36 +345,6 @@ export function PersonalProjectsPanel() {
   );
 }
 
-// Stylized maned lion head, used as a corner watermark on the Roar
-// Tracker sheet. Not a team mark: a generic roaring-lion silhouette
-// built from a spiky mane, face, ears, and snout.
-function LionMark({ color, style }: { color: string; style?: React.CSSProperties }) {
-  const cx = 50;
-  const cy = 50;
-  const spikes = Array.from({ length: 14 }, (_, i) => {
-    const a = (i / 14) * Math.PI * 2 - Math.PI / 2;
-    const inner = 26;
-    const outer = 46;
-    const midA = a + Math.PI / 14;
-    const x1 = cx + inner * Math.cos(a);
-    const y1 = cy + inner * Math.sin(a);
-    const xt = cx + outer * Math.cos(midA);
-    const yt = cy + outer * Math.sin(midA);
-    const na = a + (2 * Math.PI) / 14;
-    const x2 = cx + inner * Math.cos(na);
-    const y2 = cy + inner * Math.sin(na);
-    return `${i === 0 ? 'M' : 'L'} ${x1.toFixed(1)} ${y1.toFixed(1)} L ${xt.toFixed(1)} ${yt.toFixed(1)} L ${x2.toFixed(1)} ${y2.toFixed(1)}`;
-  }).join(' ');
-  return (
-    <svg viewBox="0 0 100 100" fill="none" aria-hidden style={style}>
-      <path d={`${spikes} Z`} fill={color} />
-      <circle cx={cx} cy={cy} r="27" fill={color} />
-      <path d="M30 32 L26 20 L40 28 Z" fill={color} />
-      <path d="M70 32 L74 20 L60 28 Z" fill={color} />
-    </svg>
-  );
-}
-
 function ProjectSheetHeader({ project, collapsed = false }: { project: typeof sideProjects[SideProjectId]; collapsed?: boolean }) {
   const { theme, title, tagline } = project;
   return (
@@ -385,7 +355,10 @@ function ProjectSheetHeader({ project, collapsed = false }: { project: typeof si
       {title === 'Roar Tracker' && (
         <>
           <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(0deg, transparent 0, transparent 60px, rgba(255,255,255,0.03) 60px, rgba(255,255,255,0.03) 61px)' }} />
-          <LionMark color={theme.accent} style={{ position: 'absolute', right: '-24px', top: collapsed ? '-40px' : '-28px', width: collapsed ? '120px' : '190px', height: collapsed ? '120px' : '190px', opacity: 0.12, transition: 'all 0.3s ease', pointerEvents: 'none' }} />
+          {/* Lions logo as a white knockout: the full-color mark is the same
+              Honolulu Blue as the header bg, so it disappears at watermark
+              opacity without the filter. */}
+          <img src="/images/lions-logo.png" alt="" aria-hidden style={{ position: 'absolute', right: '-24px', top: collapsed ? '-24px' : '-8px', width: collapsed ? '130px' : '200px', height: 'auto', opacity: 0.14, filter: 'brightness(0) invert(1)', transition: 'all 0.3s ease', pointerEvents: 'none' }} />
         </>
       )}
       {title === 'Degenerates Dashboard' && (
