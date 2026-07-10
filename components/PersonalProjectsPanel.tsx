@@ -490,7 +490,7 @@ function ScreenGallery({
                 alt={screen.caption}
                 loading="lazy"
                 className="screen-shot-mobile"
-                style={{ aspectRatio: '1179 / 1977', border: '1px solid var(--color-border)', background: bg }}
+                style={{ aspectRatio: '1179 / 1977', objectFit: 'cover', border: '1px solid var(--color-border)', background: bg }}
               />
             )}
           </figure>
