@@ -30,6 +30,8 @@ export interface LifeEvent {
   narrativeImages?: string[];
   gallery?: string[];
   pullQuote?: string;
+  /** Achievement chips under the intro description. */
+  mainBadges?: string[];
   /** Optional lead filmstrip under the description; sections carry their own photos. */
   mainPhotos?: string[];
   /** Photos shown whole in the header; defaults to [image]. */
@@ -146,7 +148,12 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'Where I found my craft',
     storyPath: '/college',
     description:
-      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use. Not just writing code, but solving real problems. I also somehow ended up as the star of a UDM commercial: that\'s me in the stills, working a build session and out on a community cleanup.',
+      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. College is where I fell in love with building things that people actually use. Not just writing code, but solving real problems. I also somehow ended up as the star of a UDM commercial: that\'s me in the stills, working a build session and out on a community cleanup.',
+    mainBadges: [
+      'BS Software Engineering',
+      'Minor in Leadership',
+      'Graduated with honors',
+    ],
     highlights: [
       'BS Software Engineering, Minor in Leadership, Graduated with Honors',
       'Division I track & field athlete, Student Athlete of the Year',
@@ -178,10 +185,10 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-d1',
         title: 'D1 Track & Field',
         description:
-          'Competed as a Division I track & field athlete at the University of Detroit Mercy while carrying a full academic load and graduating with honors.',
+          'Ran Division I track & field at Detroit Mercy while carrying a full academic load.',
         badges: [
           'Student Athlete of the Year',
-          '7x All-Horizon League selection',
+          '7x All-Horizon League',
         ],
         images: [
           '/images/CollegeTrack2.jpg',
@@ -192,7 +199,12 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-ai',
         title: 'AI Research Publication',
         description:
-          'Published "Sylvester: An Approach to Emotion Classification" at the New Trends in Information Technology conference (University of Jordan, Amman, April 2017), co-authored with Jalil Dennis and Dr. Shadi Banitaan. Sylvester learned the language of Twitter through automatic annotation and classification, interpreting tweets in real time to classify how people felt (fear, disgust, excitement, sadness, happiness, or anger) about any given subject. Pre-LLM NLP at its messiest: tokenization, language drift, sarcasm, slang, and ambiguity at scale.',
+          'Sylvester learned the language of Twitter through automatic annotation and classification, reading tweets in real time to classify how people felt about any given subject. Pre-LLM NLP at its messiest: tokenization, language drift, sarcasm, slang, and ambiguity at scale. Co-authored with Jalil Dennis and Dr. Shadi Banitaan.',
+        badges: [
+          'Peer-reviewed publication',
+          'NTIT 2017, University of Jordan',
+          '6 emotions classified',
+        ],
         images: [
           '/images/sylvester-page-1.webp',
           '/images/sylvester-flow.webp',
@@ -202,7 +214,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-music',
         title: 'Music & Worship',
         description:
-          'Led worship at church throughout college, playing music, running events, and balancing it all with academics and athletics. Music, creativity, and working with people have always been a big part of who I am. Still plays at Woodside Bible Church and has played many large shows over the years.',
+          'Led worship at church throughout college while balancing academics and athletics. Music, creativity, and working with people have always been a big part of who I am, and I still play at Woodside today.',
         images: [
           '/images/music-2.webp',
           '/images/music-3.webp',
@@ -212,7 +224,12 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-continental',
         title: 'Continental Automotive Internship',
         description:
-          'Embedded Systems Engineering Intern at Continental Automotive (May–Sep 2015). Built a graphical user interface for testing a cybersecurity module found in many Chrysler and Jeep vehicles. The interface verified that plugged-in modules met all security requirements. The work was heavily C-based and requirement-driven.',
+          'Built the graphical interface used to test a cybersecurity module found in many Chrysler and Jeep vehicles, verifying that every plugged-in module met the security requirements.',
+        badges: [
+          'Embedded Systems Engineering Intern',
+          'Summer 2015',
+          'Heavily C-based',
+        ],
         images: [
           '/images/continental-logo.webp',
         ],
@@ -221,7 +238,12 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-ssc-it',
         title: 'Student Success Center: Tutor to IT Coordinator',
         description:
-          'I started at UDM\'s Student Success Center as a tutor: high-level math and stats, TA work in English, Math, and Computer Science, consistently one of the most requested. The center was operationally living in the stone age, and fixing that got me promoted into IT. I still tutored here and there, but mostly I was integrating and managing systems: an automated platform tied to university ID scan cards that replaced paper timecards and appointment tracking, new websites, databases, and data analytics (2015 to 2018). After graduation, they hired me back to integrate a new system across disability support services, the success center, and the testing center.',
+          'I started as a tutor. The center was operationally living in the stone age, and fixing that got me promoted into IT: an automated platform tied to university ID scan cards replaced their paper timecards and appointment tracking. I still tutored here and there, but mostly I was integrating and managing systems, and after graduation they hired me back to roll a new system out across three more departments.',
+        badges: [
+          'Most-requested tutor',
+          'Promoted to IT Coordinator',
+          '2015 to 2018',
+        ],
         images: [
           '/images/udm-learning-center.webp',
           '/images/udm-ssc-team.webp',
@@ -440,6 +462,31 @@ function SheetHeader({ event }: { event: LifeEvent }) {
 
 const TILTS = [-3.5, 2.5, -2, 3, -1.5];
 
+// White pill chips, styled to match the polaroid mats
+function BadgeRow({ badges, marginTop = '14px' }: { badges: string[]; marginTop?: string }) {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop }}>
+      {badges.map((b) => (
+        <span
+          key={b}
+          style={{
+            fontSize: '12px',
+            fontWeight: 500,
+            color: 'var(--color-fg)',
+            background: 'var(--color-card)',
+            padding: '6px 13px',
+            borderRadius: '100px',
+            boxShadow: '0 2px 8px rgba(34, 33, 30, 0.12)',
+            lineHeight: 1.3,
+          }}
+        >
+          {b}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function PhotoCluster({ photos, seed = 0 }: { photos: string[]; seed?: number }) {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', padding: '12px 6px' }}>
@@ -511,6 +558,7 @@ function MainPageContent({ event }: { event: LifeEvent }) {
           {event.description}
         </p>
       )}
+      {event.mainBadges && event.mainBadges.length > 0 && <BadgeRow badges={event.mainBadges} />}
 
       {/* Lead photos */}
       {event.mainPhotos && event.mainPhotos.length > 0 && (
@@ -561,25 +609,7 @@ function MainPageContent({ event }: { event: LifeEvent }) {
                   </p>
                 )}
                 {sub.badges && sub.badges.length > 0 && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: sub.description ? '14px' : '4px' }}>
-                    {sub.badges.map((b) => (
-                      <span
-                        key={b}
-                        style={{
-                          fontSize: '12px',
-                          fontWeight: 500,
-                          color: 'var(--color-fg)',
-                          background: 'var(--color-card)',
-                          padding: '6px 13px',
-                          borderRadius: '100px',
-                          boxShadow: '0 2px 8px rgba(34, 33, 30, 0.12)',
-                          lineHeight: 1.3,
-                        }}
-                      >
-                        {b}
-                      </span>
-                    ))}
-                  </div>
+                  <BadgeRow badges={sub.badges} marginTop={sub.description ? '14px' : '4px'} />
                 )}
               </div>
               {hasPhotos && (
