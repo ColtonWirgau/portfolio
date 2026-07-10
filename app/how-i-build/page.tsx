@@ -97,9 +97,9 @@ export default function HowIBuildPage() {
       <section style={{ padding: 'clamp(80px, 14vh, 150px) 24px clamp(40px, 6vh, 64px)' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Link href="/#about" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent)', fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em', textDecoration: 'none', textTransform: 'uppercase', marginBottom: 'clamp(36px, 7vh, 72px)' }}>
+            <Link href="/#work" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent)', fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em', textDecoration: 'none', textTransform: 'uppercase', marginBottom: 'clamp(36px, 7vh, 72px)' }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
-              Back
+              Back to Work
             </Link>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.12 }}

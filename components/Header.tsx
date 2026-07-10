@@ -8,7 +8,6 @@ import { ContactSheet } from '@/components/ContactSheet';
 const navLinks = [
   { label: 'Work', href: '/#work' },
   { label: 'About', href: '/#about' },
-  { label: 'Approach', href: '/how-i-build' },
 ];
 
 export function Header() {

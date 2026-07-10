@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback, useRef, Fragment } from 'react';
 import { ChurchHubMorph } from '@/components/ChurchHubMorph';
 import { WoodsideMorph } from '@/components/WoodsideMorph';
+import { HowIBuildMorph } from '@/components/HowIBuildMorph';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
@@ -158,6 +159,7 @@ export default function Home() {
   const [aiSheetOpen, setAiSheetOpen] = useState(false);
   const [chMorph, setChMorph] = useState<{ x: number; y: number } | null>(null);
   const [wsMorph, setWsMorph] = useState<{ x: number; y: number } | null>(null);
+  const [hibMorph, setHibMorph] = useState<{ x: number; y: number } | null>(null);
   const router = useRouter();
   const squidRef = useRef<HTMLSpanElement>(null);
 
@@ -181,6 +183,18 @@ export default function Home() {
       return;
     }
     setWsMorph({
+      x: e?.clientX ?? window.innerWidth / 2,
+      y: e?.clientY ?? window.innerHeight / 2,
+    });
+  }, [router]);
+
+  // How I Build morphs into its own page with a layered-planes transition.
+  const openHowIBuild = useCallback((e?: { clientX: number; clientY: number }) => {
+    if (typeof window === 'undefined') {
+      router.push('/how-i-build');
+      return;
+    }
+    setHibMorph({
       x: e?.clientX ?? window.innerWidth / 2,
       y: e?.clientY ?? window.innerHeight / 2,
     });
@@ -927,6 +941,47 @@ export default function Home() {
                 />
               ))}
             </div>
+
+              {/* End-of-Work entry: how I build (morphs into its own page) */}
+              <motion.button
+                type="button"
+                onClick={(e) => openHowIBuild(e)}
+                aria-label="Read how I build"
+                className="group"
+                whileHover={{ y: -3 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px',
+                  width: '100%', textAlign: 'left', cursor: 'pointer',
+                  marginTop: 'clamp(44px, 6vw, 80px)',
+                  padding: 'clamp(28px, 4vw, 44px)',
+                  background: 'var(--color-card)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: '18px',
+                }}
+              >
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: '11px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 700, marginBottom: '12px' }}>
+                    The approach
+                  </div>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 3.4rem)', color: 'var(--color-fg)', lineHeight: 0.98, letterSpacing: '-0.02em', textTransform: 'uppercase', marginBottom: '14px' }}>
+                    How I build.
+                  </h3>
+                  <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1rem, 1.6vw, 1.25rem)', color: 'var(--color-muted)', lineHeight: 1.5, maxWidth: '560px' }}>
+                    The opinions and defaults behind everything above: UI, frontend, backend, and data.
+                  </p>
+                </div>
+                <div
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  style={{
+                    flexShrink: 0, width: '56px', height: '56px', borderRadius: '50%',
+                    background: 'var(--color-accent)', color: 'var(--color-bg)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                </div>
+              </motion.button>
               </motion.div>
             )}
             </AnimatePresence>
@@ -1087,6 +1142,11 @@ export default function Home() {
         {/* Woodside open transition (navy wipe + green sonar rings), then route. */}
         {wsMorph && (
           <WoodsideMorph origin={wsMorph} onComplete={() => router.push('/work/woodside')} />
+        )}
+
+        {/* How I Build open transition (paper wipe + stacking layers), then route. */}
+        {hibMorph && (
+          <HowIBuildMorph origin={hibMorph} onComplete={() => router.push('/how-i-build')} />
         )}
 
         {/* Squid ink burst + the squid jetting left (fired by the
