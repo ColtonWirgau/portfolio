@@ -746,7 +746,7 @@ function RulesDemo() {
   return (
     <DemoFrame
       label="Set rules and limits"
-      caption="A description field quietly becomes the catch-all for everything the spec missed. Cap it, and the overflow tells you the structured field you actually needed. Here the amenities people were cramming into prose become icons you toggle per listing: consistent, scannable, and something you can filter on later."
+      caption="A limit is really a conversation. When someone bumps into one, it either exposes a real gap in the software (a field or feature I'm missing) or it's a chance to gently point out that by trying to say everything, they end up saying nothing. Here, capping the description turns that overflow into structured fields instead of prose."
       control={<Segmented value={mode} onChange={setMode} options={[{ value: 'free', label: 'No limits' }, { value: 'limits', label: 'Rules & limits' }]} />}
     >
       <div style={{ minHeight: '210px' }}>
