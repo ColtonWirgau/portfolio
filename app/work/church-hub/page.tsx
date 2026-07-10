@@ -274,7 +274,10 @@ export default function ChurchHubPage() {
 
         {/* ── Closing ────────────────────────────────────────── */}
         <section style={{ padding: 'clamp(72px, 12vw, 140px) 24px', borderTop: `1px solid ${BORDER}`, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', bottom: '-30%', left: '50%', transform: 'translateX(-50%)', width: '60vw', height: '60vw', background: 'radial-gradient(circle, rgba(123,163,201,0.18) 0%, transparent 66%)', pointerEvents: 'none' }} />
+          {/* Glow sized to the section so it fades to zero before every
+              edge; a fixed-size circle here got sliced by overflow:hidden
+              into a hard line at the section boundary. */}
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 42% 46% at 50% 46%, rgba(123,163,201,0.18) 0%, transparent 100%)', pointerEvents: 'none' }} />
           <motion.div variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ position: 'relative', display: 'inline-flex', marginBottom: '32px' }}>
             <HubGlyph size={120} opacity={0.9} />
           </motion.div>

@@ -231,7 +231,10 @@ export default function WoodsidePage() {
 
       {/* ── Closing ──────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(72px, 12vw, 140px) 24px', borderTop: `1px solid ${BORDER}`, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', bottom: '-30%', left: '50%', transform: 'translateX(-50%)', width: '60vw', height: '60vw', background: 'radial-gradient(circle, rgba(98,187,70,0.14) 0%, transparent 66%)', pointerEvents: 'none' }} />
+        {/* Glow sized to the section so it fades to zero before every
+            edge; a fixed-size circle here got sliced by overflow:hidden
+            into a hard line at the section boundary. */}
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 42% 46% at 50% 46%, rgba(98,187,70,0.14) 0%, transparent 100%)', pointerEvents: 'none' }} />
         <motion.h2 variants={reveal} custom={0} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}
           style={{ position: 'relative', fontFamily: 'var(--font-sans)', fontWeight: 900, fontSize: 'clamp(1.9rem, 5vw, 3.2rem)', color: INK, lineHeight: 1.08, letterSpacing: '-0.02em', textTransform: 'uppercase', maxWidth: '780px', margin: '0 auto 40px' }}>
           Whatever it takes to<br /><span style={{ color: GREEN }}>make ministry easier.</span>
