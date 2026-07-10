@@ -288,7 +288,7 @@ export function Footer() {
         })}
 
         {/* Emerging squids - stationary, camouflaged, then reveal; clicking one dives to /squid */}
-        <div style={{
+        <div className="footer-squid-left" style={{
           position: 'absolute',
           left: '60px',
           bottom: '10px',
@@ -297,7 +297,7 @@ export function Footer() {
           <EmergingSquid size={60} isInView={isInView} delay={0.5} onDive={dive} />
         </div>
 
-        <div style={{
+        <div className="footer-squid-right" style={{
           position: 'absolute',
           right: '60px',
           bottom: '25px',

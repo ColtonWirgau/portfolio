@@ -12,7 +12,7 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
     <ResponsiveSheet
       open={open}
       onClose={onClose}
-      header={
+      header={({ collapsed }) => (
         <div style={{ background: '#2A2622', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none' }}>
             <div style={{
@@ -29,25 +29,30 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
             </div>
           </div>
 
-          <div style={{ position: 'relative', padding: '36px 28px 32px', zIndex: 1 }}>
+          <div style={{ position: 'relative', padding: collapsed ? '14px 28px 12px' : '36px 28px 32px', zIndex: 1, transition: 'padding 0.3s ease' }}>
             <div style={{
               fontSize: '10px',
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
               color: 'var(--color-accent)',
-              marginBottom: '14px',
+              marginBottom: collapsed ? 0 : '14px',
+              maxHeight: collapsed ? 0 : '20px',
+              opacity: collapsed ? 0 : 1,
+              overflow: 'hidden',
+              transition: 'all 0.3s ease',
             }}>
               Peer-Reviewed · Published 2017
             </div>
             <h2 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(3rem, 7vw, 4.5rem)',
+              fontSize: collapsed ? '1.5rem' : 'clamp(3rem, 7vw, 4.5rem)',
               color: '#fff',
               lineHeight: 1,
               letterSpacing: '-0.02em',
               textTransform: 'uppercase',
-              marginBottom: '12px',
+              marginBottom: collapsed ? 0 : '12px',
               paddingTop: '0.08em',
+              transition: 'all 0.3s ease',
             }}>
               Sylvester
             </h2>
@@ -58,12 +63,16 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
               color: 'rgba(255,255,255,0.7)',
               lineHeight: 1.5,
               maxWidth: '520px',
+              maxHeight: collapsed ? 0 : '60px',
+              opacity: collapsed ? 0 : 1,
+              overflow: 'hidden',
+              transition: 'all 0.3s ease',
             }}>
               An Approach to Emotion Classification
             </p>
           </div>
         </div>
-      }
+      )}
     >
       <SheetPage name="main">
         <div style={{ padding: '28px' }}>

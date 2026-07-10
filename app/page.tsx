@@ -130,14 +130,14 @@ const projects: ProjectGroup[] = [
         description: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don’t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league’s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won’t. Along the way I found a serious bug in one of the big fantasy platforms, which I’m reporting to them, not shipping.',
       },
       {
-        id: 'personal-lions',
-        title: 'RoarTracker',
-        description: 'My parents, my wife, and I split six Lions season tickets between the four of us, so every game comes with at least two open seats. RoarTracker keeps it straight: who\'s going, who paid, what we\'ve made back selling extras, and it generates the social graphic when we list a pair. Under the hood it\'s got full OAuth, a Supabase database, and clean dashboards. A real solution to a very niche problem.',
-      },
-      {
         id: 'personal-degenerates',
         title: 'Degenerates Dashboard',
         description: 'Every week, my idiot friends and I place a 12-leg parlay. We have never won. Not once. But we keep doing it, and I built a dashboard to track our glorious losing streak. It pulls in picks, tracks results, and roasts us with the data. It\'s dumb, it\'s fun, and it\'s one of my favorite things I\'ve built.',
+      },
+      {
+        id: 'personal-lions',
+        title: 'RoarTracker',
+        description: 'My parents, my wife, and I split six Lions season tickets between the four of us, so every game comes with at least two open seats. RoarTracker keeps it straight: who\'s going, who paid, what we\'ve made back selling extras, and it generates the social graphic when we list a pair. Under the hood it\'s got full OAuth, a Supabase database, and clean dashboards. A real solution to a very niche problem.',
       },
     ],
   },
@@ -268,6 +268,77 @@ export default function Home() {
     };
   }, [checkScroll]);
 
+  const stampButtons = [
+    {
+      label: 'AI Researcher',
+      sub: '· Published, 2017 ·',
+      ariaLabel: 'See the AI research publication',
+      onClick: () => setAiSheetOpen(true),
+    },
+    {
+      label: 'Product Engineer',
+      sub: '· Since 2016 ·',
+      ariaLabel: 'Jump to Things I’ve Built',
+      onClick: scrollToWork,
+    },
+    {
+      label: 'Founder',
+      sub: '· Church Hub ·',
+      ariaLabel: 'Open Church Hub project',
+      onClick: () => {
+        scrollToWork();
+        setSelectedProject(projects[0]);
+      },
+    },
+  ].map((stamp) => (
+    <button
+      key={stamp.label}
+      type="button"
+      onClick={stamp.onClick}
+      aria-label={stamp.ariaLabel}
+      style={{
+        border: '2px solid var(--color-accent)',
+        borderRadius: '3px',
+        padding: '8px 14px 6px',
+        fontFamily: 'var(--font-display)',
+        color: 'var(--color-accent)',
+        textTransform: 'uppercase',
+        letterSpacing: '0.04em',
+        lineHeight: 1.05,
+        textAlign: 'center',
+        background: 'transparent',
+        cursor: 'pointer',
+        transition: 'background 0.18s ease, transform 0.18s ease',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = 'rgba(217, 68, 32, 0.08)';
+        e.currentTarget.style.transform = 'translateY(-1px)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.transform = 'translateY(0)';
+      }}
+    >
+      <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', whiteSpace: 'nowrap' }}>
+        {stamp.label}
+      </div>
+      <div
+        style={{
+          fontSize: '9px',
+          fontFamily: 'var(--font-sans)',
+          fontWeight: 700,
+          letterSpacing: '0.2em',
+          marginTop: '5px',
+          paddingTop: '4px',
+          borderTop: '1px solid var(--color-accent)',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {stamp.sub}
+      </div>
+    </button>
+  ));
+
   return (
     <div className="h-screen bg-bg overflow-hidden relative">
       {/* ── Main content ── single scrollable area */}
@@ -322,85 +393,10 @@ export default function Home() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7, duration: 0.6 }}
-                  style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '18px',
-                    marginLeft: '20px',
-                    marginTop: '34px',
-                    alignItems: 'flex-start',
-                  }}
+                  className="max-md:hidden flex flex-wrap items-start"
+                  style={{ gap: '18px', marginLeft: '20px', marginTop: '34px' }}
                 >
-                  {[
-                    {
-                      label: 'AI Researcher',
-                      sub: '· Published, 2017 ·',
-                      ariaLabel: 'See the AI research publication',
-                      onClick: () => setAiSheetOpen(true),
-                    },
-                    {
-                      label: 'Product Engineer',
-                      sub: '· Since 2016 ·',
-                      ariaLabel: 'Jump to Things I’ve Built',
-                      onClick: scrollToWork,
-                    },
-                    {
-                      label: 'Founder',
-                      sub: '· Church Hub ·',
-                      ariaLabel: 'Open Church Hub project',
-                      onClick: () => {
-                        scrollToWork();
-                        setSelectedProject(projects[0]);
-                      },
-                    },
-                  ].map((stamp) => (
-                    <button
-                      key={stamp.label}
-                      type="button"
-                      onClick={stamp.onClick}
-                      aria-label={stamp.ariaLabel}
-                      style={{
-                        border: '2px solid var(--color-accent)',
-                        borderRadius: '3px',
-                        padding: '8px 14px 6px',
-                        fontFamily: 'var(--font-display)',
-                        color: 'var(--color-accent)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.04em',
-                        lineHeight: 1.05,
-                        textAlign: 'center',
-                        background: 'transparent',
-                        cursor: 'pointer',
-                        transition: 'background 0.18s ease, transform 0.18s ease',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = 'rgba(217, 68, 32, 0.08)';
-                        e.currentTarget.style.transform = 'translateY(-1px)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = 'transparent';
-                        e.currentTarget.style.transform = 'translateY(0)';
-                      }}
-                    >
-                      <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', whiteSpace: 'nowrap' }}>
-                        {stamp.label}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: '9px',
-                          fontFamily: 'var(--font-sans)',
-                          fontWeight: 700,
-                          letterSpacing: '0.2em',
-                          marginTop: '5px',
-                          paddingTop: '4px',
-                          borderTop: '1px solid var(--color-accent)',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {stamp.sub}
-                      </div>
-                    </button>
-                  ))}
+                  {stampButtons}
                 </motion.div>
               </div>
 
@@ -418,6 +414,16 @@ export default function Home() {
                 alt="Colton Wirgau"
                 className="w-full h-full object-cover object-top"
               />
+            </motion.div>
+
+            {/* Stamps sit below the photo on mobile */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="md:hidden flex w-full flex-wrap justify-center gap-3"
+            >
+              {stampButtons}
             </motion.div>
           </div>
           </div>
@@ -898,59 +904,10 @@ export default function Home() {
           <SideLabel label="Work" side="right" mirrorLabel />
         </section>
 
-        {/* Pull quote */}
-        <div style={{
-          padding: '100px 24px',
-          margin: '40px 24px',
-          background: '#2A2622',
-          textAlign: 'center',
-          borderRadius: '140px 0 140px 0',
-        }}>
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(1.1rem, 1.6vw, 1.4rem)',
-              fontStyle: 'italic',
-              color: 'rgba(255,255,255,0.5)',
-              lineHeight: 1.6,
-              maxWidth: '1100px',
-              margin: '0 auto',
-            }}
-          >
-            I care a lot about clarity. Not overwhelming people.<br />
-            Saying{' '}
-            <span style={{ color: '#fff', fontWeight: 600 }}>just enough</span> at the{' '}
-            <span style={{ textDecoration: 'underline', textUnderlineOffset: '4px', textDecorationColor: 'var(--color-accent)' }}>right time</span>.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-              fontWeight: 400,
-              color: 'var(--color-accent)',
-              lineHeight: 1,
-              letterSpacing: '-0.02em',
-              textTransform: 'uppercase',
-              maxWidth: '1100px',
-              margin: '16px auto 0',
-            }}
-          >
-            Good design should feel obvious.
-          </motion.p>
-        </div>
-
         {/* My Story / About section */}
         <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
           <SideLabel label="About" side="left" delay={0.3} mirrorLabel />
-          <div style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
+          <div className="story-grid-wrapper" style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
 
             {/* Editorial heading */}
             <div style={{ marginBottom: '48px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -1043,9 +1000,7 @@ export default function Home() {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          transition: 'transform 0.4s ease',
                         }}
-                        className="group-hover:scale-[1.03]"
                       />
                       <div style={{
                         position: 'absolute',
@@ -1136,7 +1091,7 @@ export default function Home() {
         <ResponsiveSheet
           open={!!selectedProject}
           onClose={() => setSelectedProject(null)}
-          header={selectedProject ? (() => {
+          header={selectedProject ? (({ collapsed }) => {
             const p = selectedProject.poster;
             const isChurchHub = selectedProject.id === 'church-hub';
             const isWoodside = selectedProject.id === 'woodside';
@@ -1161,11 +1116,15 @@ export default function Home() {
                     <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #7B6DB5 0%, transparent 50%)' }} />
                   </div>
                 )}
-                <div style={{ position: 'relative', zIndex: 1, padding: '40px 28px 28px' }}>
+                <div style={{ position: 'relative', zIndex: 1, padding: collapsed ? '14px 28px 12px' : '40px 28px 28px', transition: 'padding 0.3s ease' }}>
                   <div style={{
                     fontSize: '10px',
                     letterSpacing: '0.15em',
-                    marginBottom: '8px',
+                    marginBottom: collapsed ? 0 : '8px',
+                    maxHeight: collapsed ? 0 : '20px',
+                    opacity: collapsed ? 0 : 1,
+                    overflow: 'hidden',
+                    transition: 'all 0.3s ease',
                     color: isWoodside ? '#8A95A5' : isPersonal ? 'rgba(255,255,255,0.5)' : '#9B8F80',
                     fontFamily: 'var(--font-sans)',
                     fontWeight: 700,
@@ -1173,7 +1132,8 @@ export default function Home() {
                     {selectedProject.category}
                   </div>
                   <h3 style={{
-                    fontSize: '32px',
+                    fontSize: collapsed ? '20px' : '32px',
+                    transition: 'font-size 0.3s ease',
                     fontWeight: isWoodside ? 900 : 400,
                     letterSpacing: isWoodside ? '0.04em' : '-0.02em',
                     lineHeight: 1.1,
@@ -1187,7 +1147,7 @@ export default function Home() {
                 </div>
               </div>
             );
-          })() : undefined}
+          }) : undefined}
           panelStyle={selectedProject ? {
             background: selectedProject.id === 'woodside' ? '#1C2B39' : selectedProject.id === 'personal' ? '#7B6DB5' : '#EDE8E0',
           } : undefined}

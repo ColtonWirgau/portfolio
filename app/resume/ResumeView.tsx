@@ -190,7 +190,7 @@ export function ResumeView({ resume }: { resume: Resume }) {
           padding: 0.35in 0.5in 0.25in;
           background: #ffffff;
           color: ${INK};
-          font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+          font-family: var(--font-sans);
           font-size: 9pt;
           line-height: 1.36;
           font-weight: 400;
@@ -206,7 +206,7 @@ export function ResumeView({ resume }: { resume: Resume }) {
         }
         .resume-head-main { flex: 1; }
         .resume-name {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 28pt;
           line-height: 1;
           letter-spacing: -0.01em;
@@ -238,7 +238,7 @@ export function ResumeView({ resume }: { resume: Resume }) {
         }
 
         .resume-summary {
-          font-family: 'Playfair Display', Georgia, serif;
+          font-family: var(--font-serif);
           font-style: italic;
           font-size: 9.5pt;
           line-height: 1.4;
@@ -369,7 +369,7 @@ function Section({ heading, children }: { heading: string; children: React.React
           margin-bottom: 6px;
         }
         .resume-section-heading {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 11.5pt;
           letter-spacing: 0.06em;
           text-transform: uppercase;

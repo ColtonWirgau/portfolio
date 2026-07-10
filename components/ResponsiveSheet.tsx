@@ -24,6 +24,9 @@ interface ResponsiveSheetContextValue {
   goBack: () => void;
   currentPage: string;
   canGoBack: boolean;
+  /** True while the mobile sheet is scrolled past its top; headers use
+      this to shrink themselves out of the way. Always false in modal mode. */
+  collapsed: boolean;
 }
 
 export interface SheetPageProps {
@@ -212,6 +215,7 @@ export function ResponsiveSheet({
   sheetMaxHeight = '90dvh',
 }: ResponsiveSheetProps) {
   const [mode, setMode] = useState<SheetMode>('sheet');
+  const [collapsed, setCollapsed] = useState(false);
   const [currentPage, setCurrentPage] = useState(defaultPage);
   const [history, setHistory] = useState<string[]>([defaultPage]);
   const [showScrollIndicator, setShowScrollIndicator] = useState(false);
@@ -276,6 +280,7 @@ export function ResponsiveSheet({
 
   // Reset on open/close
   useEffect(() => {
+    setCollapsed(false);
     if (open) {
       setCurrentPage(defaultPage);
       setHistory(defaultPage === 'main' ? ['main'] : ['main', defaultPage]);
@@ -316,13 +321,16 @@ export function ResponsiveSheet({
 
   const canGoBack = history.length > 1;
 
-  // Scroll indicator
+  // Scroll indicator + header collapse
   const checkScrollIndicator = useCallback(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
     const hasMore = container.scrollHeight > container.clientHeight + 5;
     const atBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 20;
     setShowScrollIndicator(hasMore && !atBottom);
+    // Hysteresis (collapse past 40, expand under 8) so the viewport growth
+    // from the shrinking header can't oscillate the state at the threshold.
+    setCollapsed((prev) => (prev ? container.scrollTop > 8 : container.scrollTop > 40));
   }, []);
 
   useEffect(() => {
@@ -430,7 +438,14 @@ export function ResponsiveSheet({
   });
 
   // Context
-  const contextValue: ResponsiveSheetContextValue = { mode, navigate, goBack, currentPage, canGoBack };
+  const contextValue: ResponsiveSheetContextValue = {
+    mode,
+    navigate,
+    goBack,
+    currentPage,
+    canGoBack,
+    collapsed: mode === 'sheet' && open && collapsed,
+  };
 
   const resolvedHeader = typeof header === 'function' ? header(contextValue) : header;
 

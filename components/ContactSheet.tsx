@@ -20,7 +20,7 @@ export function ContactSheet({ open, onClose }: ContactSheetProps) {
       open={open}
       onClose={onClose}
       maxWidth="max-w-xl"
-      header={
+      header={({ collapsed }) => (
         <div style={{ background: '#2A2622', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', inset: 0, opacity: 0.05, pointerEvents: 'none' }}>
             <div style={{
@@ -38,25 +38,30 @@ export function ContactSheet({ open, onClose }: ContactSheetProps) {
             </div>
           </div>
 
-          <div style={{ position: 'relative', padding: '36px 28px 30px', zIndex: 1 }}>
+          <div style={{ position: 'relative', padding: collapsed ? '14px 28px 12px' : '36px 28px 30px', zIndex: 1, transition: 'padding 0.3s ease' }}>
             <div style={{
               fontSize: '10px',
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
               color: 'var(--color-accent)',
-              marginBottom: '14px',
+              marginBottom: collapsed ? 0 : '14px',
+              maxHeight: collapsed ? 0 : '20px',
+              opacity: collapsed ? 0 : 1,
+              overflow: 'hidden',
+              transition: 'all 0.3s ease',
             }}>
               Get in Touch
             </div>
             <h2 style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.6rem, 7vw, 3.8rem)',
+              fontSize: collapsed ? '1.4rem' : 'clamp(2.6rem, 7vw, 3.8rem)',
               color: '#fff',
               lineHeight: 1,
               letterSpacing: '-0.02em',
               textTransform: 'uppercase',
-              marginBottom: '14px',
+              marginBottom: collapsed ? 0 : '14px',
               paddingTop: '0.08em',
+              transition: 'all 0.3s ease',
             }}>
               Let&apos;s talk.
             </h2>
@@ -67,12 +72,16 @@ export function ContactSheet({ open, onClose }: ContactSheetProps) {
               color: 'rgba(255,255,255,0.7)',
               lineHeight: 1.5,
               maxWidth: '440px',
+              maxHeight: collapsed ? 0 : '80px',
+              opacity: collapsed ? 0 : 1,
+              overflow: 'hidden',
+              transition: 'all 0.3s ease',
             }}>
               Hiring, collaborating, or just want to nerd out about AI, dynasty football, or church tech? Drop a line.
             </p>
           </div>
         </div>
-      }
+      )}
     >
       <SheetPage name="main">
         <div style={{ padding: '28px' }}>

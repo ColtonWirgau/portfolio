@@ -45,7 +45,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           margin: 0.4in 0.6in 0.6in 0.6in;
           @bottom-center {
             content: "${header.email}  ·  ${header.location}${header.links.map((l) => `  ·  ${l.label}`).join('')}";
-            font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+            font-family: var(--font-sans);
             font-size: 8.5pt;
             color: ${MUTED};
             letter-spacing: 0.06em;
@@ -288,7 +288,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           padding: 0.5in 0.6in 0.4in;
           background: ${PAPER};
           color: ${INK};
-          font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+          font-family: var(--font-sans);
           font-size: 9.75pt;
           line-height: 1.5;
           font-weight: 400;
@@ -307,7 +307,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
         }
         .rp-head-left { flex: 1; min-width: 0; }
         .rp-name {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 38pt;
           line-height: 0.95;
           letter-spacing: -0.015em;
@@ -383,7 +383,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           color: ${ACCENT};
         }
         .rp-stamp-main {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 10pt;
           letter-spacing: 0.05em;
           text-transform: uppercase;
@@ -391,7 +391,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           white-space: nowrap;
         }
         .rp-stamp-sub {
-          font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+          font-family: var(--font-sans);
           font-weight: 700;
           font-size: 6.25pt;
           letter-spacing: 0.2em;
@@ -410,7 +410,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
 
         /* ─── Summary ──────────────────────────────────────────── */
         .rp-summary {
-          font-family: 'Playfair Display', Georgia, serif;
+          font-family: var(--font-serif);
           font-style: italic;
           font-size: 11pt;
           line-height: 1.5;
@@ -432,7 +432,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
         }
         .rp-role-left { min-width: 0; }
         .rp-role-company {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 13pt;
           letter-spacing: 0.01em;
           text-transform: uppercase;
@@ -496,7 +496,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           align-items: baseline;
         }
         .rp-skill-label {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 10pt;
           letter-spacing: 0.04em;
           text-transform: uppercase;
@@ -522,7 +522,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           break-inside: avoid;
         }
         .rp-personal-label {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 10pt;
           letter-spacing: 0.04em;
           text-transform: uppercase;
@@ -548,7 +548,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           break-inside: avoid;
         }
         .rp-side-name {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 11pt;
           letter-spacing: 0.04em;
           text-transform: uppercase;
@@ -588,7 +588,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
 
         /* ─── Pull quote close ─────────────────────────────────── */
         .rp-quote {
-          font-family: 'Playfair Display', Georgia, serif;
+          font-family: var(--font-serif);
           font-style: italic;
           font-size: 12pt;
           line-height: 1.5;
@@ -649,7 +649,7 @@ function SectionHead({
       </h2>
       <style jsx>{`
         .rp-section-head {
-          font-family: 'Anton', sans-serif;
+          font-family: var(--font-display);
           font-size: 14pt;
           letter-spacing: 0.05em;
           text-transform: uppercase;

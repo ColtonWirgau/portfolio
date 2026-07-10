@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { Fragment, useCallback, useRef, useState } from 'react';
 import { ResponsiveSheet, SheetPage } from '@/components/ResponsiveSheet';
 
 type SideProjectId = 'dynastly' | 'roar' | 'degenerates';
@@ -137,15 +137,45 @@ const sideProjects: Record<SideProjectId, {
 
 export function PersonalProjectsPanel() {
   const [selected, setSelected] = useState<SideProjectId | null>(null);
+  const [activePosterId, setActivePosterId] = useState(0);
+
+  // Infinite carousel loop + active dot tracking on mobile, matching the
+  // work and story carousels: three duplicated sets, wrap scrollLeft at
+  // the set boundaries, start on the middle set.
+  const attachCarousel = useCallback((el: HTMLDivElement | null) => {
+    if (!el) return;
+    const handleScroll = () => {
+      const setWidth = el.scrollWidth / 3; // 3 sets of cards
+      if (el.scrollLeft >= setWidth * 2) {
+        el.scrollLeft -= setWidth;
+      } else if (el.scrollLeft <= 0) {
+        el.scrollLeft += setWidth;
+      }
+      const posInSet = el.scrollLeft % setWidth;
+      const singleCardWidth = setWidth / 3;
+      const idx = Math.round(posInSet / singleCardWidth) % 3;
+      setActivePosterId(idx);
+    };
+    el.addEventListener('scroll', handleScroll);
+    const raf = requestAnimationFrame(() => {
+      el.scrollLeft = el.scrollWidth / 3;
+    });
+    return () => {
+      el.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   return (
     <div>
       {/* Project posters */}
-      <div className="poster-grid">
+      <div className="poster-grid" ref={attachCarousel}>
+        {[0, 1, 2].map((setIndex) => (
+          <Fragment key={`side-poster-set-${setIndex}`}>
 
         {/* POSTER 1 - DYNASTLY */}
         <div
-          className="group poster-card"
+          className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
           onClick={() => setSelected('dynastly')}
           style={{
             background: '#09090B',
@@ -187,51 +217,9 @@ export function PersonalProjectsPanel() {
           </div>
         </div>
 
-        {/* POSTER 2 - ROAR TRACKER */}
+        {/* POSTER 2 - DEGENERATES DASHBOARD */}
         <div
-          className="group poster-card"
-          onClick={() => setSelected('roar')}
-          style={{
-            background: '#0076B6',
-            cursor: 'pointer',
-            position: 'relative',
-            overflow: 'hidden',
-            aspectRatio: '2/3',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <img src="/images/roar-tracker-mobile-1.webp" alt="" loading="lazy" style={{ position: 'absolute', bottom: '-26%', left: '-10%', width: '42%', transform: 'rotate(-8deg)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.3)', boxShadow: '0 12px 32px rgba(0,0,0,0.45)', zIndex: 2 }} />
-          <img src="/images/roar-tracker-mobile-2.webp" alt="" loading="lazy" style={{ position: 'absolute', bottom: '-30%', right: '-12%', width: '46%', transform: 'rotate(7deg)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.3)', boxShadow: '0 12px 32px rgba(0,0,0,0.45)', zIndex: 2 }} />
-
-          <div style={{ padding: '24px 28px 0', position: 'relative', zIndex: 3, display: 'flex', justifyContent: 'flex-end' }}>
-            <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.75)', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
-              Detroit Lions
-            </span>
-          </div>
-
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 28px', position: 'relative', zIndex: 3 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'baseline', justifyContent: 'center' }}>
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1.9rem, 4.8vw, 2.9rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
-                Roar
-              </span>
-              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1.9rem, 4.8vw, 2.9rem)', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.02em' }}>
-                Tracker
-              </span>
-            </div>
-            <div style={{ width: '40px', height: '2px', background: '#FFFFFF', margin: '20px auto' }} />
-            <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#FFFFFF', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textAlign: 'center', marginBottom: '20px' }}>
-              Season Ticket HQ
-            </p>
-            <p style={{ fontSize: '11px', fontWeight: 500, color: 'rgba(255,255,255,0.85)', fontFamily: 'var(--font-sans)', textAlign: 'center', lineHeight: 1.6, maxWidth: '220px', margin: '0 auto' }}>
-              Six seats, two always open. Who&apos;s going, who paid, and the sale graphic when we list a pair.
-            </p>
-          </div>
-        </div>
-
-        {/* POSTER 3 - DEGENERATES DASHBOARD */}
-        <div
-          className="group poster-card"
+          className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
           onClick={() => setSelected('degenerates')}
           style={{
             background: '#0A0A0A',
@@ -273,6 +261,73 @@ export function PersonalProjectsPanel() {
           </div>
         </div>
 
+        {/* POSTER 3 - ROAR TRACKER */}
+        <div
+          className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
+          onClick={() => setSelected('roar')}
+          style={{
+            background: '#0076B6',
+            cursor: 'pointer',
+            position: 'relative',
+            overflow: 'hidden',
+            aspectRatio: '2/3',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <img src="/images/roar-tracker-mobile-1.webp" alt="" loading="lazy" style={{ position: 'absolute', bottom: '-26%', left: '-10%', width: '42%', transform: 'rotate(-8deg)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.3)', boxShadow: '0 12px 32px rgba(0,0,0,0.45)', zIndex: 2 }} />
+          <img src="/images/roar-tracker-mobile-2.webp" alt="" loading="lazy" style={{ position: 'absolute', bottom: '-30%', right: '-12%', width: '46%', transform: 'rotate(7deg)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.3)', boxShadow: '0 12px 32px rgba(0,0,0,0.45)', zIndex: 2 }} />
+
+          <div style={{ padding: '24px 28px 0', position: 'relative', zIndex: 3, display: 'flex', justifyContent: 'flex-end' }}>
+            <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.75)', fontFamily: 'var(--font-sans)', textTransform: 'uppercase' }}>
+              Detroit Lions
+            </span>
+          </div>
+
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 28px', position: 'relative', zIndex: 3 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'baseline', justifyContent: 'center' }}>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1.9rem, 4.8vw, 2.9rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
+                Roar
+              </span>
+              <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1.9rem, 4.8vw, 2.9rem)', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.02em' }}>
+                Tracker
+              </span>
+            </div>
+            <div style={{ width: '40px', height: '2px', background: '#FFFFFF', margin: '20px auto' }} />
+            <p style={{ fontSize: '9px', fontWeight: 700, letterSpacing: '0.25em', color: '#FFFFFF', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', textAlign: 'center', marginBottom: '20px' }}>
+              Season Ticket HQ
+            </p>
+            <p style={{ fontSize: '11px', fontWeight: 500, color: 'rgba(255,255,255,0.85)', fontFamily: 'var(--font-sans)', textAlign: 'center', lineHeight: 1.6, maxWidth: '220px', margin: '0 auto' }}>
+              Six seats, two always open. Who&apos;s going, who paid, and the sale graphic when we list a pair.
+            </p>
+          </div>
+        </div>
+
+          </Fragment>
+        ))}
+      </div>
+
+      {/* Carousel dots (mobile only, hidden on desktop via .poster-dots) */}
+      <div className="poster-dots" style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '10px',
+        padding: '24px 0 0',
+        width: '100%',
+      }}>
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            style={{
+              width: activePosterId === i ? '24px' : '8px',
+              height: '8px',
+              borderRadius: '100px',
+              background: activePosterId === i ? 'var(--color-fg)' : 'var(--color-border)',
+              transition: 'all 0.3s ease',
+            }}
+          />
+        ))}
       </div>
 
       {/* Side-project sheet */}
@@ -280,7 +335,7 @@ export function PersonalProjectsPanel() {
         open={!!selected}
         onClose={() => setSelected(null)}
         maxWidth="max-w-5xl"
-        header={selected ? <ProjectSheetHeader project={sideProjects[selected]} /> : null}
+        header={selected ? ({ collapsed }) => <ProjectSheetHeader project={sideProjects[selected]} collapsed={collapsed} /> : null}
       >
         <SheetPage name="main">
           {selected && <ProjectSheetBody project={sideProjects[selected]} />}
@@ -290,10 +345,10 @@ export function PersonalProjectsPanel() {
   );
 }
 
-function ProjectSheetHeader({ project }: { project: typeof sideProjects[SideProjectId] }) {
+function ProjectSheetHeader({ project, collapsed = false }: { project: typeof sideProjects[SideProjectId]; collapsed?: boolean }) {
   const { theme, title, tagline } = project;
   return (
-    <div style={{ background: theme.bg, padding: '36px 28px 32px', position: 'relative', overflow: 'hidden' }}>
+    <div style={{ background: theme.bg, padding: collapsed ? '14px 28px 12px' : '36px 28px 32px', position: 'relative', overflow: 'hidden', transition: 'padding 0.3s ease' }}>
       {title === 'Dynastly' && (
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 20% 10%, rgba(99,102,241,0.18) 0%, transparent 45%), radial-gradient(circle at 85% 90%, rgba(245,158,11,0.10) 0%, transparent 45%)' }} />
       )}
@@ -305,21 +360,32 @@ function ProjectSheetHeader({ project }: { project: typeof sideProjects[SideProj
       )}
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <div style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: theme.label, fontWeight: 700, marginBottom: '14px' }}>
+        <div style={{
+          fontSize: '10px',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          color: theme.label,
+          fontWeight: 700,
+          marginBottom: collapsed ? 0 : '14px',
+          maxHeight: collapsed ? 0 : '20px',
+          opacity: collapsed ? 0 : 1,
+          overflow: 'hidden',
+          transition: 'all 0.3s ease',
+        }}>
           Personal Project
         </div>
 
         {title === 'Roar Tracker' ? (
-          <div style={{ display: 'flex', alignItems: 'baseline', marginBottom: '10px' }}>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(2.4rem, 6vw, 3.6rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', marginBottom: collapsed ? 0 : '10px', transition: 'margin 0.3s ease' }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: collapsed ? '1.4rem' : 'clamp(2.4rem, 6vw, 3.6rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', transition: 'font-size 0.3s ease' }}>
               Roar
             </span>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(2.4rem, 6vw, 3.6rem)', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.02em' }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: collapsed ? '1.4rem' : 'clamp(2.4rem, 6vw, 3.6rem)', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.02em', transition: 'font-size 0.3s ease' }}>
               Tracker
             </span>
           </div>
         ) : title === 'Degenerates Dashboard' ? (
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 2.9rem)', lineHeight: 0.95, letterSpacing: '0.02em', textTransform: 'uppercase', paddingTop: '0.08em', marginBottom: '10px' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: collapsed ? '1.2rem' : 'clamp(2rem, 5vw, 2.9rem)', lineHeight: 0.95, letterSpacing: '0.02em', textTransform: 'uppercase', paddingTop: '0.08em', marginBottom: collapsed ? 0 : '10px', transition: 'all 0.3s ease' }}>
             <span style={{ display: 'block', color: '#00D9FF', textShadow: '0 0 20px rgba(0,217,255,0.7), 0 0 40px rgba(0,217,255,0.35)' }}>
               Degenerates
             </span>
@@ -328,17 +394,38 @@ function ProjectSheetHeader({ project }: { project: typeof sideProjects[SideProj
             </span>
           </h2>
         ) : (
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 6vw, 3.5rem)', color: theme.fg, lineHeight: 1, letterSpacing: '-0.015em', textTransform: 'uppercase', paddingTop: '0.08em', marginBottom: '10px' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: collapsed ? '1.4rem' : 'clamp(2.4rem, 6vw, 3.5rem)', color: theme.fg, lineHeight: 1, letterSpacing: '-0.015em', textTransform: 'uppercase', paddingTop: '0.08em', marginBottom: collapsed ? 0 : '10px', transition: 'all 0.3s ease' }}>
             {title}
           </h2>
         )}
 
-        <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '15px', color: theme.muted, lineHeight: 1.5, maxWidth: '520px' }}>
+        <p style={{
+          fontFamily: 'var(--font-serif)',
+          fontStyle: 'italic',
+          fontSize: '15px',
+          color: theme.muted,
+          lineHeight: 1.5,
+          maxWidth: '520px',
+          maxHeight: collapsed ? 0 : '60px',
+          opacity: collapsed ? 0 : 1,
+          overflow: 'hidden',
+          transition: 'all 0.3s ease',
+        }}>
           {tagline}
         </p>
       </div>
     </div>
   );
+}
+
+// Slide width follows from a capped image height so wide dashboard
+// shots can't dominate the sheet (the next slide peeks in the gap).
+const SHOT_MAX_HEIGHT = 'min(420px, 45dvh)';
+
+function aspectRatioNumber(aspect?: string) {
+  if (!aspect) return 1.6; // default 1600 / 1000
+  const [w, h] = aspect.split('/').map((n) => parseFloat(n));
+  return w > 0 && h > 0 ? w / h : 1.6;
 }
 
 function ScreenGallery({
@@ -353,7 +440,9 @@ function ScreenGallery({
   const scrollBySlide = (dir: number) => {
     const el = trackRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir * el.clientWidth * 0.92, behavior: 'smooth' });
+    const slide = el.firstElementChild as HTMLElement | null;
+    const step = slide ? slide.getBoundingClientRect().width + 16 : el.clientWidth * 0.92;
+    el.scrollBy({ left: dir * step, behavior: 'smooth' });
   };
 
   const arrowButtonStyle: React.CSSProperties = {
@@ -406,7 +495,11 @@ function ScreenGallery({
           <figure
             key={screen.desktop}
             className={screen.mobile ? 'screen-figure has-mobile' : 'screen-figure'}
-            style={{ flex: '0 0 92%', scrollSnapAlign: 'center', margin: 0 }}
+            style={{
+              flex: `0 0 min(92%, calc(${SHOT_MAX_HEIGHT} * ${aspectRatioNumber(screen.aspect)}))`,
+              scrollSnapAlign: 'center',
+              margin: 0,
+            }}
           >
             <img
               src={screen.desktop}

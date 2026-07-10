@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 @import "tailwindcss";
 
+/* Fonts are self-hosted via next/font in app/layout.tsx, which defines
+   --font-anton / --font-montserrat / --font-playfair on <html>. */
 @theme inline {
-  --font-sans: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Anton', sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-anton), sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
   --color-bg: #D5D2C8;
   --color-fg: #222222;
   --color-muted: #44413B;
@@ -31,7 +32,7 @@ html {
 body {
   background: var(--color-bg);
   color: var(--color-fg);
-  font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -95,7 +96,7 @@ body,
   border-radius: 6px;
   padding: 10px 14px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
 }
 .about-map-popup .mapboxgl-popup-tip {
   border-top-color: var(--color-bg);
@@ -130,6 +131,16 @@ body,
 
 /* Below ~1200px: horizontal scroll carousel */
 @media (max-width: 1200px) {
+  /* The wrapper clips (overflow hidden) for the personal-view slide
+     transition; bleed it to the viewport edges and pad the content back
+     in so the carousel inside can reach the true screen edge instead of
+     being chopped at the site gutter. */
+  .poster-grid-wrapper {
+    margin-left: calc(-24px - env(safe-area-inset-left, 0px));
+    margin-right: calc(-24px - env(safe-area-inset-right, 0px));
+    padding-left: calc(24px + env(safe-area-inset-left, 0px));
+    padding-right: calc(24px + env(safe-area-inset-right, 0px));
+  }
   .poster-grid {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -186,6 +197,14 @@ body,
   display: none !important;
 }
 
+/* Whole-card hover, matching the work posters (no internal image zoom) */
+.story-card {
+  transition: transform 0.3s ease !important;
+}
+.story-card:hover {
+  transform: scale(1.03) !important;
+}
+
 /* Hide story carousel dots on desktop */
 .story-dots {
   display: none;
@@ -193,6 +212,14 @@ body,
 
 /* Below ~920px: horizontal scroll carousel */
 @media (max-width: 920px) {
+  /* Same full-bleed trick as .poster-grid-wrapper: let the story cards
+     reach the viewport edge instead of clipping at the site gutter. */
+  .story-grid-wrapper {
+    margin-left: calc(-24px - env(safe-area-inset-left, 0px));
+    margin-right: calc(-24px - env(safe-area-inset-right, 0px));
+    padding-left: calc(24px + env(safe-area-inset-left, 0px));
+    padding-right: calc(24px + env(safe-area-inset-right, 0px));
+  }
   .story-grid {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -241,7 +268,9 @@ body,
 }
 .screen-shot-mobile {
   display: none;
-  width: min(100%, 300px);
+  width: auto;
+  max-width: min(100%, 300px);
+  max-height: min(420px, 48dvh);
   margin: 0 auto;
 }
 @container (max-width: 540px) {
@@ -250,6 +279,33 @@ body,
   }
   .screen-figure.has-mobile .screen-shot-mobile {
     display: block;
+  }
+}
+
+/* Mobile footer: less dead space above the wave, and the emerging squids
+   tuck into the corners at ~half size so they never overlap the centered
+   social icons / email. Inline styles set the desktop values. */
+@media (max-width: 767px) {
+  footer {
+    margin-top: 24px !important;
+  }
+  #about {
+    padding-bottom: 40px !important;
+  }
+  .story-grid {
+    margin-bottom: 32px !important;
+  }
+  .footer-squid-left {
+    left: 10px !important;
+    bottom: 2px !important;
+    transform: scale(0.55);
+    transform-origin: bottom left;
+  }
+  .footer-squid-right {
+    right: 10px !important;
+    bottom: 2px !important;
+    transform: scale(0.5);
+    transform-origin: bottom right;
   }
 }
 

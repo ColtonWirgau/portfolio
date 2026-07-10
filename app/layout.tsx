@@ -1,6 +1,27 @@
 import type { Metadata } from "next";
+import { Anton, Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
+
+const anton = Anton({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-anton",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://coltonwirgau.me"),
@@ -42,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${anton.variable} ${montserrat.variable} ${playfair.variable}`}>
       <body className="antialiased" suppressHydrationWarning>
         <Header />
         {children}

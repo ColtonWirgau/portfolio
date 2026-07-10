@@ -396,9 +396,9 @@ export const lifeEvents: LifeEvent[] = [
 
 // ── Sheet Header ──
 
-function SheetHeader({ event }: { event: LifeEvent }) {
+function SheetHeader({ event, collapsed = false }: { event: LifeEvent; collapsed?: boolean }) {
   return (
-    <div className="relative overflow-hidden" style={{ height: '240px', background: '#22201C' }}>
+    <div className="relative overflow-hidden" style={{ height: collapsed ? '64px' : '240px', background: '#22201C', transition: 'height 0.3s ease' }}>
       {/* The same photo, blurred and darkened, fills the wide header so the
           real (often portrait) image never has to be crop-beheaded */}
       <img
@@ -412,7 +412,7 @@ function SheetHeader({ event }: { event: LifeEvent }) {
           header so they can never collide with the title block (52%) */}
       <div
         className="absolute inset-y-0 right-0 flex items-center justify-end"
-        style={{ padding: '18px 20px 18px 0', maxWidth: '48%', gap: '10px' }}
+        style={{ padding: '18px 20px 18px 0', maxWidth: '48%', gap: '10px', opacity: collapsed ? 0 : 1, transition: 'opacity 0.25s ease' }}
       >
         {(event.headerPhotos ?? [event.image]).map((src) => (
           <img
@@ -430,11 +430,19 @@ function SheetHeader({ event }: { event: LifeEvent }) {
         ))}
       </div>
       {/* Title block over the blurred side */}
-      <div className="absolute bottom-0 left-0" style={{ padding: '24px 28px', maxWidth: '52%' }}>
-        <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '6px' }} className="uppercase text-white/50">
+      <div className="absolute bottom-0 left-0" style={{ padding: collapsed ? '14px 28px' : '24px 28px', maxWidth: collapsed ? '90%' : '52%', transition: 'padding 0.3s ease' }}>
+        <div style={{
+          fontSize: '10px',
+          letterSpacing: '0.15em',
+          marginBottom: collapsed ? 0 : '6px',
+          maxHeight: collapsed ? 0 : '16px',
+          opacity: collapsed ? 0 : 1,
+          overflow: 'hidden',
+          transition: 'all 0.3s ease',
+        }} className="uppercase text-white/50">
           {event.year}
         </div>
-        <h3 style={{ fontSize: '28px', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.1 }} className="text-white">
+        <h3 style={{ fontSize: collapsed ? '18px' : '28px', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.1, transition: 'font-size 0.3s ease' }} className="text-white">
           {event.label}
         </h3>
       </div>
@@ -736,7 +744,7 @@ export function LifeEventSheet({ event, onClose, defaultPage, onOpenAIResearch }
     <ResponsiveSheet
       open={true}
       onClose={onClose}
-      header={<SheetHeader event={event} />}
+      header={({ collapsed }) => <SheetHeader event={event} collapsed={collapsed} />}
       defaultPage={defaultPage || 'main'}
       maxWidth="max-w-5xl"
     >

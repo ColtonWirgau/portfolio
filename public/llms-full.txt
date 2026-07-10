@@ -56,8 +56,8 @@ Detail page: /work/woodside
 Less polished, more personality. The stuff Colton builds for fun and sometimes for friends and family.
 
 - **Dynastly.** A dynasty fantasy football tool. Colton plays dynasty fantasy football and got tired of bouncing between five tools to evaluate his team, see how he stacks up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don't expose the APIs needed. Dynastly pulls player valuations from multiple sources, mirrors his league's rosters and matchups, and lets him build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won't. He's found some interesting things in upstream platforms along the way.
-- **Lions Season Ticket Tracker (RoarTracker).** Colton, his wife, and his parents split six Detroit Lions season tickets between the four of them, so every game comes with at least two open seats: friends when they can find them, the resale market when they can't. RoarTracker keeps track of who's going to each game, who paid what, and what the family has made or spent across the season. It runs the drawing when more people want seats than they have, and it auto-generates the social graphics they use when listing extra seats for sale. Modest from a brand standpoint (it's just for the family), but under the hood it has full OAuth, a Supabase Postgres database, and clean dashboards.
 - **Degenerates Dashboard.** Every week, Colton and his friends place a 12-leg parlay. They have never won. The dashboard pulls in picks, tracks results, and roasts them with the data. It's dumb, it's fun, and one of his favorite things he's built.
+- **Lions Season Ticket Tracker (RoarTracker).** Colton, his wife, and his parents split six Detroit Lions season tickets between the four of them, so every game comes with at least two open seats: friends when they can find them, the resale market when they can't. RoarTracker keeps track of who's going to each game, who paid what, and what the family has made or spent across the season. It runs the drawing when more people want seats than they have, and it auto-generates the social graphics they use when listing extra seats for sale. Modest from a brand standpoint (it's just for the family), but under the hood it has full OAuth, a Supabase Postgres database, and clean dashboards.
 
 Tech across these: Next.js, Neon (Postgres), Drizzle, OAuth, Tailwind, Playwright, Vercel.
 
@@ -99,8 +99,6 @@ BS in Software Engineering with a minor in Leadership. Graduated with honors. Ch
 ### Troy, MI (Career, Woodside Bible Church)
 
 Stepped into web development, database work, and the problems nobody else had time to touch. From there, Colton started his own business (Church Hub), because he saw the same problems across churches everywhere. A lot of what he does now lives at the intersection of product thinking, UX, and real-world ministry needs.
-
-Pull quote from the site: "I care a lot about clarity. Not overwhelming people. Saying just enough, at the right time. Good design should feel obvious."
 
 ### Clarkston, MI (Family)
 
