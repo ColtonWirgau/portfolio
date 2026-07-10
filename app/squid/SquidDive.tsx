@@ -558,6 +558,7 @@ function ScaleStrip() {
         alignItems: 'flex-end',
         gap: '56px',
         overflowX: 'auto',
+        overflowY: 'hidden',
         padding: '24px 32px 20px',
         borderBottom: `1px dashed ${LIGHT_FAINT}`,
         maxWidth: '100%',

@@ -146,6 +146,9 @@ body,
     flex-wrap: nowrap !important;
     gap: 16px !important;
     overflow-x: auto !important;
+    /* overflow-x: auto implies overflow-y: auto; pin it so touch drags
+       can't rubber-band the cards vertically */
+    overflow-y: hidden !important;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     /* Break out of parent padding */
@@ -225,6 +228,8 @@ body,
     flex-wrap: nowrap !important;
     gap: 16px !important;
     overflow-x: auto !important;
+    /* Same as .poster-grid: no vertical rubber-banding on touch drags */
+    overflow-y: hidden !important;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     width: 100vw;

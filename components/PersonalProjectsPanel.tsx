@@ -489,7 +489,7 @@ function ScreenGallery({
       </div>
       <div
         ref={trackRef}
-        style={{ display: 'flex', gap: '16px', overflowX: 'auto', scrollSnapType: 'x mandatory', margin: '0 -28px', padding: '0 28px' }}
+        style={{ display: 'flex', gap: '16px', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', margin: '0 -28px', padding: '0 28px' }}
       >
         {screens.map((screen) => (
           <figure
