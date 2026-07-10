@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback, useRef, Fragment } from 'react';
+import { ChurchHubMorph } from '@/components/ChurchHubMorph';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
@@ -154,7 +156,22 @@ export default function Home() {
   const [inkPos, setInkPos] = useState<{ x: number; y: number } | null>(null);
   const [squidSwim, setSquidSwim] = useState(false);
   const [aiSheetOpen, setAiSheetOpen] = useState(false);
+  const [chMorph, setChMorph] = useState<{ x: number; y: number } | null>(null);
+  const router = useRouter();
   const squidRef = useRef<HTMLSpanElement>(null);
+
+  // Church Hub skips the sheet: clicking its poster (or the hero stamp)
+  // plays the marble/hub open transition, then routes to the branded page.
+  const openChurchHub = useCallback((e?: { clientX: number; clientY: number }) => {
+    if (typeof window === 'undefined') {
+      router.push('/work/church-hub');
+      return;
+    }
+    setChMorph({
+      x: e?.clientX ?? window.innerWidth / 2,
+      y: e?.clientY ?? window.innerHeight / 2,
+    });
+  }, [router]);
 
   // Back-to-Work: the squid squirts a little ink where it sits and jets
   // off to the left (the way it faces) while the rest of the view slides
@@ -285,10 +302,7 @@ export default function Home() {
       label: 'Founder',
       sub: '· Church Hub ·',
       ariaLabel: 'Open Church Hub project',
-      onClick: () => {
-        scrollToWork();
-        setSelectedProject(projects[0]);
-      },
+      onClick: (e: { clientX: number; clientY: number }) => openChurchHub(e),
     },
   ].map((stamp) => (
     <button
@@ -555,7 +569,7 @@ export default function Home() {
                   ═══════════════════════════════════════════════ */}
               <div
                 className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
-                onClick={() => setSelectedProject(projects[0])}
+                onClick={(e) => openChurchHub(e)}
                 style={{
                   background: '#EDE8E0',
                   cursor: 'pointer',
@@ -1056,6 +1070,11 @@ export default function Home() {
 
         {/* AI research sheet */}
         <AIResearchSheet open={aiSheetOpen} onClose={() => setAiSheetOpen(false)} />
+
+        {/* Church Hub open transition (marble wipe + hub-and-spoke), then route. */}
+        {chMorph && (
+          <ChurchHubMorph origin={chMorph} onComplete={() => router.push('/work/church-hub')} />
+        )}
 
         {/* Squid ink burst + the squid jetting left (fired by the
             Personal Projects "Back" control). Both are viewport-fixed so

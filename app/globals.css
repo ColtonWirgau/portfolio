@@ -298,6 +298,45 @@ body,
   }
 }
 
+/* Work-page screenshot set: multiple shots sit side by side full width
+   when there's room, and collapse to a peek carousel when the container
+   gets narrow. Single shots just render full width (no track). */
+.shot-set {
+  container-type: inline-size;
+  width: 100%;
+}
+.shot-set-track {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+  padding-bottom: 22px;
+}
+.shot-set-item {
+  min-width: 0;
+}
+.shot-set-dots {
+  display: none;
+  justify-content: center;
+  gap: 10px;
+}
+@container (max-width: 660px) {
+  .shot-set-track {
+    display: flex !important;
+    grid-template-columns: none !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+  }
+  .shot-set-item {
+    flex: 0 0 84%;
+    scroll-snap-align: center;
+    padding-right: 12px;
+  }
+  .shot-set-dots {
+    display: flex;
+  }
+}
+
 /* Mobile footer: less dead space above the wave, and the emerging squids
    tuck into the corners at ~half size so they never overlap the centered
    social icons / email. Inline styles set the desktop values. */
