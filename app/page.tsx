@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback, useRef, Fragment } from 'react';
 import { ChurchHubMorph } from '@/components/ChurchHubMorph';
+import { WoodsideMorph } from '@/components/WoodsideMorph';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
@@ -157,6 +158,7 @@ export default function Home() {
   const [squidSwim, setSquidSwim] = useState(false);
   const [aiSheetOpen, setAiSheetOpen] = useState(false);
   const [chMorph, setChMorph] = useState<{ x: number; y: number } | null>(null);
+  const [wsMorph, setWsMorph] = useState<{ x: number; y: number } | null>(null);
   const router = useRouter();
   const squidRef = useRef<HTMLSpanElement>(null);
 
@@ -168,6 +170,18 @@ export default function Home() {
       return;
     }
     setChMorph({
+      x: e?.clientX ?? window.innerWidth / 2,
+      y: e?.clientY ?? window.innerHeight / 2,
+    });
+  }, [router]);
+
+  // Woodside gets the same treatment with its own branded transition.
+  const openWoodside = useCallback((e?: { clientX: number; clientY: number }) => {
+    if (typeof window === 'undefined') {
+      router.push('/work/woodside');
+      return;
+    }
+    setWsMorph({
       x: e?.clientX ?? window.innerWidth / 2,
       y: e?.clientY ?? window.innerHeight / 2,
     });
@@ -662,7 +676,7 @@ export default function Home() {
                   ═══════════════════════════════════════════════ */}
               <div
                 className={`group poster-card ${setIndex > 0 ? 'poster-card-dup' : ''}`}
-                onClick={() => setSelectedProject(projects[1])}
+                onClick={(e) => openWoodside(e)}
                 style={{
                   background: '#1C2B39',
                   cursor: 'pointer',
@@ -1074,6 +1088,11 @@ export default function Home() {
         {/* Church Hub open transition (marble wipe + hub-and-spoke), then route. */}
         {chMorph && (
           <ChurchHubMorph origin={chMorph} onComplete={() => router.push('/work/church-hub')} />
+        )}
+
+        {/* Woodside open transition (navy wipe + green sonar rings), then route. */}
+        {wsMorph && (
+          <WoodsideMorph origin={wsMorph} onComplete={() => router.push('/work/woodside')} />
         )}
 
         {/* Squid ink burst + the squid jetting left (fired by the
