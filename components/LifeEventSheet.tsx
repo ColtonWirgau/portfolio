@@ -9,6 +9,8 @@ export interface SubEvent {
   id: string;
   title: string;
   description: string;
+  /** Scannable achievement chips; use for stat-heavy sections, not stories. */
+  badges?: string[];
   images?: string[];
 }
 
@@ -78,7 +80,11 @@ export const lifeEvents: LifeEvent[] = [
         id: 'algonac-ib',
         title: 'IB Diploma Recipient',
         description:
-          'Completed the full International Baccalaureate Diploma at Algonac High School and graduated 3rd in class with a 4.2 GPA. That\'s the IB seal on the sash.',
+          'Completed the full International Baccalaureate Diploma at Algonac High School. That\'s the IB seal on the sash.',
+        badges: [
+          'Graduated 3rd in class',
+          '4.2 GPA',
+        ],
         images: [
           '/images/algonac-ib-diploma.webp',
           '/images/ib-logo.webp',
@@ -86,9 +92,14 @@ export const lifeEvents: LifeEvent[] = [
       },
       {
         id: 'algonac-track',
-        title: 'Track & Field Records',
-        description:
-          'Set 7 school records in track & field. All-State selection and the all-time leading scorer in Algonac HS history. Inducted into the Hall of Fame.',
+        title: 'Track & Field',
+        description: '',
+        badges: [
+          '7 school records',
+          'All-State selection',
+          'All-time leading scorer in Algonac HS history',
+          'Hall of Fame inductee',
+        ],
         images: [
           '/images/HSTrack8.jpg',
           '/images/HSTrack7.jpg',
@@ -162,7 +173,11 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-d1',
         title: 'D1 Track & Field',
         description:
-          'Competed as a Division I track & field athlete at the University of Detroit Mercy while carrying a full academic load and graduating with honors. Named Student Athlete of the Year and earned seven All-Horizon League selections over my career.',
+          'Competed as a Division I track & field athlete at the University of Detroit Mercy while carrying a full academic load and graduating with honors.',
+        badges: [
+          'Student Athlete of the Year',
+          '7x All-Horizon League selection',
+        ],
         images: [
           '/images/CollegeTrack2.jpg',
           '/images/CollegeTrack3.jpg',
@@ -531,9 +546,32 @@ function MainPageContent({ event }: { event: LifeEvent }) {
                 <h4 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--color-fg)', letterSpacing: '-0.01em', marginBottom: '8px' }}>
                   {sub.title}
                 </h4>
-                <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
-                  {sub.description}
-                </p>
+                {sub.description && (
+                  <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+                    {sub.description}
+                  </p>
+                )}
+                {sub.badges && sub.badges.length > 0 && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: sub.description ? '14px' : '4px' }}>
+                    {sub.badges.map((b) => (
+                      <span
+                        key={b}
+                        style={{
+                          fontSize: '12px',
+                          fontWeight: 500,
+                          color: 'var(--color-fg)',
+                          background: 'var(--color-card)',
+                          padding: '6px 13px',
+                          borderRadius: '100px',
+                          boxShadow: '0 2px 8px rgba(34, 33, 30, 0.12)',
+                          lineHeight: 1.3,
+                        }}
+                      >
+                        {b}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
               {hasPhotos && (
                 <div style={{ flex: '1 1 320px', minWidth: '280px', display: 'flex', justifyContent: 'center' }}>
