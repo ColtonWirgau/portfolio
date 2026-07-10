@@ -147,25 +147,46 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
             }}>
               {'“'}Sylvester: An Approach to Emotion Classification.{'”'} <em>New Trends in Information Technology</em>, 2017.
             </p>
-            <a
-              href="https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontSize: '13px',
-                fontWeight: 600,
-                color: 'var(--color-accent)',
-                textDecoration: 'none',
-              }}
-            >
-              Read the paper on ResearchGate
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg>
-            </a>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px' }}>
+              <a
+                href="https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: 'var(--color-accent)',
+                  textDecoration: 'none',
+                }}
+              >
+                Read the paper on ResearchGate
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </a>
+              <a
+                href="/sylvester-emotion-classification.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  color: 'var(--color-accent)',
+                  textDecoration: 'none',
+                }}
+              >
+                Download the PDF
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </SheetPage>

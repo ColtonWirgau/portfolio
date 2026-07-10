@@ -78,11 +78,11 @@ export const lifeEvents: LifeEvent[] = [
     subEvents: [
       {
         id: 'algonac-ib',
-        title: 'IB Diploma Recipient',
+        title: 'International Baccalaureate Diploma Programme',
         description:
-          'Completed the full International Baccalaureate Diploma at Algonac High School. That\'s the IB seal on the sash.',
+          'If you haven\'t met the IB: it\'s a two-year, all-in academic program where every subject runs at the highest level and everything is capped with internationally graded essays and exams. Very, very challenging, and worth it: I walked into college with about 54 credits already banked.',
         badges: [
-          'Graduated 3rd in class',
+          'IB Diploma recipient',
           '4.2 GPA',
         ],
         images: [
@@ -93,12 +93,13 @@ export const lifeEvents: LifeEvent[] = [
       {
         id: 'algonac-track',
         title: 'Track & Field',
-        description: '',
+        description:
+          'My job was simple: show up wherever points were available. I started as a mile-and-400 runner and worked my way down to the sprints, running everything from the 60 to the 400 by senior year, with the 400 as my main race and the anchor leg on most of our relays. All of it eventually bought me a Division I lane in Detroit.',
         badges: [
           '7 school records',
-          'All-State selection',
+          'All-State',
           'All-time leading scorer in Algonac HS history',
-          'Hall of Fame inductee',
+          'Hall of Fame',
         ],
         images: [
           '/images/HSTrack8.jpg',
@@ -107,9 +108,13 @@ export const lifeEvents: LifeEvent[] = [
       },
       {
         id: 'algonac-football',
-        title: 'Football Captain',
+        title: 'Football',
         description:
-          'Captain of the football team and All-Area selection. I played safety, running back, and wide receiver, returned punts and kicks, and even handled place kicking. About the only time I came off the field was kickoff. They called me the Energizer Bunny.',
+          'I played safety, running back, and wide receiver, returned punts and kicks, and even handled place kicking. About the only time I came off the field was kickoff. They called me the Energizer Bunny.',
+        badges: [
+          'Team captain',
+          'All-Area selection',
+        ],
         images: [
           '/images/algonac-football.webp',
           '/images/HS2.jpg',
@@ -188,6 +193,10 @@ export const lifeEvents: LifeEvent[] = [
         title: 'AI Research Publication',
         description:
           'Published "Sylvester: An Approach to Emotion Classification" at the New Trends in Information Technology conference (University of Jordan, Amman, April 2017), co-authored with Jalil Dennis and Dr. Shadi Banitaan. Sylvester learned the language of Twitter through automatic annotation and classification, interpreting tweets in real time to classify how people felt (fear, disgust, excitement, sadness, happiness, or anger) about any given subject. Pre-LLM NLP at its messiest: tokenization, language drift, sarcasm, slang, and ambiguity at scale.',
+        images: [
+          '/images/sylvester-page-1.webp',
+          '/images/sylvester-flow.webp',
+        ],
       },
       {
         id: 'detroit-music',
