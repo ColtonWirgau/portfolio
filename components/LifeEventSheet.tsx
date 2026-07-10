@@ -128,7 +128,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'algonac-faith',
         title: 'Faith & Foundation',
         description:
-          'I grew up in a church my great grandfather started, and faith has shaped how I see people, how I lead, and how I believe people should be treated: with kindness, grace, and the same patience that\'s been shown to me.',
+          'I grew up in a church my great grandfather started, and faith has shaped how I see people, how I lead, and how I believe people should be treated: with kindness, grace, and the same patience that\'s been shown to me. That doesn\'t stop at church. It carries into my work, my teams, and how I build things.',
         images: [
           '/images/algonac-church.webp',
           '/images/algonac-youth-group.webp',
@@ -186,7 +186,7 @@ export const lifeEvents: LifeEvent[] = [
         id: 'detroit-d1',
         title: 'D1 Track & Field',
         description:
-          'Ran Division I track & field at Detroit Mercy while carrying a full academic load.',
+          'Ran Division I track & field at Detroit Mercy while carrying a full software engineering course load. Balancing a full season against an engineering degree taught me more about time management and discipline than any class did.',
         badges: [
           'Student Athlete of the Year',
           '7x All-Horizon League',
@@ -255,6 +255,10 @@ export const lifeEvents: LifeEvent[] = [
     storyPath: '/career',
     description:
       'Software Development Manager and Full-Stack Developer at Woodside Bible Church since 2016. As the sole in-house developer, I design and build internal tools, platforms, and widgets that serve thousands of people every week while managing contractors and coordinating with MarCom.',
+    mainPhotos: [
+      '/images/woodside-team-event-1.webp',
+      '/images/woodside-team-event-2.webp',
+    ],
     highlights: [
       'Software Dev Manager / Full-Stack Developer since 2016',
       'Built apps.woodsidebible.org from scratch',
@@ -332,6 +336,7 @@ export const lifeEvents: LifeEvent[] = [
         images: [
           '/images/wedding-plane.webp',
           '/images/wedding-hangar.webp',
+          '/images/family-wedding-dance.webp',
         ],
       },
       {
@@ -378,6 +383,10 @@ export const lifeEvents: LifeEvent[] = [
         title: 'Football',
         description:
           'Football never really stopped for me. I still play flag football and I\'m a proud Detroit Lions season ticket holder. I even built RoarTracker, a personal app to manage season tickets, track attendance, resale, and spending data.',
+        images: [
+          '/images/hobbies-flag-football.webp',
+          '/images/hobbies-ford-field.webp',
+        ],
       },
       {
         id: 'hobbies-tattoos',
