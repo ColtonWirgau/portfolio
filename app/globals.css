@@ -237,6 +237,9 @@ body,
     -webkit-overflow-scrolling: touch;
     width: 100vw;
     margin-left: calc(-24px - env(safe-area-inset-left, 0px));
+    /* Room for the carousel dots below; on desktop the dots are hidden
+       and the grid ends flush so the About side label lines up. */
+    margin-bottom: 60px;
     padding: 0 24px;
     box-sizing: border-box;
   }

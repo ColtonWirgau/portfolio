@@ -239,12 +239,9 @@ export default function WoodsidePage() {
           style={{ position: 'relative', fontFamily: 'var(--font-sans)', fontWeight: 900, fontSize: 'clamp(1.9rem, 5vw, 3.2rem)', color: INK, lineHeight: 1.08, letterSpacing: '-0.02em', textTransform: 'uppercase', maxWidth: '780px', margin: '0 auto 40px' }}>
           Whatever it takes to<br /><span style={{ color: GREEN }}>make ministry easier.</span>
         </motion.h2>
-        <motion.div variants={reveal} custom={1} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/work/church-hub" style={{ fontSize: '14px', fontWeight: 800, color: NAVY, background: GREEN, padding: '13px 26px', borderRadius: '100px', textDecoration: 'none', letterSpacing: '0.02em' }}>
-            See Church Hub
-          </Link>
-          <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 800, color: GREEN, padding: '13px 26px', borderRadius: '100px', background: 'transparent', border: `1px solid rgba(98,187,70,0.5)`, letterSpacing: '0.02em', cursor: 'pointer', fontFamily: 'inherit' }}>
-            Back to Work
+        <motion.div variants={reveal} custom={1} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ display: 'flex', justifyContent: 'center' }}>
+          <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 800, color: NAVY, background: GREEN, padding: '13px 30px', borderRadius: '100px', border: 'none', letterSpacing: '0.02em', cursor: 'pointer', fontFamily: 'inherit' }}>
+            My Work
           </button>
         </motion.div>
       </section>

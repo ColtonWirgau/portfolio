@@ -180,12 +180,9 @@ export default function HowIBuildPage() {
           style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.9rem, 5vw, 3.2rem)', color: 'var(--color-fg)', lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', maxWidth: '760px', margin: '0 auto 36px' }}>
           The best code is the code<br />future-me can change without fear.
         </motion.h2>
-        <motion.div variants={reveal} custom={1} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-bg)', background: 'var(--color-accent)', padding: '13px 26px', borderRadius: '100px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-            See the work
-          </button>
-          <button type="button" onClick={(e) => exitWithInk(e, '/#about')} style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-accent)', padding: '13px 26px', borderRadius: '100px', background: 'transparent', border: '1px solid var(--color-border)', cursor: 'pointer', fontFamily: 'inherit' }}>
-            Back to start
+        <motion.div variants={reveal} custom={1} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ display: 'flex', justifyContent: 'center' }}>
+          <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-bg)', background: 'var(--color-accent)', padding: '13px 30px', borderRadius: '100px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+            My Work
           </button>
         </motion.div>
       </section>

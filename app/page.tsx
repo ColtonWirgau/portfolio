@@ -1071,7 +1071,7 @@ export default function Home() {
             </div>
 
             {/* Portrait cards row / carousel */}
-            <div className="story-grid" ref={storyCarouselRef} style={{ marginBottom: '60px' }}>
+            <div className="story-grid" ref={storyCarouselRef}>
               {[0, 1, 2].map((setIndex) => (
                 <Fragment key={setIndex}>
                   {lifeEvents.map((event) => (

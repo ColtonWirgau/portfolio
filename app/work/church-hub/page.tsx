@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Footer } from '@/components/Footer';
@@ -285,12 +284,9 @@ export default function ChurchHubPage() {
             style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(2rem, 5vw, 3.4rem)', color: INK, lineHeight: 1.15, maxWidth: '760px', margin: '0 auto 40px' }}>
             A platform they own, not a subscription they rent.
           </motion.h2>
-          <motion.div variants={reveal} custom={2} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/work/woodside" style={{ fontSize: '14px', fontWeight: 700, color: CREAM, background: BLUE_DEEP, padding: '13px 26px', borderRadius: '100px', textDecoration: 'none', letterSpacing: '0.02em' }}>
-              Next: Woodside
-            </Link>
-            <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 700, color: BLUE_DEEP, padding: '13px 26px', borderRadius: '100px', background: 'transparent', border: `1px solid ${BLUE}`, letterSpacing: '0.02em', cursor: 'pointer', fontFamily: 'inherit' }}>
-              Back to Work
+          <motion.div variants={reveal} custom={2} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ display: 'flex', justifyContent: 'center' }}>
+            <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 700, color: CREAM, background: BLUE_DEEP, padding: '13px 30px', borderRadius: '100px', border: 'none', letterSpacing: '0.02em', cursor: 'pointer', fontFamily: 'inherit' }}>
+              My Work
             </button>
           </motion.div>
         </section>
