@@ -8,6 +8,7 @@ Running list of things to come back to. (Older, stale planning lives in NEXT_STE
 - [ ] **Tattoos (Hobbies sheet):** real photos of the tattoo sleeve. The Tattoos section still says "detailed photos coming soon."
 - [ ] **Working shots:** a photo of Colton working at his desk in the office, and maybe another of him working at Woodside.
 - [ ] **Career card/header image:** replace the Troy / Career event header image (currently a stock Unsplash photo). A desk / working shot from above could double as this.
+- [ ] **Church Hub / Woodside pages:** get more images for these work pages.
 
 ## Design & build
 
