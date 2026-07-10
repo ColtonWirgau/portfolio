@@ -126,7 +126,7 @@ function OptimisticDemo() {
   };
 
   return (
-    <DemoFrame label="Snappy by default: optimistic UI" caption="The row lands the instant you click, in a pending state, then settles once the server answers 200. The check is a quick flourish, not a permanent badge. Delete is optimistic too. If a write failed, it would roll back.">
+    <DemoFrame label="Optimistic, but not too optimistic" caption="Adding a row shows instantly and settles once the server answers 200. But delete gets a processing state first, not an instant poof: if it looked done and quietly failed, you'd move on and never catch that it never actually worked. The check is a quick flourish, not a permanent badge, and anything that fails rolls back.">
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px' }}>
         <AnimatePresence initial={false}>
           {items.map((i) => (
