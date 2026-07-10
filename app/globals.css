@@ -393,6 +393,20 @@ body,
   font-size: 10px !important;
 }
 
+/* How I Build page demos: skeleton shimmer + pending spinner. */
+@keyframes hib-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.hib-shimmer {
+  background: linear-gradient(90deg, rgba(168,164,152,0.22) 25%, rgba(168,164,152,0.45) 37%, rgba(168,164,152,0.22) 63%);
+  background-size: 200% 100%;
+  animation: hib-shimmer 1.4s ease-in-out infinite;
+  border-radius: 4px;
+}
+@keyframes hib-spin { to { transform: rotate(360deg); } }
+.hib-spin { display: inline-block; animation: hib-spin 0.7s linear infinite; }
+
 /* "How I build" interstitial band between Work and My Story: a quiet
    divider (no floating card), integrated into the page rhythm. */
 .how-i-build-band {

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Footer } from '@/components/Footer';
 import { InkCloseButton, useInkExit } from '@/components/InkExit';
+import { HowIBuildDemo, type DemoId } from '@/components/HowIBuildDemos';
 
 /* How I Build: Colton's engineering philosophy, in his own voice. Uses
    the main site theme (paper + accent), not a project brand. This is a
@@ -18,7 +19,7 @@ const reveal = {
 };
 
 type Principle = { p: string; d: string };
-type Section = { kicker: string; heading: string; lead: string; principles: Principle[] };
+type Section = { kicker: string; heading: string; lead: string; principles: Principle[]; demos?: DemoId[] };
 
 const SECTIONS: Section[] = [
   {
@@ -27,11 +28,10 @@ const SECTIONS: Section[] = [
     lead: 'If someone needs a tutorial to use what I built, I did it wrong. Most of my users are non-technical ministry staff, and they are the bar: if a busy person can sit down and just get it, the design is done.',
     principles: [
       { p: 'Clarity over cleverness.', d: 'Say just enough, at the right time. A clever interaction that needs explaining loses to a plain one that doesn’t.' },
-      { p: 'A wall of text says nothing.', d: 'The instinct, usually from non-technical stakeholders, is to put everything on the screen at once. But say it all and nobody reads any of it, so you have said nothing. The work is making it simpler without losing anything: lead with the one thing that matters, let people drill in for the rest, and let hierarchy, icons, and color carry what would otherwise be another paragraph.' },
       { p: 'Mobile is not a smaller desktop.', d: 'I design the phone experience as its own first-class thing: styled bottom sheets, thumb-reachable controls, layouts that reflow instead of shrink.' },
       { p: 'Motion should mean something.', d: 'Animation earns its place when it explains where something came from or where it went. If it’s only decoration, it’s noise.' },
-      { p: 'Snappy by default: optimistic UI.', d: 'The interface shouldn’t sit and wait on the network to feel alive. Add something from a modal and the modal closes and the item shows up immediately, just in a pending state. When the API comes back 200 I settle it into place with a toast or a small microinteraction; if it fails, I roll it back honestly. Speed people can feel beats technically-correct-but-laggy every time.' },
     ],
+    demos: ['wallOfText', 'optimistic'],
   },
   {
     kicker: 'Frontend',
@@ -83,10 +83,9 @@ const SECTIONS: Section[] = [
     lead: 'A lot of how an app feels comes down to unglamorous decisions about where work happens and what the user sees while it happens. I sweat these details, because they’re the difference between something that feels instant and something that feels like it’s thinking.',
     principles: [
       { p: 'Do the work where it’s cheapest.', d: 'Before I optimize the frontend, I ask whether the work belongs there at all. Sometimes the right move is a nested-JSON stored procedure that does the heavy lifting in one round trip and hands the client something dumb and ready to render, instead of shipping raw rows and stitching them together in the browser.' },
-      { p: 'Know what’s static, and show it first.', d: 'Most screens have parts that never change and parts that wait on data. I render the static shell immediately and let the slow pieces stream in, so you’re looking at something real in milliseconds instead of a blank page.' },
       { p: 'Cache the stable, and trust it.', d: 'I work out what can actually be cached, and what changes too often to trust, then lean on it hard so repeat views feel instant. If I can’t confidently invalidate it, I don’t cache it.' },
-      { p: 'Skeletons and microinteractions, placed on purpose.', d: 'Where a wait is unavoidable, a skeleton that matches the real layout, or a small microinteraction, makes it feel intentional instead of broken. Used well, they change how fast the whole thing feels even when the numbers are identical.' },
     ],
+    demos: ['skeleton'],
   },
   {
     kicker: 'Defaults & preferences',
@@ -144,6 +143,12 @@ export default function HowIBuildPage() {
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.9rem, 4.6vw, 3rem)', color: 'var(--color-fg)', lineHeight: 1.02, letterSpacing: '-0.02em', textTransform: 'uppercase', marginBottom: '20px' }}>{s.heading}</h2>
                 <p style={{ fontSize: '16px', lineHeight: 1.8, color: 'var(--color-muted)' }}>{s.lead}</p>
               </motion.div>
+
+              {s.demos && s.demos.length > 0 && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                  {s.demos.map((d) => <HowIBuildDemo key={d} id={d} />)}
+                </div>
+              )}
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2px', border: '1px solid var(--color-border)', borderRadius: '10px', overflow: 'hidden', background: 'var(--color-border)' }}>
                 {s.principles.map((pr, i) => (
