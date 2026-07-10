@@ -457,6 +457,39 @@ function ScreenGallery({
     setActive(best);
   };
 
+  // Arrow controls: center the target slide in the track. Not everyone
+  // can scroll horizontally with a mouse, so swiping can't be the only
+  // way through the gallery.
+  const scrollToSlide = (idx: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const child = el.children[Math.max(0, Math.min(screens.length - 1, idx))] as HTMLElement | undefined;
+    if (!child) return;
+    const elRect = el.getBoundingClientRect();
+    const childRect = child.getBoundingClientRect();
+    el.scrollTo({
+      left: el.scrollLeft + (childRect.left - elRect.left) - (el.clientWidth - childRect.width) / 2,
+      behavior: 'smooth',
+    });
+  };
+
+  const arrowStyle = (enabled: boolean): React.CSSProperties => ({
+    width: '30px',
+    height: '30px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    border: '1px solid var(--color-border)',
+    borderRadius: '100px',
+    background: 'transparent',
+    color: 'var(--color-muted)',
+    cursor: enabled ? 'pointer' : 'default',
+    opacity: enabled ? 1 : 0.35,
+    transition: 'color 0.15s, opacity 0.2s',
+    padding: 0,
+  });
+
   return (
     <div className="screen-gallery" style={{ marginBottom: '28px' }}>
       <div
@@ -498,19 +531,43 @@ function ScreenGallery({
       </div>
 
       {screens.length > 1 && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', padding: '20px 0 0' }}>
-          {screens.map((screen, i) => (
-            <div
-              key={screen.desktop}
-              style={{
-                width: active === i ? '24px' : '8px',
-                height: '8px',
-                borderRadius: '100px',
-                background: active === i ? 'var(--color-fg)' : 'var(--color-border)',
-                transition: 'all 0.3s ease',
-              }}
-            />
-          ))}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '18px', padding: '20px 0 0' }}>
+          <button
+            type="button"
+            aria-label="Previous screenshot"
+            disabled={active === 0}
+            onClick={() => scrollToSlide(active - 1)}
+            style={arrowStyle(active > 0)}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-fg)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
+          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            {screens.map((screen, i) => (
+              <div
+                key={screen.desktop}
+                style={{
+                  width: active === i ? '24px' : '8px',
+                  height: '8px',
+                  borderRadius: '100px',
+                  background: active === i ? 'var(--color-fg)' : 'var(--color-border)',
+                  transition: 'all 0.3s ease',
+                }}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            aria-label="Next screenshot"
+            disabled={active === screens.length - 1}
+            onClick={() => scrollToSlide(active + 1)}
+            style={arrowStyle(active < screens.length - 1)}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-fg)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M9 18l6-6-6-6" /></svg>
+          </button>
         </div>
       )}
     </div>
