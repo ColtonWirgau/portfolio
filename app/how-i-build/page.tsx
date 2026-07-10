@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Footer } from '@/components/Footer';
+import { InkCloseButton, useInkExit } from '@/components/InkExit';
 
 /* How I Build: Colton's engineering philosophy, in his own voice. Uses
    the main site theme (paper + accent), not a project brand. This is a
@@ -91,17 +91,19 @@ const SECTIONS: Section[] = [
 ];
 
 export default function HowIBuildPage() {
+  const { exitWithInk, inkOverlay } = useInkExit('/#work');
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', color: 'var(--color-fg)' }}>
+      {/* Like the other morph-opened pages, this one is an overlay: no site
+          nav, just the fixed close control and the ink flood back out. */}
+      <style>{`body > nav { display: none !important; }`}</style>
+
+      <InkCloseButton onClick={exitWithInk} color="var(--color-accent)" background="rgba(213,210,200,0.6)" border="var(--color-border)" />
+      {inkOverlay}
+
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(80px, 14vh, 150px) 24px clamp(40px, 6vh, 64px)' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Link href="/#work" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--color-accent)', fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em', textDecoration: 'none', textTransform: 'uppercase', marginBottom: 'clamp(36px, 7vh, 72px)' }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
-              Back to Work
-            </Link>
-          </motion.div>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.12 }}
             style={{ fontSize: '12px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--color-muted)', fontWeight: 700, marginBottom: '18px' }}>
             How I Build
@@ -158,12 +160,12 @@ export default function HowIBuildPage() {
           The best code is the code<br />future-me can change without fear.
         </motion.h2>
         <motion.div variants={reveal} custom={1} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link href="/#work" style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-bg)', background: 'var(--color-accent)', padding: '13px 26px', borderRadius: '100px', textDecoration: 'none' }}>
+          <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-bg)', background: 'var(--color-accent)', padding: '13px 26px', borderRadius: '100px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
             See the work
-          </Link>
-          <Link href="/#about" style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-accent)', padding: '13px 26px', borderRadius: '100px', textDecoration: 'none', border: '1px solid var(--color-border)' }}>
+          </button>
+          <button type="button" onClick={(e) => exitWithInk(e, '/#about')} style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-accent)', padding: '13px 26px', borderRadius: '100px', background: 'transparent', border: '1px solid var(--color-border)', cursor: 'pointer', fontFamily: 'inherit' }}>
             Back to start
-          </Link>
+          </button>
         </motion.div>
       </section>
 

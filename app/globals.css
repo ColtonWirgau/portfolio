@@ -134,8 +134,11 @@ body,
   /* The wrapper clips (overflow hidden) for the personal-view slide
      transition; bleed it to the viewport edges and pad the content back
      in so the carousel inside can reach the true screen edge instead of
-     being chopped at the site gutter. */
+     being chopped at the site gutter. (On desktop the wrapper stays
+     overflow: visible so the poster hover-scale isn't clipped on the
+     outer edges; the page's <main> is overflow-x-hidden regardless.) */
   .poster-grid-wrapper {
+    overflow: hidden;
     margin-left: calc(-24px - env(safe-area-inset-left, 0px));
     margin-right: calc(-24px - env(safe-area-inset-right, 0px));
     padding-left: calc(24px + env(safe-area-inset-left, 0px));

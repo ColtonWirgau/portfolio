@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Footer } from '@/components/Footer';
+import { InkCloseButton, useInkExit } from '@/components/InkExit';
 
 /* ── Woodside brand system ────────────────────────────────────────────
    Loosely off woodsidebible.org: deep navy, a bright green accent, and
@@ -67,9 +68,13 @@ const NOTABLE = [
 const TECH = ['SQL Server', 'MinistryPlatform', 'Power BI', 'Next.js', 'React', 'TypeScript', 'Node.js', 'REST API', 'WordPress', 'Planning Center', 'REACH', 'Neon', 'Tailwind'];
 
 export default function WoodsidePage() {
+  const { exitWithInk, inkOverlay } = useInkExit('/#work');
   return (
     <div style={{ position: 'relative', minHeight: '100vh', background: NAVY, color: INK, overflowX: 'clip' }}>
       <style>{`body > nav { display: none !important; }`}</style>
+
+      <InkCloseButton onClick={exitWithInk} color={GREEN} background="rgba(22,32,43,0.55)" border="rgba(98,187,70,0.45)" />
+      {inkOverlay}
 
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section style={{ position: 'relative', minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(80px, 12vh, 140px) 24px clamp(48px, 8vh, 80px)', overflow: 'hidden' }}>
@@ -82,15 +87,6 @@ export default function WoodsidePage() {
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }}
         />
         <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, ${NAVY} 6%, rgba(22,32,43,0.72) 45%, rgba(22,32,43,0.55) 100%)` }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, padding: 'clamp(28px, 5vh, 48px) 24px' }}>
-          <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-            <Link href="/#work" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: GREEN, fontSize: '13px', fontWeight: 800, letterSpacing: '0.06em', textDecoration: 'none', textTransform: 'uppercase' }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
-              Work
-            </Link>
-          </div>
-        </div>
-
         <div style={{ position: 'relative', maxWidth: '1080px', margin: '0 auto', width: '100%' }}>
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}
             style={{ fontSize: '12px', letterSpacing: '0.22em', textTransform: 'uppercase', color: GREEN, fontWeight: 800, marginBottom: '18px' }}>
@@ -244,9 +240,9 @@ export default function WoodsidePage() {
           <Link href="/work/church-hub" style={{ fontSize: '14px', fontWeight: 800, color: NAVY, background: GREEN, padding: '13px 26px', borderRadius: '100px', textDecoration: 'none', letterSpacing: '0.02em' }}>
             See Church Hub
           </Link>
-          <Link href="/#work" style={{ fontSize: '14px', fontWeight: 800, color: GREEN, padding: '13px 26px', borderRadius: '100px', textDecoration: 'none', border: `1px solid rgba(98,187,70,0.5)`, letterSpacing: '0.02em' }}>
+          <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 800, color: GREEN, padding: '13px 26px', borderRadius: '100px', background: 'transparent', border: `1px solid rgba(98,187,70,0.5)`, letterSpacing: '0.02em', cursor: 'pointer', fontFamily: 'inherit' }}>
             Back to Work
-          </Link>
+          </button>
         </motion.div>
       </section>
 

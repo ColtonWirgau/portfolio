@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Footer } from '@/components/Footer';
+import { InkCloseButton, useInkExit } from '@/components/InkExit';
 
 /* ── Church Hub brand system ──────────────────────────────────────────
    Marble over cream, warm-gray ink, a soft slate-blue accent, serif
@@ -143,6 +144,7 @@ function Pillar({ index, kicker, heading, body, children }: {
 }
 
 export default function ChurchHubPage() {
+  const { exitWithInk, inkOverlay } = useInkExit('/#work');
   return (
     <div style={{ position: 'relative', minHeight: '100vh', background: CREAM, color: INK, overflowX: 'clip' }}>
       {/* page-wide marble wash, matching the poster / sheet / transition */}
@@ -152,6 +154,9 @@ export default function ChurchHubPage() {
 
       <style>{`body > nav { display: none !important; }`}</style>
 
+      <InkCloseButton onClick={exitWithInk} color={BLUE_DEEP} background="rgba(237,232,224,0.6)" border="rgba(123,163,201,0.55)" />
+      {inkOverlay}
+
       <div style={{ position: 'relative', zIndex: 1 }}>
         {/* ── Hero ───────────────────────────────────────────── */}
         <section style={{ position: 'relative', minHeight: '88vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(80px, 12vh, 140px) 24px 60px', overflow: 'hidden' }}>
@@ -160,13 +165,6 @@ export default function ChurchHubPage() {
           <div style={{ position: 'absolute', top: '8%', right: '4%', pointerEvents: 'none' }}>
             <HubGlyph size={280} opacity={0.12} />
           </div>
-
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.05 }} style={{ maxWidth: '1040px', margin: '0 auto', width: '100%' }}>
-            <Link href="/#work" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: BLUE_DEEP, fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em', textDecoration: 'none', textTransform: 'uppercase', marginBottom: 'clamp(40px, 8vh, 88px)' }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M15 18l-6-6 6-6" /></svg>
-              Work
-            </Link>
-          </motion.div>
 
           <div style={{ maxWidth: '1040px', margin: '0 auto', width: '100%' }}>
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}
@@ -288,9 +286,9 @@ export default function ChurchHubPage() {
             <Link href="/work/woodside" style={{ fontSize: '14px', fontWeight: 700, color: CREAM, background: BLUE_DEEP, padding: '13px 26px', borderRadius: '100px', textDecoration: 'none', letterSpacing: '0.02em' }}>
               Next: Woodside
             </Link>
-            <Link href="/#work" style={{ fontSize: '14px', fontWeight: 700, color: BLUE_DEEP, padding: '13px 26px', borderRadius: '100px', textDecoration: 'none', border: `1px solid ${BLUE}`, letterSpacing: '0.02em' }}>
+            <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 700, color: BLUE_DEEP, padding: '13px 26px', borderRadius: '100px', background: 'transparent', border: `1px solid ${BLUE}`, letterSpacing: '0.02em', cursor: 'pointer', fontFamily: 'inherit' }}>
               Back to Work
-            </Link>
+            </button>
           </motion.div>
         </section>
 
