@@ -30,6 +30,7 @@ const SECTIONS: Section[] = [
       { p: 'Show one thing, hide the rest.', d: 'Progressive disclosure by default. Lead with the decision in front of the person; let them drill in for the rest. Sheets and detail views instead of walls of controls.' },
       { p: 'Mobile is not a smaller desktop.', d: 'I design the phone experience as its own first-class thing: styled bottom sheets, thumb-reachable controls, layouts that reflow instead of shrink.' },
       { p: 'Motion should mean something.', d: 'Animation earns its place when it explains where something came from or where it went. If it’s only decoration, it’s noise.' },
+      { p: 'Snappy by default: optimistic UI.', d: 'The interface shouldn’t sit and wait on the network to feel alive. Add something from a modal and the modal closes and the item shows up immediately, just in a pending state. When the API comes back 200 I settle it into place with a toast or a small microinteraction; if it fails, I roll it back honestly. Speed people can feel beats technically-correct-but-laggy every time.' },
     ],
   },
   {
