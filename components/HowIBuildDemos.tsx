@@ -75,10 +75,10 @@ function Segmented<T extends string>({ options, value, onChange }: { options: { 
               <motion.span
                 layoutId={`seg-${uid}`}
                 transition={{ type: 'spring', stiffness: 420, damping: 34 }}
-                style={{ position: 'absolute', inset: 0, background: ACCENT, borderRadius: '100px', zIndex: -1 }}
+                style={{ position: 'absolute', inset: 0, background: ACCENT, borderRadius: '100px' }}
               />
             )}
-            {o.label}
+            <span style={{ position: 'relative', zIndex: 1 }}>{o.label}</span>
           </span>
         );
       })}
