@@ -217,10 +217,15 @@ export function Footer() {
         </svg>
       </div>
 
-      {/* Footer body */}
+      {/* Footer body. The -1px top margin tucks it under the wave SVG:
+          fractional layout heights can otherwise leave a subpixel seam
+          between the two blocks that shows the page background through
+          as a thin horizontal line. */}
       <div
+        className="footer-body"
         style={{
           background: FOOTER_BG,
+          marginTop: '-1px',
           padding: '20px 24px 40px',
           position: 'relative',
           overflowX: 'clip',
@@ -307,7 +312,7 @@ export function Footer() {
         </div>
 
         {/* Footer content */}
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+        <div className="footer-content" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
           {/* Social icons */}
           <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
             <a href="https://github.com/ColtonWirgau/" target="_blank" rel="noopener noreferrer" style={{ color: '#6B665C', transition: 'color 0.2s' }} onMouseEnter={e => (e.currentTarget.style.color = 'var(--color-accent)')} onMouseLeave={e => (e.currentTarget.style.color = '#6B665C')}>
