@@ -1,8 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { ChevronRight } from 'lucide-react';
-import { ResponsiveSheet, SheetPage, useResponsiveSheet } from './ResponsiveSheet';
+import { ResponsiveSheet, SheetPage } from './ResponsiveSheet';
 
 // ── Types ──
 
@@ -10,7 +9,7 @@ export interface SubEvent {
   id: string;
   title: string;
   description: string;
-  image?: string;
+  images?: string[];
 }
 
 export interface LifeEvent {
@@ -29,6 +28,10 @@ export interface LifeEvent {
   narrativeImages?: string[];
   gallery?: string[];
   pullQuote?: string;
+  /** Optional lead filmstrip under the description; sections carry their own photos. */
+  mainPhotos?: string[];
+  /** Photos shown whole in the header; defaults to [image]. */
+  headerPhotos?: string[];
 }
 
 // ── Data ──
@@ -58,9 +61,9 @@ export const lifeEvents: LifeEvent[] = [
       '/images/algonac-childhood.webp',
       '/images/algonac-football.webp',
       '/images/HSTrack8.jpg',
-      '/images/Hs1.jpg',
     ],
     gallery: [
+      '/images/algonac-ib-diploma.webp',
       '/images/algonac-track-blocks.webp',
       '/images/HSTrack7.jpg',
       '/images/HSTrack3.jpg',
@@ -76,26 +79,47 @@ export const lifeEvents: LifeEvent[] = [
         id: 'algonac-ib',
         title: 'IB Diploma Recipient',
         description:
-          'Completed the full International Baccalaureate Diploma at Algonac High School, one of the most rigorous academic tracks available. Graduated 3rd in class with a 4.2 GPA.',
+          'Completed the full International Baccalaureate Diploma at Algonac High School and graduated 3rd in class with a 4.2 GPA. That\'s the IB seal on the sash.',
+        images: [
+          '/images/algonac-ib-diploma.webp',
+          '/images/ib-logo.webp',
+        ],
       },
       {
         id: 'algonac-track',
         title: 'Track & Field Records',
         description:
           'Set 7 school records in track & field. All-State selection and the all-time leading scorer in Algonac HS history. Inducted into the Hall of Fame.',
+        images: [
+          '/images/HSTrack8.jpg',
+          '/images/HSTrack7.jpg',
+          '/images/HSTrack3.jpg',
+        ],
       },
       {
         id: 'algonac-football',
         title: 'Football Captain',
         description:
           'Captain of the football team. Earned All-Area honors and helped lead the team through some of its best seasons.',
+        images: [
+          '/images/algonac-football.webp',
+          '/images/HS2.jpg',
+        ],
       },
       {
         id: 'algonac-faith',
         title: 'Faith & Foundation',
         description:
-          'Grew up in a church my great grandfather started. Faith has always been a central part of my life. It shaped how I see people, how I lead, and how I believe people should be treated. I care a lot about treating people with kindness, with grace, and with the same patience that\'s been shown to me. That doesn\'t stop at church. It carries into my work, my teams, and how I build things.',
+          'I grew up in a church my great grandfather started, and faith has shaped how I see people, how I lead, and how I believe people should be treated: with kindness, grace, and the same patience that\'s been shown to me. That doesn\'t stop at church. It carries into my work, my teams, and how I build things.',
+        images: [
+          '/images/algonac-church.webp',
+          '/images/algonac-youth-group.webp',
+        ],
       },
+    ],
+    headerPhotos: [
+      '/images/algonac-childhood.webp',
+      '/images/algonac-graduation-speech.webp',
     ],
     image: '/images/algonac-graduation-speech.webp',
     lat: 42.6189,
@@ -108,15 +132,14 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'Where I found my craft',
     storyPath: '/college',
     description:
-      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use. Not just writing code, but solving real problems.',
+      'Went to school at the University of Detroit Mercy, where the energy of the city shaped my hustle. Graduated with honors with a BS in Software Engineering and a minor in Leadership. College is where I fell in love with building things that people actually use. Not just writing code, but solving real problems. I also somehow ended up as the star of a UDM commercial: that\'s me in the stills, working a build session and out on a community cleanup.',
     highlights: [
       'BS Software Engineering, Minor in Leadership, Graduated with Honors',
       'Division I track & field athlete, Student Athlete of the Year',
       'Seven Time All-Horizon League selection (Track & Field)',
       'Published: "Sylvester: An Approach to Emotion Classification"',
       'Embedded Systems Engineering Intern at Continental Automotive',
-      'IT Coordinator: integrated websites, databases, and new systems for the university',
-      'Most sought-after tutor at the Student Success Center',
+      'Student Success Center: most sought-after tutor, promoted to IT Coordinator',
       'Star of a UDM commercial (yes, really)',
     ],
     narrative: [
@@ -132,48 +155,55 @@ export const lifeEvents: LifeEvent[] = [
       '/images/udm-commercial-model.webp',
       '/images/udm-commercial-cleanup.webp',
     ],
+    mainPhotos: [
+      '/images/udm-commercial-model.webp',
+      '/images/udm-commercial-cleanup.webp',
+    ],
     subEvents: [
       {
         id: 'detroit-d1',
         title: 'D1 Track & Field',
         description:
           'Competed as a Division I track & field athlete at the University of Detroit Mercy while carrying a full academic load and graduating with honors. Named Student Athlete of the Year and earned seven All-Horizon League selections over my career.',
+        images: [
+          '/images/CollegeTrack2.jpg',
+          '/images/CollegeTrack3.jpg',
+        ],
       },
       {
         id: 'detroit-ai',
         title: 'AI Research Publication',
         description:
-          'Published "Sylvester: An Approach to Emotion Classification" in New Trends in Information Technology, 2017. A collaborative AI program that learns the language of Twitter through automatic annotation and classification, collecting and interpreting tweets in real time to determine how users feel emotionally about any given subject based on current language.',
+          'Published "Sylvester: An Approach to Emotion Classification" at the New Trends in Information Technology conference (University of Jordan, Amman, April 2017), co-authored with Jalil Dennis and Dr. Shadi Banitaan. Sylvester learned the language of Twitter through automatic annotation and classification, interpreting tweets in real time to classify how people felt (fear, disgust, excitement, sadness, happiness, or anger) about any given subject. Pre-LLM NLP at its messiest: tokenization, language drift, sarcasm, slang, and ambiguity at scale.',
       },
       {
         id: 'detroit-music',
         title: 'Music & Worship',
         description:
           'Led worship at church throughout college, playing music, running events, and balancing it all with academics and athletics. Music, creativity, and working with people have always been a big part of who I am. Still plays at Woodside Bible Church and has played many large shows over the years.',
+        images: [
+          '/images/music-2.webp',
+          '/images/music-3.webp',
+        ],
       },
       {
         id: 'detroit-continental',
         title: 'Continental Automotive Internship',
         description:
           'Embedded Systems Engineering Intern at Continental Automotive (May–Sep 2015). Built a graphical user interface for testing a cybersecurity module found in many Chrysler and Jeep vehicles. The interface verified that plugged-in modules met all security requirements. The work was heavily C-based and requirement-driven.',
+        images: [
+          '/images/continental-logo.webp',
+        ],
       },
       {
-        id: 'detroit-it',
-        title: 'IT Coordinator at UDM',
+        id: 'detroit-ssc-it',
+        title: 'Student Success Center: Tutor to IT Coordinator',
         description:
-          'IT Coordinator at the University of Detroit Mercy (Sep 2015–Aug 2018). Helped integrate three new websites, managed multiple databases, provided technical support for users and staff, and performed data analytics for university departments. After graduation, was hired by the university to integrate a new system for the disability support services, student success center, and testing center.',
-      },
-      {
-        id: 'detroit-commercial',
-        title: 'The UDM Commercial',
-        description:
-          'Somehow I ended up as the star of a University of Detroit Mercy commercial. I\'m not entirely sure how it happened, but it did, and I\'m told it was very convincing. That\'s me in the stills below: working a build session with a professor and out on a community cleanup in the UDM colors.',
-      },
-      {
-        id: 'detroit-ssc',
-        title: 'Student Success Center',
-        description:
-          'Tutor and Teacher\'s Assistant at UDM\'s Student Success Center. Tutored high-level math and statistics one-on-one and in large groups. Served as a TA in English, Math, and Computer Science courses. Helped high-risk students with time management skills. Consistently one of the center\'s most sought-after tutors. Led a digital transformation of the center\'s operations, replacing manual paper timecards and appointment tracking with an automated online platform integrated with university ID scan cards.',
+          'I started at UDM\'s Student Success Center as a tutor: high-level math and stats, TA work in English, Math, and Computer Science, consistently one of the most requested. The center was operationally living in the stone age, and fixing that got me promoted into IT. I still tutored here and there, but mostly I was integrating and managing systems: an automated platform tied to university ID scan cards that replaced paper timecards and appointment tracking, new websites, databases, and data analytics (2015 to 2018). After graduation, they hired me back to integrate a new system across disability support services, the success center, and the testing center.',
+        images: [
+          '/images/udm-learning-center.webp',
+          '/images/udm-ssc-team.webp',
+        ],
       },
     ],
     image: '/images/college-track-1.webp',
@@ -200,12 +230,14 @@ export const lifeEvents: LifeEvent[] = [
       'After graduating, Woodside didn\u2019t want to lose me, so they created a role for me. I stepped into web development, database work, and solving problems that nobody else had time to touch. One of my first projects was cleaning up our database. I ended up deactivating about two thirds of it and building better systems to track real engagement. Some of that work eventually made its way into the main MinistryPlatform product.',
       'From there, I started my own business. I saw the same problems popping up across churches everywhere, so I began helping teams build better tools, better experiences, and better systems. A lot of what I do now lives at the intersection of product thinking, UX, and real-world ministry needs.',
     ],
-    narrativeImages: [
-      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=400&fit=crop',
-    ],
     pullQuote: 'I care a lot about clarity. Not overwhelming people. Saying just enough, at the right time. Good design should feel obvious.',
     subEvents: [
+      {
+        id: 'troy-origin',
+        title: 'How It Started',
+        description:
+          'After graduating, Woodside didn\'t want to lose me, so they created a role for me. I stepped into web development, database work, and solving problems that nobody else had time to touch. One of my first projects was cleaning up our database. I ended up deactivating about two thirds of it and building better systems to track real engagement. Some of that work eventually made its way into the main MinistryPlatform product. Seeing the same problems pop up across churches everywhere is also what led me to start my own business.',
+      },
       {
         id: 'troy-platform',
         title: 'Apps.WoodsideBible.org',
@@ -260,12 +292,21 @@ export const lifeEvents: LifeEvent[] = [
         title: 'The Airport Wedding',
         description:
           'Got married to Sarah at the Grosse Ile Municipal Airport. Yes, an actual airport. It was unconventional, personal, and exactly what we wanted.',
+        images: [
+          '/images/wedding-plane.webp',
+          '/images/wedding-hangar.webp',
+        ],
       },
       {
         id: 'clarkston-family',
         title: 'Family Life',
         description:
-          'Home with Sarah, Weston (3), and Rosie (1). A quiet town north of Detroit. Home base for family life and side projects alike.',
+          'Home with Sarah, Weston (3), and Rosie (1). A quiet town north of Detroit. Home base for family life and side projects alike. When I\'m not building something, I\'m probably playing music, flying with Sarah, or chasing kids around the house.',
+        images: [
+          '/images/family-of-four.webp',
+          '/images/family-newborn.webp',
+          '/images/family-embrace.webp',
+        ],
       },
     ],
     image: '/images/family-embrace.webp',
@@ -291,6 +332,10 @@ export const lifeEvents: LifeEvent[] = [
         title: 'Music',
         description:
           'I\'ve worked with artists like Detroit Collective, Elevation Worship, Maverick City Music, Chris Tomlin, Switchfoot, and many more. I\'m known mainly as a writer, electric guitar player, and track builder, but I\'ve also played a lot of drums, bass, keys, and sung/led worship. I was on staff as a worship director at Woodside for about 3 years and I\'m widely known as the Ableton guru of the metro Detroit area.',
+        images: [
+          '/images/music-2.webp',
+          '/images/music-3.webp',
+        ],
       },
       {
         id: 'hobbies-football',
@@ -319,16 +364,39 @@ export const lifeEvents: LifeEvent[] = [
 
 function SheetHeader({ event }: { event: LifeEvent }) {
   return (
-    <div className="relative">
-      <div style={{ height: '220px' }} className="w-full overflow-hidden">
-        <img
-          src={event.image}
-          alt={event.label}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
+    <div className="relative overflow-hidden" style={{ height: '240px', background: '#22201C' }}>
+      {/* The same photo, blurred and darkened, fills the wide header so the
+          real (often portrait) image never has to be crop-beheaded */}
+      <img
+        src={event.image}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ filter: 'blur(26px) brightness(0.5) saturate(1.05)', transform: 'scale(1.2)' }}
+      />
+      {/* The full photo(s), shown whole, anchored right; capped at 48% of the
+          header so they can never collide with the title block (52%) */}
+      <div
+        className="absolute inset-y-0 right-0 flex items-center justify-end"
+        style={{ padding: '18px 20px 18px 0', maxWidth: '48%', gap: '10px' }}
+      >
+        {(event.headerPhotos ?? [event.image]).map((src) => (
+          <img
+            key={src}
+            src={src}
+            alt={event.label}
+            style={{
+              height: '100%',
+              width: 'auto',
+              maxWidth: `${Math.floor(100 / (event.headerPhotos?.length ?? 1))}%`,
+              objectFit: 'cover',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.45)',
+            }}
+          />
+        ))}
       </div>
-      <div className="absolute bottom-0 left-0 right-0" style={{ padding: '24px 28px' }}>
+      {/* Title block over the blurred side */}
+      <div className="absolute bottom-0 left-0" style={{ padding: '24px 28px', maxWidth: '52%' }}>
         <div style={{ fontSize: '10px', letterSpacing: '0.15em', marginBottom: '6px' }} className="uppercase text-white/50">
           {event.year}
         </div>
@@ -343,204 +411,130 @@ function SheetHeader({ event }: { event: LifeEvent }) {
   );
 }
 
-// ── Narrative page content ──
+// ── Photo cluster: prints scattered on the desk, not a filmstrip ──
+// Photos get a white mat, a soft shadow, and a staggered tilt; hovering
+// straightens them. Anything named like a logo renders as a small "seal"
+// tucked against the previous photo instead of a framed print.
 
-function NarrativeContent({ event }: { event: LifeEvent }) {
+const TILTS = [-3.5, 2.5, -2, 3, -1.5];
+
+function PhotoCluster({ photos, seed = 0 }: { photos: string[]; seed?: number }) {
   return (
-    <div style={{ padding: '0 28px 28px' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        {event.narrative?.map((paragraph, i) => (
-          <p key={i} style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
-            {paragraph}
-          </p>
-        ))}
-      </div>
+    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', padding: '12px 6px' }}>
+      {photos.map((src, i) => {
+        if (src.includes('logo')) {
+          // Logos render flat: as a seal tucked against the previous photo,
+          // or standing alone when a section has no photo to lean on.
+          const overlapsPhoto = i > 0;
+          return (
+            <img
+              key={src}
+              src={src}
+              alt=""
+              loading="lazy"
+              style={{
+                maxHeight: '72px',
+                maxWidth: '280px',
+                width: 'auto',
+                height: 'auto',
+                position: 'relative',
+                ...(overlapsPhoto
+                  ? {
+                      marginLeft: '-38px',
+                      marginBottom: '-64px',
+                      zIndex: 2,
+                      filter: 'drop-shadow(0 4px 10px rgba(34, 33, 30, 0.35))',
+                    }
+                  : { margin: '8px 12px' }),
+              }}
+            />
+          );
+        }
+        const rot = TILTS[(i + seed) % TILTS.length];
+        return (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            loading="lazy"
+            style={{
+              height: i % 2 === 0 ? '200px' : '168px',
+              width: 'auto',
+              maxWidth: '100%',
+              objectFit: 'cover',
+              background: '#FDFBF6',
+              padding: '8px 8px 26px',
+              boxShadow: '0 8px 22px rgba(34, 33, 30, 0.22)',
+              transform: `rotate(${rot}deg)`,
+              margin: '4px -6px',
+              position: 'relative',
+              zIndex: 1,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
-      {/* Narrative images */}
-      {event.narrativeImages && event.narrativeImages.length > 0 && (
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '28px' }}>
-          {event.narrativeImages.map((src, i) => (
-            <div key={i} style={{
-              width: i === 0 ? 140 : 100,
-              height: i === 0 ? 140 : 100,
-              borderRadius: '50%',
-              overflow: 'hidden',
-              background: 'var(--color-border)',
-            }}>
-              <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-          ))}
+// ── Main page content (everything inline: sections with their photos) ──
+
+function MainPageContent({ event }: { event: LifeEvent }) {
+  return (
+    <div style={{ padding: '28px 32px 32px' }}>
+      {/* Description */}
+      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+        {event.description}
+      </p>
+
+      {/* Lead photos */}
+      {event.mainPhotos && event.mainPhotos.length > 0 && (
+        <div style={{ marginTop: '16px' }}>
+          <PhotoCluster photos={event.mainPhotos} />
         </div>
       )}
 
       {/* Pull quote */}
       {event.pullQuote && (
-        <div style={{
-          marginTop: '28px',
-          paddingTop: '20px',
-          borderTop: '1px solid var(--color-border)',
-        }}>
-          <p style={{
-            fontFamily: 'var(--font-serif)',
-            fontSize: '15px',
-            fontStyle: 'italic',
-            color: 'var(--color-fg)',
-            lineHeight: 1.6,
-          }}>
+        <div style={{ marginTop: '24px', padding: '4px 0 4px 18px', borderLeft: '3px solid var(--color-accent)' }}>
+          <p style={{ fontFamily: 'var(--font-serif)', fontSize: '15px', fontStyle: 'italic', color: 'var(--color-fg)', lineHeight: 1.6 }}>
             {event.pullQuote}
           </p>
         </div>
       )}
 
-      {/* Photo gallery */}
-      {event.gallery && event.gallery.length > 0 && (
-        <div style={{ marginTop: '28px' }}>
-          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '12px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>
-            Photos
-          </div>
-          <div style={{ columns: '2 140px', columnGap: '12px' }}>
-            {event.gallery.map((src) => (
-              <img
-                key={src}
-                src={src}
-                alt=""
-                loading="lazy"
-                style={{
-                  display: 'block',
-                  width: '100%',
-                  marginBottom: '12px',
-                  breakInside: 'avoid',
-                  border: '1px solid var(--color-border)',
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ── Sub-event page content ──
-
-function SubEventContent({ sub }: { sub: SubEvent }) {
-  return (
-    <div style={{ padding: '0 28px 28px' }}>
-      {sub.image && (
-        <div style={{ marginBottom: '20px', overflow: 'hidden' }}>
-          <img
-            src={sub.image}
-            alt={sub.title}
-            style={{ width: '100%', display: 'block', border: '1px solid var(--color-border)' }}
-          />
-        </div>
-      )}
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
-        {sub.description}
-      </p>
-    </div>
-  );
-}
-
-// ── Drill-in row (progressive disclosure list item) ──
-
-function DrillRow({ title, teaser, onClick }: { title: string; teaser?: string; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '16px',
-        width: '100%',
-        padding: '14px 8px',
-        background: 'none',
-        border: 'none',
-        borderTop: '1px solid var(--color-border)',
-        cursor: 'pointer',
-        textAlign: 'left',
-        transition: 'background 0.15s',
-      }}
-      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--color-card)')}
-      onMouseLeave={(e) => (e.currentTarget.style.background = 'none')}
-    >
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-fg)', letterSpacing: '-0.01em' }}>
-          {title}
-        </div>
-        {teaser && (
-          <div style={{
-            fontSize: '12px',
-            fontWeight: 400,
-            color: 'var(--color-muted)',
-            marginTop: '2px',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}>
-            {teaser}
-          </div>
-        )}
-      </div>
-      <ChevronRight style={{ width: '16px', height: '16px', flexShrink: 0, color: 'var(--color-muted)' }} />
-    </button>
-  );
-}
-
-// ── Main page content (overview with clickable sub-events) ──
-
-function MainPageContent({ event }: { event: LifeEvent }) {
-  const { navigate } = useResponsiveSheet();
-  const hasStoryPage = Boolean(event.narrative?.length || event.gallery?.length);
-  const storyTeaser = typeof event.narrative?.[0] === 'string' ? event.narrative[0] : 'Photos and the longer version';
-
-  return (
-    <div style={{ padding: '28px' }}>
-      {/* Description */}
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '20px' }}>
-        {event.description}
-      </p>
-
-      {/* Highlights as pills */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '28px' }}>
-        {event.highlights.map((h, i) => (
-          <span key={i} style={{
-            fontSize: '11px',
-            fontWeight: 500,
-            color: 'var(--color-muted)',
-            padding: '5px 12px',
-            borderRadius: '100px',
-            border: '1px solid var(--color-border)',
-            lineHeight: 1.3,
-          }}>
-            {h}
-          </span>
-        ))}
-      </div>
-
-      {/* Drill-in pages */}
-      {(hasStoryPage || event.subEvents.length > 0) && (
-        <div>
-          <div style={{ fontSize: '11px', letterSpacing: '0.15em', marginBottom: '8px', color: 'var(--color-muted)', textTransform: 'uppercase' }}>
-            Go Deeper
-          </div>
-          {hasStoryPage && (
-            <DrillRow
-              title="The Full Story"
-              teaser={storyTeaser}
-              onClick={() => navigate('story')}
-            />
-          )}
-          {event.subEvents.map((sub) => (
-            <DrillRow
-              key={sub.id}
-              title={sub.title}
-              teaser={sub.description}
-              onClick={() => navigate(sub.id)}
-            />
-          ))}
-        </div>
-      )}
+      {/* Inline sections: text and photos alternate sides, magazine-style */}
+      {event.subEvents.map((sub, i) => {
+        const hasPhotos = Boolean(sub.images && sub.images.length > 0);
+        const flip = i % 2 === 1;
+        return (
+          <section key={sub.id} style={{ borderTop: '1px solid var(--color-border)', marginTop: '26px', paddingTop: '22px' }}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: flip ? 'row-reverse' : 'row',
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                gap: '12px 36px',
+              }}
+            >
+              <div style={{ flex: '1 1 340px', minWidth: '260px' }}>
+                <h4 style={{ fontSize: '15px', fontWeight: 600, color: 'var(--color-fg)', letterSpacing: '-0.01em', marginBottom: '8px' }}>
+                  {sub.title}
+                </h4>
+                <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)' }}>
+                  {sub.description}
+                </p>
+              </div>
+              {hasPhotos && (
+                <div style={{ flex: '1 1 320px', minWidth: '280px', display: 'flex', justifyContent: 'center' }}>
+                  <PhotoCluster photos={sub.images!} seed={i} />
+                </div>
+              )}
+            </div>
+          </section>
+        );
+      })}
     </div>
   );
 }
@@ -568,18 +562,11 @@ export function LifeEventSheet({ event, onClose, defaultPage }: LifeEventSheetPr
       onClose={onClose}
       header={<SheetHeader event={event} />}
       defaultPage={defaultPage || 'main'}
+      maxWidth="max-w-5xl"
     >
       <SheetPage name="main">
         <MainPageContent event={event} />
       </SheetPage>
-      <SheetPage name="story" title="The Full Story">
-        <NarrativeContent event={event} />
-      </SheetPage>
-      {event.subEvents.map((sub) => (
-        <SheetPage key={sub.id} name={sub.id} title={sub.title}>
-          <SubEventContent sub={sub} />
-        </SheetPage>
-      ))}
     </ResponsiveSheet>
   );
 }
