@@ -776,12 +776,12 @@ function CacheDemo() {
     <DemoFrame ref={frameRef} label="Cache the stable, and trust it" caption="Compute the stable stuff once; repeat views are free. A cache you cannot confidently invalidate never gets built, so it clears the moment the data underneath changes.">
       <div style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '18px', background: PAPER, marginBottom: '16px', minHeight: '108px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         {loading ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: MUTED, fontSize: '13px' }}><Spinner /> Crunching the leaderboard… (cold)</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: MUTED, fontSize: '13px' }}><Spinner /> Aggregating 2.4M orders… (cold)</div>
         ) : ms === null ? (
-          <div style={{ color: MUTED, fontSize: '13px' }}>Leaderboard not loaded.</div>
+          <div style={{ color: MUTED, fontSize: '13px' }}>Annual report not run yet.</div>
         ) : (
           <div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', color: FG }}>You&apos;re #4 of 128</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', color: FG }}>$4.82M this year</div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', marginTop: '8px', fontSize: '12px', fontWeight: 700, color: ms === 0 ? GREEN : MUTED }}>
               {ms === 0
                 ? <span style={{ padding: '3px 10px', borderRadius: '100px', background: 'rgba(63,143,82,0.14)', color: GREEN, letterSpacing: '0.05em', textTransform: 'uppercase', fontSize: '10px' }}>Cache hit · instant</span>
