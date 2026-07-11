@@ -66,11 +66,11 @@ const SECTIONS: Section[] = [
   {
     kicker: 'Content & the people in it',
     heading: 'The best software still fails on bad content.',
-    lead: 'A product often lives or dies on what people put into it, not the code. So I treat content as part of what I build: set the guardrails, seed it with great examples, and stay close to the people filling it in.',
+    lead: 'A product often lives or dies on what people put into it, not the code. So I treat content as part of what I build: give people the right fields, set sensible limits, and stay close to the people filling it in.',
     principles: [
       { p: 'Talk to the people using it.', d: 'When something is being used in a way I didn’t intend, I ask about it instead of assuming. Half the time I find a feature I’m missing; the other half I can show a cleaner way. People make mistakes, and some are just better at a thing than others.' },
     ],
-    demos: ['seed', 'rules'],
+    demos: ['formTypes', 'rules'],
   },
   {
     kicker: 'Where things belong',
@@ -118,8 +118,8 @@ export default function HowIBuildPage() {
       <section style={{ padding: 'clamp(80px, 14vh, 150px) 24px clamp(40px, 6vh, 64px)' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.12 }}
-            style={{ fontSize: '12px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--color-muted)', fontWeight: 700, marginBottom: '18px' }}>
-            How I Build
+            style={{ fontSize: '12px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 700, marginBottom: '18px' }}>
+            Software Development
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
             style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 8vw, 6rem)', color: 'var(--color-fg)', lineHeight: 0.95, letterSpacing: '-0.03em', textTransform: 'uppercase', marginBottom: '28px' }}>
@@ -127,11 +127,7 @@ export default function HowIBuildPage() {
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.32 }}
             style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1.2rem, 2.4vw, 1.75rem)', color: 'var(--color-fg)', lineHeight: 1.5, maxWidth: '680px' }}>
-            Not a skills list. This is how I actually make decisions: my defaults, my opinions, and where I’ve landed after years as the person who owns every one of them.
-          </motion.p>
-          <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.42 }}
-            style={{ fontSize: '15px', lineHeight: 1.85, color: 'var(--color-muted)', maxWidth: '620px', marginTop: '28px' }}>
-            The throughline under all of it: software should make something easier for a real person. Everything below is in service of that.
+            Here are the opinions and preferences I’ve built up over many years of shipping code, leading teams, and solving problems.
           </motion.p>
         </div>
       </section>
