@@ -1032,12 +1032,12 @@ export default function Home() {
                 How I build.
               </h2>
               <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1.05rem, 1.8vw, 1.4rem)', color: 'var(--color-muted)', lineHeight: 1.5, maxWidth: '520px', marginTop: '18px' }}>
-                My opinions on what makes a product succeed.
+                My opinions and preferences on what makes a product succeed.
               </p>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(22px, 4vw, 48px)' }}>
               <div className="hib-disciplines" style={{ display: 'flex', flexDirection: 'column', gap: '9px', textAlign: 'right' }}>
-                {['UI / UX', 'Frontend', 'Backend', 'Database', 'Defaults'].map((d) => (
+                {['UI / UX', 'Frontend', 'Backend', 'Database'].map((d) => (
                   <span key={d} style={{ fontSize: '12px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-muted)', fontWeight: 600 }}>{d}</span>
                 ))}
               </div>
