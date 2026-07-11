@@ -97,9 +97,32 @@ const SECTIONS: Section[] = [
     principles: [
       { p: 'Build vs. buy, honestly.', d: 'Buy the commodity; build the workflows and data that are the actual point. Own your core so you’re never renting your own operations.' },
       { p: 'Test the risky seams.', d: 'Integrations, money, and auth get real coverage (Playwright for the flows that matter). I don’t chase a coverage number for its own sake.' },
-      { p: 'AI is leverage, not an excuse to stop thinking.', d: 'I use modern LLMs heavily to move faster, but I own every decision and read every line. I was doing applied NLP before the LLM era; I know where the models are confidently wrong.' },
     ],
     demos: ['monorepo'],
+  },
+  {
+    kicker: 'AI in the workflow',
+    heading: 'AI writes a lot of my code. I own all of it.',
+    lead: 'I was doing applied NLP before the LLM era (published in 2017), so I never treated AI as magic. I treat it like a very fast team that needs a good manager: used well it collapses the gap between deciding something and shipping it; used lazily it produces confident nonsense. The difference isn’t the model, it’s the workflow around it. And the payoff isn’t just my own speed: I once set up a former MinistryPlatform CFO, who had never written code, with an AI dev environment. Today he builds and runs his own product full time.',
+    principles: [
+      { p: 'Agents are staff, not autocomplete.', d: 'I hand AI whole tasks the way I’d hand them to a contractor: context, constraints, pointers to existing patterns, and a definition of done. Then I review the output like a PR.' },
+      { p: 'Build the piece the model is missing.', d: 'The tooling changes monthly and I stay on the edge of it. When a model struggles at a task, I write a skill for it; I was packaging skills before LLMs started reaching for them on their own.' },
+      { p: 'Standardize it so it scales.', d: 'Conventions, guardrails, and the skills I build live in the repo, not in my head. Sharing them with my team has let people ship things they never would have attempted. That’s how one person’s leverage becomes a team’s.' },
+      { p: 'Context files follow the same rule as my UI.', d: 'Say just enough. A CLAUDE.md stays small enough to actually get read (a couple hundred lines, tops) and points to reference files for depth, because a wall of text says nothing to a model either.' },
+      { p: 'Know where models are confidently wrong.', d: 'Sarcasm and slang broke classifiers in 2017; plausible-but-wrong code ships from LLMs today. Same failure mode. So the risky seams get tests, the output gets read, and I stay the one accountable.' },
+    ],
+    demos: ['aiBrief', 'aiReview', 'aiPlaybook'],
+  },
+  {
+    kicker: 'Leadership',
+    heading: 'Lead by serving. Own the outcome.',
+    lead: 'I minored in leadership, then got the practical degree: years directing worship teams of volunteers who didn’t have to show up, then leading contractors, cross-department projects, and vendor partnerships as the technical decision-maker. My model is servant leadership, and it isn’t softness: absorb the ambiguity, clear the blockers, give people real ownership, and take responsibility for the result either way.',
+    principles: [
+      { p: 'Direction over supervision.', d: 'With contractors and collaborators I write the spec, define done, and review the work honestly, and I stay out of the way in between. Inspect the seams, not the shoulder.' },
+      { p: 'Influence without authority is the real test.', d: 'Nobody at MinistryPlatform reported to me. I still worked directly with their engineers on problems in their product, and a framework I built was adopted into their core. That’s the same muscle as leading a team, minus the title.' },
+      { p: 'Sunday always comes.', d: 'Worship directing is shipping live with a volunteer team: recruit, rehearse, delegate, handle the Thursday dropout, and deliver at 9 AM sharp every week. Deadlines that can’t slip and people you can’t pay teach you more about leadership than any org chart.' },
+    ],
+    demos: ['translate', 'unblock'],
   },
 ];
 
@@ -173,8 +196,8 @@ export default function HowIBuildPage() {
       {/* ── Closing ──────────────────────────────────────────── */}
       <section style={{ padding: 'clamp(64px, 11vw, 130px) 24px', borderTop: '1px solid var(--color-border)', textAlign: 'center' }}>
         <motion.h2 variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}
-          style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.9rem, 5vw, 3.2rem)', color: 'var(--color-fg)', lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', maxWidth: '760px', margin: '0 auto 36px' }}>
-          A great product is a thousand small<br />decisions that all went the right way.
+          style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.9rem, 5vw, 3.2rem)', color: 'var(--color-fg)', lineHeight: 1.05, letterSpacing: '-0.02em', textTransform: 'uppercase', maxWidth: '760px', margin: '0 auto 36px', textWrap: 'balance' }}>
+          A great product is a thousand good decisions, compounding.
         </motion.h2>
         <motion.div variants={reveal} custom={1} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ display: 'flex', justifyContent: 'center' }}>
           <button type="button" onClick={exitWithInk} style={{ fontSize: '14px', fontWeight: 700, color: 'var(--color-bg)', background: 'var(--color-accent)', padding: '13px 30px', borderRadius: '100px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>

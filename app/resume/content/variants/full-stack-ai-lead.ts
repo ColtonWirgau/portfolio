@@ -37,7 +37,7 @@ export const fullStackAiLeadResume: Resume = {
   ],
 
   summary:
-    'Full-stack product engineer with a decade of shipping real software and a peer-reviewed AI background that predates the LLM era (co-author, emotion classification, 2017). Sole engineer behind a 14-campus organization’s entire platform, and founder of Church Hub, a product churches own and extend. I build AI deeply and tastefully into products and workflows, lead UI/UX and small teams, and care most about software that makes something easier for a real person.',
+    'Full-stack product engineer with a decade of shipping real software and a peer-reviewed AI background that predates the LLM era (co-author, emotion classification, 2017). Sole engineer behind a 14-campus organization’s entire platform, and founder of Church Hub, a product churches own and extend. I build AI deeply and tastefully into products and workflows, lead contractors, UI/UX, and cross-department delivery, and care most about software that makes something easier for a real person.',
 
   experience: [
     {
@@ -46,10 +46,11 @@ export const fullStackAiLeadResume: Resume = {
       location: 'Troy, MI',
       dates: '2019 – Present',
       bullets: [
-        'Sole in-house engineer for a 14-campus organization serving thousands weekly; own full-stack delivery across public web apps, internal tools, integrations, and reporting, from requirements through deployment and adoption.',
-        'Architected and maintain a Next.js monorepo whose shared abstractions let me spin up staff- and community-facing tools fast (apps.woodsidebible.org, embedded widgets, microsites); built integrations across MinistryPlatform, Planning Center, REACH, and WordPress, including a nested-JSON retrieval framework adopted into MinistryPlatform’s core product.',
-        'Sole steward of data across all campuses: kept MinistryPlatform the single source of truth, validated at the boundary, and made every write carry its author for a tamper-proof audit trail; initial cleanup retired roughly two-thirds of stale records and the engagement-tracking model I built was adopted org-wide.',
-        'Lead Power BI reporting and UI/UX across all digital products; recipient of MinistryPlatform’s Deep Space Award for product innovation and advancement of the ecosystem.',
+        'Sole in-house engineer for a 14-campus organization serving thousands weekly; own full-stack delivery across public web apps, internal tools, integrations, and reporting.',
+        'Architected and maintain a Next.js monorepo of staff- and community-facing tools (apps.woodsidebible.org, embedded widgets, microsites) with integrations across MinistryPlatform, Planning Center, REACH, and WordPress; worked directly with MinistryPlatform’s engineers, and my nested-JSON retrieval framework was adopted into their core release, earning their Deep Space Award.',
+        'Sole steward of data across all campuses: MinistryPlatform kept the single source of truth, every write validated at the boundary and carrying its author for a tamper-proof audit trail; initial cleanup retired roughly two-thirds of stale records and my engagement-tracking model was adopted org-wide.',
+        'Scope and direct contract developers (spec, definition of done, line-by-line review) and lead cross-department delivery, translating ministry, comms, and finance needs into buildable requirements.',
+        'Drive AI adoption across the workflow: agentic coding standards, guardrails, and custom skills built and shared with the team, LLM features shipped where they beat deterministic code, and non-engineers coached into AI-assisted development (one, a former CFO, now ships his own product full time).',
       ],
     },
     {
@@ -58,8 +59,8 @@ export const fullStackAiLeadResume: Resume = {
       location: 'Detroit, MI',
       dates: 'Jan 2025 – Present',
       bullets: [
-        'Founded Church Hub and own product strategy, architecture, and end-to-end delivery: a modular Next.js platform churches own and extend (in-house, via a contractor, or with AI) rather than a subscription they rent.',
-        'Handles event management, volunteer coordination, giving dashboards, and genuinely good-looking analytics built on each church’s own data; deployed across congregations from large multi-campus organizations down to single-site churches.',
+        'Founded Church Hub and own product strategy, architecture, and delivery end to end: a modular Next.js platform churches own and extend (in-house, via a contractor, or with AI) rather than rent.',
+        'Event management, volunteer coordination, giving dashboards, and analytics on each church’s own data; deployed everywhere from multi-campus organizations to single-site churches.',
       ],
     },
     {
@@ -104,7 +105,7 @@ export const fullStackAiLeadResume: Resume = {
         'Prompt & context engineering',
         'Agentic patterns & MCP',
         'Evaluation',
-        'AI use-case development',
+        'AI adoption & enablement',
         'Applied NLP research background',
         'Anthropic & OpenAI APIs',
         'Claude Code',

@@ -1138,12 +1138,296 @@ function RulesDemo() {
   );
 }
 
+/* ── 16. The brief is the work (AI) ────────────────────────────────── */
+
+const BRIEF_MODES = {
+  vague: {
+    prompt: 'add a signup form to the events page',
+    results: [
+      { ok: false, text: 'Invented its own button styles' },
+      { ok: false, text: 'No validation, saves whatever it gets' },
+      { ok: false, text: 'Wrote to a table the schema doesn’t have' },
+    ],
+  },
+  brief: {
+    prompt: 'Add signup to /events/[id]. Use the shared <Form /> kit, validate with eventSignupSchema, write through createRegistration(), and match the RSVP flow’s loading and error states.',
+    results: [
+      { ok: true, text: 'Reused the shared form kit' },
+      { ok: true, text: 'Validated at the boundary' },
+      { ok: true, text: 'Wrote through the existing mutation' },
+    ],
+  },
+};
+
+function AiBriefDemo() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [mode, setMode] = useState<'vague' | 'brief'>('vague');
+  const [paused, setPaused] = useState(false);
+
+  // Comparison toggle: the same feature asked for two ways. No cursor;
+  // auto-cycles and yields the moment the visitor touches it.
+  const { reduce } = useAutoplay(frameRef, async ({ wait, alive }) => {
+    setMode('vague');
+    await wait(2800);
+    if (!alive()) return;
+    setMode('brief');
+    await wait(3400);
+  }, { paused });
+  const shown = reduce && !paused ? 'brief' : mode;
+
+  const panel = (m: 'vague' | 'brief') => (
+    <div>
+      <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>The ask</div>
+      <div style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12.5px', lineHeight: 1.7, color: FG, background: PAPER, border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '14px 16px', minHeight: '104px' }}>
+        {BRIEF_MODES[m].prompt}
+      </div>
+      <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, margin: '16px 0 8px' }}>What the agent shipped</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+        {BRIEF_MODES[m].results.map((r) => (
+          <div key={r.text} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '9px 13px', borderRadius: '8px', border: `1px solid ${r.ok ? GREEN : RED}`, background: PAPER }}>
+            <span style={{ color: r.ok ? GREEN : RED, display: 'inline-flex', flexShrink: 0 }}>
+              {r.ok
+                ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                : <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>}
+            </span>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: FG }}>{r.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <DemoFrame
+      ref={frameRef}
+      label="The brief is the work"
+      caption="Same model, same feature. An agent handed context, constraints, and pointers to existing patterns ships the right thing; a vague ask ships confident guesses. Delegating to AI is a management skill, and writing the brief is the job."
+      control={<Segmented value={shown} onChange={(v) => { setPaused(true); setMode(v); }} options={[{ value: 'vague', label: 'Vague ask' }, { value: 'brief', label: 'Real brief' }]} />}
+    >
+      <div style={swapGrid}>
+        <Swap show={shown === 'vague'}>{panel('vague')}</Swap>
+        <Swap show={shown === 'brief'}>{panel('brief')}</Swap>
+      </div>
+    </DemoFrame>
+  );
+}
+
+/* ── 17. Confidently wrong, caught in review (AI) ──────────────────── */
+
+function AiReviewDemo() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [reviewed, setReviewed] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const { reduce } = useAutoplay(frameRef, async ({ wait, alive }) => {
+    setReviewed(false);
+    await wait(3000);
+    if (!alive()) return;
+    setReviewed(true);
+    await wait(3200);
+  }, { paused });
+  const shown = reduce && !paused ? true : reviewed;
+  return (
+    <DemoFrame
+      ref={frameRef}
+      label="Confidently wrong, caught in review"
+      caption="The draft compiles, runs, and demos fine, and then shows the 4th of July as July 3rd to everyone in Detroit: a bare date string parses as UTC midnight. Models are confidently wrong in ways that read fine, so every AI line gets the same review a contractor's PR would. I own what ships."
+      control={<Segmented value={shown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); setReviewed(v === 'after'); }} options={[{ value: 'draft', label: 'AI draft' }, { value: 'after', label: 'After review' }]} />}
+    >
+      {/* minHeight fits the taller (reviewed) state so the card never
+          resizes as the toggle flips. */}
+      <pre style={{ margin: 0, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12.5px', lineHeight: 1.7, color: FG, background: PAPER, border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '16px 18px', overflowX: 'auto', minHeight: '122px' }}>
+{`// event.date = '2026-07-04'`}
+        {shown
+          ? <span style={{ color: GREEN }}>{`
+const [y, m, d] = event.date.split('-')
+const label = new Date(+y, +m - 1, +d)
+  .toLocaleDateString()`}</span>
+          : <span style={{ color: RED, textDecoration: 'underline wavy', textDecorationColor: RED }}>{`
+const label = new Date(event.date)
+  .toLocaleDateString()`}</span>}
+      </pre>
+      <div style={{ marginTop: '14px', minHeight: '40px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600, color: shown ? GREEN : RED }}>
+        {shown ? (
+          <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M20 6 9 17l-5-5" /></svg> Renders &ldquo;7/4/2026&rdquo; in every timezone.</>
+        ) : (
+          <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" style={{ flexShrink: 0 }}><path d="M18 6 6 18M6 6l12 12" /></svg> Renders &ldquo;7/3/2026&rdquo; in Detroit. Off by a day, no error anywhere.</>
+        )}
+      </div>
+    </DemoFrame>
+  );
+}
+
+/* ── 18. Write the playbook down (AI) ──────────────────────────────── */
+
+const PLAYBOOK_TASKS = ['New feature', 'Bug fix', 'Data report'];
+
+function AiPlaybookDemo() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [guided, setGuided] = useState<boolean[]>([false, false, false]);
+  const after = useTimers();
+  const allGuided = guided.every(Boolean);
+  const guide = () => {
+    PLAYBOOK_TASKS.forEach((_, i) => after(() => setGuided((prev) => prev.map((v, j) => (j === i ? true : v))), (i + 1) * 350));
+  };
+  // Concept illustration, not a real control: the house rules land in the
+  // repo once and every task an agent picks up starts from them, on a loop.
+  useAutoplay(frameRef, async ({ wait, alive }) => {
+    setGuided([false, false, false]);
+    await wait(1500);
+    if (!alive()) return;
+    guide();
+    await wait(2900);
+  });
+  return (
+    <DemoFrame ref={frameRef} label="Write the playbook down" caption="Personal AI skill doesn't scale; a playbook in the repo does. Conventions, guardrails, and project context live where every agent and every teammate starts from them, so each new task begins at the house standard instead of from scratch. That's the difference between one person using AI and a team being faster because of it.">
+      <div style={{ border: `1px solid ${allGuided ? GREEN : ACCENT}`, borderRadius: '10px', padding: '12px 14px', background: PAPER, marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '10px', transition: 'border-color 0.3s ease' }}>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke={allGuided ? GREEN : ACCENT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>
+        <span style={{ fontSize: '13px', fontWeight: 700, color: FG }}>CLAUDE.md</span>
+        <span style={{ fontSize: '11px', color: allGuided ? GREEN : MUTED, marginLeft: 'auto' }}>{allGuided ? 'in every task' : 'house rules, in the repo'}</span>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '10px', marginBottom: '16px' }}>
+        {PLAYBOOK_TASKS.map((t, i) => (
+          <div key={t} style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '12px', textAlign: 'center', background: PAPER }}>
+            <div style={{ fontSize: '13px', fontWeight: 700, color: FG }}>{t}</div>
+            <div style={{ fontSize: '10px', color: MUTED, letterSpacing: '0.06em', textTransform: 'uppercase', margin: '3px 0 10px' }}>agent task</div>
+            <div style={{ height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {guided[i]
+                ? <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 480, damping: 18 }} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: GREEN, fontSize: '11px', fontWeight: 700 }}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg> house style
+                  </motion.span>
+                : <span style={{ fontSize: '11px', color: MUTED }}>freestyling</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </DemoFrame>
+  );
+}
+
+/* ── 19. Be the translation layer (Leadership) ─────────────────────── */
+
+const TRANSLATED = [
+  'One signup per household per event, enforced by the database',
+  'Already registered? Show the existing signup, not a blank form',
+  'Nightly count reconciliation against finance, with a diff report',
+];
+
+function TranslateDemo() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [mode, setMode] = useState<'heard' | 'built'>('heard');
+  const [paused, setPaused] = useState(false);
+  const { reduce } = useAutoplay(frameRef, async ({ wait, alive }) => {
+    setMode('heard');
+    await wait(2800);
+    if (!alive()) return;
+    setMode('built');
+    await wait(3400);
+  }, { paused });
+  const shown = reduce && !paused ? 'built' : mode;
+  return (
+    <DemoFrame
+      ref={frameRef}
+      label="Be the translation layer"
+      caption="Requirements rarely arrive as requirements. Cross-department work lives or dies on someone who can pull the real problem out of how it feels, write it down as something buildable, and read it back in plain language until everyone nods."
+      control={<Segmented value={shown} onChange={(v) => { setPaused(true); setMode(v); }} options={[{ value: 'heard', label: 'What I heard' }, { value: 'built', label: 'What we built' }]} />}
+    >
+      <div style={swapGrid}>
+        <Swap show={shown === 'heard'}>
+          <div style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '18px 20px', background: PAPER }}>
+            <p style={{ margin: 0, fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '15px', lineHeight: 1.8, color: FG }}>
+              &ldquo;Families keep getting signed up twice, and finance says our numbers never match theirs. Can it just&hellip; stop doing that?&rdquo;
+            </p>
+            <div style={{ fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginTop: '12px' }}>Events team, hallway conversation</div>
+          </div>
+        </Swap>
+        <Swap show={shown === 'built'}>
+          <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {TRANSLATED.map((t) => (
+                <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 13px', borderRadius: '8px', border: `1px solid ${BORDER}`, background: PAPER }}>
+                  <span style={{ color: GREEN, display: 'inline-flex', flexShrink: 0 }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                  </span>
+                  <span style={{ fontSize: '13px', fontWeight: 600, color: FG }}>{t}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ fontSize: '12px', color: MUTED, marginTop: '12px' }}>Read back in plain language and signed off before a line of code.</div>
+          </div>
+        </Swap>
+      </div>
+    </DemoFrame>
+  );
+}
+
+/* ── 20. Unblock, don't hover (Leadership) ─────────────────────────── */
+
+const TEAM_ROWS = [
+  { who: 'Contractor', task: 'Payment form', block: 'Waiting on API keys' },
+  { who: 'Designer', task: 'Event posters', block: 'Needs brand assets' },
+  { who: 'Staff team', task: 'Fall launch', block: 'Needs a decision' },
+];
+
+function UnblockDemo() {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const btnRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const cursor = useCursor(frameRef);
+  const [cleared, setCleared] = useState<boolean[]>([false, false, false]);
+  const clear = (i: number) => setCleared((prev) => prev.map((v, j) => (j === i ? true : v)));
+  const reset = () => setCleared([false, false, false]);
+
+  // Plays itself: the lead's cursor works down the list clearing each
+  // blocker, the team starts moving, then it loops.
+  useAutoplay(frameRef, async ({ wait, alive }) => {
+    reset();
+    cursor.hide();
+    await wait(1200);
+    for (let i = 0; i < TEAM_ROWS.length; i++) {
+      cursor.moveTo(btnRefs.current[i]);
+      await wait(650);
+      if (!alive()) return;
+      cursor.press();
+      clear(i);
+      await wait(750);
+      if (!alive()) return;
+    }
+    await wait(1400);
+    cursor.hide();
+    await wait(1400);
+  });
+
+  return (
+    <DemoFrame ref={frameRef} overlay={<FakeCursor ctl={cursor} />} label="Unblock, don't hover" caption="A lead's output is the team's output. Most of the job is absorbing ambiguity and clearing the path: chase down the access, hand over the asset, make the call. Nobody doing the work should ever be sitting idle waiting on me.">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {TEAM_ROWS.map((r, i) => (
+          <div key={r.who} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', padding: '11px 14px', borderRadius: '8px', border: `1px solid ${cleared[i] ? GREEN : BORDER}`, background: PAPER, transition: 'border-color 0.25s ease' }}>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: '13px', fontWeight: 700, color: FG }}>{r.who} · <span style={{ fontWeight: 500 }}>{r.task}</span></div>
+              <div style={{ fontSize: '11.5px', fontWeight: 600, marginTop: '2px', color: cleared[i] ? GREEN : RED }}>
+                {cleared[i] ? 'Moving' : `Blocked · ${r.block}`}
+              </div>
+            </div>
+            <div style={{ flexShrink: 0, height: '30px', display: 'flex', alignItems: 'center' }}>
+              {cleared[i]
+                ? <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 480, damping: 18 }} style={{ color: GREEN, display: 'inline-flex' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                  </motion.span>
+                : <button type="button" ref={(el) => { btnRefs.current[i] = el; }} onClick={() => clear(i)} style={{ ...ghostButton, padding: '6px 12px', fontSize: '11px' }}>Unblock</button>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </DemoFrame>
+  );
+}
+
 /* ── Registry ──────────────────────────────────────────────────────── */
 
 export type DemoId =
   | 'optimistic' | 'wallOfText' | 'skeleton' | 'mobile' | 'motion'
   | 'typesEnforce' | 'validate' | 'cleanData' | 'cheapest' | 'cache'
-  | 'abstract' | 'monorepo' | 'constraint' | 'formTypes' | 'rules';
+  | 'abstract' | 'monorepo' | 'constraint' | 'formTypes' | 'rules'
+  | 'aiBrief' | 'aiReview' | 'aiPlaybook' | 'translate' | 'unblock';
 
 const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   optimistic: OptimisticDemo,
@@ -1161,6 +1445,11 @@ const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   constraint: ConstraintDemo,
   formTypes: FormTypesDemo,
   rules: RulesDemo,
+  aiBrief: AiBriefDemo,
+  aiReview: AiReviewDemo,
+  aiPlaybook: AiPlaybookDemo,
+  translate: TranslateDemo,
+  unblock: UnblockDemo,
 };
 
 export function HowIBuildDemo({ id }: { id: DemoId }) {
