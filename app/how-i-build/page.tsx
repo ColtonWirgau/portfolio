@@ -24,8 +24,8 @@ type Section = { kicker: string; heading: string; lead: string; principles: Prin
 const SECTIONS: Section[] = [
   {
     kicker: 'UI / UX',
-    heading: 'Good design should feel obvious.',
-    lead: 'If someone needs a tutorial to use what I built, I did it wrong. Most of my users are non-technical ministry staff, and they are the bar: if a busy person can sit down and just get it, the design is done.',
+    heading: 'Good design should feel right.',
+    lead: 'If someone needs a tutorial to use what I built, I did it wrong. When Instagram ships an update, nobody sits through a walkthrough; you open the app, keep doing what you came to do, and it all just makes sense. I want everything I build to work like that.',
     principles: [
       { p: 'Clarity over cleverness.', d: 'Say just enough, at the right time. A clever interaction that needs explaining loses to a plain one that doesn’t.' },
     ],
@@ -37,8 +37,8 @@ const SECTIONS: Section[] = [
     lead: 'My default is Next.js, React, and TypeScript, everywhere, strict. The goal isn’t the fanciest code; it’s code that future-me can change without fear.',
     principles: [
       { p: 'Keep state local and derived.', d: 'Data fetched on the server and passed down beats a pile of client state. I reach for global state only when something is genuinely shared.' },
-      { p: 'Tailwind plus a shared design system.', d: 'A consistent component library (Shadcn-based) for the 90%, and a plain inline style when a one-off is clearer than fighting classes.' },
-      { p: 'Performance is a feature, not a pass at the end.', d: 'Lazy-load images, ship what’s needed, and measure before optimizing.' },
+      { p: 'A shared, abstracted design system.', d: 'A consistent component library (Shadcn-based) covers the 90%, and one change ripples everywhere it’s used; a plain inline style when a one-off is clearer than fighting the system.' },
+      { p: 'Performance is a feature.', d: 'Lazy-load images, ship what’s needed, and measure before optimizing.' },
     ],
     demos: ['abstract'],
   },
@@ -85,7 +85,7 @@ const SECTIONS: Section[] = [
   },
   {
     kicker: 'Performance & feel',
-    heading: 'Fast is a feeling, and you engineer it.',
+    heading: 'Fast is a feeling you engineer.',
     lead: 'A lot of how an app feels comes down to unglamorous decisions about where work happens and what the user sees while it happens. I sweat these details, because they’re the difference between something that feels instant and something that feels like it’s thinking.',
     principles: [],
     demos: ['cheapest', 'skeleton', 'cache'],
@@ -102,25 +102,25 @@ const SECTIONS: Section[] = [
   },
   {
     kicker: 'AI in the workflow',
-    heading: 'AI writes a lot of my code. I own all of it.',
-    lead: 'I was doing applied NLP before the LLM era (published in 2017), so I never treated AI as magic. I treat it like a very fast team that needs a good manager: used well it collapses the gap between deciding something and shipping it; used lazily it produces confident nonsense. The difference isn’t the model, it’s the workflow around it. And the payoff isn’t just my own speed: I once set up a former MinistryPlatform CFO, who had never written code, with an AI dev environment. Today he builds and runs his own product full time.',
+    heading: 'AI is the fastest team I’ve ever led.',
+    lead: 'Every line still ships with my name on it, though. I was doing applied NLP before the LLM era (published in 2017), so I never treated AI as magic: a fast team still needs a manager. When I use it well, it collapses the gap between deciding something and shipping it. When I get lazy with it, I get confident nonsense back. And it scales past me: I once set up a former MinistryPlatform CFO, who had never written code, with an AI dev environment, and today he builds and runs his own product full time.',
     principles: [
-      { p: 'Agents are staff, not autocomplete.', d: 'I hand AI whole tasks the way I’d hand them to a contractor: context, constraints, pointers to existing patterns, and a definition of done. Then I review the output like a PR.' },
+      { p: 'Delegate like it’s staff.', d: 'I hand AI whole tasks the way I’d hand them to a contractor: context, constraints, pointers to existing patterns, and a definition of done. Then I review the output like a PR.' },
       { p: 'Build the piece the model is missing.', d: 'The tooling changes monthly and I stay on the edge of it. When a model struggles at a task, I write a skill for it; I was packaging skills before LLMs started reaching for them on their own.' },
-      { p: 'Standardize it so it scales.', d: 'Conventions, guardrails, and the skills I build live in the repo, not in my head. Sharing them with my team has let people ship things they never would have attempted. That’s how one person’s leverage becomes a team’s.' },
-      { p: 'Context files follow the same rule as my UI.', d: 'Say just enough. A CLAUDE.md stays small enough to actually get read (a couple hundred lines, tops) and points to reference files for depth, because a wall of text says nothing to a model either.' },
-      { p: 'Know where models are confidently wrong.', d: 'Sarcasm and slang broke classifiers in 2017; plausible-but-wrong code ships from LLMs today. Same failure mode. So the risky seams get tests, the output gets read, and I stay the one accountable.' },
+      { p: 'Write it down and share it.', d: 'Conventions, guardrails, and the skills I build live in the repo, not in my head. Sharing them with my team has let people ship things they never would have attempted.' },
+      { p: 'Context follows my UI rule: say just enough.', d: 'A CLAUDE.md stays small enough to actually get read (a couple hundred lines, tops) and points to reference files for depth, because a wall of text says nothing to a model either.' },
+      { p: 'Know where models are confidently wrong.', d: 'Sarcasm and slang broke my classifiers in 2017, and plausible-but-wrong code ships from LLMs today for the same reason. So the risky seams get tests, the output gets read, and I stay the one accountable.' },
     ],
     demos: ['aiBrief', 'aiReview', 'aiPlaybook'],
   },
   {
     kicker: 'Leadership',
-    heading: 'Lead by serving. Own the outcome.',
-    lead: 'I minored in leadership, then got the practical degree: years directing worship teams of volunteers who didn’t have to show up, then leading contractors, cross-department projects, and vendor partnerships as the technical decision-maker. My model is servant leadership, and it isn’t softness: absorb the ambiguity, clear the blockers, give people real ownership, and take responsibility for the result either way.',
+    heading: 'Lead by serving.',
+    lead: 'I minored in leadership, then got the practical degree: years directing worship teams of volunteers who didn’t have to show up, then leading contractors, cross-department projects, and vendor partnerships as the technical decision-maker. My model is servant leadership: my job is to absorb the ambiguity, clear the blockers, hand people real ownership, and take responsibility for whatever happens.',
     principles: [
-      { p: 'Direction over supervision.', d: 'With contractors and collaborators I write the spec, define done, and review the work honestly, and I stay out of the way in between. Inspect the seams, not the shoulder.' },
-      { p: 'Influence without authority is the real test.', d: 'Nobody at MinistryPlatform reported to me. I still worked directly with their engineers on problems in their product, and a framework I built was adopted into their core. That’s the same muscle as leading a team, minus the title.' },
-      { p: 'Sunday always comes.', d: 'Worship directing is shipping live with a volunteer team: recruit, rehearse, delegate, handle the Thursday dropout, and deliver at 9 AM sharp every week. Deadlines that can’t slip and people you can’t pay teach you more about leadership than any org chart.' },
+      { p: 'Direction over supervision.', d: 'With contractors and collaborators I write the spec, define done, and review the work honestly, and I stay out of the way in between. I check the work at the seams instead of looking over anyone’s shoulder.' },
+      { p: 'Influence without authority.', d: 'Nobody at MinistryPlatform reported to me. I still worked directly with their engineers on problems in their product, and a framework I built was adopted into their core. Getting that done with no title over anyone is the same muscle as leading a team.' },
+      { p: 'Sunday always comes.', d: 'Worship directing is shipping live with a volunteer team: recruit, rehearse, delegate, handle the Thursday dropout, and deliver at 9 AM sharp every week. Deadlines that can’t slip and people you can’t pay taught me more about leadership than anything since.' },
     ],
     demos: ['translate', 'unblock'],
   },

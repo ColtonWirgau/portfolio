@@ -796,11 +796,14 @@ function CacheDemo() {
 
 /* ── 11. Abstract on the third copy ────────────────────────────────── */
 
-function StatCard({ shared }: { shared?: boolean }) {
+function StatCard({ count, shared }: { count: string; shared?: boolean }) {
   return (
     <div style={{ flex: 1, minWidth: '90px', border: `1px solid ${shared ? ACCENT : BORDER}`, borderRadius: '10px', padding: '14px', background: PAPER, textAlign: 'center' }}>
       <div style={{ fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: MUTED, fontWeight: 700 }}>Likes</div>
-      <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: FG }}>128</div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px' }}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={ACCENT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M7 10v12" /><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z" /></svg>
+        <span style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: FG }}>{count}</span>
+      </div>
       {shared && <div style={{ fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT, fontWeight: 700, marginTop: '6px' }}>Shared component</div>}
     </div>
   );
@@ -823,11 +826,11 @@ function AbstractDemo() {
       <div style={{ minHeight: '150px', display: 'flex', alignItems: 'center' }}>
         {!extracted ? (
           <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
-            <StatCard /><StatCard /><StatCard />
+            <StatCard count="128" /><StatCard count="47" /><StatCard count="2.4k" />
           </div>
         ) : (
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-            <div style={{ maxWidth: '160px', width: '100%' }}><StatCard shared /></div>
+            <div style={{ maxWidth: '160px', width: '100%' }}><StatCard count="128" shared /></div>
             <div style={{ fontSize: '12px', color: MUTED }}>Used in <strong style={{ color: FG }}>3</strong> places. Change it once.</div>
           </div>
         )}
@@ -1201,7 +1204,7 @@ function AiBriefDemo() {
     <DemoFrame
       ref={frameRef}
       label="The brief is the work"
-      caption="Same model, same feature. An agent handed context, constraints, and pointers to existing patterns ships the right thing; a vague ask ships confident guesses. Delegating to AI is a management skill, and writing the brief is the job."
+      caption="Same model, same feature; the only thing that changed is the brief. Handing an agent context, constraints, and pointers to existing patterns is most of the job, the same as briefing a contractor."
       control={<Segmented value={shown} onChange={(v) => { setPaused(true); setMode(v); }} options={[{ value: 'vague', label: 'Vague ask' }, { value: 'brief', label: 'Real brief' }]} />}
     >
       <div style={swapGrid}>
@@ -1230,7 +1233,7 @@ function AiReviewDemo() {
     <DemoFrame
       ref={frameRef}
       label="Confidently wrong, caught in review"
-      caption="The draft compiles, runs, and demos fine, and then shows the 4th of July as July 3rd to everyone in Detroit: a bare date string parses as UTC midnight. Models are confidently wrong in ways that read fine, so every AI line gets the same review a contractor's PR would. I own what ships."
+      caption="The draft compiles, runs, and demos fine, and then shows the 4th of July as July 3rd to everyone in Detroit: a bare date string parses as UTC midnight. Models are confidently wrong in ways that read fine, which is why every AI line gets the same review a contractor's PR would."
       control={<Segmented value={shown ? 'after' : 'draft'} onChange={(v) => { setPaused(true); setReviewed(v === 'after'); }} options={[{ value: 'draft', label: 'AI draft' }, { value: 'after', label: 'After review' }]} />}
     >
       {/* minHeight fits the taller (reviewed) state so the card never
@@ -1279,7 +1282,7 @@ function AiPlaybookDemo() {
     await wait(2900);
   });
   return (
-    <DemoFrame ref={frameRef} label="Write the playbook down" caption="Personal AI skill doesn't scale; a playbook in the repo does. Conventions, guardrails, and project context live where every agent and every teammate starts from them, so each new task begins at the house standard instead of from scratch. That's the difference between one person using AI and a team being faster because of it.">
+    <DemoFrame ref={frameRef} label="Write the playbook down" caption="Conventions, guardrails, and project context live in the repo, where every agent and every teammate starts from them. Each new task begins at the house standard instead of from scratch, and the whole team gets faster, not just me.">
       <div style={{ border: `1px solid ${allGuided ? GREEN : ACCENT}`, borderRadius: '10px', padding: '12px 14px', background: PAPER, marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '10px', transition: 'border-color 0.3s ease' }}>
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke={allGuided ? GREEN : ACCENT} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" /></svg>
         <span style={{ fontSize: '13px', fontWeight: 700, color: FG }}>CLAUDE.md</span>
