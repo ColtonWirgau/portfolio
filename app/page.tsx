@@ -266,17 +266,22 @@ export default function Home() {
   // (e.g. returning from the Personal Projects view).
   const attachCarousel = useCallback((el: HTMLDivElement | null) => {
     if (!el) return;
+    let wrapTimer = 0;
     const handleScroll = () => {
-      const cardWidth = el.scrollWidth / 3; // 3 sets of cards
-      if (el.scrollLeft >= cardWidth * 2) {
-        el.scrollLeft -= cardWidth;
-      } else if (el.scrollLeft <= 0) {
-        el.scrollLeft += cardWidth;
-      }
-      const posInSet = el.scrollLeft % cardWidth;
-      const singleCardWidth = cardWidth / 3;
+      const setWidth = el.scrollWidth / 3; // 3 duplicated sets
+      const singleCardWidth = setWidth / 3;
+      const posInSet = ((el.scrollLeft % setWidth) + setWidth) % setWidth;
       const idx = Math.round(posInSet / singleCardWidth) % 3;
       setActivePosterId(idx);
+      // Seamless wrap, but only once scrolling settles, so it never
+      // interrupts a swipe mid-gesture (that ate the move and made the
+      // first card take two swipes to leave).
+      window.clearTimeout(wrapTimer);
+      wrapTimer = window.setTimeout(() => {
+        const sw = el.scrollWidth / 3;
+        if (el.scrollLeft >= sw * 2) el.scrollLeft -= sw;
+        else if (el.scrollLeft <= 0) el.scrollLeft += sw;
+      }, 140);
     };
     el.addEventListener('scroll', handleScroll);
     // Start at the middle set
@@ -287,6 +292,7 @@ export default function Home() {
     return () => {
       el.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(raf);
+      window.clearTimeout(wrapTimer);
       stopAuto();
     };
   }, []);
@@ -295,17 +301,19 @@ export default function Home() {
   useEffect(() => {
     const el = storyCarouselRef.current;
     if (!el) return;
+    let wrapTimer = 0;
     const handleScroll = () => {
-      const cardWidth = el.scrollWidth / 3;
-      if (el.scrollLeft >= cardWidth * 2) {
-        el.scrollLeft -= cardWidth;
-      } else if (el.scrollLeft <= 0) {
-        el.scrollLeft += cardWidth;
-      }
-      const posInSet = el.scrollLeft % cardWidth;
-      const singleCardWidth = cardWidth / lifeEvents.length;
+      const setWidth = el.scrollWidth / 3;
+      const singleCardWidth = setWidth / lifeEvents.length;
+      const posInSet = ((el.scrollLeft % setWidth) + setWidth) % setWidth;
       const idx = Math.round(posInSet / singleCardWidth) % lifeEvents.length;
       setActiveStoryId(idx);
+      window.clearTimeout(wrapTimer);
+      wrapTimer = window.setTimeout(() => {
+        const sw = el.scrollWidth / 3;
+        if (el.scrollLeft >= sw * 2) el.scrollLeft -= sw;
+        else if (el.scrollLeft <= 0) el.scrollLeft += sw;
+      }, 140);
     };
     el.addEventListener('scroll', handleScroll);
     requestAnimationFrame(() => {
@@ -314,6 +322,7 @@ export default function Home() {
     const stopAuto = autoAdvanceCarousel(el, lifeEvents.length, 3600);
     return () => {
       el.removeEventListener('scroll', handleScroll);
+      window.clearTimeout(wrapTimer);
       stopAuto();
     };
   }, []);
@@ -1076,8 +1085,8 @@ export default function Home() {
                 lineHeight: 1.6,
                 maxWidth: '1100px',
               }}>
-                I{'\u2019'}ve always been interested in how things work, and how to{' '}
-                <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>make them work better</span>.
+                The places and people that{' '}
+                <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>made me</span>.
               </p>
             </div>
 

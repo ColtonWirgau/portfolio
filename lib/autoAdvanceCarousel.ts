@@ -21,14 +21,10 @@ export function autoAdvanceCarousel(
     if (taken || document.hidden) return;
     // Not a carousel (desktop grid) -> nothing to advance.
     if (el.scrollWidth <= el.clientWidth + 4) return;
-    const setWidth = el.scrollWidth / 3;
-    const step = setWidth / cardsPerSet;
-    // Pre-wrap before a smooth step would cross the last set, so the
-    // smooth animation never gets interrupted by the boundary reset (the
-    // three sets are identical, so the jump is invisible).
-    if (el.scrollLeft + step >= setWidth * 2) {
-      el.scrollLeft -= setWidth;
-    }
+    // Always step one card to the right. The carousel's own settle-wrap
+    // recenters into the middle set once the smooth scroll finishes, so
+    // stepping off the end reads as one continuous card, not a jump back.
+    const step = el.scrollWidth / 3 / cardsPerSet;
     el.scrollTo({ left: el.scrollLeft + step, behavior: 'smooth' });
   };
 

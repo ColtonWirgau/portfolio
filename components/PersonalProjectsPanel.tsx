@@ -145,17 +145,20 @@ export function PersonalProjectsPanel() {
   // the set boundaries, start on the middle set.
   const attachCarousel = useCallback((el: HTMLDivElement | null) => {
     if (!el) return;
+    let wrapTimer = 0;
     const handleScroll = () => {
-      const setWidth = el.scrollWidth / 3; // 3 sets of cards
-      if (el.scrollLeft >= setWidth * 2) {
-        el.scrollLeft -= setWidth;
-      } else if (el.scrollLeft <= 0) {
-        el.scrollLeft += setWidth;
-      }
-      const posInSet = el.scrollLeft % setWidth;
+      const setWidth = el.scrollWidth / 3; // 3 duplicated sets
       const singleCardWidth = setWidth / 3;
+      const posInSet = ((el.scrollLeft % setWidth) + setWidth) % setWidth;
       const idx = Math.round(posInSet / singleCardWidth) % 3;
       setActivePosterId(idx);
+      // Seamless wrap only once scrolling settles (see the home carousel).
+      window.clearTimeout(wrapTimer);
+      wrapTimer = window.setTimeout(() => {
+        const sw = el.scrollWidth / 3;
+        if (el.scrollLeft >= sw * 2) el.scrollLeft -= sw;
+        else if (el.scrollLeft <= 0) el.scrollLeft += sw;
+      }, 140);
     };
     el.addEventListener('scroll', handleScroll);
     const raf = requestAnimationFrame(() => {
@@ -165,6 +168,7 @@ export function PersonalProjectsPanel() {
     return () => {
       el.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(raf);
+      window.clearTimeout(wrapTimer);
       stopAuto();
     };
   }, []);
