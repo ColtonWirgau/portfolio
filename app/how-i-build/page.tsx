@@ -96,7 +96,7 @@ const SECTIONS: Section[] = [
     heading: 'Own it.',
     lead: 'My defaults optimize for leverage and longevity: build what’s core, buy the commodity, and keep everything maintainable by the people who have to live with it. Years as a team of one drilled those in (every shortcut eventually came back to me), but they’re how I’d run a team of any size.',
     principles: [
-      { p: 'Build vs. buy, honestly.', d: 'Buy the commodity; build the workflows and data that are the actual point. Own your core so you’re never renting your own operations.' },
+      { p: 'Build vs. buy.', d: 'Buy the commodity; build the workflows and data that are the actual point. Own your core so you’re never renting your own operations.' },
       { p: 'Test the risky seams.', d: 'Integrations, money, and auth get real coverage (Playwright for the flows that matter). I don’t chase a coverage number for its own sake.' },
     ],
     demos: ['monorepo'],
