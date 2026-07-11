@@ -58,7 +58,7 @@ const SECTIONS: Section[] = [
     heading: 'The data model is the product.',
     lead: 'Get the model right and everything downstream gets easier; get it wrong and you pay for it forever. I came up doing heavy SQL on a messy inherited database, so I don’t treat data as an afterthought.',
     principles: [
-      { p: 'Right tool per job.', d: 'SQL Server (MinistryPlatform) as the source of truth for the domain; Postgres (Neon) for app-level concerns. I don’t force one to be the other.' },
+      { p: 'Right tool per job.', d: 'Pick the store that fits the problem instead of forcing one database to be everything. Right now that looks like SQL Server as the domain source of truth with Postgres for app-level concerns, living side by side.' },
       { p: 'Normalize by default, denormalize on purpose.', d: 'I only denormalize for a read path that actually hurts, and I write down why. I’ve built nested-JSON frameworks when the relational shape fought the UI.' },
       { p: 'Migrations are code.', d: 'Reviewed, reversible, and never run by hand-copying SQL into a prod window.' },
     ],
@@ -94,7 +94,7 @@ const SECTIONS: Section[] = [
   {
     kicker: 'Defaults & preferences',
     heading: 'Own it.',
-    lead: 'As the sole technical decision-maker, I optimize for leverage and longevity: build what’s core, buy the commodity, and keep the whole thing maintainable by a small team (sometimes a team of one).',
+    lead: 'My defaults optimize for leverage and longevity: build what’s core, buy the commodity, and keep everything maintainable by the people who have to live with it. Years as a team of one drilled those in (every shortcut eventually came back to me), but they’re how I’d run a team of any size.',
     principles: [
       { p: 'Build vs. buy, honestly.', d: 'Buy the commodity; build the workflows and data that are the actual point. Own your core so you’re never renting your own operations.' },
       { p: 'Test the risky seams.', d: 'Integrations, money, and auth get real coverage (Playwright for the flows that matter). I don’t chase a coverage number for its own sake.' },
