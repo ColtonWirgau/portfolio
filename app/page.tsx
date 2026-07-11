@@ -16,6 +16,7 @@ import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 import { AIResearchSheet } from '@/components/AIResearchSheet';
 import { PersonalProjectsPanel } from '@/components/PersonalProjectsPanel';
+import { autoAdvanceCarousel } from '@/lib/autoAdvanceCarousel';
 
 const roles = [
   'an AI pioneer',
@@ -282,9 +283,11 @@ export default function Home() {
     const raf = requestAnimationFrame(() => {
       el.scrollLeft = el.scrollWidth / 3;
     });
+    const stopAuto = autoAdvanceCarousel(el, 3, 4200);
     return () => {
       el.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(raf);
+      stopAuto();
     };
   }, []);
 
@@ -308,7 +311,11 @@ export default function Home() {
     requestAnimationFrame(() => {
       el.scrollLeft = el.scrollWidth / 3;
     });
-    return () => el.removeEventListener('scroll', handleScroll);
+    const stopAuto = autoAdvanceCarousel(el, lifeEvents.length, 3600);
+    return () => {
+      el.removeEventListener('scroll', handleScroll);
+      stopAuto();
+    };
   }, []);
 
   useEffect(() => {

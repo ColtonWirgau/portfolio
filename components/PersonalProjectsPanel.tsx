@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useRef, useState } from 'react';
 import { ResponsiveSheet, SheetPage } from '@/components/ResponsiveSheet';
+import { autoAdvanceCarousel } from '@/lib/autoAdvanceCarousel';
 
 type SideProjectId = 'dynastly' | 'roar' | 'degenerates';
 
@@ -160,9 +161,11 @@ export function PersonalProjectsPanel() {
     const raf = requestAnimationFrame(() => {
       el.scrollLeft = el.scrollWidth / 3;
     });
+    const stopAuto = autoAdvanceCarousel(el, 3, 4200);
     return () => {
       el.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(raf);
+      stopAuto();
     };
   }, []);
 
