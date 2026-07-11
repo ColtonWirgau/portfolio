@@ -28,6 +28,7 @@ const SECTIONS: Section[] = [
     lead: 'If someone needs a tutorial to use what I built, I did it wrong. When Instagram ships an update, nobody sits through a walkthrough; you open the app, keep doing what you came to do, and it all just makes sense. I want everything I build to work like that.',
     principles: [
       { p: 'Clarity over cleverness.', d: 'Say just enough, at the right time. A clever interaction that needs explaining loses to a plain one that doesn’t.' },
+      { p: 'Borrow what already works.', d: 'Before I invent an interaction, I look at how the apps people live in every day solved the same problem. They’ve spent years working out what’s intuitive, scalable, and good-looking, and users show up already trained. It’s not always the right answer, but it’s rarely a bad place to start.' },
     ],
     demos: ['optimistic', 'wallOfText', 'mobile', 'motion'],
   },
@@ -37,7 +38,7 @@ const SECTIONS: Section[] = [
     lead: 'My default is Next.js, React, and TypeScript, everywhere, strict. The goal isn’t the fanciest code; it’s code that future-me can change without fear.',
     principles: [
       { p: 'Keep state local and derived.', d: 'Data fetched on the server and passed down beats a pile of client state. I reach for global state only when something is genuinely shared.' },
-      { p: 'A shared, abstracted design system.', d: 'A consistent component library (Shadcn-based) covers the 90%, and one change ripples everywhere it’s used; a plain inline style when a one-off is clearer than fighting the system.' },
+      { p: 'A shared, abstracted design system.', d: 'Build the component library once, use it everywhere, and let one change ripple through the whole product. On bigger projects consistency carries extra weight: when every screen works the same way, people already know how to use the feature you shipped yesterday.' },
       { p: 'Performance is a feature.', d: 'Lazy-load images, ship what’s needed, and measure before optimizing.' },
     ],
     demos: ['abstract'],
@@ -106,6 +107,7 @@ const SECTIONS: Section[] = [
     lead: 'Every line still ships with my name on it, though. I was doing applied NLP before the LLM era (published in 2017), so I never treated AI as magic: a fast team still needs a manager. When I use it well, it collapses the gap between deciding something and shipping it. When I get lazy with it, I get confident nonsense back. And it scales past me: I once set up a former MinistryPlatform CFO, who had never written code, with an AI dev environment, and today he builds and runs his own product full time.',
     principles: [
       { p: 'Delegate like it’s staff.', d: 'I hand AI whole tasks the way I’d hand them to a contractor: context, constraints, pointers to existing patterns, and a definition of done. Then I review the output like a PR.' },
+      { p: 'Skip the mockup.', d: 'Building is so fast now that I don’t mock screens up in Illustrator anymore; I prototype in the real code. If there’s existing schema I work off it from the jump, and if there isn’t I fake the data and tweak the UI until it feels right. That work usually drives the schema too: more than once the screen showed me that what I assumed was one-to-one is really one-to-many, before a single table existed.' },
       { p: 'Build the piece the model is missing.', d: 'The tooling changes monthly and I stay on the edge of it. When a model struggles at a task, I write a skill for it; I was packaging skills before LLMs started reaching for them on their own.' },
       { p: 'Write it down and share it.', d: 'Conventions, guardrails, and the skills I build live in the repo, not in my head. Sharing them with my team has let people ship things they never would have attempted.' },
       { p: 'Context follows my UI rule: say just enough.', d: 'A CLAUDE.md stays small enough to actually get read (a couple hundred lines, tops) and points to reference files for depth, because a wall of text says nothing to a model either.' },

@@ -24,7 +24,10 @@ const DemoFrame = forwardRef<HTMLDivElement, { label: string; caption: string; c
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        style={{ position: 'relative', overflow: 'hidden', border: `1px solid ${BORDER}`, borderRadius: '14px', padding: 'clamp(22px, 3vw, 32px)', background: 'var(--color-card)' }}
+        // overflowAnchor keeps the browser from pinning the visitor's scroll
+        // position to a node inside the demo: the autoplay loops add and
+        // remove rows, and an anchored row makes the whole page jump.
+        style={{ position: 'relative', overflow: 'hidden', overflowAnchor: 'none', border: `1px solid ${BORDER}`, borderRadius: '14px', padding: 'clamp(22px, 3vw, 32px)', background: 'var(--color-card)' }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px', flexWrap: 'wrap', marginBottom: '22px' }}>
           <div style={{ fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', color: ACCENT, fontWeight: 700 }}>{label}</div>
@@ -209,20 +212,20 @@ type OptStatus = 'pending' | 'confirmed' | 'settled' | 'deleting';
 
 function OptimisticDemo() {
   const frameRef = useRef<HTMLDivElement>(null);
-  const addRef = useRef<HTMLButtonElement>(null);
+  const pillRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const removeRef = useRef<HTMLButtonElement>(null);
   const cursor = useCursor(frameRef);
   const [items, setItems] = useState<{ id: number; name: string; status: OptStatus }[]>([
     { id: 0, name: 'Fresh mozzarella', status: 'settled' },
   ]);
   const next = useRef(1);
+  const pick = useRef(0);
   const after = useTimers();
   const setStatus = (id: number, status: OptStatus) => setItems((prev) => prev.map((i) => (i.id === id ? { ...i, status } : i)));
 
   const reset = () => setItems([{ id: 0, name: 'Fresh mozzarella', status: 'settled' }]);
-  const add = () => {
+  const add = (name: string) => {
     const id = next.current++;
-    const name = TOPPINGS[(id - 1) % TOPPINGS.length];
     setItems((prev) => [...prev, { id, name, status: 'pending' }]);
     after(() => setStatus(id, 'confirmed'), 900);   // server says 200
     after(() => setStatus(id, 'settled'), 2000);    // success flourish fades
@@ -233,17 +236,19 @@ function OptimisticDemo() {
     after(() => setItems((prev) => prev.filter((i) => i.id !== id)), 800);  // then poof once the server confirms
   };
 
-  // Plays itself: add a topping (optimistic pending, then the 200 check),
-  // then remove it (processing, then poof), looping while on screen.
+  // Plays itself: pick a topping pill (optimistic pending, then the 200
+  // check), then remove it (processing, then poof), looping while on
+  // screen with a different pill each pass.
   useAutoplay(frameRef, async ({ wait, alive }) => {
     reset();
     cursor.hide();
     await wait(900);
-    cursor.moveTo(addRef.current);
+    const idx = pick.current++ % TOPPINGS.length;
+    cursor.moveTo(pillRefs.current[idx]);
     await wait(700);
     if (!alive()) return;
     cursor.press();
-    const id = add();
+    const id = add(TOPPINGS[idx]);
     await wait(2600);
     if (!alive()) return;
     cursor.moveTo(removeRef.current);
@@ -292,9 +297,22 @@ function OptimisticDemo() {
           ))}
         </AnimatePresence>
       </div>
-      <button type="button" ref={addRef} onClick={add} disabled={items.length >= 3} style={{ ...pillButton, opacity: items.length >= 3 ? 0.5 : 1, cursor: items.length >= 3 ? 'default' : 'pointer' }}>
-        Add topping
-      </button>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+        {TOPPINGS.map((t, i) => {
+          const disabled = items.some((it) => it.name === t) || items.length >= 3;
+          return (
+            <button
+              key={t}
+              type="button"
+              ref={(el) => { pillRefs.current[i] = el; }}
+              onClick={() => { if (!disabled) add(t); }}
+              style={{ ...ghostButton, display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '7px 13px', color: FG, opacity: disabled ? 0.35 : 1, cursor: disabled ? 'default' : 'pointer', transition: 'opacity 0.2s ease' }}
+            >
+              <span style={{ color: ACCENT, fontWeight: 800 }}>+</span> {t}
+            </button>
+          );
+        })}
+      </div>
     </DemoFrame>
   );
 }
@@ -499,7 +517,6 @@ function MotionDemo() {
           </AnimatePresence>
         </div>
       </div>
-      <div style={{ minHeight: '38px' }}>{items.length < MOTION_ITEMS.length && <button type="button" onClick={() => { setPaused(true); reset(); }} style={ghostButton}>Reset</button>}</div>
     </DemoFrame>
   );
 }
@@ -677,9 +694,9 @@ function CleanDataDemo() {
           ))}
         </AnimatePresence>
       </div>
-      <div style={{ minHeight: '42px' }}>{dupCount > 0
-        ? <button type="button" ref={mergeRef} onClick={clean} style={pillButton}>Match &amp; merge duplicates</button>
-        : <button type="button" onClick={reset} style={ghostButton}>Reset</button>}</div>
+      <div style={{ minHeight: '42px' }}>{dupCount > 0 && (
+        <button type="button" ref={mergeRef} onClick={clean} style={pillButton}>Match &amp; merge duplicates</button>
+      )}</div>
     </DemoFrame>
   );
 }
@@ -728,18 +745,27 @@ function CheapestDemo() {
       caption="Sometimes the fastest frontend is a dumber one. A nested-JSON stored procedure does the heavy lifting in one round trip and hands the client something ready to render, instead of shipping raw rows and stitching them in the browser."
       control={<Segmented value={where} onChange={(w) => { setPaused(true); show(w); }} options={[{ value: 'browser', label: 'In the browser' }, { value: 'db', label: 'In the database' }]} />}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '7px', marginBottom: '16px', minHeight: '240px' }}>
-        {pipe.steps.map((step, i) => {
-          const complete = i <= done;
-          return (
-            <div key={step} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '10px 13px', borderRadius: '8px', border: `1px solid ${BORDER}`, background: PAPER, opacity: complete ? 1 : 0.5, transition: 'opacity 0.2s ease' }}>
-              <span style={{ width: 18, height: 18, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, background: complete ? GREEN : 'transparent', border: complete ? 'none' : `1px solid ${BORDER}`, color: PAPER }}>
-                {complete && <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
-              </span>
-              <span style={{ fontSize: '13px', fontWeight: 600, color: FG }}>{step}</span>
+      {/* Both pipelines render into the same grid cell and cross-fade, so
+          nothing is ever inserted or removed and the cell holds the taller
+          pipeline's height. */}
+      <div style={{ ...swapGrid, marginBottom: '16px' }}>
+        {(['browser', 'db'] as const).map((w) => (
+          <Swap key={w} show={where === w}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
+              {PIPELINES[w].steps.map((step, i) => {
+                const complete = where === w && i <= done;
+                return (
+                  <div key={step} style={{ display: 'flex', alignItems: 'center', gap: '11px', padding: '10px 13px', borderRadius: '8px', border: `1px solid ${BORDER}`, background: PAPER, opacity: complete ? 1 : 0.5, transition: 'opacity 0.2s ease' }}>
+                    <span style={{ width: 18, height: 18, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, background: complete ? GREEN : 'transparent', border: complete ? 'none' : `1px solid ${BORDER}`, color: PAPER }}>
+                      {complete && <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>}
+                    </span>
+                    <span style={{ fontSize: '13px', fontWeight: 600, color: FG }}>{step}</span>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
+          </Swap>
+        ))}
       </div>
       <div style={{ fontSize: '12px', color: MUTED }}>Round trips: <strong style={{ color: FG }}>{pipe.trips}</strong> · Steps: <strong style={{ color: FG }}>{pipe.steps.length}</strong></div>
     </DemoFrame>
