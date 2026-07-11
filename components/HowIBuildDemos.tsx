@@ -480,7 +480,7 @@ function MotionDemo() {
       control={<Segmented value={mode} onChange={(v) => { setPaused(true); setMode(v); }} options={[{ value: 'meaningful', label: 'Meaningful' }, { value: 'decorative', label: 'Decorative' }]} />}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', minHeight: '156px' }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', minHeight: '176px' }}>
           <AnimatePresence>
             {items.map((label, i) => (
               <motion.div
@@ -688,7 +688,7 @@ function CleanDataDemo() {
 
 const PIPELINES = {
   browser: { steps: ['Fetch products', 'Fetch prices', 'Fetch reviews', 'Stitch in JS', 'Render'], trips: 3, per: 260 },
-  db: { steps: ['Call view (nested JSON)', 'Render'], trips: 1, per: 260 },
+  db: { steps: ['Call stored procedure (nested JSON)', 'Render'], trips: 1, per: 260 },
 };
 
 function CheapestDemo() {
@@ -774,7 +774,7 @@ function CacheDemo() {
 
   return (
     <DemoFrame ref={frameRef} label="Cache the stable, and trust it" caption="Compute the stable stuff once; repeat views are free. A cache you cannot confidently invalidate never gets built, so it clears the moment the data underneath changes.">
-      <div style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '18px', background: PAPER, marginBottom: '16px', minHeight: '96px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div style={{ border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '18px', background: PAPER, marginBottom: '16px', minHeight: '108px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
         {loading ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: MUTED, fontSize: '13px' }}><Spinner /> Crunching the leaderboard… (cold)</div>
         ) : ms === null ? (
@@ -1099,9 +1099,9 @@ function RulesDemo() {
         <Swap show={shownMode === 'free'}>
         <div>
           <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>Description</div>
-          <div style={{ border: `1px solid ${RED}`, borderRadius: '8px', padding: '12px 14px', fontSize: '13px', lineHeight: 1.6, color: MUTED, background: PAPER }}>
+          <p style={{ margin: 0, fontSize: '13.5px', lineHeight: 1.7, color: FG }}>
             Cozy cabin, steps from the lake. Fast wifi throughout. Free parking on site for two cars. Pool is open May through September. Coffee and tea in the kitchen. Pet friendly, up to two dogs. Fire pit out back. Check in after 3, out by 11. No smoking. $180 a night, sleeps four…
-          </div>
+          </p>
           <div style={{ fontSize: '12px', color: RED, marginTop: '10px', fontWeight: 600 }}>Everything the form forgot ends up in here.</div>
         </div>
         </Swap>
