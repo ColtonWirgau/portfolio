@@ -661,7 +661,7 @@ function CleanDataDemo() {
         <span>Records: <span style={{ color: FG }}>{rows.length}</span></span>
         <span>Duplicates: <span style={{ color: dupCount ? RED : GREEN }}>{dupCount}</span></span>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '16px', minHeight: '236px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '16px', minHeight: '306px' }}>
         <AnimatePresence initial={false}>
           {rows.map((r) => (
             <motion.div key={r.id} layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, height: 0, marginBottom: -6 }} transition={{ duration: 0.25 }}
