@@ -12,6 +12,7 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
     <ResponsiveSheet
       open={open}
       onClose={onClose}
+      maxWidth="max-w-5xl"
       header={({ collapsed }) => (
         <div style={{ background: '#2A2622', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none' }}>

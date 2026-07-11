@@ -529,26 +529,52 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="hero-stamps-mobile md:hidden relative z-10 -mt-12 flex w-full flex-col items-center gap-3"
+              className="md:hidden relative z-10 -mt-12 flex w-full flex-col items-center gap-3"
             >
-              <div style={{ minHeight: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {/* The glass frame stays put (opacity 1, no transform) so the
+                  backdrop blur never re-composites and snaps; only the label
+                  inside slides and fades. */}
+              <button
+                type="button"
+                onClick={stamps[stampIndex].onClick}
+                aria-label={stamps[stampIndex].ariaLabel}
+                style={{
+                  position: 'relative',
+                  overflow: 'hidden',
+                  minWidth: '200px',
+                  minHeight: '58px',
+                  display: 'grid',
+                  placeItems: 'center',
+                  padding: '10px 18px 8px',
+                  border: '2px solid var(--color-accent)',
+                  borderRadius: '3px',
+                  background: 'rgba(213, 210, 200, 0.55)',
+                  backdropFilter: 'blur(12px) saturate(1.4)',
+                  WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
+                  boxShadow: '0 1px 8px rgba(0, 0, 0, 0.06)',
+                  color: 'var(--color-accent)',
+                  cursor: 'pointer',
+                }}
+              >
                 <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
+                  <motion.span
                     key={stampIndex}
-                    initial={{ opacity: 0, x: 26 }}
+                    initial={{ opacity: 0, x: 24 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -26 }}
-                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                    exit={{ opacity: 0, x: -24 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ gridArea: '1 / 1', textAlign: 'center', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.04em', lineHeight: 1.05 }}
                   >
-                    {renderStamp(stamps[stampIndex])}
-                  </motion.div>
+                    <span style={{ display: 'block', fontSize: '1.2rem', whiteSpace: 'nowrap' }}>{stamps[stampIndex].label}</span>
+                    <span style={{ display: 'block', fontSize: '10px', fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.2em', marginTop: '5px', paddingTop: '4px', borderTop: '1px solid var(--color-accent)', whiteSpace: 'nowrap' }}>{stamps[stampIndex].sub}</span>
+                  </motion.span>
                 </AnimatePresence>
-              </div>
+              </button>
               {/* Which of the three role stamps is showing. */}
               <div style={{ display: 'flex', gap: '7px' }} aria-hidden="true">
-                {stamps.map((s, i) => (
+                {[0, 1, 2].map((i) => (
                   <span
-                    key={s.label}
+                    key={i}
                     style={{
                       width: i === stampIndex ? '18px' : '6px',
                       height: '6px',

@@ -377,24 +377,9 @@ body,
   }
 }
 
-/* Hero stamp on mobile: frosted-glass fill in the site color (same
-   recipe as the scroll pill) so the photo edge reads through it, and
-   slightly larger than the shared desktop stamp style. !important on
-   the background because the shared hover handlers write inline
-   backgrounds. */
-.hero-stamps-mobile button {
-  padding: 10px 18px 8px !important;
-  background: rgba(213, 210, 200, 0.55) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(1.4);
-  backdrop-filter: blur(12px) saturate(1.4);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
-}
-.hero-stamps-mobile button > div:first-child {
-  font-size: 1.2rem !important;
-}
-.hero-stamps-mobile button > div:last-child {
-  font-size: 10px !important;
-}
+/* Hero mobile stamp glass now lives inline on the static frame in
+   app/page.tsx (only the label inside animates, so the backdrop blur
+   never re-composites). */
 
 /* How I Build page demos: skeleton shimmer + pending spinner. */
 @keyframes hib-shimmer {
