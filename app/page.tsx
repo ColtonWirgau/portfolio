@@ -529,19 +529,36 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="hero-stamps-mobile md:hidden relative z-10 -mt-12 flex w-full justify-center"
+              className="hero-stamps-mobile md:hidden relative z-10 -mt-12 flex w-full flex-col items-center gap-3"
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={stampIndex}
-                  initial={{ opacity: 0, scale: 1.12 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.28, ease: 'easeOut' }}
-                >
-                  {renderStamp(stamps[stampIndex])}
-                </motion.div>
-              </AnimatePresence>
+              <div style={{ minHeight: '58px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={stampIndex}
+                    initial={{ opacity: 0, x: 26 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -26 }}
+                    transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    {renderStamp(stamps[stampIndex])}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              {/* Which of the three role stamps is showing. */}
+              <div style={{ display: 'flex', gap: '7px' }} aria-hidden="true">
+                {stamps.map((s, i) => (
+                  <span
+                    key={s.label}
+                    style={{
+                      width: i === stampIndex ? '18px' : '6px',
+                      height: '6px',
+                      borderRadius: '100px',
+                      background: i === stampIndex ? 'var(--color-accent)' : 'var(--color-border)',
+                      transition: 'width 0.45s ease, background 0.45s ease',
+                    }}
+                  />
+                ))}
+              </div>
             </motion.div>
           </div>
           </div>
