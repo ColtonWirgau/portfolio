@@ -81,7 +81,7 @@ const SECTIONS: Section[] = [
       { p: 'Transform near the data.', d: 'Shaping happens close to where data comes from, not smeared across components that then disagree.' },
       { p: 'Cache close to the read, and only what you can invalidate.', d: 'A cache you can’t confidently bust is a future bug wearing a performance costume.' },
     ],
-    demos: ['sharedRule'],
+    demos: ['constraint'],
   },
   {
     kicker: 'Performance & feel',

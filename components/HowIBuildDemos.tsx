@@ -258,7 +258,7 @@ function OptimisticDemo() {
 
   return (
     <DemoFrame ref={frameRef} overlay={<FakeCursor ctl={cursor} />} label="Optimistic, but not too optimistic" caption="Adding a row shows instantly and settles once the server answers 200. But delete gets a processing state first, not an instant poof: if it looked done and quietly failed, you'd move on and never catch that it never actually worked. The check is a quick flourish, not a permanent badge, and anything that fails rolls back.">
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px', minHeight: '108px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px', minHeight: '150px' }}>
         <AnimatePresence initial={false}>
           {items.map((i, idx) => (
             <motion.div
@@ -292,7 +292,7 @@ function OptimisticDemo() {
           ))}
         </AnimatePresence>
       </div>
-      <button type="button" ref={addRef} onClick={add} disabled={items.length >= 6} style={{ ...pillButton, opacity: items.length >= 6 ? 0.5 : 1, cursor: items.length >= 6 ? 'default' : 'pointer' }}>
+      <button type="button" ref={addRef} onClick={add} disabled={items.length >= 3} style={{ ...pillButton, opacity: items.length >= 3 ? 0.5 : 1, cursor: items.length >= 3 ? 'default' : 'pointer' }}>
         Add topping
       </button>
     </DemoFrame>
@@ -535,11 +535,13 @@ function SkeletonDemo() {
           {STATS.map((s, i) => (
             <div key={s.label} style={{ padding: '16px 18px', borderLeft: i > 0 ? `1px solid ${BORDER}` : 'none' }}>
               <div style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '10px' }}>{s.label}</div>
-              {loading ? (
-                <div className="hib-shimmer" style={{ height: '18px', width: '80%' }} />
-              ) : (
-                <motion.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: i * 0.06 }} style={{ fontSize: '16px', fontWeight: 700, color: FG }}>{s.value}</motion.div>
-              )}
+              <div style={{ height: '20px', display: 'flex', alignItems: 'center' }}>
+                {loading ? (
+                  <div className="hib-shimmer" style={{ height: '16px', width: '80%' }} />
+                ) : (
+                  <motion.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: i * 0.06 }} style={{ fontSize: '16px', fontWeight: 700, lineHeight: '20px', color: FG }}>{s.value}</motion.div>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -726,7 +728,7 @@ function CheapestDemo() {
       caption="Sometimes the fastest frontend is a dumber one. A nested-JSON stored procedure does the heavy lifting in one round trip and hands the client something ready to render, instead of shipping raw rows and stitching them in the browser."
       control={<Segmented value={where} onChange={(w) => { setPaused(true); show(w); }} options={[{ value: 'browser', label: 'In the browser' }, { value: 'db', label: 'In the database' }]} />}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '7px', marginBottom: '16px', minHeight: '232px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '7px', marginBottom: '16px', minHeight: '240px' }}>
         {pipe.steps.map((step, i) => {
           const complete = i <= done;
           return (
@@ -882,73 +884,66 @@ function MonorepoDemo() {
   );
 }
 
-/* ── 13. One rule, in one place ────────────────────────────────────── */
+/* ── 13. Put the rule where it can't be skipped ────────────────────── */
 
-const SURFACES = ['Homepage', 'Search', 'Category page'];
-
-function SharedRuleDemo() {
+function ConstraintDemo() {
   const frameRef = useRef<HTMLDivElement>(null);
-  const [mode, setMode] = useState<'copied' | 'shared'>('copied');
-  const [applied, setApplied] = useState(false);
-  const [fixed, setFixed] = useState([false, false, false]);
+  const [mode, setMode] = useState<'app' | 'db'>('app');
   const [paused, setPaused] = useState(false);
 
-  // Apply the "hide sold-out items" rule. Shared: every surface reads the
-  // one view, so all update. Copied: two surfaces get fixed and the third
-  // quietly gets forgotten. Mode is passed in so the loop can't act on a
-  // stale value.
-  const apply = (m: 'copied' | 'shared' = mode) => { setApplied(true); setFixed(m === 'shared' ? [true, true, true] : [true, true, false]); };
-  const switchMode = (m: 'copied' | 'shared') => { setMode(m); setApplied(false); setFixed([false, false, false]); };
-
-  // Concept illustration, not a real control: cycle copied vs shared and
-  // apply the rule in each, so the forgotten third surface shows itself.
-  useAutoplay(frameRef, async ({ wait, alive }) => {
-    switchMode('copied');
-    await wait(1500);
+  // Comparison toggle: the same race (an item sells out between cart and
+  // checkout) with the stock check living only in app code vs enforced by
+  // a database constraint. Auto-cycles; yields the moment you touch it.
+  const { reduce } = useAutoplay(frameRef, async ({ wait, alive }) => {
+    setMode('app');
+    await wait(3400);
     if (!alive()) return;
-    apply('copied');
-    await wait(2600);
-    if (!alive()) return;
-    switchMode('shared');
-    await wait(1100);
-    if (!alive()) return;
-    apply('shared');
-    await wait(2600);
+    setMode('db');
+    await wait(3600);
   }, { paused });
+  const shown = reduce && !paused ? 'db' : mode;
+
+  const card: React.CSSProperties = { border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '14px', background: PAPER };
 
   return (
     <DemoFrame
       ref={frameRef}
-      label="One rule, in one place"
-      caption="Picture a storefront where the homepage, search, and category pages all list products, each built by a different person. Add a 'hide sold-out' filter to two of them but miss the third, and it keeps showing sold-out items for months until someone notices. Push the rule down into one shared SQL view, stored proc, or constraint and every screen obeys it."
-      control={<Segmented value={mode} onChange={(m) => { setPaused(true); switchMode(m); }} options={[{ value: 'copied', label: 'Copied per app' }, { value: 'shared', label: 'Shared in SQL' }]} />}
+      label="Put the rule where it can't be skipped"
+      caption="An item's in the cart, in stock. By checkout the last one is gone. With the check living only in app code, you're trusting every path to re-verify stock before it charges, and the one that forgets oversells (then it's refunds and apologies). A database constraint refuses the write itself: the API returns an error and nothing processes. The rule holds even when the code doesn't."
+      control={<Segmented value={shown} onChange={(m) => { setPaused(true); setMode(m); }} options={[{ value: 'app', label: 'App-layer check' }, { value: 'db', label: 'DB constraint' }]} />}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '16px', fontSize: '13px', color: FG }}>
-        <span>Rule: <strong>hide sold-out items</strong></span>
-        {mode === 'shared' && <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: ACCENT, border: `1px solid ${BORDER}`, borderRadius: '100px', padding: '3px 9px' }}>via v_in_stock</span>}
+      <div style={{ ...card, marginBottom: '12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+        <div>
+          <div style={{ fontSize: '14px', fontWeight: 700, color: FG }}>Vintage jacket</div>
+          <div style={{ fontSize: '12px', color: MUTED, marginTop: '3px', lineHeight: 1.5 }}>In your cart since 9:02. At 9:05 someone else buys the last one.</div>
+        </div>
+        <span style={{ flexShrink: 0, fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: RED, border: `1px solid ${RED}`, borderRadius: '100px', padding: '4px 10px' }}>0 left</span>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))', gap: '10px', marginBottom: '16px' }}>
-        {SURFACES.map((name, i) => {
-          const hidden = applied && fixed[i];
-          const leaking = applied && !fixed[i];
-          return (
-            <div key={name} style={{ border: `1px solid ${leaking ? RED : BORDER}`, borderRadius: '10px', padding: '12px', background: PAPER, transition: 'border-color 0.3s ease' }}>
-              <div style={{ fontSize: '12.5px', fontWeight: 700, color: FG }}>{name}</div>
-              <div style={{ fontSize: '11px', color: MUTED, margin: '5px 0 10px' }}>lists products</div>
-              {hidden && (
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, color: GREEN }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg> sold-out hidden
-                </span>
-              )}
-              {leaking && (
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11px', fontWeight: 700, color: RED }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></svg> showing sold out
-                </span>
-              )}
-              {!applied && <span style={{ fontSize: '11px', fontWeight: 600, color: MUTED }}>all items shown</span>}
+
+      <div style={swapGrid}>
+        <Swap show={shown === 'app'}>
+          <div style={card}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 700, color: GREEN }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+              Order confirmed. Card charged.
             </div>
-          );
-        })}
+            <div style={{ marginTop: '11px', border: `1px solid ${RED}`, background: 'rgba(192,73,47,0.08)', borderRadius: '8px', padding: '11px 13px', fontSize: '12px', color: RED, fontWeight: 600, lineHeight: 1.55 }}>
+              Oversold: 2 orders, 1 in stock. The re-check before charging was never written, so nothing stopped it. Now someone gets a refund and an apology.
+            </div>
+          </div>
+        </Swap>
+        <Swap show={shown === 'db'}>
+          <div style={card}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 700, color: RED }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+              Checkout rejected · 409 from the database
+            </div>
+            <div style={{ marginTop: '9px', fontSize: '12px', color: MUTED, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' }}>CHECK (stock &gt;= 0) violated, so the charge never happens.</div>
+            <div style={{ marginTop: '11px', border: `1px solid ${GREEN}`, background: 'rgba(63,143,82,0.10)', borderRadius: '8px', padding: '11px 13px', fontSize: '12px', color: GREEN, fontWeight: 600, lineHeight: 1.55 }}>
+              Overselling is impossible, no matter which code path runs. The friction is the feature.
+            </div>
+          </div>
+        </Swap>
       </div>
     </DemoFrame>
   );
@@ -1148,7 +1143,7 @@ function RulesDemo() {
 export type DemoId =
   | 'optimistic' | 'wallOfText' | 'skeleton' | 'mobile' | 'motion'
   | 'typesEnforce' | 'validate' | 'cleanData' | 'cheapest' | 'cache'
-  | 'abstract' | 'monorepo' | 'sharedRule' | 'formTypes' | 'rules';
+  | 'abstract' | 'monorepo' | 'constraint' | 'formTypes' | 'rules';
 
 const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   optimistic: OptimisticDemo,
@@ -1163,7 +1158,7 @@ const REGISTRY: Record<DemoId, () => React.ReactElement> = {
   cache: CacheDemo,
   abstract: AbstractDemo,
   monorepo: MonorepoDemo,
-  sharedRule: SharedRuleDemo,
+  constraint: ConstraintDemo,
   formTypes: FormTypesDemo,
   rules: RulesDemo,
 };
