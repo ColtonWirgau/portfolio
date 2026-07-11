@@ -498,10 +498,6 @@ function MotionDemo() {
             ))}
           </AnimatePresence>
         </div>
-        <div style={{ width: '92px', flexShrink: 0, alignSelf: 'stretch', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '6px', border: `1px dashed ${BORDER}`, borderRadius: '10px', color: MUTED }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="5" rx="1" /><path d="M4 9v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9M10 13h4" /></svg>
-          <span style={{ fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 700 }}>Archive</span>
-        </div>
       </div>
       <div style={{ minHeight: '38px' }}>{items.length < MOTION_ITEMS.length && <button type="button" onClick={() => { setPaused(true); reset(); }} style={ghostButton}>Reset</button>}</div>
     </DemoFrame>
