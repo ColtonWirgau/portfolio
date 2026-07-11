@@ -12,6 +12,7 @@ import {
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { SquidMark } from '@/components/SquidMark';
 import { InkBurst } from '@/components/InkBurst';
+import { InkCloseButton } from '@/components/InkExit';
 
 /* Same art as SquidMark, but with a live pupil that needs its own cx/cy,
    so the path is inlined here rather than reusing the component. */
@@ -861,8 +862,18 @@ export function SquidDive() {
       />
 
       <DepthMeter depth={depth} />
-      {/* The bands become exits home at either end of the dive */}
-      <DiveBand dir={-1} visible exit={depth <= 15} onExit={exitWithInk} light={depth > 300} />
+      {/* A close control is always available (like the morph-open pages);
+          "back to dry land" is saved for the very bottom of the dive. */}
+      <InkCloseButton
+        onClick={exitWithInk}
+        label="Back to dry land"
+        color={depth > 300 ? LIGHT : 'var(--color-fg)'}
+        background={depth > 300 ? 'rgba(23,18,9,0.35)' : 'rgba(213,210,200,0.55)'}
+        border={depth > 300 ? 'rgba(237,232,220,0.28)' : 'var(--color-border)'}
+      />
+      {/* Top band only ascends (hidden at the surface); the bottom band
+          becomes the exit home once you reach the deepest section. */}
+      <DiveBand dir={-1} visible={depth > 15} exit={false} onExit={exitWithInk} light={depth > 300} />
       <DiveBand dir={1} visible exit={depth >= 1085} onExit={exitWithInk} light={depth > 300} />
 
       {/* Ink flood out: the same burst as the way in, then we surface on the home page */}
