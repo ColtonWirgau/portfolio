@@ -93,7 +93,7 @@ const SECTIONS: Section[] = [
   },
   {
     kicker: 'Defaults & preferences',
-    heading: 'Own the thing that’s actually yours.',
+    heading: 'Own it.',
     lead: 'As the sole technical decision-maker, I optimize for leverage and longevity: build what’s core, buy the commodity, and keep the whole thing maintainable by a small team (sometimes a team of one).',
     principles: [
       { p: 'Build vs. buy, honestly.', d: 'Buy the commodity; build the workflows and data that are the actual point. Own your core so you’re never renting your own operations.' },
