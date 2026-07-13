@@ -135,6 +135,11 @@ function useAmbientSquids(isInView: boolean) {
   const timeoutRef = useRef<NodeJS.Timeout>(undefined);
 
   const spawnSquid = useCallback(() => {
+    // Hidden tabs keep (throttled) timers running but pause the animation
+    // loop, so squids spawned while the user is away never finish their swim
+    // and pile up at the start line until the tab wakes. Skip the spawn (the
+    // schedule keeps ticking) and cap the school size as a backstop.
+    if (document.hidden) return;
     const direction = Math.random() > 0.5 ? 'right' : 'left';
     const size = 30 + Math.random() * 50;
     const squid: AmbientSquid = {
@@ -145,7 +150,7 @@ function useAmbientSquids(isInView: boolean) {
       direction,
       bobAmount: 3 + Math.random() * 8,
     };
-    setSquids(prev => [...prev, squid]);
+    setSquids(prev => (prev.length >= 6 ? prev : [...prev, squid]));
   }, []);
 
   const removeSquid = useCallback((id: number) => {
