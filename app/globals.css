@@ -269,6 +269,18 @@ body,
   }
 }
 
+/* Project sheet body order: the screenshot gallery follows the copy on
+   desktop, but on mobile it jumps up between the lead and the bullets so
+   the first screen shows product, not a wall of text. */
+.project-gallery-slot {
+  order: 4;
+}
+@media (max-width: 768px) {
+  .project-gallery-slot {
+    order: 1;
+  }
+}
+
 /* Work-page screenshot set: multiple shots sit side by side full width
    when there's room, and collapse to a peek carousel when the container
    gets narrow. Single shots just render full width (no track). */

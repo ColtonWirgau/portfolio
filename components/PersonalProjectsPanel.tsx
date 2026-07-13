@@ -610,13 +610,21 @@ function ScreenGallery({
 
 function ProjectSheetBody({ project }: { project: typeof sideProjects[SideProjectId] }) {
   const { theme, body, points, outro, stack, screens } = project;
+  // Flex + order so the gallery can move: after the copy on desktop, right
+  // under the lead on mobile (see .project-gallery-slot in globals.css).
   return (
-    <div style={{ padding: '28px' }}>
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '16px' }}>
+    <div style={{ padding: '28px', display: 'flex', flexDirection: 'column' }}>
+      <p style={{ order: 0, fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '16px' }}>
         {body}
       </p>
 
-      <ul style={{ listStyle: 'none', padding: 0, margin: `0 0 ${outro ? '16px' : '28px'}` }}>
+      {screens && screens.length > 0 && (
+        <div className="project-gallery-slot">
+          <ScreenGallery screens={screens} bg={theme.bg} />
+        </div>
+      )}
+
+      <ul style={{ order: 2, listStyle: 'none', padding: 0, margin: `0 0 ${outro ? '16px' : '28px'}` }}>
         {points.map((point) => (
           <li key={point} style={{ display: 'flex', gap: '12px', fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '8px' }}>
             <span aria-hidden style={{ width: '14px', height: '2px', background: theme.accent, flexShrink: 0, marginTop: '11px' }} />
@@ -626,14 +634,12 @@ function ProjectSheetBody({ project }: { project: typeof sideProjects[SideProjec
       </ul>
 
       {outro && (
-        <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '28px' }}>
+        <p style={{ order: 3, fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '28px' }}>
           {outro}
         </p>
       )}
 
-      {screens && screens.length > 0 && <ScreenGallery screens={screens} bg={theme.bg} />}
-
-      <div style={{ paddingTop: '16px', borderTop: '1px solid var(--color-border)' }}>
+      <div style={{ order: 5, paddingTop: '16px', borderTop: '1px solid var(--color-border)' }}>
         <p style={{ fontSize: '11px', fontWeight: 400, color: 'var(--color-muted)', lineHeight: 1.8 }}>
           Built with {stack.join(' · ')}
         </p>
