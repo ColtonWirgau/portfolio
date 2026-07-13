@@ -1,9 +1,10 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Footer } from '@/components/Footer';
 import { InkCloseButton, useInkExit } from '@/components/InkExit';
+import { ScreenshotLightbox } from '@/components/ScreenshotLightbox';
 
 /* ── Church Hub brand system ──────────────────────────────────────────
    Marble over cream, warm-gray ink, a soft slate-blue accent, serif
@@ -49,13 +50,19 @@ function HubGlyph({ size = 220, opacity = 0.14 }: { size?: number; opacity?: num
 
 type Shot = { desktop: string; desktopAlt: string; phone: string; phoneAlt: string };
 
-// One desktop + overlaid phone composite.
-function Composite({ shot }: { shot: Shot }) {
+// One desktop + overlaid phone composite. Clicking opens the full-screen
+// viewer on this shot.
+function Composite({ shot, onClick }: { shot: Shot; onClick: () => void }) {
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
+    <button
+      type="button"
+      aria-label={`View full screen: ${shot.desktopAlt}`}
+      onClick={onClick}
+      style={{ display: 'block', position: 'relative', width: '100%', padding: 0, border: 'none', background: 'transparent', cursor: 'zoom-in', textAlign: 'inherit' }}
+    >
       <img src={shot.desktop} alt={shot.desktopAlt} loading="lazy" style={{ display: 'block', width: '100%', borderRadius: '4px', border: `1px solid ${BORDER}`, boxShadow: '0 24px 60px rgba(48,60,74,0.18)' }} />
       <img src={shot.phone} alt={shot.phoneAlt} loading="lazy" style={{ position: 'absolute', bottom: '-14px', right: '-10px', width: 'clamp(92px, 27%, 170px)', borderRadius: '16px', border: `1px solid ${BORDER}`, boxShadow: '0 18px 48px rgba(0,0,0,0.32)' }} />
-    </div>
+    </button>
   );
 }
 
@@ -65,6 +72,7 @@ function Composite({ shot }: { shot: Shot }) {
 function ShotSet({ shots }: { shots: Shot[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const handleScroll = () => {
     const el = trackRef.current;
@@ -80,11 +88,31 @@ function ShotSet({ shots }: { shots: Shot[] }) {
     setActive(best);
   };
 
+  const lightbox = (
+    <AnimatePresence>
+      {lightboxIndex !== null && (
+        <ScreenshotLightbox
+          shots={shots.map((s) => ({ src: s.desktop, caption: s.desktopAlt }))}
+          index={lightboxIndex}
+          onNavigate={(i) => {
+            // When the set is collapsed to the narrow-container carousel,
+            // keep it on the shot the viewer is showing.
+            setLightboxIndex(i);
+            const child = trackRef.current?.children[i] as HTMLElement | undefined;
+            child?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+          }}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
+    </AnimatePresence>
+  );
+
   if (shots.length === 1) {
     return (
       <motion.div variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}
         style={{ width: '100%', paddingBottom: '22px' }}>
-        <Composite shot={shots[0]} />
+        <Composite shot={shots[0]} onClick={() => setLightboxIndex(0)} />
+        {lightbox}
       </motion.div>
     );
   }
@@ -97,9 +125,9 @@ function ShotSet({ shots }: { shots: Shot[] }) {
         className="shot-set-track"
         style={{ gridTemplateColumns: `repeat(${shots.length}, minmax(0, 1fr))` }}
       >
-        {shots.map((s) => (
+        {shots.map((s, i) => (
           <div key={s.desktop} className="shot-set-item">
-            <Composite shot={s} />
+            <Composite shot={s} onClick={() => setLightboxIndex(i)} />
           </div>
         ))}
       </div>
@@ -108,6 +136,7 @@ function ShotSet({ shots }: { shots: Shot[] }) {
           <div key={s.desktop} style={{ width: active === i ? '24px' : '8px', height: '8px', borderRadius: '100px', background: active === i ? BLUE_DEEP : BORDER, transition: 'all 0.3s ease' }} />
         ))}
       </div>
+      {lightbox}
     </motion.div>
   );
 }

@@ -1,7 +1,9 @@
 'use client';
 
 import { Fragment, useCallback, useRef, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { ResponsiveSheet, SheetPage } from '@/components/ResponsiveSheet';
+import { ScreenshotLightbox } from '@/components/ScreenshotLightbox';
 import { autoAdvanceCarousel } from '@/lib/autoAdvanceCarousel';
 
 type SideProjectId = 'dynastly' | 'roar' | 'degenerates';
@@ -443,6 +445,7 @@ function ScreenGallery({
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Track the slide closest to the track's center so the dots stay in
   // sync as the user scrolls or swipes, matching the work/story carousels.
@@ -505,7 +508,7 @@ function ScreenGallery({
         // hangs below the desktop image (the track's overflow would clip it).
         style={{ display: 'flex', gap: '16px', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', margin: '0 -28px', padding: '0 28px 20px' }}
       >
-        {screens.map((screen) => (
+        {screens.map((screen, i) => (
           <figure
             key={screen.desktop}
             style={{
@@ -517,8 +520,14 @@ function ScreenGallery({
               margin: 0,
             }}
           >
-            {/* Desktop + overlaid phone composite, same as the Church Hub page */}
-            <div style={{ position: 'relative', width: '100%' }}>
+            {/* Desktop + overlaid phone composite, same as the Church Hub page.
+                Clicking opens the full-screen viewer on this shot. */}
+            <button
+              type="button"
+              aria-label={`View full screen: ${screen.caption}`}
+              onClick={() => setLightboxIndex(i)}
+              style={{ display: 'block', position: 'relative', width: '100%', padding: 0, border: 'none', background: 'transparent', cursor: 'zoom-in' }}
+            >
               <img
                 src={screen.desktop}
                 alt={screen.caption}
@@ -534,10 +543,26 @@ function ScreenGallery({
                   style={{ position: 'absolute', bottom: '-14px', right: '-10px', width: 'clamp(72px, 26%, 150px)', aspectRatio: '1179 / 1977', objectFit: 'cover', borderRadius: '12px', border: '1px solid var(--color-border)', boxShadow: '0 18px 48px rgba(0,0,0,0.32)', background: bg }}
                 />
               )}
-            </div>
+            </button>
           </figure>
         ))}
       </div>
+
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <ScreenshotLightbox
+            shots={screens.map((s) => ({ src: s.desktop, caption: s.caption }))}
+            index={lightboxIndex}
+            onNavigate={(i) => {
+              // Keep the carousel underneath on the same shot, so closing the
+              // viewer lands where the user left off.
+              setLightboxIndex(i);
+              scrollToSlide(i);
+            }}
+            onClose={() => setLightboxIndex(null)}
+          />
+        )}
+      </AnimatePresence>
 
       {screens.length > 1 && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '18px', padding: '20px 0 0' }}>
