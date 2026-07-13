@@ -269,41 +269,6 @@ body,
   }
 }
 
-/* Project sheet screenshot gallery: show the desktop shot in wide
-   containers and the phone shot in narrow ones. */
-.screen-gallery {
-  container-type: inline-size;
-}
-.screen-shot-desktop {
-  display: block;
-}
-.screen-shot-mobile {
-  display: none;
-  width: auto;
-  max-width: min(100%, 300px);
-  max-height: min(420px, 48dvh);
-  margin: 0 auto;
-}
-@container (max-width: 540px) {
-  /* The slide is sized from the desktop aspect ratio; on mobile the
-     portrait shot is much narrower than that, which left big dead space
-     inside each slide. Shrink the slide to the phone shot and let the
-     image fill it so neighbours sit close with a clean peek. */
-  .screen-figure.has-mobile {
-    flex-basis: 82% !important;
-  }
-  .screen-figure.has-mobile .screen-shot-desktop {
-    display: none;
-  }
-  .screen-figure.has-mobile .screen-shot-mobile {
-    display: block;
-    width: 100%;
-    max-width: none;
-    max-height: none;
-    margin: 0;
-  }
-}
-
 /* Work-page screenshot set: multiple shots sit side by side full width
    when there's room, and collapse to a peek carousel when the container
    gets narrow. Single shots just render full width (no track). */

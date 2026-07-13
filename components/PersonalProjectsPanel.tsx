@@ -497,16 +497,17 @@ function ScreenGallery({
   });
 
   return (
-    <div className="screen-gallery" style={{ marginBottom: '28px' }}>
+    <div style={{ marginBottom: '28px' }}>
       <div
         ref={trackRef}
         onScroll={handleScroll}
-        style={{ display: 'flex', gap: '16px', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', margin: '0 -28px', padding: '0 28px' }}
+        // The bottom padding leaves room for the overlaid phone shot, which
+        // hangs below the desktop image (the track's overflow would clip it).
+        style={{ display: 'flex', gap: '16px', overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory', margin: '0 -28px', padding: '0 28px 20px' }}
       >
         {screens.map((screen) => (
           <figure
             key={screen.desktop}
-            className={screen.mobile ? 'screen-figure has-mobile' : 'screen-figure'}
             style={{
               // Cap the slide at ~74% of the track so the neighbouring shots
               // always peek in (the height term still keeps wide dashboards
@@ -516,22 +517,24 @@ function ScreenGallery({
               margin: 0,
             }}
           >
-            <img
-              src={screen.desktop}
-              alt={screen.caption}
-              loading="lazy"
-              className="screen-shot-desktop"
-              style={{ width: '100%', aspectRatio: screen.aspect ?? '1600 / 1000', border: '1px solid var(--color-border)', background: bg }}
-            />
-            {screen.mobile && (
+            {/* Desktop + overlaid phone composite, same as the Church Hub page */}
+            <div style={{ position: 'relative', width: '100%' }}>
               <img
-                src={screen.mobile}
+                src={screen.desktop}
                 alt={screen.caption}
                 loading="lazy"
-                className="screen-shot-mobile"
-                style={{ aspectRatio: '1179 / 1977', objectFit: 'cover', border: '1px solid var(--color-border)', background: bg }}
+                style={{ display: 'block', width: '100%', aspectRatio: screen.aspect ?? '1600 / 1000', border: '1px solid var(--color-border)', background: bg }}
               />
-            )}
+              {screen.mobile && (
+                <img
+                  src={screen.mobile}
+                  alt=""
+                  aria-hidden
+                  loading="lazy"
+                  style={{ position: 'absolute', bottom: '-14px', right: '-10px', width: 'clamp(72px, 26%, 150px)', aspectRatio: '1179 / 1977', objectFit: 'cover', borderRadius: '12px', border: '1px solid var(--color-border)', boxShadow: '0 18px 48px rgba(0,0,0,0.32)', background: bg }}
+                />
+              )}
+            </div>
           </figure>
         ))}
       </div>
