@@ -285,7 +285,7 @@ export function PersonalProjectsPanel() {
               Fantasy League HR Department
             </p>
             <p style={{ fontSize: '11px', fontWeight: 500, color: 'rgba(229,231,235,0.65)', fontFamily: 'var(--font-sans)', textAlign: 'center', lineHeight: 1.6, maxWidth: '220px', margin: '0 auto' }}>
-              A weekly 12-leg parlay we have never hit. Tracks the picks, the votes, the rules, and the punishments.
+              Tracking the weekly 12-leg parlay we have never once hit.
             </p>
           </div>
         </div>
@@ -327,7 +327,7 @@ export function PersonalProjectsPanel() {
               Season Ticket HQ
             </p>
             <p style={{ fontSize: '11px', fontWeight: 500, color: 'rgba(255,255,255,0.85)', fontFamily: 'var(--font-sans)', textAlign: 'center', lineHeight: 1.6, maxWidth: '220px', margin: '0 auto' }}>
-              Six seats, two always open. Who&apos;s going, who paid, and the sale graphic when we list a pair.
+              Who&apos;s going, who paid, and how the season is netting out.
             </p>
           </div>
         </div>
@@ -540,7 +540,7 @@ function ScreenGallery({
                   alt=""
                   aria-hidden
                   loading="lazy"
-                  style={{ position: 'absolute', bottom: '-14px', right: '-10px', width: 'clamp(72px, 26%, 150px)', aspectRatio: '1179 / 1977', objectFit: 'cover', borderRadius: '12px', border: '1px solid var(--color-border)', boxShadow: '0 18px 48px rgba(0,0,0,0.32)', background: bg }}
+                  style={{ position: 'absolute', bottom: '-14px', right: '-10px', width: 'clamp(72px, 26%, 150px)', borderRadius: '12px', border: '1px solid var(--color-border)', boxShadow: '0 18px 48px rgba(0,0,0,0.32)', background: bg }}
                 />
               )}
             </button>
