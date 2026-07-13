@@ -48,14 +48,16 @@ export function Header() {
   return (
     <>
     <nav
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between"
-      style={{ padding: '10px 24px', pointerEvents: 'none' }}
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between pt-2.5 px-3 lg:px-6"
+      style={{ pointerEvents: 'none' }}
     >
       {/* Squid, on its own glass disc */}
+      {/* -ml-2 at lg+ centers the 40px disc on the 24px side-label column
+          (label center x=36 vs disc center x=44 at the shared 24px pad). */}
       <Link
         href="/"
         onClick={handleLogoClick}
-        className="flex items-center justify-center hover:opacity-80 transition-opacity"
+        className="flex items-center justify-center hover:opacity-80 transition-opacity lg:-ml-2"
         style={{ ...glass, width: 40, height: 40, borderRadius: '50%' }}
       >
           <div style={{ width: 28, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

@@ -512,7 +512,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="w-[50%] max-md:w-full max-md:h-[45vh] md:h-[90dvh] shrink-0"
+              className="w-[50%] max-md:w-full max-md:h-[45vh] md:h-[min(90dvh,calc(100dvh_-_116px))] shrink-0"
             >
               <img
                 src="/Portfoliov1.jpg"
