@@ -212,12 +212,12 @@ export const fullStackAiLeadResume: Resume = {
         {
           title: 'Sylvester: An Approach to Emotion Classification',
           venue: 'New Trends in Information Technology',
-          year: '2017',
+          year: 'April 2017',
           link: 'https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification',
           linkLabel: 'ResearchGate',
           hideTitle: true,
           description:
-            'Built an AI system in 2017, before AI went mainstream: it read tweets in real time to gauge how people felt about any subject, learning the evolving language of Twitter rather than a fixed dictionary. The problems we wrestled with then (sarcasm, slang, drift, ambiguity at scale) are the same ones shaping modern AI today. New Trends in Information Technology, 2017.',
+            'Built an AI system in 2017, before AI went mainstream: it read tweets in real time to gauge how people felt about any subject, learning the evolving language of Twitter rather than a fixed dictionary. The problems we wrestled with then (sarcasm, slang, drift, ambiguity at scale) are the same ones shaping modern AI today. New Trends in Information Technology, April 2017.',
         },
       ],
     },

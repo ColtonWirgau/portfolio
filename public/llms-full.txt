@@ -69,7 +69,7 @@ The three personal projects live inline in the Work section of the home page (/#
 
 Sylvester was a collaborative research project Colton worked on during undergrad at the University of Detroit Mercy. It learned the language of Twitter through automatic annotation and classification, then interpreted tweets in real time to determine how people felt emotionally about any given subject, based on the current shape of online language rather than a fixed lexicon.
 
-Citation: "Sylvester: An Approach to Emotion Classification." *New Trends in Information Technology*, 2017.
+Citation: "Sylvester: An Approach to Emotion Classification." *New Trends in Information Technology*, April 2017.
 
 ResearchGate link: https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification
 

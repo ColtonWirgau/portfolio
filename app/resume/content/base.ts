@@ -31,7 +31,7 @@ export const basePublications: ResumePublication[] = [
   {
     title: 'Sylvester: An Approach to Emotion Classification',
     venue: 'New Trends in Information Technology',
-    year: '2017',
+    year: 'April 2017',
     link: 'https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification',
     linkLabel: 'ResearchGate',
   },

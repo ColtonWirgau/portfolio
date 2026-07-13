@@ -86,7 +86,7 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
             marginBottom: '24px',
             borderBottom: '1px solid var(--color-border)',
           }}>
-            <Meta label="Year" value="2017" />
+            <Meta label="Published" value="April 2017" />
             <Meta label="Venue" value="New Trends in Information Technology" />
             <Meta label="Area" value="NLP · Real-time Classification" />
           </div>
@@ -155,7 +155,7 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
               color: 'var(--color-fg)',
               marginBottom: '16px',
             }}>
-              {'“'}Sylvester: An Approach to Emotion Classification.{'”'} <em>New Trends in Information Technology</em>, 2017.
+              {'“'}Sylvester: An Approach to Emotion Classification.{'”'} <em>New Trends in Information Technology</em>, April 2017.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px' }}>
               <a
