@@ -59,26 +59,12 @@ export function ContactSheet({ open, onClose }: ContactSheetProps) {
               lineHeight: 1,
               letterSpacing: '-0.02em',
               textTransform: 'uppercase',
-              marginBottom: collapsed ? 0 : '14px',
+              marginBottom: 0,
               paddingTop: '0.08em',
               transition: 'all 0.3s ease',
             }}>
               Let&apos;s talk.
             </h2>
-            <p style={{
-              fontFamily: 'var(--font-serif)',
-              fontStyle: 'italic',
-              fontSize: '16px',
-              color: 'rgba(255,255,255,0.7)',
-              lineHeight: 1.5,
-              maxWidth: '440px',
-              maxHeight: collapsed ? 0 : '80px',
-              opacity: collapsed ? 0 : 1,
-              overflow: 'hidden',
-              transition: 'all 0.3s ease',
-            }}>
-              Hiring, collaborating, or just want to nerd out about AI, dynasty football, or church tech? Drop a line.
-            </p>
           </div>
         </div>
       )}
