@@ -407,7 +407,9 @@ function CursorSchool() {
   }, [mx, my]);
 
   return (
-    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 600 }} aria-hidden="true">
+    // z 950: above the close button (900) so the diver swims over it, below
+    // the ink floods (5000+) so exits still swallow him.
+    <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 950 }} aria-hidden="true">
       {/* The cursor: the crown of the diver's helmet pinned to the pointer, no spring lag */}
       <motion.div
         style={{
