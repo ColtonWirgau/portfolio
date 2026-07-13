@@ -285,7 +285,7 @@ export const lifeEvents: LifeEvent[] = [
         ],
       },
     ],
-    image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=1000&fit=crop',
+    image: '/images/Work1.jpeg',
     lat: 42.6064,
     lng: -83.1498,
   },
