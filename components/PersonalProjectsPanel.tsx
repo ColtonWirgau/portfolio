@@ -10,6 +10,8 @@ const sideProjects: Record<SideProjectId, {
   title: string;
   tagline: string;
   body: string;
+  points: string[];
+  outro?: string;
   stack: string[];
   screens?: { desktop: string; mobile?: string; caption: string; aspect?: string }[];
   theme: {
@@ -23,7 +25,14 @@ const sideProjects: Record<SideProjectId, {
   dynastly: {
     title: 'Dynastly',
     tagline: 'Dynasty fantasy football trade companion',
-    body: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Sites like KeepTradeCut only handle 1-for-1 deals, and most league platforms don’t expose the APIs I needed. So I built Dynastly: pulls player valuations from a few sources, mirrors my league’s rosters and matchups, and lets me build realistic multi-team trades on a single canvas. Ships with a companion browser extension to pull data the public APIs won’t. Along the way I found a serious bug in one of the big fantasy platforms, which I’m reporting to them, not shipping.',
+    body: 'I play dynasty fantasy football and got tired of bouncing between five tools to evaluate my team, see how I stack up against the league, and build trades. Dynastly puts all of it in one place.',
+    points: [
+      'Pulls player valuations from multiple sources and prices whole rosters, draft picks included.',
+      'Mirrors my league’s rosters, matchups, and open offers.',
+      'Builds realistic multi-team trades on a single canvas (sites like KeepTradeCut stop at 1-for-1 deals).',
+      'Ships with a companion browser extension that pulls data the public APIs won’t.',
+    ],
+    outro: 'Along the way I found a serious bug in one of the big fantasy platforms, which I’m reporting to them, not shipping.',
     stack: ['Next.js 16', 'TypeScript', 'Drizzle', 'Neon', 'Tailwind 4', 'Playwright', 'Chrome Extension', 'Sleeper API'],
     screens: [
       {
@@ -58,7 +67,12 @@ const sideProjects: Record<SideProjectId, {
   roar: {
     title: 'Roar Tracker',
     tagline: 'Six Lions season tickets, one organized family',
-    body: 'My parents, my wife, and I split six Lions season tickets, and there are only four of us. So every game comes with at least two open seats: friends when we can find them, the resale market when we can’t. Roar Tracker keeps the whole operation straight. Who’s in for each game, who paid what, and how the season is tracking money-wise. When more people want in than we have seats, it runs the drawing. And when we list a pair, it generates a clean social graphic for the post, the kind I used to rebuild in Illustrator every single week.',
+    body: 'My parents, my wife, and I split six Lions season tickets, and there are only four of us. So every game comes with at least two open seats: friends when we can find them, the resale market when we can’t. Roar Tracker keeps the whole operation straight.',
+    points: [
+      'Tracks who’s in for each game, who paid what, and how the season is tracking money-wise.',
+      'Runs the drawing when more people want in than we have seats.',
+      'Generates a clean social graphic when we list a pair, the kind I used to rebuild in Illustrator every single week.',
+    ],
     stack: ['Next.js', 'TypeScript', 'Supabase', 'OAuth', 'Tailwind', 'Vercel'],
     screens: [
       {
@@ -88,7 +102,13 @@ const sideProjects: Record<SideProjectId, {
   degenerates: {
     title: 'Degenerates Dashboard',
     tagline: 'A 12-leg parlay you all lose together every Sunday',
-    body: 'Every week, my idiot friends and I place a 12-leg parlay. We have never won. Not once. But we keep doing it, and I built a dashboard to track our glorious losing streak. It pulls in picks, tracks results, and roasts us with the data. It’s dumb, it’s fun, and it’s one of my favorite things I’ve built.',
+    body: 'Every week, my idiot friends and I place a 12-leg parlay. We have never won. Not once. But we keep doing it, and I built a dashboard to track our glorious losing streak.',
+    points: [
+      'Pulls in everyone’s picks and tracks the legs live as games finish.',
+      'Keeps the season record: every week, every bet we should not have made.',
+      'Rules, stakes, and punishments all get voted on before anything locks.',
+    ],
+    outro: 'It’s dumb, it’s fun, and it’s one of my favorite things I’ve built.',
     stack: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'Tailwind'],
     screens: [
       {
@@ -342,7 +362,7 @@ export function PersonalProjectsPanel() {
         open={!!selected}
         onClose={() => setSelected(null)}
         maxWidth="max-w-5xl"
-        header={selected ? ({ collapsed }) => <ProjectSheetHeader project={sideProjects[selected]} collapsed={collapsed} /> : null}
+        header={selected ? () => <ProjectSheetHeader project={sideProjects[selected]} /> : null}
       >
         <SheetPage name="main">
           {selected && <ProjectSheetBody project={sideProjects[selected]} />}
@@ -352,10 +372,13 @@ export function PersonalProjectsPanel() {
   );
 }
 
-function ProjectSheetHeader({ project, collapsed = false }: { project: typeof sideProjects[SideProjectId]; collapsed?: boolean }) {
-  const { theme, title, tagline } = project;
+// Always the compact version: the sheet used to render a tall header that
+// shrank on scroll, but the compact bar carries everything the tall one did
+// (the tagline lives in the body lead now), so it just starts small.
+function ProjectSheetHeader({ project }: { project: typeof sideProjects[SideProjectId] }) {
+  const { theme, title } = project;
   return (
-    <div style={{ background: theme.bg, padding: collapsed ? '14px 28px 12px' : '26px 28px 24px', position: 'relative', overflow: 'hidden', transition: 'padding 0.3s ease' }}>
+    <div style={{ background: theme.bg, padding: '16px 28px 14px', position: 'relative', overflow: 'hidden' }}>
       {title === 'Dynastly' && (
         <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 20% 10%, rgba(99,102,241,0.18) 0%, transparent 45%), radial-gradient(circle at 85% 90%, rgba(245,158,11,0.10) 0%, transparent 45%)' }} />
       )}
@@ -365,7 +388,7 @@ function ProjectSheetHeader({ project, collapsed = false }: { project: typeof si
           {/* Lions logo as a white knockout: the full-color mark is the same
               Honolulu Blue as the header bg, so it disappears at watermark
               opacity without the filter. */}
-          <img src="/images/lions-logo.png" alt="" aria-hidden style={{ position: 'absolute', right: '-24px', top: collapsed ? '-24px' : '-8px', width: collapsed ? '130px' : '200px', height: 'auto', opacity: 0.14, filter: 'brightness(0) invert(1)', transition: 'all 0.3s ease', pointerEvents: 'none' }} />
+          <img src="/images/lions-logo.png" alt="" aria-hidden style={{ position: 'absolute', right: '-24px', top: '-24px', width: '130px', height: 'auto', opacity: 0.14, filter: 'brightness(0) invert(1)', pointerEvents: 'none' }} />
         </>
       )}
       {title === 'Degenerates Dashboard' && (
@@ -374,43 +397,28 @@ function ProjectSheetHeader({ project, collapsed = false }: { project: typeof si
 
       <div style={{ position: 'relative', zIndex: 1 }}>
         {title === 'Roar Tracker' ? (
-          <div style={{ display: 'flex', alignItems: 'baseline', marginBottom: collapsed ? 0 : '8px', transition: 'margin 0.3s ease' }}>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: collapsed ? '1.4rem' : 'clamp(2.4rem, 6vw, 3.6rem)', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em', transition: 'font-size 0.3s ease' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline' }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1.6rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.02em' }}>
               Roar
             </span>
-            <span style={{ fontFamily: 'var(--font-sans)', fontSize: collapsed ? '1.4rem' : 'clamp(2.4rem, 6vw, 3.6rem)', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.02em', transition: 'font-size 0.3s ease' }}>
+            <span style={{ fontFamily: 'var(--font-sans)', fontSize: '1.6rem', fontWeight: 500, color: 'rgba(255,255,255,0.55)', letterSpacing: '-0.02em' }}>
               Tracker
             </span>
           </div>
         ) : title === 'Degenerates Dashboard' ? (
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: collapsed ? '1.2rem' : 'clamp(2rem, 5vw, 2.9rem)', lineHeight: 0.95, letterSpacing: '0.02em', textTransform: 'uppercase', paddingTop: '0.08em', marginBottom: collapsed ? 0 : '8px', transition: 'all 0.3s ease' }}>
-            <span style={{ display: 'block', color: '#00D9FF', textShadow: '0 0 20px rgba(0,217,255,0.7), 0 0 40px rgba(0,217,255,0.35)' }}>
-              Degenerates
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', lineHeight: 1, letterSpacing: '0.02em', textTransform: 'uppercase', paddingTop: '0.08em' }}>
+            <span style={{ color: '#00D9FF', textShadow: '0 0 20px rgba(0,217,255,0.7), 0 0 40px rgba(0,217,255,0.35)' }}>
+              Degenerates{' '}
             </span>
-            <span style={{ display: 'block', color: '#FF69B4', textShadow: '0 0 20px rgba(255,105,180,0.7), 0 0 40px rgba(255,105,180,0.35)' }}>
+            <span style={{ color: '#FF69B4', textShadow: '0 0 20px rgba(255,105,180,0.7), 0 0 40px rgba(255,105,180,0.35)' }}>
               Dashboard
             </span>
           </h2>
         ) : (
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: collapsed ? '1.4rem' : 'clamp(2.4rem, 6vw, 3.5rem)', color: theme.fg, lineHeight: 1, letterSpacing: '-0.015em', textTransform: 'uppercase', paddingTop: '0.08em', marginBottom: collapsed ? 0 : '8px', transition: 'all 0.3s ease' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', color: theme.fg, lineHeight: 1, letterSpacing: '-0.015em', textTransform: 'uppercase', paddingTop: '0.08em' }}>
             {title}
           </h2>
         )}
-
-        <p style={{
-          fontFamily: 'var(--font-serif)',
-          fontStyle: 'italic',
-          fontSize: '15px',
-          color: theme.muted,
-          lineHeight: 1.5,
-          maxWidth: '520px',
-          maxHeight: collapsed ? 0 : '60px',
-          opacity: collapsed ? 0 : 1,
-          overflow: 'hidden',
-          transition: 'all 0.3s ease',
-        }}>
-          {tagline}
-        </p>
       </div>
     </div>
   );
@@ -573,12 +581,27 @@ function ScreenGallery({
 }
 
 function ProjectSheetBody({ project }: { project: typeof sideProjects[SideProjectId] }) {
-  const { theme, body, stack, screens } = project;
+  const { theme, body, points, outro, stack, screens } = project;
   return (
     <div style={{ padding: '28px' }}>
-      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '28px' }}>
+      <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '16px' }}>
         {body}
       </p>
+
+      <ul style={{ listStyle: 'none', padding: 0, margin: `0 0 ${outro ? '16px' : '28px'}` }}>
+        {points.map((point) => (
+          <li key={point} style={{ display: 'flex', gap: '12px', fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '8px' }}>
+            <span aria-hidden style={{ width: '14px', height: '2px', background: theme.accent, flexShrink: 0, marginTop: '11px' }} />
+            <span>{point}</span>
+          </li>
+        ))}
+      </ul>
+
+      {outro && (
+        <p style={{ fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: 'var(--color-muted)', marginBottom: '28px' }}>
+          {outro}
+        </p>
+      )}
 
       {screens && screens.length > 0 && <ScreenGallery screens={screens} bg={theme.bg} />}
 
