@@ -39,19 +39,6 @@ export function ContactSheet({ open, onClose }: ContactSheetProps) {
           </div>
 
           <div style={{ position: 'relative', padding: collapsed ? '14px 28px 12px' : '36px 28px 30px', zIndex: 1, transition: 'padding 0.3s ease' }}>
-            <div style={{
-              fontSize: '10px',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'var(--color-accent)',
-              marginBottom: collapsed ? 0 : '14px',
-              maxHeight: collapsed ? 0 : '20px',
-              opacity: collapsed ? 0 : 1,
-              overflow: 'hidden',
-              transition: 'all 0.3s ease',
-            }}>
-              Get in Touch
-            </div>
             <h2 style={{
               fontFamily: 'var(--font-display)',
               fontSize: collapsed ? '1.4rem' : 'clamp(2.6rem, 7vw, 3.8rem)',
@@ -276,7 +263,8 @@ function SubmitButton() {
       type="submit"
       disabled={pending}
       style={{
-        alignSelf: 'flex-end',
+        alignSelf: 'stretch',
+        width: '100%',
         padding: '12px 22px 10px',
         background: 'transparent',
         color: 'var(--color-accent)',
