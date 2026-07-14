@@ -1,6 +1,11 @@
 'use client';
 
+import { MoreHorizontal, X, Eye, Download } from 'lucide-react';
 import { ResponsiveSheet, SheetPage } from './ResponsiveSheet';
+import { MorphMenu, MorphMenuItem } from './MorphMenu';
+
+const PAPER_URL = 'https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification';
+const PDF_URL = '/sylvester-emotion-classification.pdf';
 
 interface AIResearchSheetProps {
   open: boolean;
@@ -13,6 +18,7 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
       open={open}
       onClose={onClose}
       maxWidth="max-w-5xl"
+      headerControl={<PaperMenu />}
       header={({ collapsed }) => (
         <div style={{ background: '#2A2622', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none' }}>
@@ -31,19 +37,6 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
           </div>
 
           <div style={{ position: 'relative', padding: collapsed ? '14px 28px 12px' : '36px 28px 32px', zIndex: 1, transition: 'padding 0.3s ease' }}>
-            <div style={{
-              fontSize: '10px',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'var(--color-accent)',
-              marginBottom: collapsed ? 0 : '14px',
-              maxHeight: collapsed ? 0 : '20px',
-              opacity: collapsed ? 0 : 1,
-              overflow: 'hidden',
-              transition: 'all 0.3s ease',
-            }}>
-              Peer-Reviewed · Published 2017
-            </div>
             <h2 style={{
               fontFamily: 'var(--font-display)',
               fontSize: collapsed ? '1.5rem' : 'clamp(3rem, 7vw, 4.5rem)',
@@ -129,78 +122,52 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
               ))}
             </div>
           </Section>
-
-          {/* Citation */}
-          <div style={{
-            marginTop: '36px',
-            padding: '20px',
-            background: 'var(--color-bg)',
-            border: '1px solid var(--color-border)',
-            borderLeft: '3px solid var(--color-accent)',
-          }}>
-            <div style={{
-              fontSize: '10px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'var(--color-muted)',
-              marginBottom: '8px',
-            }}>
-              Citation
-            </div>
-            <p style={{
-              fontFamily: 'var(--font-serif)',
-              fontSize: '13px',
-              fontStyle: 'italic',
-              lineHeight: 1.6,
-              color: 'var(--color-fg)',
-              marginBottom: '16px',
-            }}>
-              {'“'}Sylvester: An Approach to Emotion Classification.{'”'} <em>New Trends in Information Technology</em>, April 2017.
-            </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px' }}>
-              <a
-                href="https://www.researchgate.net/publication/319523370_Sylvester_An_Approach_to_Emotion_Classification"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  color: 'var(--color-accent)',
-                  textDecoration: 'none',
-                }}
-              >
-                Read the paper on ResearchGate
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </a>
-              <a
-                href="/sylvester-emotion-classification.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  color: 'var(--color-accent)',
-                  textDecoration: 'none',
-                }}
-              >
-                Download the PDF
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" />
-                </svg>
-              </a>
-            </div>
-          </div>
         </div>
       </SheetPage>
     </ResponsiveSheet>
+  );
+}
+
+/** The paper "more" control: a single glass surface that morphs from a kebab
+    circle into a View / Download menu (ported MorphMenu). Replaces the sheet's
+    default close button; the sheet still closes via backdrop click and Escape. */
+function PaperMenu() {
+  return (
+    <MorphMenu
+      label="Paper options"
+      header="Paper"
+      trigger={(open) => (
+        <span style={{ position: 'relative', width: '16px', height: '16px', display: 'block' }}>
+          <MoreHorizontal
+            className="h-4 w-4"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              transition: 'transform 0.2s ease, opacity 0.2s ease',
+              transform: open ? 'scale(0) rotate(90deg)' : 'none',
+              opacity: open ? 0 : 1,
+            }}
+          />
+          <X
+            className="h-4 w-4"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              transition: 'transform 0.2s ease, opacity 0.2s ease',
+              transform: open ? 'none' : 'scale(0) rotate(-90deg)',
+              opacity: open ? 1 : 0,
+            }}
+          />
+        </span>
+      )}
+    >
+      <MorphMenuItem icon={<Eye className="h-4 w-4" />} href={PAPER_URL} external>
+        View paper
+      </MorphMenuItem>
+      <MorphMenuItem icon={<Download className="h-4 w-4" />} href={PDF_URL} download>
+        Download PDF
+      </MorphMenuItem>
+    </MorphMenu>
   );
 }
 

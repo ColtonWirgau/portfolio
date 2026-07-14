@@ -1207,8 +1207,11 @@ function AiBriefDemo() {
   const panel = (m: 'vague' | 'brief') => (
     <div>
       <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, marginBottom: '8px' }}>The ask</div>
-      <div style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12.5px', lineHeight: 1.7, color: FG, background: PAPER, border: `1px solid ${BORDER}`, borderRadius: '10px', padding: '14px 16px', minHeight: '104px' }}>
-        {BRIEF_MODES[m].prompt}
+      <div style={{ position: 'relative', minHeight: '104px', padding: '10px 8px 6px 46px' }}>
+        <span aria-hidden style={{ position: 'absolute', top: '-24px', left: '-8px', fontFamily: 'Georgia, "Times New Roman", serif', fontSize: '104px', lineHeight: 1, fontWeight: 700, color: ACCENT, opacity: 0.16, pointerEvents: 'none', userSelect: 'none' }}>&ldquo;</span>
+        <div style={{ position: 'relative', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12.5px', lineHeight: 1.7, color: FG }}>
+          {BRIEF_MODES[m].prompt}
+        </div>
       </div>
       <div style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: MUTED, fontWeight: 700, margin: '16px 0 8px' }}>What the agent shipped</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>

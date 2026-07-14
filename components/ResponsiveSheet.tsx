@@ -40,6 +40,10 @@ interface ResponsiveSheetProps {
   onClose: () => void;
   children: ReactNode;
   header?: ReactNode | ((context: ResponsiveSheetContextValue) => ReactNode);
+  /** Optional control rendered top-right in place of the default close
+      button (modal mode) and floated top-right in sheet mode. When set,
+      the sheet still closes via backdrop click and Escape. */
+  headerControl?: ReactNode;
   defaultPage?: string;
   maxWidth?: string;
   modalBreakpoint?: number;
@@ -205,6 +209,7 @@ export function ResponsiveSheet({
   onClose,
   children,
   header,
+  headerControl,
   defaultPage = 'main',
   maxWidth = 'max-w-2xl',
   modalBreakpoint = 768,
@@ -609,6 +614,12 @@ export function ResponsiveSheet({
               </div>
             </div>
 
+            {headerControl && (
+              <div className="absolute z-30" style={{ top: '14px', right: '16px' }}>
+                {headerControl}
+              </div>
+            )}
+
             {/* Scrollable content: pinned while the header is expanded so
                 the collapse plays out before any body scrolling starts */}
             <div ref={scrollContainerRef} className={`min-h-0 flex-1 overscroll-contain ${hasHeader && !collapsed ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
@@ -651,25 +662,31 @@ export function ResponsiveSheet({
               className={`relative z-10 mx-4 flex max-h-[85vh] w-full flex-col overflow-hidden bg-bg shadow-2xl ${maxWidth} ${panelClassName} ${className}`}
               style={panelStyle}
             >
-              {/* Close button */}
-              <button
-                onClick={onClose}
-                className="absolute z-20"
-                style={{
-                  top: '16px',
-                  right: '16px',
-                  padding: '8px',
-                  borderRadius: '50%',
-                  background: 'rgba(0,0,0,0.3)',
-                  color: 'rgba(255,255,255,0.8)',
-                  backdropFilter: 'blur(8px)',
-                  transition: 'background 0.15s',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.5)')}
-                onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.3)')}
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
+              {/* Top-right control: custom headerControl, else the close button */}
+              {headerControl ? (
+                <div className="absolute z-20" style={{ top: '16px', right: '16px' }}>
+                  {headerControl}
+                </div>
+              ) : (
+                <button
+                  onClick={onClose}
+                  className="absolute z-20"
+                  style={{
+                    top: '16px',
+                    right: '16px',
+                    padding: '8px',
+                    borderRadius: '50%',
+                    background: 'rgba(0,0,0,0.3)',
+                    color: 'rgba(255,255,255,0.8)',
+                    backdropFilter: 'blur(8px)',
+                    transition: 'background 0.15s',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.5)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(0,0,0,0.3)')}
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
 
               {/* Header */}
               {resolvedHeader && <div className="shrink-0">{resolvedHeader}</div>}
