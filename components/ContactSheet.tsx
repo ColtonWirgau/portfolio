@@ -19,6 +19,7 @@ export function ContactSheet({ open, onClose }: ContactSheetProps) {
     <ResponsiveSheet
       open={open}
       onClose={onClose}
+      hideClose
       maxWidth="max-w-xl"
       header={({ collapsed }) => (
         <div style={{ background: '#2A2622', position: 'relative', overflow: 'hidden' }}>
@@ -36,6 +37,33 @@ export function ContactSheet({ open, onClose }: ContactSheetProps) {
             }}>
               Hi
             </div>
+          </div>
+
+          {/* Profile photo: the hero cutout on its gradient, tight crop.
+              Only in the expanded header so the collapsed bar stays clean. */}
+          <div
+            aria-hidden
+            style={{
+              position: 'absolute',
+              top: '50%',
+              right: '26px',
+              transform: 'translateY(-50%)',
+              zIndex: 2,
+              width: '96px',
+              height: '96px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              boxShadow: '0 12px 28px rgba(0,0,0,0.38)',
+              opacity: collapsed ? 0 : 1,
+              transition: 'opacity 0.3s ease',
+              pointerEvents: 'none',
+            }}
+          >
+            <img
+              src="/images/contact-circle.png"
+              alt="Colton Wirgau"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
           </div>
 
           <div style={{ position: 'relative', padding: collapsed ? '14px 28px 12px' : '36px 28px 30px', zIndex: 1, transition: 'padding 0.3s ease' }}>

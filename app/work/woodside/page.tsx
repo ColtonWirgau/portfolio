@@ -99,7 +99,7 @@ export default function WoodsidePage() {
           <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ duration: 0.6, delay: 0.42 }} style={{ width: '88px', height: '3px', background: GREEN, transformOrigin: 'left', marginBottom: '24px' }} />
           <motion.p initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5 }}
             style={{ fontSize: 'clamp(1.05rem, 2vw, 1.4rem)', color: BODY, maxWidth: '640px', lineHeight: 1.5, fontWeight: 400 }}>
-            Software Development Manager and sole in-house developer, building the software that powers a large multi-campus church.
+            Technology Development Manager and sole in-house developer, building the software that powers a large multi-campus church.
           </motion.p>
         </div>
       </section>

@@ -38,7 +38,7 @@ export const itBusinessAnalystResume: Resume = {
   experience: [
     {
       company: 'Woodside Bible Church',
-      title: 'Software Development Manager · Full-Stack Engineer',
+      title: 'Technology Development Manager · Full-Stack Engineer',
       location: 'Troy, MI',
       dates: '2016 – Present',
       bullets: [

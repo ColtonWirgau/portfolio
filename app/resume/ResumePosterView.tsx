@@ -26,10 +26,19 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
     publications,
     awards,
     sideProjects,
+    spotlight,
     stamps,
     pullQuote,
     personal,
   } = resume;
+
+  // Generic card section between Skills and Education. `spotlight` carries
+  // its own heading; legacy `sideProjects` renders under the old heading.
+  const cardSection =
+    spotlight ??
+    (sideProjects && sideProjects.length > 0
+      ? { heading: 'Side Projects', items: sideProjects }
+      : null);
 
   return (
     <>
@@ -133,12 +142,12 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           ))}
         </div>
 
-        {/* ════════ Side projects (poster view exclusive) ══════════ */}
-        {sideProjects && sideProjects.length > 0 ? (
+        {/* ════════ Spotlight cards (poster view exclusive) ════════ */}
+        {cardSection && cardSection.items.length > 0 ? (
           <>
-            <SectionHead>Selected Side Work</SectionHead>
+            <SectionHead>{cardSection.heading}</SectionHead>
             <div className="rp-side">
-              {sideProjects.map((p) => (
+              {cardSection.items.map((p) => (
                 <div key={p.name} className="rp-side-item">
                   <div className="rp-side-name">{p.name}</div>
                   <div className="rp-side-desc">{p.description}</div>
@@ -533,7 +542,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           color: ${INK};
         }
 
-        /* ─── Side work mini-cards ──────────────────────────────── */
+        /* ─── Side project mini-cards ───────────────────────────── */
         .rp-side {
           display: flex;
           flex-direction: column;

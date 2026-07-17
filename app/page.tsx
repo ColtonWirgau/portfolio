@@ -537,32 +537,53 @@ export default function Home() {
 
             </div>
 
-            {/* Figure — a background layer behind the copy. Desktop: sits to
-                the right, scaled/cropped to ~head-to-thigh. Tablet/mobile: it's
-                larger and the copy overlays his mid-section, head and shoulders
-                reading above it. Only the bottom of the body fades out (he
-                emerges from the page); head and sides stay crisp. No
-                overflow-clip, so the drop-shadow never cuts to a hard line. */}
+            {/* Figure — a background layer behind the copy, scaled/cropped to
+                ~head-to-thigh and fading into the page at the bottom. On md+
+                a gradient backdrop panel sits behind him (the "panel" look);
+                on mobile the backdrop is hidden so he reads as a clean cutout
+                on the page ("full" look). Same figure in both — only the
+                backdrop toggles by breakpoint. */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="pointer-events-none absolute z-0 flex items-start justify-center md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
+              className="pointer-events-none absolute z-0 flex items-start justify-center md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
               style={{
                 WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 66%, transparent 96%)',
                 maskImage: 'linear-gradient(to bottom, #000 0%, #000 66%, transparent 96%)',
               }}
             >
-              {/* Soft aura so the cutout sits in the space, not pasted flat. */}
+              {/* Gradient backdrop (desktop/tablet only). Diagonal gray
+                  sampled from the LinkedIn photo: dark top-left to light
+                  bottom-right. Top starts near his mouth so head + shoulders
+                  peek above it; fades into the page at the bottom with the
+                  figure. */}
               <div
                 aria-hidden
-                className="absolute inset-0 pointer-events-none"
+                className="hidden md:block absolute"
+                style={{
+                  top: '20%',
+                  right: '0',
+                  bottom: '0',
+                  width: 'min(88%, 540px)',
+                  background:
+                    'linear-gradient(135deg, #201E1C 0%, #3A3835 32%, #605E59 64%, #A6A5A1 100%)',
+                  boxShadow: '0 30px 70px rgba(45,34,20,0.20)',
+                }}
+              />
+              {/* Soft aura on mobile (no backdrop) so the cutout sits in the
+                  space, not pasted flat. */}
+              <div
+                aria-hidden
+                className="md:hidden absolute inset-0 pointer-events-none"
                 style={{ background: 'radial-gradient(52% 48% at 58% 42%, rgba(120,96,64,0.14), transparent 72%)' }}
               />
+              {/* Smaller at tablet widths so the far elbow isn't clipped by
+                  the viewport edge; full scale returns at xl. */}
               <img
                 src="/images/Edited/Serious3.png"
                 alt="Colton Wirgau"
-                className="relative w-auto max-w-none object-contain object-top h-[122%] md:h-[152%]"
+                className="relative w-auto max-w-none object-contain object-top h-[122%] md:h-[132%] xl:h-[152%]"
                 style={{ filter: 'drop-shadow(0 16px 34px rgba(45,34,20,0.18)) drop-shadow(0 0 26px rgba(45,34,20,0.10))' }}
               />
             </motion.div>

@@ -23,8 +23,12 @@ export const baseHeader: ResumeHeader = {
     { label: PORTFOLIO_URL, href: `https://${PORTFOLIO_URL}` },
   ],
   // Lives in public/images/. Only rendered by the poster view; the
-  // standard ATS-friendly view ignores it.
-  headshot: '/images/headshot.png',
+  // standard ATS-friendly view ignores it. Head-and-shoulders crop of the
+  // LinkedIn photo (LinkedIn.png, charcoal-gradient background) so the
+  // resume, LinkedIn, and site all lead with the same photo. Cropped tight
+  // because the resume renders it in a small circle; the full torso shot
+  // would shrink the face.
+  headshot: '/images/headshot-linkedin.png',
 };
 
 export const basePublications: ResumePublication[] = [

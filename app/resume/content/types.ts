@@ -65,6 +65,15 @@ export type ResumeSideProject = {
   link?: string;
 };
 
+// Poster view only. Generic mini-card section rendered between Skills and
+// Education: any heading + name/description cards. Supersedes the old
+// fixed-heading "Side Projects" section (`sideProjects`, kept for backward
+// compatibility); when both are present, `spotlight` wins.
+export type ResumeSpotlight = {
+  heading: string;
+  items: ResumeSideProject[];
+};
+
 // Portfolio-style "stamp": bordered Anton label with a small Montserrat
 // sub-line below a hairline rule. Used on the poster view only.
 export type ResumeStamp = { label: string; sub: string };
@@ -88,6 +97,9 @@ export type Resume = {
   publications?: ResumePublication[];
   awards?: ResumeAward[];
   sideProjects?: ResumeSideProject[];
+  // Poster view only. Generic card section; takes precedence over
+  // `sideProjects` when both are set.
+  spotlight?: ResumeSpotlight;
   // Poster view only. Three stamp badges under the name.
   stamps?: ResumeStamp[];
   // Poster view only. Italic Playfair epigraph at the very bottom.

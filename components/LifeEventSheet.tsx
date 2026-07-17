@@ -254,7 +254,7 @@ export const lifeEvents: LifeEvent[] = [
     tagline: 'Where I build',
     storyPath: '/career',
     description:
-      'Software Development Manager and Full-Stack Developer at Woodside Bible Church since 2016. As the sole in-house developer, I design and build internal tools, platforms, and widgets that serve thousands of people every week while managing contractors and coordinating with MarCom.',
+      'Technology Development Manager and Full-Stack Developer at Woodside Bible Church since 2016. As the sole in-house developer, I design and build internal tools, platforms, and widgets that serve thousands of people every week while managing contractors and coordinating with MarCom.',
     highlights: [
       'Software Dev Manager / Full-Stack Developer since 2016',
       'Built apps.woodsidebible.org from scratch',

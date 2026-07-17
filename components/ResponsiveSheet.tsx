@@ -44,6 +44,9 @@ interface ResponsiveSheetProps {
       button (modal mode) and floated top-right in sheet mode. When set,
       the sheet still closes via backdrop click and Escape. */
   headerControl?: ReactNode;
+  /** Hide the default top-right close button (modal mode). The sheet still
+      closes via backdrop click and Escape. Ignored when headerControl is set. */
+  hideClose?: boolean;
   defaultPage?: string;
   maxWidth?: string;
   modalBreakpoint?: number;
@@ -210,6 +213,7 @@ export function ResponsiveSheet({
   children,
   header,
   headerControl,
+  hideClose,
   defaultPage = 'main',
   maxWidth = 'max-w-2xl',
   modalBreakpoint = 768,
@@ -662,12 +666,13 @@ export function ResponsiveSheet({
               className={`relative z-10 mx-4 flex max-h-[85vh] w-full flex-col overflow-hidden bg-bg shadow-2xl ${maxWidth} ${panelClassName} ${className}`}
               style={panelStyle}
             >
-              {/* Top-right control: custom headerControl, else the close button */}
+              {/* Top-right control: custom headerControl, else the close
+                  button (unless hidden). */}
               {headerControl ? (
                 <div className="absolute z-20" style={{ top: '16px', right: '16px' }}>
                   {headerControl}
                 </div>
-              ) : (
+              ) : hideClose ? null : (
                 <button
                   onClick={onClose}
                   className="absolute z-20"

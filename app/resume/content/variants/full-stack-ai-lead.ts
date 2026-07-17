@@ -42,15 +42,16 @@ export const fullStackAiLeadResume: Resume = {
   experience: [
     {
       company: 'Woodside Bible Church',
-      title: 'Software Development Manager · Full-Stack Engineer',
+      title: 'Technology Development Manager · Full-Stack Engineer',
       location: 'Troy, MI',
       dates: '2019 – Present',
       bullets: [
-        'Sole in-house engineer for a 14-campus organization serving thousands weekly; own full-stack delivery across public web apps, internal tools, integrations, and reporting.',
-        'Architected and maintain a Next.js monorepo of staff- and community-facing tools (apps.woodsidebible.org, embedded widgets, microsites) with integrations across MinistryPlatform, Planning Center, REACH, and WordPress; worked directly with MinistryPlatform’s engineers, and my nested-JSON retrieval framework was adopted into their core release, earning their Deep Space Award.',
+        'Own the software function for a 14-campus organization serving thousands weekly: strategy, roadmap, and full-stack delivery across web apps, internal tools, and integrations, as its only engineer.',
+        'Architected and maintain a Next.js monorepo of staff- and community-facing tools (apps.woodsidebible.org, embedded widgets, microsites) with integrations across MinistryPlatform, Planning Center, REACH, and WordPress.',
         'Sole steward of data across all campuses: MinistryPlatform kept the single source of truth, every write validated at the boundary and carrying its author for a tamper-proof audit trail; initial cleanup retired roughly two-thirds of stale records and my engagement-tracking model was adopted org-wide.',
-        'Scope and direct contract developers (spec, definition of done, line-by-line review) and lead cross-department delivery, translating ministry, comms, and finance needs into buildable requirements.',
-        'Drive AI adoption across the workflow: agentic coding standards, guardrails, and custom skills built and shared with the team, LLM features shipped where they beat deterministic code, and non-engineers coached into AI-assisted development (one, a former CFO, now ships his own product full time).',
+        'Direct a bench of specialists on work I could do myself and choose to delegate (a partner web team, a full-stack developer on integrations, a SQL developer on database solutions, a contractor I tag-team builds with), each with a spec, definition of done, and line-by-line review.',
+        'Act as the technology lead inside larger org initiatives (campaigns, events, ministry launches): own the software piece end to end and translate ministry, comms, and finance needs into buildable requirements.',
+        'Drive AI adoption across the workflow: agentic coding standards, guardrails, and custom skills built and shared with the team, and LLM features shipped where they beat deterministic code.',
       ],
     },
     {
@@ -83,7 +84,7 @@ export const fullStackAiLeadResume: Resume = {
 
   // AI-led ordering to match the portfolio's positioning rule. Trimmed from
   // the old keyword-dense lists to the high-signal items so the summary and
-  // side work fit while holding exactly two pages.
+  // side projects fit while holding exactly two pages.
   skills: [
     {
       label: 'Languages & Frameworks',
@@ -177,27 +178,32 @@ export const fullStackAiLeadResume: Resume = {
     },
   ],
 
-  // Side work included deliberately: Dynastly is the natural conversation
-  // starter for product / fantasy-sports targets (e.g. Sleeper), and the
-  // others show range and personality. Dynastly copy stays clean and says
-  // nothing about upstream-platform bugs.
-  sideProjects: [
-    {
-      name: 'Dynastly',
-      description:
-        'Dynasty fantasy football platform that aggregates player valuations, mirrors live league state, and models realistic multi-team trades on one canvas. Next.js, OAuth, and a companion browser extension for data the public APIs don’t expose.',
-    },
-    {
-      name: 'Degenerates Dashboard',
-      description:
-        'Tracks my friend group’s weekly 12-leg parlay: ingests picks, tracks results, and roasts us with the data. Dumb, fun, and one of my favorite builds.',
-    },
-    {
-      name: 'RoarTracker',
-      description:
-        'Detroit Lions season-ticket tracker for four co-owners: attendance, payments, a seat drawing, and auto-generated resale graphics. Full OAuth, Supabase Postgres, clean dashboards.',
-    },
-  ],
+  // Selected Wins replaced the old side-projects section: outcomes pulled
+  // out of the bullet walls into scannable cards. Side projects live on the
+  // portfolio (screenshots and writeups) rather than the resume. The bullets
+  // that carried these outcomes are trimmed above so nothing is said twice;
+  // the cleanup + engagement-model clause stays in the data-stewardship
+  // bullet because no card covers it.
+  spotlight: {
+    heading: 'Selected Wins',
+    items: [
+      {
+        name: 'Adopted upstream',
+        description:
+          'I ship features the MinistryPlatform community builds on: a nested-JSON retrieval framework adopted into the core release, custom insights that inspired new features in the main product, and major contributions to MP Next, the open-source Next.js wrapper partner organizations start from.',
+      },
+      {
+        name: 'Leadership across technologies',
+        description:
+          'Products and solutions shipped while owning a piece of every system a 14-campus organization runs on: I work alongside partner companies and contract developers, make the architecture calls, and put people in the roles where they deliver.',
+      },
+      {
+        name: 'AI enablement',
+        description:
+          'I coach non-engineers into AI-assisted development (one former CFO now builds and runs his own product full time) and build AI into the software itself, like an internal MCP integration that answers staff questions from MinistryPlatform data, scoped to their access with PII protected.',
+      },
+    ],
+  },
 
   // Education carries the athletic recognition as a single detail line (the
   // distinctive human signal, kept cheap) since the standalone Personal
@@ -225,6 +231,6 @@ export const fullStackAiLeadResume: Resume = {
   ],
 
   // Personal section intentionally omitted: trimmed to make room for the
-  // summary and side work, which carry more signal for the target roles.
+  // summary and side projects, which carry more signal for the target roles.
   // Athletic recognition lives in Education above.
 };
