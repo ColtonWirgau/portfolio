@@ -540,23 +540,17 @@ export default function Home() {
             {/* Figure — a background layer behind the copy. Desktop: sits to
                 the right, scaled/cropped to ~head-to-thigh. Tablet/mobile: it's
                 larger and the copy overlays his mid-section, head and shoulders
-                reading above it. Every edge is soft-faded so nothing clips to a
-                hard line, and it sits behind the text (z-0). */}
+                reading above it. Only the bottom of the body fades out (he
+                emerges from the page); head and sides stay crisp. No
+                overflow-clip, so the drop-shadow never cuts to a hard line. */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="pointer-events-none absolute z-0 overflow-hidden flex items-start justify-center md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
+              className="pointer-events-none absolute z-0 flex items-start justify-center md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
               style={{
-                // Fade every edge so wherever the crop box clips the figure or
-                // its shadow, it's already transparent — no hard cutoff lines.
-                // Bottom fades earliest (hides the lower body / emerges look).
-                WebkitMaskImage:
-                  'linear-gradient(to bottom, transparent 0%, #000 5%, #000 66%, transparent 98%), linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%)',
-                WebkitMaskComposite: 'source-in',
-                maskImage:
-                  'linear-gradient(to bottom, transparent 0%, #000 5%, #000 66%, transparent 98%), linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%)',
-                maskComposite: 'intersect',
+                WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 66%, transparent 96%)',
+                maskImage: 'linear-gradient(to bottom, #000 0%, #000 66%, transparent 96%)',
               }}
             >
               {/* Soft aura so the cutout sits in the space, not pasted flat. */}
