@@ -478,10 +478,10 @@ export default function Home() {
                 tucks in front); the beige gaps let it show through. Desktop
                 uses the in-column HELLO below. */}
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.8 }}
-              className="md:hidden absolute z-0 top-[7vh] right-0 text-right uppercase leading-[0.8] tracking-[-0.04em] text-[clamp(6rem,33vw,11rem)]"
+              initial={{ opacity: 0, x: 90 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1, duration: 0.9, ease: 'easeOut' }}
+              className="md:hidden absolute z-0 top-[7vh] right-0 text-right uppercase leading-[0.8] tracking-[-0.04em] text-[clamp(5rem,26vw,8.5rem)]"
               style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
             >
               Hello
@@ -520,10 +520,9 @@ export default function Home() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="flex items-center gap-2 max-md:flex-col max-md:items-start max-md:gap-1 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[1.35rem] tracking-[0.01em] md:ml-5 max-md:ml-[22%] max-md:mt-[13vh] text-[color:var(--color-fg)] max-md:text-[color:var(--color-accent)]"
-                  style={{ fontFamily: 'var(--font-serif)' }}
+                  className="flex items-center gap-2 max-md:flex-col max-md:items-start max-md:gap-1 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[2rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[24vh] text-[color:var(--color-fg)] max-md:text-[color:var(--color-accent)] [font-family:var(--font-serif)] max-md:[font-family:var(--font-display)] max-md:leading-[0.9] max-md:uppercase"
                 >
-                  <span className="font-normal max-md:font-bold">I{"'"}m Colton,</span>
+                  <span className="font-normal">I{"'"}m Colton,</span>
                   <div className="relative overflow-hidden h-[1.5em] pb-[4px] mb-[-4px]" style={{ height: 'calc(1.5em + 4px)' }}>
                     <AnimatePresence mode="wait">
                       <motion.span
@@ -535,8 +534,8 @@ export default function Home() {
                           y: { type: 'spring', stiffness: 300, damping: 30 },
                           opacity: { duration: 0.2 },
                         }}
-                        className="block font-medium max-md:font-semibold"
-                        style={{ fontStyle: 'italic', color: 'var(--color-accent)', borderBottom: '2px solid var(--color-accent)', paddingBottom: '2px' }}
+                        className="block font-medium italic max-md:not-italic"
+                        style={{ color: 'var(--color-accent)', borderBottom: '2px solid var(--color-accent)', paddingBottom: '2px' }}
                       >
                         {roles[roleIndex]}
                       </motion.span>
@@ -567,7 +566,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="pointer-events-none absolute z-0 flex items-start justify-start md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
+              className="pointer-events-none absolute z-[1] flex items-start justify-start md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
               style={{
                 // Bottom fade only — he emerges from the page. Top/sides stay
                 // crisp (no head fade, no drop-shadow edge).
