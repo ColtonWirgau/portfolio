@@ -472,38 +472,45 @@ export default function Home() {
         <section className="min-h-dvh md:h-screen flex items-stretch" style={{ padding: '0 24px' }}>
           <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" padTop="64px" padBottom="5dvh" />
           <div className="flex-1 flex items-stretch">
-          <div className="relative flex items-center md:items-stretch gap-10 w-full max-w-[1400px] mx-auto max-md:flex-col max-md:gap-5 max-md:justify-end max-md:pt-[9vh] max-md:pb-[8vh]">
+          <div className="relative flex items-center md:items-stretch gap-10 w-full max-w-[1400px] mx-auto max-md:flex-col max-md:gap-5 max-md:justify-start max-md:pt-[10vh] max-md:pb-[8vh]">
             {/* Text side. Full width on mobile: the column layout's
                 items-center would otherwise shrink-wrap this block and
                 re-center it every time the rotating role changes width. */}
-            <div className="relative z-10 flex-1 flex flex-col justify-center gap-6 min-w-0 max-md:w-full">
+            <div className="relative z-10 flex-1 flex flex-col justify-center gap-6 min-w-0 max-md:w-full max-md:flex-none">
               {/* Page-colored scrim behind the copy: invisible over the beige,
                   a soft halo where the copy overlaps the figure (tablet/mobile),
                   so text stays legible without a hard box. */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 -z-10"
+                className="pointer-events-none absolute inset-0 -z-10 max-md:hidden"
                 style={{ background: 'radial-gradient(66% 66% at 32% 50%, color-mix(in srgb, var(--color-bg) 82%, transparent), transparent 74%)' }}
               />
               <div className="z-10">
+                {/* HELLO right-aligns on mobile into the open space beside the
+                    (left-leaning) figure, so it sits up by his head. Desktop
+                    stays left-aligned. */}
                 <motion.h1
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.8 }}
-                  className="text-[clamp(8rem,16vw,16rem)] max-md:text-[clamp(5rem,24vw,8rem)] leading-[0.85] tracking-[-0.04em] mb-5 uppercase"
+                  className="text-[clamp(8rem,16vw,16rem)] max-md:text-[clamp(5rem,24vw,8rem)] leading-[0.85] tracking-[-0.04em] mb-5 uppercase max-md:text-right"
                   style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
                 >
                   Hello
                 </motion.h1>
 
+                {/* On mobile the line drops down over his chest and stays
+                    left-aligned so the rotating role grows rightward without
+                    shifting the line around. Desktop: indented 20px under
+                    HELLO. Text halo keeps it legible over the figure. */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="flex items-center gap-2 text-[clamp(1.1rem,1.8vw,1.4rem)] tracking-[0.01em]"
-                  style={{ marginLeft: '20px', fontFamily: 'var(--font-serif)', color: 'var(--color-fg)', textShadow: '0 0 10px var(--color-bg), 0 0 20px var(--color-bg), 0 1px 2px var(--color-bg)' }}
+                  className="flex items-center gap-2 max-md:flex-col max-md:items-start max-md:gap-1 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[1.35rem] tracking-[0.01em] md:ml-5 max-md:ml-[22%] max-md:mt-[13vh] text-[color:var(--color-fg)] max-md:text-[color:var(--color-accent)]"
+                  style={{ fontFamily: 'var(--font-serif)' }}
                 >
-                  <span style={{ fontWeight: 400 }}>I{"'"}m Colton,</span>
+                  <span className="font-normal max-md:font-bold">I{"'"}m Colton,</span>
                   <div className="relative overflow-hidden h-[1.5em] pb-[4px] mb-[-4px]" style={{ height: 'calc(1.5em + 4px)' }}>
                     <AnimatePresence mode="wait">
                       <motion.span
@@ -515,8 +522,8 @@ export default function Home() {
                           y: { type: 'spring', stiffness: 300, damping: 30 },
                           opacity: { duration: 0.2 },
                         }}
-                        className="block"
-                        style={{ fontStyle: 'italic', fontWeight: 500, color: 'var(--color-accent)', borderBottom: '2px solid var(--color-accent)', paddingBottom: '2px' }}
+                        className="block font-medium max-md:font-semibold"
+                        style={{ fontStyle: 'italic', color: 'var(--color-accent)', borderBottom: '2px solid var(--color-accent)', paddingBottom: '2px' }}
                       >
                         {roles[roleIndex]}
                       </motion.span>
@@ -549,6 +556,8 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 1 }}
               className="pointer-events-none absolute z-0 flex items-start justify-center md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
               style={{
+                // Bottom fade only — he emerges from the page. Top/sides stay
+                // crisp (no head fade, no drop-shadow edge).
                 WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 66%, transparent 96%)',
                 maskImage: 'linear-gradient(to bottom, #000 0%, #000 66%, transparent 96%)',
               }}
@@ -584,7 +593,6 @@ export default function Home() {
                 src="/images/Edited/Serious3.png"
                 alt="Colton Wirgau"
                 className="relative w-auto max-w-none object-contain object-top h-[122%] md:h-[132%] xl:h-[152%]"
-                style={{ filter: 'drop-shadow(0 16px 34px rgba(45,34,20,0.18)) drop-shadow(0 0 26px rgba(45,34,20,0.10))' }}
               />
             </motion.div>
 
@@ -596,7 +604,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="md:hidden relative z-10 mt-6 flex w-full flex-col items-center gap-3"
+              className="md:hidden relative z-10 mt-6 max-md:mt-auto flex w-full flex-col items-center gap-3"
             >
               {/* The glass frame stays put (opacity 1, no transform) so the
                   backdrop blur never re-composites and snaps; only the label
