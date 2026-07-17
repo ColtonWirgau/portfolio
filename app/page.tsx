@@ -480,7 +480,7 @@ export default function Home() {
             <motion.h1
               initial={{ opacity: 0, x: 90 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1, duration: 0.9, ease: 'easeOut' }}
+              transition={{ delay: 0.1, duration: 0.8 }}
               className="md:hidden absolute z-0 top-[7vh] right-0 text-right uppercase leading-[0.8] tracking-[-0.04em] text-[clamp(5rem,26vw,8.5rem)]"
               style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
             >
