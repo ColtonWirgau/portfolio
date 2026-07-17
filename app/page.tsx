@@ -12,6 +12,7 @@ import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
 import { SquidMark } from '@/components/SquidMark';
 import { InkBurst } from '@/components/InkBurst';
+import { TextBurst } from '@/components/TextBurst';
 import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
 import { AIResearchSheet } from '@/components/AIResearchSheet';
@@ -520,8 +521,11 @@ export default function Home() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="flex items-center gap-2 max-md:flex-col max-md:items-start max-md:gap-1 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[2rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[24vh] text-[color:var(--color-fg)] max-md:text-[color:var(--color-accent)] [font-family:var(--font-serif)] max-md:[font-family:var(--font-display)] max-md:leading-[0.9] max-md:uppercase"
+                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-start max-md:gap-1 max-md:isolate text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[2rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[24vh] text-[color:var(--color-fg)] max-md:text-[color:var(--color-accent)] [font-family:var(--font-serif)] max-md:[font-family:var(--font-display)] max-md:leading-[0.9] max-md:uppercase"
                 >
+                  {/* Subtle light burst behind the copy (mobile only) so the
+                      orange stays legible where it crosses his arm/shirt. */}
+                  <TextBurst className="md:hidden" style={{ zIndex: -1, inset: '-16% -9%' }} />
                   <span className="font-normal">I{"'"}m Colton,</span>
                   <div className="relative overflow-hidden h-[1.5em] pb-[4px] mb-[-4px]" style={{ height: 'calc(1.5em + 4px)' }}>
                     <AnimatePresence mode="wait">
