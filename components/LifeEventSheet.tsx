@@ -381,7 +381,11 @@ export const lifeEvents: LifeEvent[] = [
         id: 'hobbies-tattoos',
         title: 'Tattoos',
         description:
-          'I have a full sleeve of tattoos, and every piece was designed with intention. Each one tells part of my story. Faith, family, things I\'ve been through, things I believe in. I see them as a form of design in their own right. Detailed photos and the stories behind each piece coming soon.',
+          'I have a full sleeve of tattoos, and every piece was designed with intention. Each one tells part of my story. Faith, family, things I\'ve been through, things I believe in. I see them as a form of design in their own right. Two of them are here: a traditional eagle and the squid.',
+        images: [
+          '/images/tattoo-eagle.webp',
+          '/images/tattoo-squid.webp',
+        ],
       },
     ],
     image: '/images/music-1.webp',

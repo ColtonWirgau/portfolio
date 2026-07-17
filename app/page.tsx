@@ -227,6 +227,22 @@ export default function Home() {
     }
   }, []);
 
+  const scrollToNextSection = useCallback(() => {
+    const main = mainRef.current;
+    if (!main) return;
+    for (const id of ['work', 'how-i-build', 'about']) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      const top = el.offsetTop - main.offsetTop;
+      if (top > main.scrollTop + 10) {
+        main.scrollTo({ top, behavior: 'smooth' });
+        return;
+      }
+    }
+    // Past the last section: finish the scroll so the click never dead-ends.
+    main.scrollTo({ top: main.scrollHeight, behavior: 'smooth' });
+  }, []);
+
   // Landing intent: the header and the takeover pages stash where they want
   // the home page to be (a section id, or 'top') and route to '/' rather
   // than pushing a '/#id' URL (which Next stacks into '/#work#work'). Read
@@ -407,16 +423,22 @@ export default function Home() {
         letterSpacing: '0.04em',
         lineHeight: 1.05,
         textAlign: 'center',
-        background: 'transparent',
+        // Frosted glass (same as the mobile stamp) so the pill stays legible
+        // wherever it overlaps the figure, and reads as a subtle chip on the
+        // plain background.
+        background: 'rgba(213, 210, 200, 0.5)',
+        backdropFilter: 'blur(12px) saturate(1.4)',
+        WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
+        boxShadow: '0 1px 8px rgba(0, 0, 0, 0.05)',
         cursor: 'pointer',
         transition: 'background 0.18s ease, transform 0.18s ease',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.background = 'rgba(217, 68, 32, 0.08)';
+        e.currentTarget.style.background = 'rgba(217, 68, 32, 0.14)';
         e.currentTarget.style.transform = 'translateY(-1px)';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'transparent';
+        e.currentTarget.style.background = 'rgba(213, 210, 200, 0.5)';
         e.currentTarget.style.transform = 'translateY(0)';
       }}
     >
@@ -449,12 +471,20 @@ export default function Home() {
         {/* Hero section */}
         <section className="min-h-dvh md:h-screen flex items-stretch" style={{ padding: '0 24px' }}>
           <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" padTop="64px" padBottom="5dvh" />
-          <div className="flex-1 flex items-center">
-          <div className="flex items-center gap-10 w-full max-md:flex-col max-md:gap-6 max-md:pt-20 max-md:pb-14">
+          <div className="flex-1 flex items-stretch">
+          <div className="relative flex items-center md:items-stretch gap-10 w-full max-w-[1400px] mx-auto max-md:flex-col max-md:gap-5 max-md:justify-end max-md:pt-[9vh] max-md:pb-[8vh]">
             {/* Text side. Full width on mobile: the column layout's
                 items-center would otherwise shrink-wrap this block and
                 re-center it every time the rotating role changes width. */}
-            <div className="flex-1 flex flex-col justify-center gap-6 min-w-0 max-md:w-full">
+            <div className="relative z-10 flex-1 flex flex-col justify-center gap-6 min-w-0 max-md:w-full">
+              {/* Page-colored scrim behind the copy: invisible over the beige,
+                  a soft halo where the copy overlaps the figure (tablet/mobile),
+                  so text stays legible without a hard box. */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -z-10"
+                style={{ background: 'radial-gradient(66% 66% at 32% 50%, color-mix(in srgb, var(--color-bg) 82%, transparent), transparent 74%)' }}
+              />
               <div className="z-10">
                 <motion.h1
                   initial={{ opacity: 0, y: 30 }}
@@ -471,7 +501,7 @@ export default function Home() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
                   className="flex items-center gap-2 text-[clamp(1.1rem,1.8vw,1.4rem)] tracking-[0.01em]"
-                  style={{ marginLeft: '20px', fontFamily: 'var(--font-serif)', color: 'var(--color-fg)' }}
+                  style={{ marginLeft: '20px', fontFamily: 'var(--font-serif)', color: 'var(--color-fg)', textShadow: '0 0 10px var(--color-bg), 0 0 20px var(--color-bg), 0 1px 2px var(--color-bg)' }}
                 >
                   <span style={{ fontWeight: 400 }}>I{"'"}m Colton,</span>
                   <div className="relative overflow-hidden h-[1.5em] pb-[4px] mb-[-4px]" style={{ height: 'calc(1.5em + 4px)' }}>
@@ -507,17 +537,39 @@ export default function Home() {
 
             </div>
 
-            {/* Photo side */}
+            {/* Figure — a background layer behind the copy. Desktop: sits to
+                the right, scaled/cropped to ~head-to-thigh. Tablet/mobile: it's
+                larger and the copy overlays his mid-section, head and shoulders
+                reading above it. Every edge is soft-faded so nothing clips to a
+                hard line, and it sits behind the text (z-0). */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="w-[50%] max-md:w-full max-md:h-[45vh] md:h-[min(90dvh,calc(100dvh_-_116px))] shrink-0"
+              className="pointer-events-none absolute z-0 overflow-hidden flex items-start justify-center md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
+              style={{
+                // Fade every edge so wherever the crop box clips the figure or
+                // its shadow, it's already transparent — no hard cutoff lines.
+                // Bottom fades earliest (hides the lower body / emerges look).
+                WebkitMaskImage:
+                  'linear-gradient(to bottom, transparent 0%, #000 5%, #000 66%, transparent 98%), linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%)',
+                WebkitMaskComposite: 'source-in',
+                maskImage:
+                  'linear-gradient(to bottom, transparent 0%, #000 5%, #000 66%, transparent 98%), linear-gradient(to right, transparent 0%, #000 7%, #000 93%, transparent 100%)',
+                maskComposite: 'intersect',
+              }}
             >
+              {/* Soft aura so the cutout sits in the space, not pasted flat. */}
+              <div
+                aria-hidden
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: 'radial-gradient(52% 48% at 58% 42%, rgba(120,96,64,0.14), transparent 72%)' }}
+              />
               <img
-                src="/Portfoliov1.jpg"
+                src="/images/Edited/Serious3.png"
                 alt="Colton Wirgau"
-                className="w-full h-full object-cover object-top"
+                className="relative w-auto max-w-none object-contain object-top h-[122%] md:h-[152%]"
+                style={{ filter: 'drop-shadow(0 16px 34px rgba(45,34,20,0.18)) drop-shadow(0 0 26px rgba(45,34,20,0.10))' }}
               />
             </motion.div>
 
@@ -529,7 +581,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="md:hidden relative z-10 -mt-12 flex w-full flex-col items-center gap-3"
+              className="md:hidden relative z-10 mt-6 flex w-full flex-col items-center gap-3"
             >
               {/* The glass frame stays put (opacity 1, no transform) so the
                   backdrop blur never re-composites and snaps; only the label
@@ -1071,6 +1123,7 @@ export default function Home() {
             its own page). A quiet divider band, not a floating card. */}
         <button
           type="button"
+          id="how-i-build"
           onClick={(e) => openHowIBuild(e)}
           aria-label="Read how I build"
           className="how-i-build-band"
@@ -1452,7 +1505,12 @@ export default function Home() {
               justifyContent: 'center',
             }}
           >
-            <div style={{ marginBottom: '10px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px', color: 'var(--color-muted)', padding: '10px 20px', borderRadius: '100px', backdropFilter: 'blur(20px) saturate(1.4)', WebkitBackdropFilter: 'blur(20px) saturate(1.4)', backgroundColor: 'rgba(213, 210, 200, 0.6)', boxShadow: '0 1px 8px rgba(0,0,0,0.08)' }}>
+            <button
+              type="button"
+              onClick={scrollToNextSection}
+              aria-label="Jump to next section"
+              style={{ pointerEvents: 'auto', cursor: 'pointer', border: 'none', font: 'inherit', marginBottom: '10px', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '8px', color: 'var(--color-muted)', padding: '10px 20px', borderRadius: '100px', backdropFilter: 'blur(20px) saturate(1.4)', WebkitBackdropFilter: 'blur(20px) saturate(1.4)', backgroundColor: 'rgba(213, 210, 200, 0.6)', boxShadow: '0 1px 8px rgba(0,0,0,0.08)' }}
+            >
               <motion.div
                 animate={{ y: [0, 2, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -1476,7 +1534,7 @@ export default function Home() {
                   <path d="M6 17l6 6 6-6" />
                 </svg>
               </motion.div>
-            </div>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

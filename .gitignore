@@ -50,3 +50,6 @@ node_modules/
 
 # Local working notes / private job leads
 TODO.md
+
+# Raw source photos (keep local, dont ship in public/)
+public/images/Pics/
