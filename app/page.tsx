@@ -473,6 +473,19 @@ export default function Home() {
           <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" padTop="64px" padBottom="5dvh" />
           <div className="flex-1 flex items-stretch">
           <div className="relative flex items-center md:items-stretch gap-10 w-full max-w-[1400px] mx-auto max-md:flex-col max-md:gap-5 max-md:justify-start max-md:pt-[10vh] max-md:pb-[8vh]">
+            {/* Mobile-only HELLO. Rendered as a sibling BEFORE the figure so
+                the opaque parts of the cutout paint over it (his head/shoulder
+                tucks in front); the beige gaps let it show through. Desktop
+                uses the in-column HELLO below. */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.8 }}
+              className="md:hidden absolute z-0 top-[7vh] right-0 text-right uppercase leading-[0.8] tracking-[-0.04em] text-[clamp(6rem,33vw,11rem)]"
+              style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
+            >
+              Hello
+            </motion.h1>
             {/* Text side. Full width on mobile: the column layout's
                 items-center would otherwise shrink-wrap this block and
                 re-center it every time the rotating role changes width. */}
@@ -493,7 +506,7 @@ export default function Home() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.8 }}
-                  className="text-[clamp(8rem,16vw,16rem)] max-md:text-[clamp(5rem,24vw,8rem)] leading-[0.85] tracking-[-0.04em] mb-5 uppercase max-md:text-right"
+                  className="max-md:hidden text-[clamp(8rem,16vw,16rem)] leading-[0.85] tracking-[-0.04em] mb-5 uppercase"
                   style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
                 >
                   Hello
@@ -554,7 +567,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="pointer-events-none absolute z-0 flex items-start justify-center md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
+              className="pointer-events-none absolute z-0 flex items-start justify-start md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
               style={{
                 // Bottom fade only — he emerges from the page. Top/sides stay
                 // crisp (no head fade, no drop-shadow edge).
@@ -592,7 +605,7 @@ export default function Home() {
               <img
                 src="/images/Edited/Serious3.png"
                 alt="Colton Wirgau"
-                className="relative w-auto max-w-none object-contain object-top h-[122%] md:h-[132%] xl:h-[152%]"
+                className="relative w-auto max-w-none object-contain object-top h-[134%] md:h-[132%] xl:h-[152%]"
               />
             </motion.div>
 
