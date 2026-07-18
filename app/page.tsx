@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useCallback, useRef, Fragment } from 'react';
 import { ChurchHubMorph } from '@/components/ChurchHubMorph';
 import { WoodsideMorph } from '@/components/WoodsideMorph';
+import { WoodsideMark } from '@/components/WoodsideMark';
 import { HowIBuildMorph } from '@/components/HowIBuildMorph';
 import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEventSheet';
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
@@ -939,29 +940,20 @@ export default function Home() {
                   }} />
                 </div>
 
-                {/* Three crosses - middle one larger */}
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'flex-end',
-                  gap: '24px',
-                  padding: '12px 28px 16px',
-                  position: 'relative',
-                  zIndex: 3,
-                }}>
-                  <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
-                    <rect x="8.5" y="0" width="5" height="30" fill="#62BB46" />
-                    <rect x="0" y="7" width="22" height="5" fill="#62BB46" />
-                  </svg>
-                  <svg width="30" height="42" viewBox="0 0 30 42" fill="none">
-                    <rect x="11" y="0" width="7" height="42" fill="#62BB46" />
-                    <rect x="0" y="10" width="30" height="7" fill="#62BB46" />
-                  </svg>
-                  <svg width="22" height="30" viewBox="0 0 22 30" fill="none">
-                    <rect x="8.5" y="0" width="5" height="30" fill="#62BB46" />
-                    <rect x="0" y="7" width="22" height="5" fill="#62BB46" />
-                  </svg>
-                </div>
+                {/* Subtle Woodside flame mark watermark, top-left (same mark
+                    as the Woodside pages loader). */}
+                <WoodsideMark
+                  size="52cqw"
+                  color="#6A9BD1"
+                  style={{
+                    position: 'absolute',
+                    top: '-8cqw',
+                    left: '-8cqw',
+                    opacity: 0.12,
+                    zIndex: 2,
+                    pointerEvents: 'none',
+                  }}
+                />
 
                 {/* Centered title - Montserrat */}
                 <div style={{
