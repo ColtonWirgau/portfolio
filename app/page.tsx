@@ -352,17 +352,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Mobile hero shows one role stamp at a time (three don't fit a phone
-  // row cleanly); cycle on a different cadence than the role text so the
-  // two rotations don't tick in lockstep.
-  const [stampIndex, setStampIndex] = useState(0);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStampIndex((prev) => (prev + 1) % 3);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
   const checkScroll = useCallback(() => {
     const el = mainRef.current;
     if (!el) return;
@@ -613,68 +602,71 @@ export default function Home() {
               />
             </motion.div>
 
-            {/* One stamp at a time on mobile, auto-cycling: three won't
-                sit on a single phone row, and a 2+1 wrap looked lopsided.
-                Still overlaps the photo's bottom edge (-mt-12 minus the
-                column's gap-6 nets ~24px of overlap). */}
+            {/* All three role stamps at once on mobile, static, in one
+                frosted card: the rotating headline role is the only moving
+                element now, so the hero settles instead of ticking. Each row
+                is its own button, keeping the three separate destinations. */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="md:hidden relative z-10 mt-6 max-md:mt-auto flex w-full flex-col items-center gap-3"
+              className="md:hidden relative z-10 mt-6 max-md:mt-auto flex w-full justify-center"
             >
-              {/* The glass frame stays put (opacity 1, no transform) so the
-                  backdrop blur never re-composites and snaps; only the label
-                  inside slides and fades. */}
-              <button
-                type="button"
-                onClick={stamps[stampIndex].onClick}
-                aria-label={stamps[stampIndex].ariaLabel}
+              <div
                 style={{
-                  position: 'relative',
-                  overflow: 'hidden',
-                  minWidth: '200px',
-                  minHeight: '58px',
-                  display: 'grid',
-                  placeItems: 'center',
-                  padding: '10px 18px 8px',
+                  width: '100%',
+                  maxWidth: '320px',
                   border: '2px solid var(--color-accent)',
                   borderRadius: '3px',
                   background: 'rgba(213, 210, 200, 0.55)',
                   backdropFilter: 'blur(12px) saturate(1.4)',
                   WebkitBackdropFilter: 'blur(12px) saturate(1.4)',
                   boxShadow: '0 1px 8px rgba(0, 0, 0, 0.06)',
+                  overflow: 'hidden',
                   color: 'var(--color-accent)',
-                  cursor: 'pointer',
                 }}
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
-                    key={stampIndex}
-                    initial={{ opacity: 0, x: 24 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -24 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ gridArea: '1 / 1', textAlign: 'center', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.04em', lineHeight: 1.05 }}
-                  >
-                    <span style={{ display: 'block', fontSize: '1.2rem', whiteSpace: 'nowrap' }}>{stamps[stampIndex].label}</span>
-                    <span style={{ display: 'block', fontSize: '10px', fontFamily: 'var(--font-sans)', fontWeight: 700, letterSpacing: '0.2em', marginTop: '5px', paddingTop: '4px', borderTop: '1px solid var(--color-accent)', whiteSpace: 'nowrap' }}>{stamps[stampIndex].sub}</span>
-                  </motion.span>
-                </AnimatePresence>
-              </button>
-              {/* Which of the three role stamps is showing. */}
-              <div style={{ display: 'flex', gap: '7px' }} aria-hidden="true">
-                {[0, 1, 2].map((i) => (
-                  <span
-                    key={i}
-                    style={{
-                      width: i === stampIndex ? '18px' : '6px',
-                      height: '6px',
-                      borderRadius: '100px',
-                      background: i === stampIndex ? 'var(--color-accent)' : 'var(--color-border)',
-                      transition: 'width 0.45s ease, background 0.45s ease',
-                    }}
-                  />
+                {stamps.map((stamp, i) => (
+                  <Fragment key={stamp.label}>
+                    {/* Inset hairline between rows: doesn't reach the frame
+                        edges and sits at low opacity, so it reads as a soft
+                        break rather than a hard rule. */}
+                    {i > 0 && (
+                      <div
+                        aria-hidden
+                        style={{
+                          height: '1px',
+                          margin: '0 16px',
+                          background: 'rgba(217, 68, 32, 0.16)',
+                        }}
+                      />
+                    )}
+                    <button
+                      type="button"
+                      onClick={stamp.onClick}
+                      aria-label={stamp.ariaLabel}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '12px',
+                        width: '100%',
+                        padding: '11px 16px 9px',
+                        background: 'transparent',
+                        border: 'none',
+                        color: 'var(--color-accent)',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <span style={{ fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '1.15rem', lineHeight: 1 }}>
+                        {stamp.label}
+                      </span>
+                      <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                        {stamp.sub.replace(/·/g, '').trim()}
+                      </span>
+                    </button>
+                  </Fragment>
                 ))}
               </div>
             </motion.div>
