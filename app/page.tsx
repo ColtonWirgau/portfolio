@@ -513,13 +513,13 @@ export default function Home() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-end max-md:text-right max-md:gap-1 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[1.5rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[31vh] text-[color:var(--color-fg)] [font-family:var(--font-serif)]"
+                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-end max-md:text-right max-md:gap-0.5 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[1.5rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[40vh] text-[color:var(--color-fg)] [font-family:var(--font-serif)]"
                 >
                   <span className="font-normal">I{"'"}m Colton,</span>
                   {/* Desktop clips for the roll; mobile is a flex slot with a
                       min-height so it never collapses in the between-message
                       gap (which would jitter the vertical centering). */}
-                  <div className="relative md:overflow-hidden md:h-[calc(1.5em+4px)] md:pb-[4px] md:mb-[-4px] max-md:flex max-md:min-h-[2em] max-md:items-center max-md:justify-end">
+                  <div className="relative md:overflow-hidden md:h-[calc(1.5em+4px)] md:pb-[4px] md:mb-[-4px] max-md:flex max-md:min-h-[1.75em] max-md:items-center max-md:justify-end">
                     <AnimatePresence mode="wait">
                       <motion.span
                         key={roleIndex}
