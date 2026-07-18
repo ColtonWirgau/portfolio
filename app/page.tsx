@@ -513,10 +513,13 @@ export default function Home() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-end max-md:text-right max-md:gap-1 max-md:isolate text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[2rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[24vh] text-[color:var(--color-fg)] max-md:text-[color:var(--color-accent)] [font-family:var(--font-serif)] max-md:[font-family:var(--font-display)] max-md:leading-[0.9] max-md:uppercase"
+                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-end max-md:text-right max-md:gap-1 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[1.5rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[24vh] text-[color:var(--color-fg)] [font-family:var(--font-serif)]"
                 >
                   <span className="font-normal">I{"'"}m Colton,</span>
-                  <div className="relative overflow-hidden h-[1.5em] pb-[4px] mb-[-4px]" style={{ height: 'calc(1.5em + 4px)' }}>
+                  {/* Desktop clips for the roll; mobile is a flex slot with a
+                      min-height so it never collapses in the between-message
+                      gap (which would jitter the vertical centering). */}
+                  <div className="relative md:overflow-hidden md:h-[calc(1.5em+4px)] md:pb-[4px] md:mb-[-4px] max-md:flex max-md:min-h-[2em] max-md:items-center max-md:justify-end">
                     <AnimatePresence mode="wait">
                       <motion.span
                         key={roleIndex}
@@ -527,8 +530,11 @@ export default function Home() {
                           y: { type: 'spring', stiffness: 300, damping: 30 },
                           opacity: { duration: 0.2 },
                         }}
-                        className="block font-medium italic max-md:not-italic"
-                        style={{ color: 'var(--color-accent)', borderBottom: '2px solid var(--color-accent)', paddingBottom: '2px' }}
+                        // Glass chip is mobile-only and lives on the animated
+                        // span, so it's sized to each message and fades in/out
+                        // with the text (never lingers in the empty gap).
+                        className="font-medium italic whitespace-nowrap md:block md:border-b-2 md:pb-[2px] max-md:inline-flex max-md:items-center max-md:px-3 max-md:py-1 max-md:rounded-[4px] max-md:bg-[rgba(213,210,200,0.55)] max-md:backdrop-blur-md max-md:backdrop-saturate-150 max-md:shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
+                        style={{ color: 'var(--color-accent)', borderColor: 'var(--color-accent)' }}
                       >
                         {roles[roleIndex]}
                       </motion.span>
