@@ -1158,14 +1158,11 @@ export default function Home() {
         >
           <div className="how-i-build-inner">
             <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 700, marginBottom: '14px' }}>
-                The approach
-              </div>
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 7vw, 5rem)', color: 'var(--color-fg)', lineHeight: 0.9, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>
                 How I build.
               </h2>
               <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1.05rem, 1.8vw, 1.4rem)', color: 'var(--color-muted)', lineHeight: 1.5, maxWidth: '720px', marginTop: '18px', textWrap: 'balance' }}>
-                My opinions and preferences on what makes a product succeed.
+                My take on what makes a product succeed.
               </p>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(22px, 4vw, 48px)' }}>
