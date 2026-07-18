@@ -514,7 +514,7 @@ export default function Home() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-start max-md:gap-1 max-md:isolate text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[2rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[24vh] text-[color:var(--color-fg)] max-md:text-[color:var(--color-accent)] [font-family:var(--font-serif)] max-md:[font-family:var(--font-display)] max-md:leading-[0.9] max-md:uppercase"
+                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-end max-md:text-right max-md:gap-1 max-md:isolate text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[2rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[24vh] text-[color:var(--color-fg)] max-md:text-[color:var(--color-accent)] [font-family:var(--font-serif)] max-md:[font-family:var(--font-display)] max-md:leading-[0.9] max-md:uppercase"
                 >
                   {/* Subtle light burst behind the copy (mobile only) so the
                       orange stays legible where it crosses his arm/shirt. */}
