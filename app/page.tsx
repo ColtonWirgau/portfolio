@@ -533,7 +533,7 @@ export default function Home() {
                         // Glass chip is mobile-only and lives on the animated
                         // span, so it's sized to each message and fades in/out
                         // with the text (never lingers in the empty gap).
-                        className="font-medium italic whitespace-nowrap md:block md:border-b-2 md:pb-[2px] max-md:inline-flex max-md:items-center max-md:px-3 max-md:py-1 max-md:rounded-[4px] max-md:bg-[rgba(213,210,200,0.55)] max-md:backdrop-blur-md max-md:backdrop-saturate-150 max-md:shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
+                        className="font-medium italic whitespace-nowrap md:block md:border-b-2 md:pb-[2px] max-md:inline-flex max-md:items-center max-md:px-3 max-md:py-1 max-md:-mr-3 max-md:rounded-[4px] max-md:bg-[rgba(213,210,200,0.55)] max-md:backdrop-blur-md max-md:backdrop-saturate-150 max-md:shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
                         style={{ color: 'var(--color-accent)', borderColor: 'var(--color-accent)' }}
                       >
                         {roles[roleIndex]}
