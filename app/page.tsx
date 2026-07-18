@@ -466,7 +466,7 @@ export default function Home() {
   const stampButtons = stamps.map(renderStamp);
 
   return (
-    <div className="h-screen bg-bg overflow-hidden relative">
+    <div className="h-dvh md:h-screen bg-bg overflow-hidden relative">
       {/* ── Main content ── single scrollable area */}
       <main ref={mainRef} className="h-full overflow-y-auto overflow-x-hidden relative" style={{ paddingBottom: '0' }}>
         {/* Hero section */}
