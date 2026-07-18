@@ -1158,6 +1158,9 @@ export default function Home() {
         >
           <div className="how-i-build-inner">
             <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 700, marginBottom: '14px' }}>
+                Software Development
+              </div>
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 7vw, 5rem)', color: 'var(--color-fg)', lineHeight: 0.9, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>
                 How I build.
               </h2>
