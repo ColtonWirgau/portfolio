@@ -471,8 +471,11 @@ export default function Home() {
             <motion.h1
               initial={{ opacity: 0, x: 90 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1, duration: 0.8 }}
-              className="md:hidden absolute z-0 top-[10vh] right-0 text-right uppercase leading-[0.8] tracking-[-0.04em] text-[clamp(5.5rem,28vw,9.5rem)]"
+              // Starts only once the figure has faded in (figure: delay 0.2 +
+              // 1.0s), so HELLO slides in behind him instead of flashing in
+              // front while he's still transparent.
+              transition={{ delay: 0.9, duration: 0.6 }}
+              className="md:hidden absolute z-0 top-[10vh] right-0 text-right uppercase leading-[0.8] tracking-[-0.04em] text-[clamp(6rem,32vw,11rem)]"
               style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
             >
               Hello
@@ -560,7 +563,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="pointer-events-none absolute z-[1] flex items-start justify-start md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:inset-x-0 max-md:top-[4vh] max-md:bottom-0"
+              className="pointer-events-none absolute z-[1] flex items-start justify-start md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:-inset-x-6 max-md:top-[4vh] max-md:bottom-0"
               style={{
                 // Bottom fade only — he emerges from the page. Top/sides stay
                 // crisp (no head fade, no drop-shadow edge).
@@ -598,7 +601,7 @@ export default function Home() {
               <img
                 src="/images/Edited/Serious3.png"
                 alt="Colton Wirgau"
-                className="relative w-auto max-w-none object-contain object-top h-[134%] md:h-[132%] xl:h-[152%]"
+                className="relative w-auto max-w-none object-contain object-top h-[134%] md:h-[132%] xl:h-[152%] max-md:translate-x-[3vw]"
               />
             </motion.div>
 
