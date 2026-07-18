@@ -154,6 +154,10 @@ body,
     overflow-y: hidden !important;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    /* Only own horizontal pans; hand vertical swipes to the page <main> so a
+       vertical flick over the carousel doesn't get captured here (where it
+       can't scroll) and stall the page's momentum before it reaches the end. */
+    touch-action: pan-x;
     /* Break out of parent padding */
     width: 100vw;
     margin-left: calc(-24px - env(safe-area-inset-left, 0px));
@@ -235,6 +239,8 @@ body,
     overflow-y: hidden !important;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    /* See .poster-grid: keep vertical swipes flowing to the page. */
+    touch-action: pan-x;
     width: 100vw;
     margin-left: calc(-24px - env(safe-area-inset-left, 0px));
     /* Room for the carousel dots below; on desktop the dots are hidden
@@ -309,6 +315,8 @@ body,
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    /* See .poster-grid: vertical swipes pass through to the scroll parent. */
+    touch-action: pan-x;
   }
   .shot-set-item {
     flex: 0 0 84%;
