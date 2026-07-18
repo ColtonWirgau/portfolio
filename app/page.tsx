@@ -513,7 +513,7 @@ export default function Home() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-end max-md:text-right max-md:gap-1 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[1.5rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[24vh] text-[color:var(--color-fg)] [font-family:var(--font-serif)]"
+                  className="relative flex items-center gap-2 max-md:flex-col max-md:items-end max-md:text-right max-md:gap-1 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[1.5rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[31vh] text-[color:var(--color-fg)] [font-family:var(--font-serif)]"
                 >
                   <span className="font-normal">I{"'"}m Colton,</span>
                   {/* Desktop clips for the roll; mobile is a flex slot with a
