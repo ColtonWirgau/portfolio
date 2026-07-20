@@ -444,10 +444,10 @@ function SheetHeader({ event, collapsed = false }: { event: LifeEvent; collapsed
           overflow: 'hidden',
           transition: 'all 0.3s ease',
         }} className="uppercase text-white/50">
-          {event.year}
+          {event.label}
         </div>
         <h3 style={{ fontSize: collapsed ? '18px' : '28px', fontWeight: 400, letterSpacing: '-0.02em', lineHeight: 1.1, transition: 'font-size 0.3s ease' }} className="text-white">
-          {event.label}
+          {event.year}
         </h3>
       </div>
     </div>

@@ -224,8 +224,12 @@ body,
 /* Below ~920px: horizontal scroll carousel */
 @media (max-width: 920px) {
   /* Same full-bleed trick as .poster-grid-wrapper: let the story cards
-     reach the viewport edge instead of clipping at the site gutter. */
+     reach the viewport edge instead of clipping at the site gutter.
+     (On desktop the wrapper stays overflow: visible so the story
+     hover-scale isn't chopped on the outer edges / bottom; here we clip
+     so the full-bleed carousel doesn't spill past the gutter.) */
   .story-grid-wrapper {
+    overflow: hidden;
     margin-left: calc(-24px - env(safe-area-inset-left, 0px));
     margin-right: calc(-24px - env(safe-area-inset-right, 0px));
     padding-left: calc(24px + env(safe-area-inset-left, 0px));

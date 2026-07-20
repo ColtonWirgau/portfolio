@@ -962,10 +962,10 @@ export default function Home() {
                   zIndex: 3,
                 }}>
                   <h3 style={{
-                    fontSize: 'clamp(1.5rem, 13cqw, 3.2rem)',
+                    fontSize: 'clamp(1.9rem, 10cqw, 5rem)',
                     fontFamily: 'var(--font-sans)',
                     fontWeight: 900,
-                    color: '#C0C8D0',
+                    color: '#D3DAE2',
                     lineHeight: 1,
                     letterSpacing: '-0.02em',
                     textTransform: 'uppercase',
@@ -976,15 +976,15 @@ export default function Home() {
                     WOODSIDE
                   </h3>
                   <h4 style={{
-                    fontSize: 'clamp(0.8rem, 8cqw, 1.8rem)',
+                    fontSize: 'clamp(0.85rem, 4.6cqw, 2.2rem)',
                     fontFamily: 'var(--font-sans)',
                     fontWeight: 700,
-                    color: '#8A95A5',
+                    color: '#93A0B2',
                     lineHeight: 1,
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
                     textAlign: 'center',
-                    marginTop: '12px',
+                    marginTop: '14px',
                     transform: 'scaleY(1.2)',
                     transformOrigin: 'center',
                   }}>
@@ -1184,7 +1184,7 @@ export default function Home() {
         {/* My Story / About section */}
         <section id="about" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
           <SideLabel label="About" side="left" delay={0.3} mirrorLabel />
-          <div className="story-grid-wrapper" style={{ flex: 1, minWidth: 0, overflow: 'hidden' }}>
+          <div className="story-grid-wrapper" style={{ flex: 1, minWidth: 0 }}>
 
             {/* Editorial heading */}
             <div style={{ marginBottom: '48px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
