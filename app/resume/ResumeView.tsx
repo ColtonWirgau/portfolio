@@ -56,13 +56,18 @@ export function ResumeView({ resume }: { resume: Resume }) {
             <div className="resume-title">{header.title}</div>
           </div>
           <div className="resume-contact">
-            <div>{header.email}</div>
-            <div>{header.location}</div>
             {header.links.map((link) => (
-              <div key={link.href}>
+              <div key={link.href} className="resume-contact-portfolio">
                 <a href={link.href}>{link.label}</a>
               </div>
             ))}
+            <div>{header.email}</div>
+            {header.phone ? (
+              <div>
+                <a href={`tel:${header.phone.replace(/[^\d+]/g, '')}`}>{header.phone}</a>
+              </div>
+            ) : null}
+            <div>{header.location}</div>
           </div>
         </header>
         <div className="resume-rule" />
@@ -230,6 +235,12 @@ export function ResumeView({ resume }: { resume: Resume }) {
         .resume-contact a {
           color: ${MUTED};
           text-decoration: none;
+        }
+        /* Portfolio leads the contact block and carries the accent so a
+           skimming recruiter's eye lands on it first. */
+        .resume-contact-portfolio a {
+          color: ${ACCENT};
+          font-weight: 600;
         }
         .resume-rule {
           height: 1.5px;

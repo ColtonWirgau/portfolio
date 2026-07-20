@@ -37,7 +37,7 @@ export const fullStackAiLeadResume: Resume = {
   ],
 
   summary:
-    'Full-stack product engineer with a decade of shipping real software and a peer-reviewed AI background that predates the LLM era (co-author, emotion classification, 2017). Sole engineer behind a 14-campus organization’s entire platform, and founder of Church Hub, a product churches own and extend. I build AI deeply and tastefully into products and workflows, lead contractors, UI/UX, and cross-department delivery, and care most about software that makes something easier for a real person.',
+    'Full-stack product engineer with a decade of shipping real software and a peer-reviewed AI background that predates the LLM era (co-author, emotion classification, 2017). Sole engineer behind a 14-campus organization’s entire platform, and founder of Church Hub, a product churches own and extend. I build AI deeply and tastefully into products and workflows, lead contractors, UI/UX, and cross-department delivery.',
 
   experience: [
     {

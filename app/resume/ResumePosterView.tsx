@@ -53,7 +53,7 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           size: letter;
           margin: 0.4in 0.6in 0.6in 0.6in;
           @bottom-center {
-            content: "${header.email}  ·  ${header.location}${header.links.map((l) => `  ·  ${l.label}`).join('')}";
+            content: "${header.email}  ·  ${header.location}${header.phone ? `  ·  ${header.phone}` : ''}${header.links.map((l) => `  ·  ${l.label}`).join('')}";
             font-family: var(--font-sans);
             font-size: 8.5pt;
             color: ${MUTED};
@@ -96,6 +96,26 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
                 ))}
               </div>
             ) : null}
+            {/* Top contact line. Leads with the portfolio as a real,
+                clickable link (the footer's @bottom-center copy can't be
+                a hyperlink in the PDF) so a skimming recruiter can jump
+                straight to the site. Phone only renders when injected for
+                the print/PDF build — see app/resume/page.tsx. */}
+            <div className="rp-head-contact">
+              {header.links.map((link) => (
+                <a key={link.href} href={link.href} className="rp-head-portfolio">
+                  {link.label}
+                </a>
+              ))}
+              <span className="rp-head-sep">·</span>
+              <span>{header.email}</span>
+              {header.phone ? (
+                <>
+                  <span className="rp-head-sep">·</span>
+                  <a href={`tel:${header.phone.replace(/[^\d+]/g, '')}`}>{header.phone}</a>
+                </>
+              ) : null}
+            </div>
           </div>
           {header.headshot ? (
             <div className="rp-headshot">
@@ -277,6 +297,12 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
             <span>{header.email}</span>
             <span className="rp-footer-sep">·</span>
             <span>{header.location}</span>
+            {header.phone ? (
+              <>
+                <span className="rp-footer-sep">·</span>
+                <a href={`tel:${header.phone.replace(/[^\d+]/g, '')}`}>{header.phone}</a>
+              </>
+            ) : null}
             {header.links.map((link) => (
               <span key={link.href}>
                 <span className="rp-footer-sep">·</span>
@@ -332,6 +358,27 @@ export function ResumePosterView({ resume }: { resume: Resume }) {
           font-weight: 600;
           margin-bottom: 10px;
         }
+        /* ─── Top contact line (below stamps) ──────────────────── */
+        .rp-head-contact {
+          margin-top: 10px;
+          font-size: 9pt;
+          color: ${MUTED};
+          letter-spacing: 0.03em;
+        }
+        .rp-head-contact a {
+          text-decoration: none;
+          color: ${MUTED};
+        }
+        /* Portfolio leads and carries the accent so the eye lands on it. */
+        .rp-head-portfolio {
+          color: ${ACCENT} !important;
+          font-weight: 600;
+        }
+        .rp-head-sep {
+          color: ${RULE};
+          margin: 0 7px;
+        }
+
         /* ─── Headshot slot (top-right of header) ───────────────── */
         /* Fixed square + border-radius 50% = perfect circle.
            Sized to roughly match the height of name through stamps. */

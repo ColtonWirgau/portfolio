@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { ResumeView } from './ResumeView';
 import { ResumePosterView } from './ResumePosterView';
-import { getResume, DEFAULT_VARIANT_SLUG } from './content';
+import { getResume, DEFAULT_VARIANT_SLUG, withPrintPhone } from './content';
 
 // Resume is a private outreach surface — keep it out of search indexes
 // and the llms.txt set. (Per CLAUDE.md: prefer page-level robots metadata
@@ -11,8 +11,13 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function ResumePage() {
-  const resume = getResume(DEFAULT_VARIANT_SLUG);
+export default async function ResumePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ print?: string }>;
+}) {
+  const { print } = await searchParams;
+  const resume = withPrintPhone(getResume(DEFAULT_VARIANT_SLUG), print);
   // Dispatch on `meta.view` so the default variant renders in its intended
   // renderer (poster = branded two-page; standard = tight ATS-friendly).
   return resume.meta.view === 'poster' ? (

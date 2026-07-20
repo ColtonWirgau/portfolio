@@ -30,7 +30,9 @@ async function main() {
   const variant = args.variant || 'it-business-analyst';
   const baseUrl = args.url || 'http://localhost:3000';
   const path = variant === 'default' ? '/resume' : `/resume/${variant}`;
-  const url = `${baseUrl}${path}`;
+  // `print=1` opts into the print/PDF build: the server injects the private
+  // cell number (RESUME_PHONE from .env.local) that the public page omits.
+  const url = `${baseUrl}${path}?print=1`;
 
   const outDir = resolve(process.cwd(), 'out', 'resume');
   if (!existsSync(outDir)) await mkdir(outDir, { recursive: true });

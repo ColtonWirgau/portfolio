@@ -8,6 +8,7 @@ export type ResumeHeader = {
   title: string;        // short professional label under the name
   location: string;
   email: string;
+  phone?: string;       // optional; recruiters like having it on the applied-to copy
   links: ResumeLink[];  // portfolio, github, linkedin, etc.
   // Optional headshot. Path relative to /public (e.g. "/headshot.jpg") or
   // any absolute URL. Poster view renders it in the top-right as a

@@ -23,6 +23,18 @@ export function getResume(slug?: string | null): Resume {
   return variants[key];
 }
 
+// Inject the private cell number into the header, but ONLY for the
+// print/PDF build: it renders when the `print` flag is on the request AND
+// RESUME_PHONE is set in the (gitignored) .env.local. This keeps the
+// number off the public resume page, out of the client bundle, and out of
+// git — it appears only on the copy you generate to submit with an
+// application. See scripts/generate-resume-pdf.mjs (appends ?print=1).
+export function withPrintPhone(resume: Resume, print?: string): Resume {
+  const phone = print && process.env.RESUME_PHONE;
+  if (!phone) return resume;
+  return { ...resume, header: { ...resume.header, phone } };
+}
+
 export function listVariants(): Array<{ slug: string; label: string; tailoredFor?: string }> {
   return Object.values(variants).map((v) => ({
     slug: v.meta.slug,

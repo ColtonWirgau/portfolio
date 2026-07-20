@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ResumeView } from '../ResumeView';
 import { ResumePosterView } from '../ResumePosterView';
-import { getResume, variants } from '../content';
+import { getResume, variants, withPrintPhone } from '../content';
 
 // Each tailored variant lives at /resume/<slug>. Add new variants by
 // adding them to the registry in ../content/index.ts.
@@ -14,12 +14,15 @@ export const metadata: Metadata = {
 
 export default async function ResumeVariantPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ print?: string }>;
 }) {
   const { slug } = await params;
   if (!variants[slug]) notFound();
-  const resume = getResume(slug);
+  const { print } = await searchParams;
+  const resume = withPrintPhone(getResume(slug), print);
   // Dispatch on `meta.view`. `poster` = warm-paper, branded, two-page;
   // `standard` (default) = the tight ATS-friendly renderer.
   return resume.meta.view === 'poster' ? (
