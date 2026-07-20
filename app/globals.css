@@ -107,6 +107,59 @@ body,
   display: none;
 }
 
+/* ─── Split-screen layout (very wide screens only) ──────────────────
+   Below 1900px this is inert: .split-shell is a plain block and the
+   page stays one stacked, vertically-scrolling column. At ≥1900px the
+   hero pins to the left as a full-height panel while Work / How I build
+   / My Story scroll in the right column. The narrower right column also
+   reins in the poster grid, which was ballooning to viewport-height
+   cards on wide monitors. */
+@media (min-width: 1900px) {
+  .split-shell {
+    display: grid;
+    grid-template-columns: 44fr 56fr;
+    column-gap: clamp(56px, 5vw, 112px);
+    align-items: start;
+  }
+  /* Right column: min-width:0 lets the inner poster/story grids reflow
+     to the track width instead of forcing horizontal overflow. */
+  .split-content {
+    min-width: 0;
+  }
+  /* Hero → pinned left panel. It already carries md:h-screen (100vh);
+     here it sticks to the top of the scroll container for the full
+     height of the right column. */
+  .hero-section {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+  }
+  /* The figure wrapper is locked to md:w-[58%]. In the narrower panel that
+     narrow, right-aligned flex box crops the far arm off the figure. Give
+     the wrapper the full panel width so the cutout sits inside it and the
+     whole figure (both arms) clears. */
+  .hero-figure {
+    width: 100% !important;
+  }
+}
+
+/* ─── Portrait / rotated monitors ──────────────────────────────────
+   The hero is locked to full viewport height (md:h-screen) and the
+   figure is sized as a percentage of that height. On a tall portrait
+   screen (a rotated desktop monitor, or a tablet held upright) that
+   makes the hero eat the whole screen and the figure balloon to ~2x its
+   intended size. Cap the hero to a landscape-like band so its normal
+   proportions return and the rest of the page follows below. Scoped to
+   >=768px so phones (which use the dedicated mobile hero) are untouched. */
+@media (min-width: 768px) and (orientation: portrait) {
+  .hero-section {
+    height: min(100dvh, 900px) !important;
+    min-height: 0 !important;
+  }
+}
+
 /* Poster grid - default: 3-up grid on wide screens */
 .poster-card {
   transition: transform 0.3s ease !important;
@@ -394,8 +447,6 @@ body,
   cursor: pointer;
   background: transparent;
   border: none;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
   padding: clamp(44px, 7vw, 88px) 24px;
   transition: background 0.35s ease;
 }

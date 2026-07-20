@@ -458,8 +458,12 @@ export default function Home() {
     <div className="h-dvh md:h-screen bg-bg overflow-hidden relative">
       {/* ── Main content ── single scrollable area */}
       <main ref={mainRef} className="h-full overflow-y-auto overflow-x-hidden relative" style={{ paddingBottom: '0' }}>
+        {/* ── Split shell ── below 1900px this is a plain block (the page
+            stays a single stacked scroll); at ≥1900px it becomes a two
+            column grid: the hero pins to the left, the rest scrolls right. */}
+        <div className="split-shell">
         {/* Hero section */}
-        <section className="min-h-dvh md:h-screen flex items-stretch" style={{ padding: '0 24px' }}>
+        <section className="hero-section min-h-dvh md:h-screen flex items-stretch" style={{ padding: '0 24px' }}>
           <SideLabel label="Full-stack developer" endLabel="Detroit, MI" side="left" padTop="64px" padBottom="5dvh" />
           <div className="flex-1 flex items-stretch">
           <div className="relative flex items-center md:items-stretch gap-10 w-full max-w-[1400px] mx-auto max-md:flex-col max-md:gap-5 max-md:justify-start max-md:pt-[10vh] max-md:pb-[8vh]">
@@ -565,7 +569,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
-              className="pointer-events-none absolute z-[1] flex items-start justify-start md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:-inset-x-6 max-md:top-[4vh] max-md:bottom-0"
+              className="hero-figure pointer-events-none absolute z-[1] flex items-start justify-start md:justify-end md:top-0 md:bottom-0 md:right-0 md:w-[58%] md:pt-[6vh] md:pr-[2%] xl:pr-0 max-md:-inset-x-6 max-md:top-[4vh] max-md:bottom-0"
               style={{
                 // Bottom fade only — he emerges from the page. Top/sides stay
                 // crisp (no head fade, no drop-shadow edge).
@@ -678,6 +682,10 @@ export default function Home() {
           </div>
           </div>
         </section>
+
+        {/* ── Right column ── everything that scrolls past the pinned hero
+            when the split layout is active. */}
+        <div className="split-content">
 
         {/* Portfolio section */}
         <section id="work" style={{ padding: '80px 24px', display: 'flex', position: 'relative' }}>
@@ -1302,6 +1310,9 @@ export default function Home() {
 
           </div>
         </section>
+
+        </div>{/* ── /Right column ── */}
+        </div>{/* ── /Split shell ── */}
 
         {/* Life event sheet */}
         <LifeEventSheet
