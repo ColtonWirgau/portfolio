@@ -12,6 +12,7 @@ import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEve
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
 import { SquidMark } from '@/components/SquidMark';
+import SquidRevealFigure from '@/components/SquidRevealFigure';
 import { InkBurst } from '@/components/InkBurst';
 import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
@@ -604,10 +605,13 @@ export default function Home() {
               />
               {/* Smaller at tablet widths so the far elbow isn't clipped by
                   the viewport edge; full scale returns at xl. */}
-              <img
-                src="/images/Edited/Serious3.png"
+              <SquidRevealFigure
+                baseSrc="/images/Edited/Serious3.png"
+                squidSrc="/images/Edited/squid.png"
                 alt="Colton Wirgau"
-                className="relative w-auto max-w-none object-contain object-top h-[134%] md:h-[132%] xl:h-[152%] max-md:translate-x-[3vw]"
+                width={703}
+                height={2048}
+                className="h-[134%] md:h-[132%] xl:h-[152%] max-md:translate-x-[3vw]"
               />
             </motion.div>
 
