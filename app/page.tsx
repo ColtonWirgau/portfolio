@@ -12,7 +12,7 @@ import { lifeEvents, LifeEventSheet, type LifeEvent } from '@/components/LifeEve
 import { SectionHeading, Em, Ul } from '@/components/SectionHeading';
 import { SideLabel } from '@/components/SideLabel';
 import { SquidMark } from '@/components/SquidMark';
-import SquidRevealFigure from '@/components/SquidRevealFigure';
+import SquidRevealFigure, { type RevealFx } from '@/components/SquidRevealFigure';
 import { InkBurst } from '@/components/InkBurst';
 import { Footer } from '@/components/Footer';
 import { ResponsiveSheet, SheetPage, useResponsiveSheet } from '@/components/ResponsiveSheet';
@@ -29,6 +29,36 @@ const roles = [
   'a product thinker',
   'a leader',
   'a communicator',
+];
+
+/* Reveal variant per rolling title, index-aligned with `roles`. Each image is
+   registered to Serious3-padded.png by scripts/build-hero-variants.mjs. The
+   undefined slots (UI/UX artboard, full-stack strata) fall back to the
+   shader's ink-duotone until their code-built treatments land. */
+const roleVariants: (string | undefined)[] = [
+  '/images/Edited/variants/pioneer.png',
+  '/images/Edited/variants/detective.png',
+  undefined,
+  undefined,
+  '/images/Edited/variants/blacksmith.png',
+  '/images/Edited/variants/product.png',
+  '/images/Edited/variants/coach.png',
+  '/images/Edited/variants/radio.png',
+];
+
+/* Entrance/exit choreography per title (see SquidRevealFigure painters):
+   tintype develop, noir blinds, screen redraw, rising stack skyline, forge
+   heat, accumulating sketch hatching, playbook marker stroke, broadcast
+   rings. */
+const roleFx: RevealFx[] = [
+  'develop',
+  'blinds',
+  'scan',
+  'layers',
+  'forge',
+  'hatch',
+  'routes',
+  'rings',
 ];
 
 interface ProjectGroup {
@@ -352,6 +382,19 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  // Warm the reveal variants after first paint so the texture swap on each
+  // role tick hits the browser cache instead of the network.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      for (const src of roleVariants) {
+        if (!src) continue;
+        const img = new Image();
+        img.src = src;
+      }
+    }, 2500);
+    return () => clearTimeout(t);
+  }, []);
+
   const checkScroll = useCallback(() => {
     const el = mainRef.current;
     if (!el) return;
@@ -605,13 +648,19 @@ export default function Home() {
               />
               {/* Smaller at tablet widths so the far elbow isn't clipped by
                   the viewport edge; full scale returns at xl. */}
+              {/* Padded canvas (903x2298): the original 703x2048 figure sits
+                  at (100,250), leaving headroom for variant hats. Heights are
+                  scaled by 2298/2048 and the translates pull the figure back
+                  to where the unpadded image sat, so the layout reads
+                  identically until a fedora needs the extra room. */}
               <SquidRevealFigure
-                baseSrc="/images/Edited/Serious3.png"
-                squidSrc="/images/Edited/squid.png"
+                baseSrc="/images/Edited/Serious3-padded.png"
+                variantSrc={roleVariants[roleIndex]}
+                fx={roleFx[roleIndex]}
                 alt="Colton Wirgau"
-                width={703}
-                height={2048}
-                className="h-[134%] md:h-[132%] xl:h-[152%] max-md:translate-x-[3vw]"
+                width={903}
+                height={2298}
+                className="h-[150%] md:h-[148%] xl:h-[171%] -translate-y-[10.9%] md:translate-x-[11%] max-md:translate-x-[calc(3vw-11%)]"
               />
             </motion.div>
 

@@ -1,5 +1,26 @@
 # Portfolio: Notes for Claude
 
+## Hero reveal variants
+
+The hero portrait (`components/SquidRevealFigure.tsx`) blends into a costume
+variant matching the current rolling title. Variants live in
+`public/images/Edited/variants/`, index-aligned to the `roles` array via
+`roleVariants` in `app/page.tsx`. All images (and the base,
+`Serious3-padded.png`, 903x2298: the original 703x2048 at left 100 / top 250)
+share one canvas registration; the shader blends per-pixel, so any new
+variant must be aligned the same way.
+
+To make a new variant: generate a costume edit of the portrait with Nano
+Banana (source image: figure on plain gray, standing, arms crossed low; keep
+face/pose/framing identical; fresh chat per attempt, never iterate in-chat),
+then run rembg on it and `node scripts/build-hero-variants.mjs <cutout-dir>
+public/images/Edited/variants <preview-dir>`. The script assumes raw
+generations came from the 1536x2048 gen-source framing (figure 618x1800 at
+459/248) and maps them onto the padded canvas; check the `-overlay.png`
+preview for registration before shipping. Per-variant grades (e.g. the
+detective's noir black-and-white) are applied in that script, not baked into
+the generation.
+
 ## LLM-readable files (`llms.txt`, `llms-full.txt`)
 
 This site ships two LLM-readable files in `public/`, served at the root:
