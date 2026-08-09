@@ -233,7 +233,7 @@ export function PersonalProjectsPanel() {
           </div>
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 28px', position: 'relative', zIndex: 3 }}>
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.8rem, 8vw, 4.4rem)', color: '#F0EBE0', lineHeight: 0.9, letterSpacing: '-0.015em', textTransform: 'uppercase', textAlign: 'center', paddingTop: '0.08em' }}>
+            <h3 className="ink-sub-light" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.8rem, 8vw, 4.4rem)', color: '#F0EBE0', lineHeight: 0.9, letterSpacing: '-0.015em', textTransform: 'uppercase', textAlign: 'center', paddingTop: '0.08em' }}>
               Dynastly
             </h3>
             <div style={{ width: '40px', height: '2px', background: '#F0EBE0', margin: '20px auto' }} />

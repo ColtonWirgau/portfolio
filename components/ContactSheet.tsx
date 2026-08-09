@@ -67,7 +67,9 @@ export function ContactSheet({ open, onClose }: ContactSheetProps) {
           </div>
 
           <div style={{ position: 'relative', padding: collapsed ? '14px 28px 12px' : '36px 28px 30px', zIndex: 1, transition: 'padding 0.3s ease' }}>
-            <h2 style={{
+            {/* See AIResearchSheet: skipped while collapsed, where the title
+                is 1.4rem and the artefacts would swamp it. */}
+            <h2 className={collapsed ? undefined : 'ink-sub-light'} style={{
               fontFamily: 'var(--font-display)',
               fontSize: collapsed ? '1.4rem' : 'clamp(2.6rem, 7vw, 3.8rem)',
               color: '#fff',

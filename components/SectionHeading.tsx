@@ -68,7 +68,7 @@ export function SectionHeading({ label, title, subtitle, watermark, center, righ
       )}
 
       {/* Title */}
-      <h2 style={{
+      <h2 className="ink-heading" style={{
         position: 'relative',
         fontSize: 'clamp(4rem, 8vw, 7rem)',
         fontFamily: 'var(--font-display)',

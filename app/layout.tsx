@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Anton, Montserrat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
+import AnalogInkDefs from "@/components/AnalogInk";
 
 const anton = Anton({
   weight: "400",
@@ -67,6 +68,10 @@ export default function RootLayout({
       <body className="antialiased" suppressHydrationWarning>
         <Header />
         {children}
+        {/* Filter defs for the analog display type. Mounted at the root so
+            `filter: url(#analog-ink-*)` resolves on every route; renders no
+            box of its own. */}
+        <AnalogInkDefs />
         <div className="paper-grain" aria-hidden="true" />
       </body>
     </html>

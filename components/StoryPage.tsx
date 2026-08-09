@@ -63,6 +63,7 @@ export function StoryPage({ event }: { event: LifeEvent }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
+            className="ink-sub-light"
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(3rem, 6vw, 5rem)',

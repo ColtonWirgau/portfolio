@@ -37,7 +37,9 @@ export function AIResearchSheet({ open, onClose }: AIResearchSheetProps) {
           </div>
 
           <div style={{ position: 'relative', padding: collapsed ? '14px 28px 12px' : '36px 28px 32px', zIndex: 1, transition: 'padding 0.3s ease' }}>
-            <h2 style={{
+            {/* Only inked when expanded: collapsed drops the title to 1.5rem,
+                where the fixed-px artefacts would swamp the letterforms. */}
+            <h2 className={collapsed ? undefined : 'ink-sub-light'} style={{
               fontFamily: 'var(--font-display)',
               fontSize: collapsed ? '1.5rem' : 'clamp(3rem, 7vw, 4.5rem)',
               color: '#fff',

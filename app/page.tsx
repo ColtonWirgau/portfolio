@@ -405,15 +405,9 @@ export default function Home() {
       onClick={stamp.onClick}
       aria-label={stamp.ariaLabel}
       style={{
-        border: '2px solid var(--color-accent)',
+        border: 'none',
+        padding: 0,
         borderRadius: '3px',
-        padding: '8px 14px 6px',
-        fontFamily: 'var(--font-display)',
-        color: 'var(--color-accent)',
-        textTransform: 'uppercase',
-        letterSpacing: '0.04em',
-        lineHeight: 1.05,
-        textAlign: 'center',
         // Frosted glass (same as the mobile stamp) so the pill stays legible
         // wherever it overlaps the figure, and reads as a subtle chip on the
         // plain background.
@@ -433,22 +427,41 @@ export default function Home() {
         e.currentTarget.style.transform = 'translateY(0)';
       }}
     >
-      <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', whiteSpace: 'nowrap' }}>
-        {stamp.label}
-      </div>
+      {/* The border and rules live in here, not on the button, so the ink
+          grain can treat the whole stamp as one printed object. It can't go
+          on the button itself: filter and backdrop-filter on the same
+          element fight, and the frosted glass loses. */}
       <div
+        className="ink-grain"
         style={{
-          fontSize: '9px',
-          fontFamily: 'var(--font-sans)',
-          fontWeight: 700,
-          letterSpacing: '0.2em',
-          marginTop: '5px',
-          paddingTop: '4px',
-          borderTop: '1px solid var(--color-accent)',
-          whiteSpace: 'nowrap',
+          border: '2px solid var(--color-accent)',
+          borderRadius: '3px',
+          padding: '8px 14px 6px',
+          fontFamily: 'var(--font-display)',
+          color: 'var(--color-accent)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.04em',
+          lineHeight: 1.05,
+          textAlign: 'center',
         }}
       >
-        {stamp.sub}
+        <div style={{ fontSize: 'clamp(0.95rem, 1.15vw, 1.1rem)', whiteSpace: 'nowrap' }}>
+          {stamp.label}
+        </div>
+        <div
+          style={{
+            fontSize: '9px',
+            fontFamily: 'var(--font-sans)',
+            fontWeight: 700,
+            letterSpacing: '0.2em',
+            marginTop: '5px',
+            paddingTop: '4px',
+            borderTop: '1px solid var(--color-accent)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {stamp.sub}
+        </div>
       </div>
     </button>
   );
@@ -482,7 +495,10 @@ export default function Home() {
               className="md:hidden absolute z-0 top-[10vh] right-0 text-right uppercase leading-[0.8] tracking-[-0.04em] text-[clamp(6rem,32vw,11rem)]"
               style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
             >
-              Hello
+              {/* Filter sits on an inner span, not the animated h1: on the
+                  same element the browser re-runs the whole filter chain
+                  every frame of the slide-in. */}
+              <span style={{ display: 'inline-block', filter: 'url(#analog-ink-lg)' }}>Hello</span>
             </motion.h1>
             {/* Text side. Full width on mobile: the column layout's
                 items-center would otherwise shrink-wrap this block and
@@ -507,7 +523,9 @@ export default function Home() {
                   className="max-md:hidden text-[clamp(8rem,16vw,16rem)] leading-[0.85] tracking-[-0.04em] mb-5 uppercase"
                   style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
                 >
-                  Hello
+                  {/* See the mobile HELLO above: filter on an inner span so
+                      the entrance animation doesn't re-filter per frame. */}
+                  <span style={{ display: 'inline-block', filter: 'url(#analog-ink-xl)' }}>Hello</span>
                 </motion.h1>
 
                 {/* On mobile the line drops down over his chest and stays
@@ -520,7 +538,7 @@ export default function Home() {
                   transition={{ delay: 0.5 }}
                   className="relative flex items-center gap-2 max-md:flex-col max-md:items-end max-md:text-right max-md:gap-0.5 text-[clamp(1.1rem,1.8vw,1.4rem)] max-md:text-[1.5rem] tracking-[0.01em] max-md:tracking-[0] md:ml-5 max-md:ml-0 max-md:mt-[40vh] text-[color:var(--color-fg)] [font-family:var(--font-serif)]"
                 >
-                  <span className="font-normal">I{"'"}m Colton,</span>
+                  <span className="ink-grain font-normal">I{"'"}m Colton,</span>
                   {/* Desktop clips for the roll; mobile is a flex slot with a
                       min-height so it never collapses in the between-message
                       gap (which would jitter the vertical centering). */}
@@ -538,7 +556,7 @@ export default function Home() {
                         // Glass chip is mobile-only and lives on the animated
                         // span, so it's sized to each message and fades in/out
                         // with the text (never lingers in the empty gap).
-                        className="font-medium italic whitespace-nowrap md:block md:border-b-2 md:pb-[2px] max-md:inline-flex max-md:items-center max-md:px-3 max-md:py-1 max-md:-mr-3 max-md:rounded-[4px] max-md:bg-[rgba(213,210,200,0.55)] max-md:backdrop-blur-md max-md:backdrop-saturate-150 max-md:shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
+                        className="ink-grain-md font-medium italic whitespace-nowrap md:block md:border-b-2 md:pb-[2px] max-md:inline-flex max-md:items-center max-md:px-3 max-md:py-1 max-md:-mr-3 max-md:rounded-[4px] max-md:bg-[rgba(213,210,200,0.55)] max-md:backdrop-blur-md max-md:backdrop-saturate-150 max-md:shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
                         style={{ color: 'var(--color-accent)', borderColor: 'var(--color-accent)' }}
                       >
                         {roles[roleIndex]}
@@ -1173,7 +1191,7 @@ export default function Home() {
               <div style={{ fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--color-accent)', fontWeight: 700, marginBottom: '14px' }}>
                 Software Development
               </div>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 7vw, 5rem)', color: 'var(--color-fg)', lineHeight: 0.9, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>
+              <h2 className="ink-sub" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 7vw, 5rem)', color: 'var(--color-fg)', lineHeight: 0.9, letterSpacing: '-0.03em', textTransform: 'uppercase' }}>
                 How I build.
               </h2>
               <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 'clamp(1.05rem, 1.8vw, 1.4rem)', color: 'var(--color-muted)', lineHeight: 1.5, maxWidth: '720px', marginTop: '18px', textWrap: 'balance' }}>
@@ -1200,7 +1218,7 @@ export default function Home() {
 
             {/* Editorial heading */}
             <div style={{ marginBottom: '48px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <h2 style={{
+              <h2 className="ink-heading" style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(5rem, 10vw, 9rem)',
                 color: 'var(--color-accent)',

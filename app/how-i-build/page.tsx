@@ -147,6 +147,7 @@ export default function HowIBuildPage() {
             Software Development
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
+            className="ink-sub"
             style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.4rem, 8vw, 6rem)', color: 'var(--color-fg)', lineHeight: 0.95, letterSpacing: '-0.03em', textTransform: 'uppercase', marginBottom: '28px' }}>
             The way I think<br />about building.
           </motion.h1>

@@ -73,6 +73,53 @@ body,
   height: 0 !important;
 }
 
+/* Analog ink ── print treatment for the Anton display type. The filters
+   live in components/AnalogInk.tsx and are mounted once in the root
+   layout; these classes just pick which preset applies.
+
+   The swap at 768px is the point of having classes at all. The filters
+   work in fixed user-space px while every heading they sit on is
+   clamp()ed, so a preset tuned for a 7rem desktop heading is roughly
+   twice too strong once that heading bottoms out at its 4rem minimum on
+   a phone. Each class steps down a band on small screens so the artefacts
+   stay the same size relative to the letterform at every width. */
+.ink-heading {
+  filter: url(#analog-ink-sm);
+}
+.ink-sub {
+  filter: url(#analog-ink-sm);
+}
+.ink-heading-light {
+  filter: url(#analog-ink-sm-light);
+}
+/* Small type, hairline rules and borders. No size banding: this one
+   multiplies alpha by noise and never moves the outline, so it reads the
+   same at 9px as it does at 90px. */
+.ink-grain {
+  filter: url(#analog-grain);
+}
+/* Desktop-only variant, for elements that carry a backdrop-filter on
+   mobile. filter and backdrop-filter on the same element fight and the
+   frosted glass loses, so those only get inked at widths where the glass
+   isn't in play. */
+@media (min-width: 768px) {
+  .ink-grain-md {
+    filter: url(#analog-grain);
+  }
+}
+.ink-sub-light {
+  filter: url(#analog-ink-sm-light);
+}
+
+@media (min-width: 768px) {
+  .ink-heading {
+    filter: url(#analog-ink-md);
+  }
+  .ink-heading-light {
+    filter: url(#analog-ink-md-light);
+  }
+}
+
 /* Contact form fields — warm parchment placeholder */
 .contact-input::placeholder {
   color: var(--color-muted);
