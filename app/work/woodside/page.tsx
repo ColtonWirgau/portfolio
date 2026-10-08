@@ -139,6 +139,37 @@ export default function WoodsidePage() {
         </section>
       ))}
 
+      {/* ── Recent work: events, serve and care ──────────────── */}
+      <section style={{ padding: 'clamp(56px, 9vw, 104px) 24px', borderTop: `1px solid ${BORDER}`, background: 'linear-gradient(to bottom, rgba(98,187,70,0.06), transparent 40%)' }}>
+        <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+          <motion.div variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }} style={{ maxWidth: '720px', marginBottom: 'clamp(28px, 4vw, 44px)' }}>
+            <div style={{ fontSize: '11px', letterSpacing: '0.22em', textTransform: 'uppercase', color: GREEN, fontWeight: 800, marginBottom: '14px' }}>Recent work · Events, serve and care</div>
+            <h2 style={{ fontFamily: 'var(--font-sans)', fontWeight: 900, fontSize: 'clamp(1.7rem, 4vw, 2.7rem)', color: INK, lineHeight: 1.08, letterSpacing: '-0.02em', textTransform: 'uppercase', marginBottom: '20px' }}>
+              One event, with every way in.
+            </h2>
+            <p style={{ fontSize: '15.5px', lineHeight: 1.9, color: BODY }}>
+              Nobody asked for this one. After years of hearing the same workarounds in meetings (five events for one retreat, promo codes standing in for real prices, age limits nobody enforced), I rebuilt how Woodside does registration. One event now has many ways in, each with its own price and questions. Eligibility rules are flexible and explain themselves, discounts apply on their own with no code box to abuse, and every rule is checked again on the server. It runs the events, serve and care widgets on woodsidebible.org and two new event sites: the What Matters women’s conference and the Student Winter Retreats.
+            </p>
+          </motion.div>
+          <motion.div variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '16px', marginBottom: '32px' }}>
+            {[
+              ['/images/woodside-wc-hero.webp', 'What Matters, the Woodside women’s conference site'],
+              ['/images/woodside-wc-signup.webp', 'Conference sign-up with household eligibility'],
+              ['/images/woodside-sr-staff.webp', 'Student Winter Retreats staff roster'],
+            ].map(([src, alt]) => (
+              <img key={src} src={src} alt={alt} loading="lazy" style={{ width: '100%', aspectRatio: '16 / 10', objectFit: 'cover', objectPosition: 'top', borderRadius: '8px', border: `1px solid ${BORDER}` }} />
+            ))}
+          </motion.div>
+          <motion.div variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }}>
+            <Link href="/work/woodside/events" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '14px', fontWeight: 800, color: NAVY, background: GREEN, padding: '13px 24px', borderRadius: '100px', textDecoration: 'none', letterSpacing: '0.02em' }}>
+              Read the case study
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M9 18l6-6-6-6" /></svg>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── The work (breadth) ───────────────────────────────── */}
       <section style={{ padding: 'clamp(56px, 9vw, 104px) 24px', borderTop: `1px solid ${BORDER}` }}>
         <div style={{ maxWidth: '1080px', margin: '0 auto' }}>

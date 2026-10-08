@@ -44,6 +44,7 @@ Sub-projects under the Woodside umbrella:
 
 - **Dynamic Insights & Widgets.** Extended MinistryPlatform's static reporting platform into interactive dashboards with custom embedded widgets. Created a nested JSON framework for optimized data retrieval. This innovation inspired new features in MinistryPlatform's main product and became a development model across partner organizations.
 - **Web Pages & Platforms (apps.woodsidebible.org).** Built and maintains multiple public-facing and internal web applications. A unified Next.js platform that centralizes operations, automates data tasks, and provides clean interfaces for both staff and community use across multiple campuses. Serves thousands of users every week.
+- **Events, Serve and Care (2026).** Unrequested redesign of how Woodside does registration, built from years of hearing the same workarounds in meetings. One event now has many "ways in" (each with its own price, questions, and open and close window) instead of several duplicate events per weekend. Eligibility is a flexible rule set (age, gender, grade, staff, child-protection clearance, group leadership, hand-picked lists) combined with AND/OR, where a way in can skip one rule without skipping the rest, and the same rules drive discounts. Everything costs what it actually costs: promo codes are only promo codes, discounts apply automatically with no code box to abuse, and every rule is re-checked on the server and fails closed. Includes logistics tools (capacity-aware breakout picks, rooming boards, bus manifests, run of show, group placements, volunteers on events without registration). Powers the events, serve, and care widgets on woodsidebible.org and two phase-aware event sites: the What Matters women's conference and the Student Winter Retreats. Detail page: /work/woodside/events
 - **Database Automations.** Designed and implemented automated database workflows that replaced manual processes.
 - **Power BI Reporting.** Created Power BI dashboards and reports for leadership and staff. Turns raw data into clear, actionable visuals.
 - **Third-Party Integrations.** Built and facilitated integrations of platforms like REACH and Planning Center into MinistryPlatform.
@@ -147,6 +148,7 @@ How Colton makes technical decisions (there is a full page at /how-i-build). The
 - `/` Home, hero, work, story, contact
 - `/work/church-hub` Church Hub project page
 - `/work/woodside` Woodside Bible Church work
+- `/work/woodside/events` Events, serve and care case study: ways in, eligibility, auto-applied discounts, the women's conference and student retreat sites
 - `/#work` Work section, including the Personal Projects reveal: Dynastly, Lions tracker, Degenerates Dashboard
 - `/how-i-build` How I build: Colton's engineering philosophy in depth (UI/UX, frontend, backend, database, layering, defaults, AI in the workflow, and leadership)
 - `/childhood` Algonac story
